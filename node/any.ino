@@ -1,6 +1,6 @@
 
 bool write_any(String address, int value) {
-  Serial.print("write any: "+ address + " ");
+  Serial.print("write any: " + address + " ");
   Serial.println(value);
   if (write_valve(address, value)) return true;
   if (write_output(address, value)) return true;

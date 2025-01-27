@@ -1,69 +1,9 @@
 //Serial as used for debug messages of all sorts
 //additional the same protocoll as over ethernet is implemented
 
-//TODO refactor
-
+String input_buffer_debug = "";
 void handle_debug() {
-
-  static String inputString = "";          // a string to hold incoming data
-  static boolean messageComplete = false;  // whether the string is complete
-  String in_messageType, addressString, valueString;
-  int in_value;
-
-  //get one whole message from com
-  while (Serial.available() && !(messageComplete)) {
-    // get the new byte:
-    char inChar = (char)Serial.read();
-    // add it to the inputString:
-    inputString += inChar;
-    // if the incoming character is a newline, set a flag
-    // so the main loop can do something about it:
-    if (inChar == '$') {
-      messageComplete = true;
-    }
-  }
-
-  //message parser & handler
-  while (messageComplete) {
-    //message parser
-    Serial.println("handle_debug: parsing message...:");
-    Serial.println(inputString);
-
-    int index1 = inputString.indexOf('!');
-    int index2 = inputString.indexOf('!', index1 + 1);
-    int index3 = inputString.indexOf('!', index2 + 1);
-    int index4 = inputString.indexOf('$');
-
-    //Serial.print("  " + inputString + " index1-4: ");
-    //Serial.print(index1);
-    //Serial.print("  ");
-    //Serial.print(index2);
-    //Serial.print("  ");
-    //Serial.print(index3);
-    //Serial.print("  ");
-    //Serial.println(index4);
-
-    in_messageType = inputString.substring(index1 + 1, index2);
-    //Serial.println("  " + inputString);
-    addressString = inputString.substring(index2 + 1, index3);
-    //Serial.println("  " + addressString);
-    valueString = inputString.substring(index3 + 1, index4);
-    //Serial.println("  " + valueString);
-    in_value = valueString.toInt();
-    //Serial.print("  ");
-    //Serial.println(in_value);
-
-    //reset parser state
-    inputString = "";
-    messageComplete = false;
-
-    //handler
-    if (in_messageType == "w") {
-      write_any(addressString, in_value);
-    } else {
-      post_all_debug();
-    }
-  }
+    if (get_message_debug()) parse_message_debug();
 }
 
 void init_debug() {
@@ -71,18 +11,74 @@ void init_debug() {
   post_all_debug();
 }
 
+bool get_message_debug() {
+  while (Serial.available()) {
+    //get the new byte:
+    char inChar = client.read();
+    //add it to the inputString:
+    input_buffer_debug += inChar;
+    if (inChar == '$') {
+      return true;
+    }
+  }
+  return false;
+}
+
+
+void parse_message_debug() {
+  //message parser
+  Serial.print("handle_comm: parsing message: ");
+  Serial.println(input_buffer_debug);
+
+  int index1 = input_buffer_debug.indexOf('!');
+  int index2 = input_buffer_debug.indexOf('!', index1 + 1);
+  int index3 = input_buffer_debug.indexOf('!', index2 + 1);
+  int index4 = input_buffer_debug.indexOf('$');
+
+  String type = input_buffer_debug.substring(index1 + 1, index2);
+  String name = input_buffer_debug.substring(index2 + 1, index3);
+  String value_string = input_buffer_debug.substring(index3 + 1, index4);
+  input_buffer_debug = "";
+
+  int value = value_string.toInt();
+  if (value_string == "STOP") { value = 50; };
+  if (value_string == "UP") { value = 0; };
+  if (value_string == "DOWN") { value = 100; };
+  if (value_string == "ON") { value = 1; };
+  if (value_string == "OFF") { value = 0; };
+
+  //message handler
+  if (type == "post_all") {
+    if (name == node_info.unit_name) post_all_debug();
+  } else if (type == "restart") {
+    if (name == node_info.unit_name) delay(100000);
+  } else if (type == "r") {
+    if (get_any(name, value)) send_state_debug(name, value);
+  } else if (type == "c") {
+    write_any(name, value);
+  }
+}
+
+void send_state_debug(String name, String value) {
+  String message = "!s!" + name + '!' + value + "$\n";
+  Serial.print(message);
+}
+
+void send_state_debug(String name, int value) {
+  String message = "!s!" + name + '!' + String(value, DEC)  + "$\n";
+  Serial.print(message);
+}
 
 void post_all_debug() {
-  Serial.println(node_info.unit_name + " posting all: start");
-  int i;
-  for (i=0; i<num_outputs; i++){
-    Serial.println(outputs[i].name + " " + outputs[i].value);
+  send_state_debug(node_info.unit_name, " posting all: start");
+  for (int i=0; i<num_outputs; i++){
+    send_state_debug(outputs[i].name, outputs[i].value);
   }
-  for (i=0; i<num_rollos; i++){
-    Serial.println(rollos[i].name + " " + rollos[i].value);
+  for (int i=0; i<num_rollos; i++){
+    send_state_debug(rollos[i].name, rollos[i].value);
   }
-  for (i = 0; i < num_valves; i++) {
-    Serial.println(valves[i].name + " " + valves[i].value);
+  for (int i = 0; i < num_valves; i++) {
+    send_state_debug(valves[i].name, valves[i].value);
   }
-  Serial.println(node_info.unit_name + " posting all: end");
+  send_state_debug(node_info.unit_name, " posting all: end");
 }

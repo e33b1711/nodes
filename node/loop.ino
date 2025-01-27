@@ -7,13 +7,12 @@ void setup() {
 
   // init states
   setup_watchdog();
- setup_switches();
-  init_comm();
- setup_temps();
- setup_valves();
+  setup_switches();
+  setup_comm();
+  setup_temps();
+  setup_valves();
   //states mit ausgängen zum Schluss
- setup_outputs();
- 
+  setup_outputs();
 }
 
 void loop() {
@@ -26,9 +25,9 @@ void loop() {
 
   //update states
   //user logic is called from update_a_b_c
- update_switches();
- update_temps();
- update_valves();
+  update_switches();
+  update_temps();
+  update_valves();
 
 
   //states mit ausgängen zum Schluss
