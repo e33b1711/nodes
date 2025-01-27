@@ -43,6 +43,7 @@ bool write_valve(String name, int value) {
       if ((value >= 0) and (value < max_phase)) {
         valves[i].value = value;
       }
+      send_state(name, valves[i].value);
       return true;
     }
   }
