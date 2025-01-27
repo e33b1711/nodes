@@ -2,6 +2,7 @@ void setup_outputs() {
   Serial.println("setup_outputs");
   int i;
   for (i = 0; i < num_outputs; i++) {
+    alloc_pin(outputs[i].pin);
     digitalWrite(outputs[i].pin, !outputs[i].invert);
     pinMode(outputs[i].pin, OUTPUT);
     outputs[i].value = 0;

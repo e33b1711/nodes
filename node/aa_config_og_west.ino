@@ -7,6 +7,7 @@ node_t node_info = {
   server,
   8888,
   53,
+  12,
   { 0xDE, 0xAA, 0x7E, 0xE1, 0x1E, 0x16 },
 };
 

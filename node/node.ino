@@ -1,12 +1,30 @@
 //just some global type definitions
 #include <Ethernet.h>
 
+const int num_pins = 62;
+bool pin_alloc[num_pins] = { false };
+
+void alloc_pin(int pin) {
+  if (pin >= num_pins) {
+    Serial.println("alloc_pin: undefinied: " + String(pin, DEC));
+    Serial.println("Exit...");
+    while (true) delay(100);
+  }
+  if (pin_alloc[pin]) {
+    Serial.println("alloc_pin: allready allocated: " + String(pin, DEC));
+    Serial.println("Exit...");
+    while (true) delay(100);
+  }
+  pin_alloc[pin] = true;
+}
+
 struct node_t {
   const String unit_name;
   const IPAddress ip;
   const IPAddress server;
   const int port;
   const int ethernet_sc_pin;
+  const int ethernet_reset_pin;
   const byte mac[];
 };
 

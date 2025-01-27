@@ -7,6 +7,8 @@ void handle_debug() {
 }
 
 void init_debug() {
+  alloc_pin(0);
+  alloc_pin(1);
   Serial.begin(9600);
   post_all_debug();
 }

@@ -9,6 +9,8 @@ String message_buffer = "";
 String input_buffer = "";
 
 void init_hw() {
+  alloc_pin(node_info.ethernet_sc_pin);
+  alloc_pin(node_info.ethernet_reset_pin);
   Ethernet.init(node_info.ethernet_sc_pin);
   Ethernet.begin(node_info.mac, node_info.ip);
   delay(500);

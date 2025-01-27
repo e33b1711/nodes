@@ -4,6 +4,7 @@ void setup_switches() {
   Serial.println("setup_switches");
   int i;
   for (i = 0; i < num_switches; i++) {
+    alloc_pin(outputs[i].pin);
     pinMode(switches[i].pin, INPUT);
     digitalWrite(switches[i].pin, HIGH);
   }

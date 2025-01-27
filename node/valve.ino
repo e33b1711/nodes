@@ -7,6 +7,7 @@ void setup_valves() {
   Serial.println("setup_valve");
   int i;
   for (i = 0; i < num_valves; i++) {
+    alloc_pin(valves[i].pin);
     send_state(valves[i].name, valves[i].value);
     digitalWrite(valves[i].pin, LOW);
     pinMode(valves[i].pin, OUTPUT);

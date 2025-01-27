@@ -8,6 +8,7 @@ void setup_temps() {
   Serial.println("setup_temps");
   s_time_t = millis();
   for (int i = 0; i < num_temps; i++) {
+    alloc_pin(temps[i].pin);
     handle_one_temp(i);
   }
 }
