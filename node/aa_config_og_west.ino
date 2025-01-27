@@ -1,5 +1,5 @@
 //this is the node specific config
-const IPAddress ip(192, 168, 178, 180);
+const IPAddress ip(192, 168, 178, 217);
 const IPAddress server(192, 168, 178, 23);
 node_t node_info = {
   "og_west",
