@@ -1,0 +1,41 @@
+//setup and loop functions
+
+void setup() {
+
+  //init debug interface
+  init_debug();
+
+  // init states
+  setup_watchdog();
+ setup_switches();
+  init_comm();
+ setup_temps();
+ setup_valves();
+  //states mit ausgängen zum Schluss
+ setup_outputs();
+ 
+}
+
+void loop() {
+
+  //watchdog
+  handle_watchdog();
+
+  //react to messages
+  handle_comm();
+
+  //update states
+  //user logic is called from update_a_b_c
+ update_switches();
+ update_temps();
+ update_valves();
+
+
+  //states mit ausgängen zum Schluss
+  update_rollos();
+  update_outputs();
+  //update_a_b_c();
+
+  //debug Interface
+  handle_debug();
+}
