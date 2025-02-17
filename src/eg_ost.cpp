@@ -39,7 +39,7 @@ const long period_t = 60000;
 temp_t temps[num_temps] = {};
 
 
-const int num_outputs = 9;
+const int num_outputs = 8;
 output_t outputs[num_outputs] = {
   { "LI_EG_WZ", 41, 1, 0, 0 },
   { "LI_EG_WZ_L1",    42, 1, 0, 0 },
@@ -49,7 +49,6 @@ output_t outputs[num_outputs] = {
   { "LI_EG_GA", 46, 1, 0, 0 },
   { "LI_EG_WZ_L2", 47, 1, 0, 0 },
   { "LI_EG_VH", 49, 1, 0, 0 },
-  { "ZE_EG_VH", 54, 1, 0, 0 }
 };
    
 const int num_rollos = 0;
@@ -68,7 +67,7 @@ valve_t valves[num_valves] = {
 
 const int num_timers = 1;
 timer_t timers[num_timers] = {
-  { "ZW_EG_VH", "ZE_EG_VH", false, false, 0, 180 }
+  { "ZE_EG_VH", "LI_EG_VH", false, false, 0, 180 }
 };
 
 void user_logic()
@@ -89,7 +88,7 @@ void user_logic()
   long_short(15, "LI_OG_GA_L1", 3, "LI_OG_GA", 3);
   long_short(11, "DF_OG_GA", 100, "VD_OG_GA", 100);
   long_short(8, "DF_OG_GA", 0, "VD_OG_GA", 0);
-  simple(13, 1, "BELL");
+  simple(13, 1, "ZE_BELL");
 
 
   
