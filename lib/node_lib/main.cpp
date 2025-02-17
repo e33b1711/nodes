@@ -12,7 +12,7 @@ void setup() {
   setup_comm();
   setup_temps();
   setup_valves();
-  //states mit ausgängen zum Schluss
+  setup_timers();
   setup_outputs();
   setup_watchdog();
 }
@@ -34,6 +34,7 @@ void loop() {
 
   //states mit ausgängen zum Schluss
   update_rollos();
+  handle_timers();
   update_outputs();
   //update_a_b_c();
 

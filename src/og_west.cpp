@@ -116,3 +116,6 @@ switch_t switches[num_switches] = {
   { 3, 0, 0, 0, 0, 0 },   //leo oben
   { 2, 0, 0, 0, 0, 0 },   //gang leo
 };
+
+const int num_timers = 0;
+timer_t timers[num_timers] = {};

@@ -44,7 +44,7 @@ bool write_output(String name, int value) {
 }
 
 bool get_output(String name, int &value) {
-  for (int i = 0; i < num_temps; i++) {
+  for (int i = 0; i < num_outputs; i++) {
     if (outputs[i].name == name) {
       value = outputs[i].value;
       return true;

@@ -67,8 +67,11 @@ void post_all() {
   for (int i = 0; i < num_outputs; i++) {
     send_state(outputs[i].name, outputs[i].value);
   }
+  for (int i = 0; i < num_timers; i++) {
+    send_state(outputs[i].name, outputs[i].value);
+  }
   for (int i = 0; i < num_rollos; i++) {
-    send_state(rollos[i].name, rollos[i].value);
+    send_state(timers[i].name, timers[i].value);
   }
   for (int i = 0; i < num_valves; i++) {
     send_state(valves[i].name, valves[i].value);

@@ -12,6 +12,8 @@ void setup_temps();
 void setup_valves();
 void setup_outputs();
 void setup_watchdog();
+void setup_timers();
+
 void handle_watchdog();
 void handle_comm();
 void update_switches();
@@ -20,6 +22,7 @@ void update_valves();
 void update_rollos();
 void update_outputs();
 void handle_debug();
+void handle_timers();
 
 void user_logic();
 
@@ -35,6 +38,9 @@ bool get_output(String name, int &value);
 
 bool write_rollo(String name, int value);
 bool get_rollo(String name, int &value);
+
+bool write_timer(String name, int value);
+bool get_timer(String name, int &value);
 
 void long_short(const int b_index, const String l_long, const int l_value, const String l_short, const int s_value);
 void simple(const int b_index, const int value, const String l);
@@ -88,6 +94,15 @@ struct output_t {
   long set_time;
 };
 
+struct timer_t {
+  String name;
+  String slave;
+  bool value;
+  bool running;
+  long set_time;
+  long duration;
+};
+
 struct rollo_t {
   String name;
   String l_up;
@@ -119,24 +134,21 @@ extern node_t node_info;
 
 extern const int num_temps;
 extern const long period_t;
-
 extern temp_t temps[];
 
 extern const int num_outputs;
-
 extern output_t outputs[];
 
 extern const int num_rollos;
-
 extern rollo_t rollos[];
 
 extern const int num_valves;
-
 extern valve_t valves[];
 
 extern const int num_switches;
-
 extern switch_t switches[];
 
+extern const int num_timers;
+extern timer_t timers[];
 
 #endif

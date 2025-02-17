@@ -1,0 +1,90 @@
+#include "node.h"
+// helper functions for coupling switches to ouputs / rollos
+
+void setup_timers()
+{
+  Serial.println("setup timers");
+  int i;
+  for (i = 0; i < num_timers; i++)
+  {
+    timers[i].value = false;
+    timers[i].running = false;
+    send_state(timers[i].name, (int) timers[i].value);
+  }
+}
+
+void update_timer(int i)
+{
+  // start
+  if (timers[i].value and !timers[i].running)
+  {
+    timers[i].running = true;
+    timers[i].set_time = millis();
+    write_any(timers[i].slave, 1);
+    Serial.print(timers[i].name + ": timer an");
+  }
+  // timer: running
+  if (timers[i].value and timers[i].running)
+  {
+    if ((timers[i].set_time + timers[i].duration) < millis())
+    {
+      timers[i].running = false;
+      timers[i].value = false;
+      write_any(timers[i].slave, 0);
+      Serial.print(timers[i].name + ": timer abgelaufen");
+    }
+  }
+  // timer: external off
+  // timer: running
+  if (!timers[i].value and timers[i].running)
+  {
+    timers[i].running = false;
+    write_any(timers[i].slave, 0);
+    Serial.print(timers[i].name + ": timer abgebrochen.");
+  }
+}
+
+void handle_timers()
+{
+  for (int i = 0; i < num_outputs; i++) update_timer(i);
+}
+
+bool write_timer(String name, int value)
+{
+  int i;
+  for (i = 0; i < num_timers; i++)
+  {
+    if (outputs[i].name == name)
+    {
+      outputs[i].set_time = millis();
+      switch (value)
+      {
+      case 0:
+        outputs[i].value = false;
+        break;
+      case 1:
+        outputs[i].value = true;
+        break;
+      default:
+        outputs[i].value = not(outputs[i].value);
+        break;
+      }
+      send_state(name, outputs[i].value);
+      return true;
+    }
+  }
+  return false;
+}
+
+bool get_timer(String name, int &value)
+{
+  for (int i = 0; i < num_timers; i++)
+  {
+    if (timers[i].name == name)
+    {
+      value = (int)timers[i].running;
+      return true;
+    }
+  }
+  return false;
+}

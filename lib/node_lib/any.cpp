@@ -1,13 +1,15 @@
 #include "node.h"
 
-bool write_any(String address, int value) {
-  Serial.print("write any: " + address + " ");
+bool write_any(String name, int value) {
+  Serial.print("write any: " + name + " ");
   Serial.println(value);
-  if (write_valve(address, value)) return true;
-  if (write_output(address, value)) return true;
-  if (write_rollo(address, value)) return true;
-  Serial.println("write any: ERROR found none!");
-  return false;
+  if (write_valve(name, value)) return true;
+  if (write_output(name, value)) return true;
+  if (write_rollo(name, value)) return true;
+  if (write_timer(name, value)) return true;
+  Serial.println("Found no internal. Sending command.");
+  send_command(name, value);
+  return true;
 }
 
 bool get_any(String name, int &value) {
@@ -16,6 +18,7 @@ bool get_any(String name, int &value) {
   if (get_valve(name, value)) return true;
   if (get_rollo(name, value)) return true;
   if (get_output(name, value)) return true;
+  if (get_timer(name, value)) return true;
   return false;
 }
 

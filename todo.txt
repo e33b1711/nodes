@@ -1,0 +1,12 @@
+OTA
+thermostat
+delta-sigma valve, with light state
+udp broadcasten
+
+nodes:
+garage
+power
+chicken
+
+ethernet:
+garagen fritzbox
