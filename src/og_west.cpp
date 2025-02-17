@@ -34,7 +34,6 @@ node_t node_info = {
 
 const int num_temps = 3;
 const long period_t = 60000;
-
 temp_t temps[num_temps] = {
   { "OG_KN", 28, 0, 0, 0 },
   { "OG_KS", 27, 0, 0, 0 },
@@ -42,7 +41,6 @@ temp_t temps[num_temps] = {
 };
 
 const int num_outputs = 24;
-
 output_t outputs[num_outputs] = {
   { "LI_34", 34, 1, 0, 0 },
   { "RO_OG_KS_DO", 35, 1, 0, 0 },
@@ -71,7 +69,6 @@ output_t outputs[num_outputs] = {
 };
 
 const int num_rollos = 8;
-
 rollo_t rollos[num_rollos] = {
   { "RO_OG_KN", "RO_OG_KN_ON", "RO_OG_KN_DO", 31000, true, 50, 50, 0, false },
   { "RO_OG_KS", "RO_OG_KS_ON", "RO_OG_KS_DO", 31000, true, 50, 50, 0, false },
@@ -84,20 +81,9 @@ rollo_t rollos[num_rollos] = {
 };
 
 const int num_valves = 0;
-
-valve_t valves[num_valves] = {
-  //{ "U_34", "34", 0 },
-  //{ "U_34", "35", 0},
-  //{ "U_34", "36", 0},
-  //{ "U_34", "37", 0},
-  //{ "U_34", "38", 0},
-  //{ "U_34", "39", 0},
-  //{ "U_34", "40", 0},
-  //{ "U_34", "41", 0},
-};
+valve_t valves[num_valves] = {};
 
 const int num_switches = 16;
-
 switch_t switches[num_switches] = {
   { 4, 0, 0, 0, 0, 0 },   //bini oben
   { 5, 0, 0, 0, 0, 0 },   //gang bini
