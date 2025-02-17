@@ -38,7 +38,7 @@ output_t outputs[num_outputs] = {
   { "DF_OG_SZ_UP", 61, 0, 0, 0 },
 };
 
-const int num_rollos = 8;
+const int num_rollos = 4;
 
 rollo_t rollos[num_rollos] = {
   { "RO_OG_SZ", "RO_OG_SZ_ON", "RO_OG_SZ_DO", 31000, true, 50, 50, 0, false },
