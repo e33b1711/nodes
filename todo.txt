@@ -1,6 +1,6 @@
 
 allgemain
-( ) eg_west
+(x) eg_west
 ( ) ug
 ( ) test bett mit 2 nodes
 ( ) OTA
