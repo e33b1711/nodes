@@ -59,18 +59,18 @@ const int num_pins = 62;
 
 
 struct node_t {
-  String unit_name;
-  IPAddress ip;
-  IPAddress server;
-  int port;
-  int ethernet_sc_pin;
-  int ethernet_reset_pin;
-  byte mac[];
+  const String unit_name;
+  const IPAddress ip;
+  const IPAddress server;
+  const int port;
+  const int ethernet_sc_pin;
+  const int ethernet_reset_pin;
+  const byte mac[];
 };
 
 
 struct switch_t {
-  int pin;
+  const int pin;
   int value;
   int prev_value;
   int edge;
@@ -79,36 +79,36 @@ struct switch_t {
 };
 
 struct temp_t {
-  String name;
-  int pin;
+  const String name;
+  const int pin;
   float temp_value;
   float humi_value;
   long last_update;
 };
 
 struct output_t {
-  String name;
-  int pin;
-  bool invert;
+  const String name;
+  const int pin;
+  const bool invert;
   bool value;
   long set_time;
 };
 
 struct timer_t {
-  String name;
-  String slave;
+  const String name;
+  const String slave;
   bool value;
   bool running;
   long set_time;
-  long duration;
+  const long duration;
 };
 
 struct rollo_t {
-  String name;
-  String l_up;
-  String l_down;
-  int duration;
-  bool is_rollo;
+  const String name;
+  const String l_up;
+  const String l_down;
+  const int duration;
+  const bool is_rollo;
   int value;
   int old_value;
   long stop_time;
@@ -116,8 +116,8 @@ struct rollo_t {
 };
 
 struct valve_t {
-  String name;
-  int pin;
+  const String name;
+  const int pin;
   int value;
 };
 

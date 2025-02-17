@@ -1,12 +1,17 @@
-OTA
-thermostat
-delta-sigma valve, with light state
-udp broadcasten
 
-nodes:
-garage
-power
-chicken
+allgemain
+( ) eg_west
+( ) ug
+( ) test bett mit 2 nodes
+( ) OTA
+( ) thermostat
+( ) delta-sigma valve, with light state
+( ) udp broadcasten
 
-ethernet:
-garagen fritzbox
+( esp) nodes:
+( ) garage
+( ) power
+( ) chicken
+
+( ) ethernet:
+( ) garagen fritzbox
