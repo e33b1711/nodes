@@ -81,20 +81,20 @@ couple_t couples[num_couples] = {
 const int num_rollos = 0;
 rollo_t rollos[num_rollos] = {};
 
-const int num_valves = 0;
+const int num_valves = 7;
 valve_t valves[num_valves] = {
-    //{"U_EG_WZ", 34, 0}, // 34 rot    Wohnzimmer
-    //{"U_EG_GR", 35, 0}, // 35 rosa   Garda
-    //{"U_EG_E1", 36, 0}, // 36 grau   EZ
-    //{"U_EG_E2", 37, 0}, // 37 gelb   EZ
-    //{"U_EG_WC", 38, 0}, // 38 blau   WC
-    //{"U_EG_GA", 39, 0}, // 39 grün   Gang
-    //{"U_EG_KU", 40, 0}, // 40 weiß   Küche
+    {"U_EG_WZ", 34, 0}, // 34 rot    Wohnzimmer
+    {"U_EG_GR", 35, 0}, // 35 rosa   Garda
+    {"U_EG_E1", 36, 0}, // 36 grau   EZ
+    {"U_EG_E2", 37, 0}, // 37 gelb   EZ
+    {"U_EG_WC", 38, 0}, // 38 blau   WC
+    {"U_EG_GA", 39, 0}, // 39 grün   Gang
+    {"U_EG_KU", 40, 0}, // 40 weiß   Küche
 };
 
-const int num_timers = 0;
+const int num_timers = 1;
 timer_t timers[num_timers] = {
-    //{ "ZE_EG_VH", "LI_EG_VH", false, false, 0, 180 }
+    { "ZE_EG_VH", "LI_EG_VH", false, false, 0, 180 }
 };
 
 void user_logic()
