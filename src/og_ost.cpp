@@ -1,6 +1,7 @@
 #include "node.h"
 
-//this is the node specific config
+#ifndef __TEST__
+
 const IPAddress ip(192, 168, 178, 216);
 const IPAddress server(192, 168, 178, 23);
 node_t node_info = {
@@ -12,6 +13,22 @@ node_t node_info = {
   12,
   { 0xDE, 0xAA, 0x7E, 0xE1, 0x1E, 0x15 },
 };
+
+#else
+
+const IPAddress ip(192, 168, 178, 226);
+const IPAddress server(192, 168, 178, 23);
+node_t node_info = {
+  "og_ost",
+  ip,
+  server,
+  8889,
+  53,
+  12,
+  { 0xDE, 0xBB, 0x7E, 0xE1, 0x1E, 0x15 },
+};
+
+#endif
 
 const int num_temps = 2;
 const long period_t = 60000;

@@ -1,5 +1,8 @@
 #include "node.h"
 
+
+#ifndef __TEST__
+
 const IPAddress ip(192, 168, 178, 214);
 const IPAddress server(192, 168, 178, 23);
 node_t node_info = {
@@ -12,6 +15,21 @@ node_t node_info = {
   {0xDE, 0xAA, 0x7E, 0xE1, 0x1E, 0x13 },
 };
 
+#else
+
+const IPAddress ip(192, 168, 178, 224);
+const IPAddress server(192, 168, 178, 23);
+node_t node_info = {
+  "eg_ost",
+  ip,
+  server,
+  8889,
+  53,
+  12,
+  {0xDE, 0xBB, 0x7E, 0xE1, 0x1E, 0x13 },
+};
+
+#endif
 
 const int num_switches = 16;
 switch_t switches[num_switches] = {
@@ -65,9 +83,9 @@ valve_t valves[num_valves] = {
   { "U_EG_KU", 40, 0 },  //40 weiß   Küche
 };
 
-const int num_timers = 1;
+const int num_timers = 0;
 timer_t timers[num_timers] = {
-  { "ZE_EG_VH", "LI_EG_VH", false, false, 0, 180 }
+  //{ "ZE_EG_VH", "LI_EG_VH", false, false, 0, 180 }
 };
 
 void user_logic()

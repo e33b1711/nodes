@@ -1,25 +1,7 @@
 #include "node.h"
 
-void user_logic() {
-    long_short(15, "LI_OG_GA_L1", 3, "LI_OG_GA", 3);
-    long_short(13, "DF_OG_GA", 0, "VD_OG_GA", 0);
-    long_short(10, "DF_OG_GA", 100, "VD_OG_GA", 100);
-    long_short(1, "LI_OG_GA_L1", 3, "LI_OG_GA", 3);
-    simple(14, 3, "LI_OG_KN");
-    simple(9, 3, "LI_OG_KN_L1");
-    long_short(11, "DF_OG_KN", 100, "VD_OG_KN", 100);
-    long_short(8, "DF_OG_KN", 0, "VD_OG_KN", 0);
-    rollo_lock(4, 0, "RO_OG_KN");
-    rollo_lock(6, 100, "RO_OG_KN");
-    simple(0, 3, "LI_OG_KS");
-    simple(12, 3, "LI_OG_KS_L1");
-    long_short(2, "DF_OG_KS", 0, "VD_OG_KS", 0);
-    long_short(3, "DF_OG_KS", 100, "VD_OG_KS", 100);
-    rollo_lock(5, 100, "RO_OG_KS");
-    rollo_lock(7, 0, "RO_OG_KS");
-  }
+#ifndef __TEST__
 
-  //this is the node specific config
 const IPAddress ip(192, 168, 178, 217);
 const IPAddress server(192, 168, 178, 23);
 node_t node_info = {
@@ -31,6 +13,22 @@ node_t node_info = {
   12,
   { 0xDE, 0xAA, 0x7E, 0xE1, 0x1E, 0x16 },
 };
+
+#else
+
+const IPAddress ip(192, 168, 178, 227);
+const IPAddress server(192, 168, 178, 23);
+node_t node_info = {
+  "og_west",
+  ip,
+  server,
+  8889,
+  53,
+  12,
+  { 0xDE, 0xBB, 0x7E, 0xE1, 0x1E, 0x16 },
+};
+
+#endif
 
 const int num_temps = 3;
 const long period_t = 60000;
@@ -105,3 +103,22 @@ switch_t switches[num_switches] = {
 
 const int num_timers = 0;
 timer_t timers[num_timers] = {};
+
+void user_logic() {
+  long_short(15, "LI_OG_GA_L1", 3, "LI_OG_GA", 3);
+  long_short(13, "DF_OG_GA", 0, "VD_OG_GA", 0);
+  long_short(10, "DF_OG_GA", 100, "VD_OG_GA", 100);
+  long_short(1, "LI_OG_GA_L1", 3, "LI_OG_GA", 3);
+  simple(14, 3, "LI_OG_KN");
+  simple(9, 3, "LI_OG_KN_L1");
+  long_short(11, "DF_OG_KN", 100, "VD_OG_KN", 100);
+  long_short(8, "DF_OG_KN", 0, "VD_OG_KN", 0);
+  rollo_lock(4, 0, "RO_OG_KN");
+  rollo_lock(6, 100, "RO_OG_KN");
+  simple(0, 3, "LI_OG_KS");
+  simple(12, 3, "LI_OG_KS_L1");
+  long_short(2, "DF_OG_KS", 0, "VD_OG_KS", 0);
+  long_short(3, "DF_OG_KS", 100, "VD_OG_KS", 100);
+  rollo_lock(5, 100, "RO_OG_KS");
+  rollo_lock(7, 0, "RO_OG_KS");
+}

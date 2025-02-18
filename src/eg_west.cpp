@@ -1,5 +1,7 @@
 #include "node.h"
 
+#ifndef __TEST__
+
 const IPAddress ip(192, 168, 178, 218);
 const IPAddress server(192, 168, 178, 23);
 node_t node_info = {
@@ -11,6 +13,22 @@ node_t node_info = {
   12,
   {0xDE, 0xAA, 0x7E, 0xE1, 0x1E, 0x17 },
 };
+
+#else
+
+const IPAddress ip(192, 168, 178, 228);
+const IPAddress server(192, 168, 178, 23);
+node_t node_info = {
+  "eg_west",
+  ip,
+  server,
+  8889,
+  53,
+  12,
+  {0xDE, 0xBB, 0x7E, 0xE1, 0x1E, 0x17 },
+};
+
+#endif
 
 const int num_switches = 16;
 switch_t switches[num_switches] = {
