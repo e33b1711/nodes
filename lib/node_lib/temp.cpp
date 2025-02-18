@@ -1,4 +1,5 @@
 #include "node.h"
+#include "temp.h"
 
 #include <AM2302-Sensor.h>
 

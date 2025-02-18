@@ -1,4 +1,6 @@
 #include "node.h"
+#include "switch.h"
+#include "output.h"
 //helper functions for coupling switches to ouputs / rollos
 
 //switch with long / short press

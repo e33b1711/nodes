@@ -1,5 +1,5 @@
 #include "node.h"
-// helper functions for coupling switches to ouputs / rollos
+#include "timer.h"
 
 void setup_timers()
 {
@@ -9,7 +9,7 @@ void setup_timers()
   {
     timers[i].value = false;
     timers[i].running = false;
-    send_state(timers[i].name, (int) timers[i].value);
+    send_state(timers[i].name, (int)timers[i].value);
   }
 }
 
@@ -46,7 +46,8 @@ void update_timer(int i)
 
 void handle_timers()
 {
-  for (int i = 0; i < num_outputs; i++) update_timer(i);
+  for (int i = 0; i < num_timers; i++)
+    update_timer(i);
 }
 
 bool write_timer(String name, int value, bool silent)
@@ -54,22 +55,23 @@ bool write_timer(String name, int value, bool silent)
   int i;
   for (i = 0; i < num_timers; i++)
   {
-    if (outputs[i].name == name)
+    if (timers[i].name == name)
     {
-      outputs[i].set_time = millis();
+      timers[i].set_time = millis();
       switch (value)
       {
       case 0:
-        outputs[i].value = false;
+        timers[i].value = false;
         break;
       case 1:
-        outputs[i].value = true;
+        timers[i].value = true;
         break;
       default:
-        outputs[i].value = not(outputs[i].value);
+        timers[i].value = not(timers[i].value);
         break;
       }
-      if (!silent) send_state(name, timers[i].value);
+      if (!silent)
+        send_state(name, timers[i].value);
       return true;
     }
   }

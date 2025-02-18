@@ -1,5 +1,5 @@
 #include "node.h"
-//helper functions for coupling switches to ouputs / rollos
+#include "output.h"
 
 void setup_outputs() {
   Serial.println("setup_outputs");

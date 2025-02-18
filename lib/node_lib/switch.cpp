@@ -1,4 +1,6 @@
 #include "node.h"
+#include "switch.h"
+
 
 int this_switch = 0;
 

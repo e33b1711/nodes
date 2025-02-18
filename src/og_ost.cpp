@@ -1,4 +1,10 @@
 #include "node.h"
+#include "switch.h"
+#include "output.h"
+#include "temp.h"
+#include "timer.h"
+#include "rollo.h"
+#include "valve.h"
 
 #ifndef __TEST__
 

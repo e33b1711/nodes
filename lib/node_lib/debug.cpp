@@ -1,5 +1,3 @@
-//Serial as used for debug messages of all sorts
-//additional the same protocoll as over ethernet is implemented
 #include "node.h"
 
 String input_buffer_debug = "";
@@ -21,20 +19,6 @@ bool get_message_debug() {
 void send_state_debug(String name, int value) {
   String message = "!s!" + name + '!' + String(value, DEC)  + "$\n";
   Serial.print(message);
-}
-
-void post_all_debug() {
-  send_state_debug(node_info.unit_name, " posting all: start");
-  for (int i=0; i<num_outputs; i++){
-    send_state_debug(outputs[i].name, outputs[i].value);
-  }
-  for (int i=0; i<num_rollos; i++){
-    send_state_debug(rollos[i].name, rollos[i].value);
-  }
-  for (int i = 0; i < num_valves; i++) {
-    send_state_debug(valves[i].name, valves[i].value);
-  }
-  send_state_debug(node_info.unit_name, " posting all: end");
 }
 
 
@@ -61,9 +45,7 @@ void parse_message_debug() {
   if (value_string == "OFF") { value = 0; };
 
   //message handler
-  if (type == "post_all") {
-    if (name == node_info.unit_name) post_all_debug();
-  } else if (type == "restart") {
+  if (type == "restart") {
     if (name == node_info.unit_name) delay(100000);
   } else if (type == "r") {
     if (get_any(name, value)) send_state_debug(name, value);
@@ -87,5 +69,4 @@ void init_debug() {
 alloc_pin(0);
 alloc_pin(1);
 Serial.begin(9600);
-post_all_debug();
 }

@@ -1,4 +1,10 @@
 #include "node.h"
+#include "switch.h"
+#include "output.h"
+#include "temp.h"
+#include "timer.h"
+#include "rollo.h"
+#include "valve.h"
 
 bool write_any(String name, int value, bool silent) {
   Serial.print("write any: " + name + " ");
@@ -8,7 +14,7 @@ bool write_any(String name, int value, bool silent) {
   if (write_rollo(name, value, silent)) return true;
   if (write_timer(name, value, silent)) return true;
   Serial.println("Found no internal.");
-  return true;
+  return false;
 }
 
 bool get_any(String name, int &value) {

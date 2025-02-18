@@ -1,4 +1,5 @@
 #include "node.h"
+#include "valve.h"
 
 long valve_next_time;
 int valve_phase;

@@ -62,23 +62,6 @@ void send_state(String name, float value) {
   message_buffer += message;
 }
 
-void post_all() {
-  send_state(node_info.unit_name + " posting all: start", 0);
-  for (int i = 0; i < num_outputs; i++) {
-    send_state(outputs[i].name, outputs[i].value);
-  }
-  for (int i = 0; i < num_timers; i++) {
-    send_state(outputs[i].name, outputs[i].value);
-  }
-  for (int i = 0; i < num_rollos; i++) {
-    send_state(timers[i].name, timers[i].value);
-  }
-  for (int i = 0; i < num_valves; i++) {
-    send_state(valves[i].name, valves[i].value);
-  }
-  send_state(node_info.unit_name + " posting all: end", 0);
-}
-
 void handle_couples(String name, int value) {
   for (int i = 0; i < num_couples; i++) {
     if(name == couples[i].name) write_any(name, value, true);
@@ -108,9 +91,7 @@ void parse_message() {
   if (value_string == "OFF") { value = 0; };
 
   //message handler
-  if (type == "post_all") {
-    if (name == node_info.unit_name) post_all();
-  } else if (type == "restart") {
+  if (type == "restart") {
     if (name == node_info.unit_name) delay(100000);
   } else if (type == "r") {
     if (get_any(name, value)) send_state(name, value);
