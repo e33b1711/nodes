@@ -21,17 +21,18 @@ void update_timer(int i)
     timers[i].running = true;
     timers[i].set_time = millis();
     write_any(timers[i].slave, 1, false);
-    Serial.print(timers[i].name + ": timer an");
+    Serial.println(timers[i].name + ": timer an");
   }
   // timer: running
   if (timers[i].value and timers[i].running)
   {
-    if ((timers[i].set_time + timers[i].duration) < millis())
+    if ((timers[i].set_time + 1000 * timers[i].duration) < millis())
     {
       timers[i].running = false;
       timers[i].value = false;
       write_any(timers[i].slave, 0, false);
-      Serial.print(timers[i].name + ": timer abgelaufen");
+      send_state(timers[i].name, timers[i].value);
+      Serial.println(timers[i].name + ": timer abgelaufen");
     }
   }
   // timer: external off
@@ -40,7 +41,7 @@ void update_timer(int i)
   {
     timers[i].running = false;
     write_any(timers[i].slave, 0, false);
-    Serial.print(timers[i].name + ": timer abgebrochen.");
+    Serial.println(timers[i].name + ": timer abgebrochen.");
   }
 }
 
