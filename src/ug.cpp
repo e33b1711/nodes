@@ -14,7 +14,7 @@ node_t node_info = {
     {0xDE, 0xAA, 0x7E, 0xE1, 0x1E, 0x10},
 };
 
-const int num_switches = 16;
+const int num_switches = 8;
 switch_t switches[num_switches] = {
     {2, 0, 0, 0, 0, 0},  // 0
     {3, 0, 0, 0, 0, 0},  // 1
