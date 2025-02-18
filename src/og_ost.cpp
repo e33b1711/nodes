@@ -5,13 +5,13 @@
 const IPAddress ip(192, 168, 178, 216);
 const IPAddress server(192, 168, 178, 23);
 node_t node_info = {
-  "og_ost",
-  ip,
-  server,
-  8888,
-  53,
-  12,
-  { 0xDE, 0xAA, 0x7E, 0xE1, 0x1E, 0x15 },
+    "og_ost",
+    ip,
+    server,
+    8888,
+    53,
+    12,
+    {0xDE, 0xAA, 0x7E, 0xE1, 0x1E, 0x15},
 };
 
 #else
@@ -19,86 +19,85 @@ node_t node_info = {
 const IPAddress ip(192, 168, 178, 226);
 const IPAddress server(192, 168, 178, 23);
 node_t node_info = {
-  "og_ost",
-  ip,
-  server,
-  8889,
-  53,
-  12,
-  { 0xDE, 0xBB, 0x7E, 0xE1, 0x1E, 0x15 },
+    "og_ost",
+    ip,
+    server,
+    8889,
+    53,
+    12,
+    {0xDE, 0xBB, 0x7E, 0xE1, 0x1E, 0x15},
 };
 
 #endif
 
 const int num_temps = 2;
 const long period_t = 60000;
-
 temp_t temps[num_temps] = {
-  { "OG_BA", 27, 0, 0, 0 },
-  { "OG_SZ", 26, 0, 0, 0 },
+    {"OG_BA", 27, 0, 0, 0},
+    {"OG_SZ", 26, 0, 0, 0},
 };
 
 const int num_outputs = 12;
-
 output_t outputs[num_outputs] = {
-  { "RO_OG_SZ_ON", 41, 1, 0, 0 },
-  { "LI_OG_BA", 42, 1, 0, 0 },
-  { "RO_OG_BA_DO", 43, 1, 0, 0 },
-  { "LI_OG_SZ", 44, 1, 0, 0 },
-  { "LI_OG_SZ_L2", 45, 1, 0, 0 },
-  { "RO_OG_SZ_DO", 46, 1, 0, 0 },
-  { "LI_OG_SZ_L1", 47, 1, 0, 0 },
-  { "RO_OG_BA_ON", 49, 1, 0, 0 },
-  { "VD_OG_SZ_DO", 58, 0, 0, 0 },
-  { "DF_OG_SZ_DO", 59, 0, 0, 0 },
-  { "VD_OG_SZ_UP", 60, 0, 0, 0 },
-  { "DF_OG_SZ_UP", 61, 0, 0, 0 },
+    {"RO_OG_SZ_ON", 41, 1, 0, 0},
+    {"LI_OG_BA", 42, 1, 0, 0},
+    {"RO_OG_BA_DO", 43, 1, 0, 0},
+    {"LI_OG_SZ", 44, 1, 0, 0},
+    {"LI_OG_SZ_L2", 45, 1, 0, 0},
+    {"RO_OG_SZ_DO", 46, 1, 0, 0},
+    {"LI_OG_SZ_L1", 47, 1, 0, 0},
+    {"RO_OG_BA_ON", 49, 1, 0, 0},
+    {"VD_OG_SZ_DO", 58, 0, 0, 0},
+    {"DF_OG_SZ_DO", 59, 0, 0, 0},
+    {"VD_OG_SZ_UP", 60, 0, 0, 0},
+    {"DF_OG_SZ_UP", 61, 0, 0, 0},
 };
 
-const int num_rollos = 4;
+const int num_couples = 0;
+couple_t couples[num_couples] = {};
 
+const int num_rollos = 4;
 rollo_t rollos[num_rollos] = {
-  { "RO_OG_SZ", "RO_OG_SZ_ON", "RO_OG_SZ_DO", 31000, true, 50, 50, 0, false },
-  { "RO_OG_BA", "RO_OG_BA_ON", "RO_OG_BA_DO", 31000, true, 50, 50, 0, false },
-  { "DF_OG_SZ", "DF_OG_SZ_UP", "DF_OG_SZ_DO", 500, false, 50, 50, 0, false },
-  { "VD_OG_SZ", "VD_OG_SZ_UP", "VD_OG_SZ_DO", 500, false, 50, 50, 0, false },
+    {"RO_OG_SZ", "RO_OG_SZ_ON", "RO_OG_SZ_DO", 31000, true, 50, 50, 0, false},
+    {"RO_OG_BA", "RO_OG_BA_ON", "RO_OG_BA_DO", 31000, true, 50, 50, 0, false},
+    {"DF_OG_SZ", "DF_OG_SZ_UP", "DF_OG_SZ_DO", 500, false, 50, 50, 0, false},
+    {"VD_OG_SZ", "VD_OG_SZ_UP", "VD_OG_SZ_DO", 500, false, 50, 50, 0, false},
 };
 
 const int num_valves = 5;
-
 valve_t valves[num_valves] = {
-  { "U_OG_GA", 34, 0 },   //blau
-  { "U_OG_KS", 35, 0 },   //weiß
-  { "U_OG_KN", 36, 0 },   //grün
-  { "U_OG_BA", 37, 0 },   //rosa
-  { "U_OG_SZ", 38, 0 },   //grau
+    {"U_OG_GA", 34, 0}, // blau
+    {"U_OG_KS", 35, 0}, // weiß
+    {"U_OG_KN", 36, 0}, // grün
+    {"U_OG_BA", 37, 0}, // rosa
+    {"U_OG_SZ", 38, 0}, // grau
 };
 
 const int num_switches = 16;
-
 switch_t switches[num_switches] = {
-  { 4, 0, 0, 0, 0, 0 },   //0 sz unten
-  { 5, 0, 0, 0, 0, 0 },   //1 ans
-  { 6, 0, 0, 0, 0, 0 },   //2 sz rollo runter
-  { 7, 0, 0, 0, 0, 0 },   //3 sz oben
-  { 8, 0, 0, 0, 0, 0 },   //4 bewegung
-  { 9, 0, 0, 0, 0, 0 },   //5 mell
-  { 10, 0, 0, 0, 0, 0 },  //6 sz rollohoch
-  { 11, 0, 0, 0, 0, 0 },  //7 gang sz
-  { 25, 0, 0, 0, 0, 0 },  //8 bad runter tür
-  { 24, 0, 0, 0, 0, 0 },  //9 gang bad
-  { 23, 0, 0, 0, 0, 0 },  //10 bad
-  { 22, 0, 0, 0, 0, 0 },  //11 bad hoch tür
-  { 17, 0, 0, 0, 0, 0 },  //12 bad fenster runter
-  { 16, 0, 0, 0, 0, 0 },  //13 bad fenster hoch
-  { 3, 0, 0, 0, 0, 0 },   //14 df sz hoch
-  { 2, 0, 0, 0, 0, 0 },   //15 df sz runter
+    {4, 0, 0, 0, 0, 0},  // 0 sz unten
+    {5, 0, 0, 0, 0, 0},  // 1 ans
+    {6, 0, 0, 0, 0, 0},  // 2 sz rollo runter
+    {7, 0, 0, 0, 0, 0},  // 3 sz oben
+    {8, 0, 0, 0, 0, 0},  // 4 bewegung
+    {9, 0, 0, 0, 0, 0},  // 5 mell
+    {10, 0, 0, 0, 0, 0}, // 6 sz rollohoch
+    {11, 0, 0, 0, 0, 0}, // 7 gang sz
+    {25, 0, 0, 0, 0, 0}, // 8 bad runter tür
+    {24, 0, 0, 0, 0, 0}, // 9 gang bad
+    {23, 0, 0, 0, 0, 0}, // 10 bad
+    {22, 0, 0, 0, 0, 0}, // 11 bad hoch tür
+    {17, 0, 0, 0, 0, 0}, // 12 bad fenster runter
+    {16, 0, 0, 0, 0, 0}, // 13 bad fenster hoch
+    {3, 0, 0, 0, 0, 0},  // 14 df sz hoch
+    {2, 0, 0, 0, 0, 0},  // 15 df sz runter
 };
 
 const int num_timers = 0;
 timer_t timers[num_timers] = {};
 
-void user_logic() {
+void user_logic()
+{
   long_short(3, "LI_OG_SZ", 3, "LI_OG_SZ", 0);
   long_short(3, "none", 3, "LI_OG_SZ_L1", 0);
   long_short(3, "none", 3, "LI_OG_SZ_L2", 0);

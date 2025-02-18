@@ -79,6 +79,12 @@ void post_all() {
   send_state(node_info.unit_name + " posting all: end", 0);
 }
 
+void handle_couples(String name, int value) {
+  for (int i = 0; i < num_couples; i++) {
+    if(name == couples[i].name) write_any(name, value, true);
+  }
+}
+
 void parse_message() {
   //message parser
   Serial.print("handle_comm: parsing message: ");
@@ -109,7 +115,9 @@ void parse_message() {
   } else if (type == "r") {
     if (get_any(name, value)) send_state(name, value);
   } else if (type == "c") {
-    write_any(name, value);
+    write_any(name, value, false);
+  } else if (type == "s") {
+    handle_couples(name, value);
   }
 }
 

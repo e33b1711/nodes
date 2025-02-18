@@ -1,14 +1,13 @@
 #include "node.h"
 
-bool write_any(String name, int value) {
+bool write_any(String name, int value, bool silent) {
   Serial.print("write any: " + name + " ");
   Serial.println(value);
-  if (write_valve(name, value)) return true;
-  if (write_output(name, value)) return true;
-  if (write_rollo(name, value)) return true;
-  if (write_timer(name, value)) return true;
-  Serial.println("Found no internal. Sending command.");
-  //send_command(name, value);
+  if (write_valve(name, value, silent)) return true;
+  if (write_output(name, value, silent)) return true;
+  if (write_rollo(name, value, silent)) return true;
+  if (write_timer(name, value, silent)) return true;
+  Serial.println("Found no internal.");
   return true;
 }
 

@@ -28,20 +28,20 @@ void handle_timers();
 
 void user_logic();
 
-bool write_valve(String name, int value);
+bool write_valve(String name, int value, bool silent);
 bool get_valve(String name, int &value);
 
 void send_command(String name, int value);
 void send_state(String name, int value);
 void send_state(String name, String value);
 
-bool write_output(String name, int value);
+bool write_output(String name, int value, bool silent);
 bool get_output(String name, int &value);
 
-bool write_rollo(String name, int value);
+bool write_rollo(String name, int value, bool silent);
 bool get_rollo(String name, int &value);
 
-bool write_timer(String name, int value);
+bool write_timer(String name, int value, bool silent);
 bool get_timer(String name, int &value);
 
 void long_short(const int b_index, const String l_long, const int l_value, const String l_short, const int s_value);
@@ -53,12 +53,15 @@ void alloc_pin(int pin);
 bool get_temp(String name, int &value);
 bool get_humi(String name, int &value);
 
-bool write_any(String address, int value);
+bool write_any(String address, int value, bool silent);
 bool get_any(String name, int &value);
 
 
 const int num_pins = 62;
 
+struct couple_t {
+  const String name;
+};
 
 struct node_t {
   const String unit_name;
@@ -152,5 +155,10 @@ extern switch_t switches[];
 
 extern const int num_timers;
 extern timer_t timers[];
+
+extern const int num_couples;
+extern couple_t couples[];
+
+
 
 #endif

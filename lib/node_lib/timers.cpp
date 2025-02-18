@@ -20,7 +20,7 @@ void update_timer(int i)
   {
     timers[i].running = true;
     timers[i].set_time = millis();
-    write_any(timers[i].slave, 1);
+    write_any(timers[i].slave, 1, false);
     Serial.print(timers[i].name + ": timer an");
   }
   // timer: running
@@ -30,7 +30,7 @@ void update_timer(int i)
     {
       timers[i].running = false;
       timers[i].value = false;
-      write_any(timers[i].slave, 0);
+      write_any(timers[i].slave, 0, false);
       Serial.print(timers[i].name + ": timer abgelaufen");
     }
   }
@@ -39,7 +39,7 @@ void update_timer(int i)
   if (!timers[i].value and timers[i].running)
   {
     timers[i].running = false;
-    write_any(timers[i].slave, 0);
+    write_any(timers[i].slave, 0, false);
     Serial.print(timers[i].name + ": timer abgebrochen.");
   }
 }
@@ -49,7 +49,7 @@ void handle_timers()
   for (int i = 0; i < num_outputs; i++) update_timer(i);
 }
 
-bool write_timer(String name, int value)
+bool write_timer(String name, int value, bool silent)
 {
   int i;
   for (i = 0; i < num_timers; i++)
@@ -69,7 +69,7 @@ bool write_timer(String name, int value)
         outputs[i].value = not(outputs[i].value);
         break;
       }
-      send_state(name, outputs[i].value);
+      if (!silent) send_state(name, timers[i].value);
       return true;
     }
   }

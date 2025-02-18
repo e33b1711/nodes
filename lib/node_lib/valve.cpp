@@ -37,14 +37,14 @@ void update_valves() {
   }
 }
 
-bool write_valve(String name, int value) {
+bool write_valve(String name, int value, bool silent) {
   int i;
   for (i = 0; i < num_valves; i++) {
     if (valves[i].name == name) {
       if ((value >= 0) and (value < max_phase)) {
         valves[i].value = value;
       }
-      send_state(name, valves[i].value);
+      if (!silent) send_state(name, valves[i].value);
       return true;
     }
   }
@@ -52,7 +52,7 @@ bool write_valve(String name, int value) {
 }
 
 bool get_valve(String name, int &value) {
-  for (int i = 0; i < num_temps; i++) {
+  for (int i = 0; i < num_valves; i++) {
     if (valves[i].name == name) {
       value = valves[i].value;
       return true;

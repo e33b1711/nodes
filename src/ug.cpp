@@ -66,6 +66,9 @@ output_t outputs[num_outputs] = {
     {"LI_UG_HN", 49, 1, 0, 0},
 };
 
+const int num_couples = 0;
+couple_t couples[num_couples] = {};
+
 const int num_rollos = 0;
 rollo_t rollos[num_rollos] = {};
 
@@ -81,17 +84,16 @@ valve_t valves[num_valves] = {
 
 const int num_timers = 1;
 timer_t timers[num_timers] = {
-  { "ZE_BELL", "BELL", false, false, 0, 1 }
-};
+    {"ZE_BELL", "BELL", false, false, 0, 1}};
 
 void user_logic()
 {
-  simple(2, 3, "LI_UG_HK");
-  simple(3, 3, "LI_UG_GA");
-  simple(4, 3, "LI_UG_GA");
-  long_short(7, "LI_UG_HO", 0, "LI_UG_HO", 3);
-  long_short(7, "LI_UG_HN", 0, "none", 3);
-  long_short(5, "LI_UG_HN", 0, "LI_UG_HN", 3);
-  long_short(5, "LI_UG_HO", 0, "none", 3);
-  simple(6, 3, "LI_UG_WK");
+    simple(2, 3, "LI_UG_HK");
+    simple(3, 3, "LI_UG_GA");
+    simple(4, 3, "LI_UG_GA");
+    long_short(7, "LI_UG_HO", 0, "LI_UG_HO", 3);
+    long_short(7, "LI_UG_HN", 0, "none", 3);
+    long_short(5, "LI_UG_HN", 0, "LI_UG_HN", 3);
+    long_short(5, "LI_UG_HO", 0, "none", 3);
+    simple(6, 3, "LI_UG_WK");
 }

@@ -20,7 +20,7 @@ void update_outputs() {
   }
 }
 
-bool write_output(String name, int value) {
+bool write_output(String name, int value, bool silent) {
   for (int i = 0; i < num_outputs; i++) {
     if (outputs[i].name == name) {
       outputs[i].set_time = millis();
@@ -35,7 +35,7 @@ bool write_output(String name, int value) {
           outputs[i].value = not(outputs[i].value);
           break;
       }
-      send_state(name, outputs[i].value);
+      if (!silent) send_state(name, outputs[i].value);
       return true;
     }
   }

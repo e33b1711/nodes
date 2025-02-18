@@ -68,7 +68,7 @@ void parse_message_debug() {
   } else if (type == "r") {
     if (get_any(name, value)) send_state_debug(name, value);
   } else if (type == "c") {
-    write_any(name, value);
+    write_any(name, value, false);
   }
 }
 
