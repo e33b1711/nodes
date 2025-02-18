@@ -5,6 +5,8 @@
 #include <Ethernet.h>
 #include <Arduino.h>
 
+#define __TEST__
+
 void init_debug();
 void setup_switches();
 void setup_comm();

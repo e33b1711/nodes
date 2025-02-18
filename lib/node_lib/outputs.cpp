@@ -21,8 +21,7 @@ void update_outputs() {
 }
 
 bool write_output(String name, int value) {
-  int i;
-  for (i = 0; i < num_outputs; i++) {
+  for (int i = 0; i < num_outputs; i++) {
     if (outputs[i].name == name) {
       outputs[i].set_time = millis();
       switch (value) {

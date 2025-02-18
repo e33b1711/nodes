@@ -8,7 +8,7 @@ bool write_any(String name, int value) {
   if (write_rollo(name, value)) return true;
   if (write_timer(name, value)) return true;
   Serial.println("Found no internal. Sending command.");
-  send_command(name, value);
+  //send_command(name, value);
   return true;
 }
 
