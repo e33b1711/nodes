@@ -12,7 +12,7 @@ void setup() {
     setup_comm();
     setup_temps();
     setup_valves();
-    update_rollos();
+    setup_rollos();
     setup_timers();
     setup_outputs();
     setup_watchdog();
