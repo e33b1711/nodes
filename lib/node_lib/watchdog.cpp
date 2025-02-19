@@ -1,14 +1,13 @@
 #include "node.h"
 
 void setup_watchdog(void) {
-    Serial.print("setting up watchdog...");
+    Serial.print("INFO: setting up watchdog...");
     cli();  // disable all interrupts
     asm("WDR");
     WDTCSR |= (1 << WDCE) | (1 << WDE);
     WDTCSR = (1 << WDIE) | (1 << WDE) | (1 << WDP3)
              | (1 << WDP0);  // 8s / no interrupt, system reset
     sei();
-    Serial.println("done.");
 }
 
 void watchdog_off(void) {
@@ -20,6 +19,6 @@ void watchdog_off(void) {
     sei();
 }
 
-ISR(WDT_vect) { Serial.println(">>>>>>>>>>>>>>>>>>>>>HW Watchdog Interrupt<<<<<<<<<<<<<<<<<<<"); }
+ISR(WDT_vect) { Serial.println("WARNING: HW Watchdog Interrupt"); }
 
 void handle_watchdog() { asm("WDR"); }

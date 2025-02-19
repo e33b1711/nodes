@@ -7,7 +7,7 @@ const unsigned long valve_interval = 48 * 60 * 1000;
 const int max_phase = 16;
 
 void setup_valves() {
-    Serial.println("setup_valve");
+    Serial.println("INFO: setup valves");
     for (int i = 0; i < num_valves; i++) {
         alloc_pin(valves[i].pin);
         send_state(valves[i].name, valves[i].value);

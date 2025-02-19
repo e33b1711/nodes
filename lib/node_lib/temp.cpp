@@ -8,7 +8,7 @@ long s_time_t;
 AM2302::AM2302_Sensor *sensor_array[6];
 
 void setup_temps() {
-    Serial.println("setup_temps");
+    Serial.println("INFO: setup temps");
     s_time_t = millis();
     for (int i = 0; i < num_temps; i++) {
         alloc_pin(temps[i].pin);
@@ -20,11 +20,8 @@ void setup_temps() {
 void handle_one_temp(int i) {
     if (!(i < num_temps))
         return;
-    Serial.print(temps[i].name + " ");
     auto status = sensor_array[i]->read();
     if (status != AM2302::AM2302_READ_OK) {
-        Serial.print("error: ");
-        Serial.println(status);
         if (temps[i].last_update + period_t * 10 > millis())
             send_state("TI_" + temps[i].name, "NaN");
         send_state("HI_" + temps[i].name, status);
@@ -32,11 +29,6 @@ void handle_one_temp(int i) {
     }
     temps[i].temp_value = sensor_array[i]->get_Temperature();
     temps[i].humi_value = sensor_array[i]->get_Humidity();
-    Serial.print("\t");
-    Serial.print(temps[i].temp_value);
-    Serial.print("\t");
-    Serial.print(temps[i].humi_value);
-    Serial.println("succes");
     send_state("TI_" + temps[i].name, temps[i].temp_value);
     send_state("HI_" + temps[i].name, temps[i].humi_value);
     temps[i].last_update = millis();

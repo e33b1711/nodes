@@ -2,7 +2,7 @@
 #include "output.h"
 
 void setup_outputs() {
-    Serial.println("setup_outputs");
+    Serial.println("INFO: setup outputs");
     int i;
     for (i = 0; i < num_outputs; i++) {
         alloc_pin(outputs[i].pin);

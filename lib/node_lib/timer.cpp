@@ -2,7 +2,7 @@
 #include "timer.h"
 
 void setup_timers() {
-    Serial.println("setup timers");
+    Serial.println("INFO: setup timers");
     int i;
     for (i = 0; i < num_timers; i++) {
         timers[i].value = false;
@@ -17,7 +17,6 @@ void update_timer(int i) {
         timers[i].running = true;
         timers[i].set_time = millis();
         write_any(timers[i].slave, 1, false);
-        Serial.println(timers[i].name + ": timer an");
     }
     // timer: running
     if (timers[i].value and timers[i].running) {
@@ -26,7 +25,6 @@ void update_timer(int i) {
             timers[i].value = false;
             write_any(timers[i].slave, 0, false);
             send_state(timers[i].name, timers[i].value);
-            Serial.println(timers[i].name + ": timer abgelaufen");
         }
     }
     // timer: external off
@@ -34,7 +32,6 @@ void update_timer(int i) {
     if (!timers[i].value and timers[i].running) {
         timers[i].running = false;
         write_any(timers[i].slave, 0, false);
-        Serial.println(timers[i].name + ": timer abgebrochen.");
     }
 }
 

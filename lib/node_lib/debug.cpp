@@ -21,9 +21,6 @@ void send_state_debug(String name, int value) {
 }
 
 void parse_message_debug() {
-    // message parser
-    Serial.print("handle_comm: parsing message: ");
-    Serial.println(input_buffer_debug);
 
     int index1 = input_buffer_debug.indexOf('!');
     int index2 = input_buffer_debug.indexOf('!', index1 + 1);

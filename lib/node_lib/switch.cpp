@@ -4,7 +4,7 @@
 int this_switch = 0;
 
 void setup_switches() {
-    Serial.println("setup_switches");
+    Serial.println("INFO: setup switches");
     int i;
     for (i = 0; i < num_switches; i++) {
         alloc_pin(switches[i].pin);
@@ -29,8 +29,6 @@ int get_edge(int value, int prev_value) {
 
 void update_switches() {
     int i = this_switch;
-    // Serial.print("update_switches: ");
-    // Serial.println(i);
 
     // read pin, store previous value
     switches[i].prev_value = switches[i].value;
@@ -41,13 +39,9 @@ void update_switches() {
     switches[i].edge = edge;
     if (edge == 1) {
         switches[i].last_rising_edge = millis();
-        Serial.print("update_abc: pos Flanke: ");
-        Serial.println(i);
     }
     if (edge == -1) {
         switches[i].last_falling_edge = millis();
-        Serial.println("update_abc: neg Flanke: ");
-        Serial.println(i);
     }
 
     // count up

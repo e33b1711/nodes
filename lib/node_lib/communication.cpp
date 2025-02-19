@@ -15,27 +15,27 @@ void init_hw() {
     Ethernet.begin(node_info.mac, node_info.ip);
     delay(500);
     if (Ethernet.hardwareStatus() == EthernetNoHardware) {
-        Serial.println("Ethernet shield was not found. Stop!");
+        Serial.println("FAILURE: Ethernet shield was not found.");
         while (true) delay(1);
     }
 }
 
 bool connect_server() {
     while (Ethernet.linkStatus() == LinkOFF) {
-        Serial.println("setup_comm: Ethernet cable is not connected.");
+        Serial.println("ERROR: Ethernet cable is not connected.");
         delay(500);
         return false;
     }
     if (!client.connect(node_info.server, node_info.port)) {
-        Serial.println("setup_comm: connection failed");
+        Serial.println("ERROR: Server connection failed.");
         return false;
     }
-    Serial.println("setup_comm: connected");
+    Serial.println("INFO: Connected to Server.");
     return true;
 }
 
 void setup_comm() {
-    Serial.println("setup_comm...");
+    Serial.println("INFO: setup comm");
     init_hw();
     connect_server();
     message_buffer.reserve(100);
@@ -109,9 +109,6 @@ void parse_message(String &type, String &name, int &value) {
 }
 
 void handle_message() {
-    Serial.print("handle_comm: parsing message: ");
-    Serial.println(input_buffer);
-
     String type;
     String name;
     int value;
@@ -122,8 +119,6 @@ void handle_message() {
 void send_messages() {
     if (client.connected() && message_buffer != "") {
         client.print(message_buffer);
-        Serial.println("handle_comm: Sending message_buffer...");
-        Serial.print(message_buffer);
         message_buffer = "";
     }
 }
@@ -147,7 +142,7 @@ bool maintain_connection() {
         message_buffer = "";
         if (last_try_connect + retry_period < millis()) {
             last_try_connect = millis();
-            Serial.println("handel_comm: trying to recover...");
+            Serial.println("INFO: Trying to recover server connection.");
             return connect_server();
         }
         return false;
