@@ -14,7 +14,10 @@ bool get_temp(String name, String &value) {
 bool get_temp(String name, int &value) {
     for (int i = 0; i < num_temps; i++) {
         if (name == ("TI_" + temps[i].name)) {
-            value = (int) temps[i].temp_value;
+            if (isnan(temps[i].temp_value))
+                value = 9999;
+            else
+                value = (int)temps[i].temp_value;
             return true;
         }
     }
@@ -59,7 +62,7 @@ void handle_one_temp(int i) {
 }
 
 void setup_temps() {
-    Serial.println("setup_temps");
+    Serial.println("INFO: setup temps");
     s_time_t = millis();
     for (int i = 0; i < num_temps; i++) {
         alloc_pin(temps[i].pin);

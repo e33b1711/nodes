@@ -5,6 +5,7 @@
 #include "timer.h"
 #include "rollo.h"
 #include "valve.h"
+#include "pwm.h"
 
 bool write_any(String name, int value, bool silent) {
     if (write_valve(name, value, silent))
@@ -15,10 +16,13 @@ bool write_any(String name, int value, bool silent) {
         return true;
     if (write_timer(name, value, silent))
         return true;
+    if (write_pwm(name, value, silent))
+        return true;
     return false;
 }
 
 bool get_any(String name, String &value_string) {
+    Serial.println("INFO: get_any: " + name + " " + value_string);
     if (get_temp(name, value_string))
         return true;
     if (get_humi(name, value_string))
@@ -31,6 +35,9 @@ bool get_any(String name, String &value_string) {
         return true;
     if (get_timer(name, value_string))
         return true;
+    if (get_pwm(name, value_string))
+        return true;
+    Serial.println("INFO: get_any: got none");
     return false;
 }
 

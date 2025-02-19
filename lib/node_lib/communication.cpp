@@ -34,14 +34,6 @@ bool connect_server() {
     return true;
 }
 
-void setup_comm() {
-    Serial.println("INFO: setup comm");
-    init_hw();
-    connect_server();
-    message_buffer.reserve(100);
-    last_try_connect = millis();
-}
-
 void send_command(String name, int value) {
     String message = "!c!" + name + '!' + String(value, DEC) + "$\n";
     message_buffer += message;
@@ -49,18 +41,32 @@ void send_command(String name, int value) {
 
 void send_state(String name, int value) {
     String message = "!s!" + name + '!' + String(value, DEC) + "$\n";
+    Serial.print("INFO: send_state: " + message);
     message_buffer += message;
 }
 
 void send_state(String name, String value) {
     String message = "!s!" + name + '!' + value + "$\n";
+    Serial.print("INFO: send_state: " + message);
     message_buffer += message;
 }
 
 void send_state(String name, float value) {
     String message = "!s!" + name + '!' + int(value) + "." + (int(value * 10.0) % 10) + "$\n";
+    Serial.print("INFO: send_state: " + message);
     message_buffer += message;
 }
+
+void setup_comm() {
+    Serial.println("INFO: setup comm");
+    init_hw();
+    connect_server();
+    message_buffer.reserve(100);
+    last_try_connect = millis();
+    send_state(node_info.unit_name, "started");
+}
+
+
 
 void handle_couples(String name, int value) {
     for (int i = 0; i < num_couples; i++) {
@@ -70,6 +76,7 @@ void handle_couples(String name, int value) {
 }
 
 void execute_message(String type, String name, int value) {
+    Serial.println("INFO: execute_message: " + type + " " + name + " " + String(value, DEC));
     if (type == "restart") {
         if (name == node_info.unit_name)
             delay(100000);

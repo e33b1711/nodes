@@ -1,7 +1,7 @@
 #include "node.h"
 
 void setup_watchdog(void) {
-    Serial.print("INFO: setting up watchdog...");
+    Serial.println("INFO: setting up watchdog...");
     cli();  // disable all interrupts
     asm("WDR");
     WDTCSR |= (1 << WDCE) | (1 << WDE);

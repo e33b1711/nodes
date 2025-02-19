@@ -36,12 +36,12 @@ const int num_temps = 6;
 const long period_t = 60000;
 const int ds18b_pin = 61;
 temp_t temps[num_temps] = {
-        {"TI_UG_WK", 26, 0, 0, 0},  //
-        {"TI_UG_HN", 27, 0, 0, 0},  //
-        {"TI_UG_LA", 28, 0, 0, 0},  //
-        {"TI_UG_GA", 29, 0, 0, 0},  //
-        {"TI_UG_HK", 30, 0, 0, 0},  //
-        {"TI_UG_HS", 31, 0, 0, 0},  //
+        {"UG_WK", 26, 0, 0, 0},  //
+        {"UG_HN", 27, 0, 0, 0},  //
+        {"UG_LA", 28, 0, 0, 0},  //
+        {"UG_GA", 29, 0, 0, 0},  //
+        {"UG_HK", 30, 0, 0, 0},  //
+        {"UG_HS", 31, 0, 0, 0},  //
 };
 
 const int num_outputs = 8;

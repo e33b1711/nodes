@@ -43,10 +43,10 @@ switch_t switches[num_switches] = {
 const int num_temps = 4;
 const long period_t = 60000;
 temp_t temps[num_temps] = {
-        {"TI_EG_GA", 58, 0, 0, 0},  //
-        {"TI_EG_KU", 59, 0, 0, 0},  //
-        {"TI_EG_WZ", 60, 0, 0, 0},  //
-        {"TI_EG_EZ", 61, 0, 0, 0},  //
+        {"EG_GA", 58, 0, 0, 0},  //
+        {"EG_KU", 59, 0, 0, 0},  //
+        {"EG_WZ", 60, 0, 0, 0},  //
+        {"EG_EZ", 61, 0, 0, 0},  //
 };
 
 const int num_outputs = 16;
@@ -87,8 +87,8 @@ valve_t valves[num_valves] = {};
 const int num_timers = 0;
 timer_t timers[num_timers] = {};
 
-const int num_pwms = 1;
-pwm_t pwms[num_pwms] = {{"HEAT", 39, 220, 180000, 0, 220, 0}};
+const int num_pwms = 0;
+pwm_t pwms[num_pwms] = {};
 
 void user_logic() {
     simple(10, 3, "LI_EG_GA");

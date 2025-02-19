@@ -6,7 +6,7 @@
 void update_pwm();
 void setup_pwm();
 bool write_pwm(String name, int value, bool silent);
-bool get_pwm(String name, int &value);
+bool get_pwm(String name, String &value);
 void set_pwm_max(String name, int value);
 
 struct pwm_t {

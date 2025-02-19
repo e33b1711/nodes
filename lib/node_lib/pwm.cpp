@@ -2,7 +2,7 @@
 #include "pwm.h"
 
 void setup_pwm() {
-    Serial.println("INFO: setup outputs");
+    Serial.println("INFO: setupPWM");
     for (int i = 0; i < num_pwms; i++) {
         alloc_pin(pwms[i].pin);
         pinMode(pwms[i].pin, OUTPUT);
@@ -29,7 +29,10 @@ void set_pwm_max(String name, int value) {
     for (int i = 0; i < num_pwms; i++) {
         if (pwms[i].name == name) {
             if (value <= pwms[i].max_value) {
-                pwms[i].act_max_value = value;
+                if (pwms[i].act_max_value != value) {
+                    pwms[i].act_max_value = value;
+                    Serial.println("INFO: set_pwm_max: " + pwms[i].name + " " + String(value, DEC));
+                }
             }
         }
     }
@@ -52,10 +55,10 @@ bool write_pwm(String name, int value, bool silent) {
     return false;
 }
 
-bool get_pwm(String name, int &value) {
+bool get_pwm(String name, String &value) {
     for (int i = 0; i < num_pwms; i++) {
         if (pwms[i].name == name) {
-            value = pwms[i].value;
+            value = String(pwms[i].value, DEC);
             return true;
         }
     }

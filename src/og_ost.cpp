@@ -86,8 +86,8 @@ switch_t switches[num_switches] = {
 const int num_timers = 0;
 timer_t timers[num_timers] = {};
 
-const int num_pwms = 1;
-pwm_t pwms[num_pwms] = {{"HEAT", 39, 220, 180000, 0, 220, 0}};
+const int num_pwms = 0;
+pwm_t pwms[num_pwms] = {};
 
 void user_logic() {
     long_short(3, "LI_OG_SZ", 3, "LI_OG_SZ", 0);
