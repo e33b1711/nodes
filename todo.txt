@@ -3,7 +3,7 @@ allgemain
 (x) eg_west
 (x) ug
 (x) test bett mit 2 nodes
-( ) other temp
+(x) other temp
 (x) pwm
 ( ) power
 ( ) OTA

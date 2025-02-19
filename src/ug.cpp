@@ -7,8 +7,6 @@
 #include "valve.h"
 #include "pwm.h"
 
-
-
 #ifndef __TEST__
 
 const IPAddress ip(192, 168, 178, 211);
@@ -71,15 +69,19 @@ rollo_t rollos[num_rollos] = {};
 
 const int num_valves = 6;
 valve_t valves[num_valves] = {
-        {"U_UG_H1", 34, 0}, {"U_UG_LA", 35, 0}, {"U_UG_WK", 36, 0},
-        {"U_UG_H2", 37, 0}, {"U_UG_GA", 38, 0}, {"U_UG_H3", 39, 0},
+        {"U_UG_H1", 34, 0},  //
+        {"U_UG_LA", 35, 0},  //
+        {"U_UG_WK", 36, 0},  //
+        {"U_UG_H2", 37, 0},  //
+        {"U_UG_GA", 38, 0},  //
+        {"U_UG_H3", 39, 0},  //
 };
 
 const int num_timers = 1;
 timer_t timers[num_timers] = {{"ZE_BELL", "BELL", false, false, 0, 1}};
 
-const int num_pwms = 1;
-pwm_t pwms[num_pwms] = {{"HEAT", 39, 220, 180000, 0, 220, 0}};
+const int num_pwms = 0;
+pwm_t pwms[num_pwms] = {};
 
 void user_logic() {
     simple(2, 3, "LI_UG_HK");
