@@ -13,8 +13,8 @@ struct timer_t {
     const String slave;
     bool value;
     bool running;
-    long set_time;
-    const long duration;
+    unsigned long set_time;
+    const unsigned long duration;
 };
 
 extern const int num_timers;

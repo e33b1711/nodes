@@ -13,7 +13,7 @@ struct output_t {
     const int pin;
     const bool invert;
     bool value;
-    long set_time;
+    unsigned long set_time;
 };
 
 extern const int num_outputs;

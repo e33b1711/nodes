@@ -3,7 +3,7 @@
 #include "node.h"
 
 EthernetClient client;
-long last_try_connect = 0;
+unsigned long last_try_connect = 0;
 const int retry_period = 60000;
 String message_buffer = "";
 String input_buffer = "";

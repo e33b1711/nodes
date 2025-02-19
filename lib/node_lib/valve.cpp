@@ -1,9 +1,9 @@
 #include "node.h"
 #include "valve.h"
 
-long valve_next_time;
+unsigned long valve_next_time;
 int valve_phase;
-const unsigned long valve_interval = 48 * 60 * 1000;
+const unsigned long valve_interval = (unsigned long) 48 * 60 * 1000;
 const int max_phase = 16;
 
 void setup_valves() {
@@ -23,7 +23,6 @@ void setup_valves() {
 }
 
 void update_valves() {
-    unsigned long next_time = millis() + valve_interval;
     if (valve_next_time <= millis()) {
         valve_next_time += valve_interval;
         valve_phase = (valve_phase + 1) % max_phase;

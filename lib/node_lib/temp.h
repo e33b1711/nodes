@@ -9,10 +9,10 @@ bool get_humi(String name, int &value);
 
 struct temp_t {
     const String name;
-    const int pin;
+    const uint8_t pin;
     float temp_value;
     float humi_value;
-    long last_update;
+    unsigned long last_update;
 };
 
 extern const int num_temps;

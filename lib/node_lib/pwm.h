@@ -13,7 +13,7 @@ struct pwm_t {
     const String name;
     const int pin;
     const int max_value;
-    const long timeout;
+    const unsigned long timeout;
     int value;
     int act_max_value;
     unsigned long set_time;

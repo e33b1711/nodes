@@ -51,7 +51,7 @@ struct node_t {
     const int port;
     const int ethernet_sc_pin;
     const int ethernet_reset_pin;
-    const byte mac[];
+    uint8_t mac[];
 };
 
 extern const IPAddress ip;

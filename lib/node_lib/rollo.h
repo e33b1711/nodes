@@ -16,7 +16,7 @@ struct rollo_t {
     const bool is_rollo;
     int value;
     int old_value;
-    long stop_time;
+    unsigned long stop_time;
     boolean stop_pending;
 };
 

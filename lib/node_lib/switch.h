@@ -10,8 +10,8 @@ struct switch_t {
     int value;
     int prev_value;
     int edge;
-    long last_falling_edge;
-    long last_rising_edge;
+    unsigned long last_falling_edge;
+    unsigned long last_rising_edge;
 };
 
 extern const int num_switches;

@@ -3,7 +3,7 @@
 
 #include <AM2302-Sensor.h>
 
-long s_time_t;
+unsigned long s_time_t;
 
 AM2302::AM2302_Sensor *sensor_array[6];
 
