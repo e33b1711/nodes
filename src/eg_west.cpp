@@ -5,6 +5,7 @@
 #include "timer.h"
 #include "rollo.h"
 #include "valve.h"
+#include "pwm.h"
 
 #ifndef __TEST__
 
@@ -90,6 +91,9 @@ valve_t valves[num_valves] = {};
 
 const int num_timers = 0;
 timer_t timers[num_timers] = {};
+
+const int num_pwms = 1;
+pwm_t pwms[num_pwms] = {{"HEAT", 39, 220, 180000, 0, 220, 0}};
 
 void user_logic() {
     simple(10, 3, "LI_EG_GA");

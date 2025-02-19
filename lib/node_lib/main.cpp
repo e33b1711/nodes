@@ -5,6 +5,7 @@
 #include "rollo.h"
 #include "timer.h"
 #include "valve.h"
+#include "pwm.h"
 
 void setup() {
     init_debug();
@@ -15,6 +16,7 @@ void setup() {
     setup_rollos();
     setup_timers();
     setup_outputs();
+    setup_pwm();
     setup_watchdog();
 }
 
@@ -27,5 +29,6 @@ void loop() {
     update_rollos();
     handle_timers();
     update_outputs();
+    update_pwm();
     handle_debug();
 }
