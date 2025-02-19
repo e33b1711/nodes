@@ -69,51 +69,13 @@ void handle_couples(String name, int value) {
     }
 }
 
-int covert_value(String value_string) {
-    if (value_string == "STOP")
-        return 50;
-    if (value_string == "UP")
-        return 0;
-    if (value_string == "DOWN")
-        return 100;
-    if (value_string == "ON")
-        return 1;
-    if (value_string == "OFF")
-        return 0;
-    return value_string.toInt();
-}
-
-void handle_message(String type, String name, int value) {
-    if (type == "restart") {
-        if (name == node_info.unit_name)
-            delay(100000);
-    } else if (type == "r") {
-        if (get_any(name, value))
-            send_state(name, value);
-    } else if (type == "c") {
-        write_any(name, value, false);
-    } else if (type == "s") {
-        handle_couples(name, value);
-    }
-}
-
-void parse_message(String &type, String &name, int &value) {
-    int index1 = input_buffer.indexOf('!');
-    int index2 = input_buffer.indexOf('!', index1 + 1);
-    int index3 = input_buffer.indexOf('!', index2 + 1);
-    int index4 = input_buffer.indexOf('$');
-    type = input_buffer.substring(index1 + 1, index2);
-    name = input_buffer.substring(index2 + 1, index3);
-    String value_string = input_buffer.substring(index3 + 1, index4);
-    value = convert_value(value_string);
-}
-
 void handle_message() {
     String type;
     String name;
     int value;
-    parse_message(type, name, value_string);
-    handle_message(type, name, value);
+    parse_message(input_buffer, type, name, value);
+    input_buffer = "";
+    execute_message(type, name, value);
 }
 
 void send_messages() {

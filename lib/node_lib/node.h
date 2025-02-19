@@ -34,6 +34,10 @@ void alloc_pin(int pin);
 bool write_any(String address, int value, bool silent);
 bool get_any(String name, int &value);
 
+int covert_value(String value_string);
+void execute_message(String type, String name, int value);
+void parse_message(String buffer, String &type, String &name, int &value);
+
 const int num_pins = 62;
 
 struct couple_t {
