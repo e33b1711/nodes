@@ -6,7 +6,7 @@ void update_rollos();
 void setup_rollos();
 
 bool write_rollo(String name, int value, bool silent);
-bool get_rollo(String name, int &value);
+bool get_rollo(String name, String &value);
 
 struct rollo_t {
     const String name;

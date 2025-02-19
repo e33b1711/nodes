@@ -61,10 +61,10 @@ bool write_timer(String name, int value, bool silent) {
     return false;
 }
 
-bool get_timer(String name, int &value) {
+bool get_timer(String name, String &value) {
     for (int i = 0; i < num_timers; i++) {
         if (timers[i].name == name) {
-            value = (int)timers[i].running;
+            value = String(timers[i].running);
             return true;
         }
     }

@@ -74,8 +74,9 @@ void execute_message(String type, String name, int value) {
         if (name == node_info.unit_name)
             delay(100000);
     } else if (type == "r") {
-        if (get_any(name, value))
-            send_state(name, value);
+        String value_string;
+        if (get_any(name, value_string))
+            send_state(name, value_string);
     } else if (type == "c") {
         write_any(name, value, false);
     } else if (type == "s") {

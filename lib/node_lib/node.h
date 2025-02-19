@@ -32,7 +32,7 @@ void rollo_lock(const int b_index, const int value, const String l);
 void alloc_pin(int pin);
 
 bool write_any(String address, int value, bool silent);
-bool get_any(String name, int &value);
+bool get_any(String name, String &value);
 
 int covert_value(String value_string);
 void execute_message(String type, String name, int value);

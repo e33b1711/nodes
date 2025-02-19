@@ -41,10 +41,10 @@ bool write_output(String name, int value, bool silent) {
     return false;
 }
 
-bool get_output(String name, int &value) {
+bool get_output(String name, String &value) {
     for (int i = 0; i < num_outputs; i++) {
         if (outputs[i].name == name) {
-            value = outputs[i].value;
+            value = String(outputs[i].value, DEC);
             return true;
         }
     }

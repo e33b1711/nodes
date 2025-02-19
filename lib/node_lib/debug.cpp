@@ -15,8 +15,8 @@ bool get_message_dg() {
     return false;
 }
 
-void send_state_dg(String name, int value) {
-    String message = "!s!" + name + '!' + String(value, DEC) + "$\n";
+void send_state_dg(String name, String value_string) {
+    String message = "!s!" + name + '!' + value_string + "$\n";
     Serial.print(message);
 }
 
@@ -25,8 +25,9 @@ void execute_message_dg(String type, String name, int value) {
         if (name == node_info.unit_name)
             delay(100000);
     } else if (type == "r") {
-        if (get_any(name, value))
-            send_state_dg(name, value);
+        String value_string;
+        if (get_any(name, value_string))
+            send_state_dg(name, value_string);
     } else if (type == "c") {
         write_any(name, value, false);
     }

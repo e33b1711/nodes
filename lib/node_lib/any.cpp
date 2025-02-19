@@ -18,18 +18,18 @@ bool write_any(String name, int value, bool silent) {
     return false;
 }
 
-bool get_any(String name, int &value) {
-    if (get_temp(name, value))
+bool get_any(String name, String &value_string) {
+    if (get_temp(name, value_string))
         return true;
-    if (get_humi(name, value))
+    if (get_humi(name, value_string))
         return true;
-    if (get_valve(name, value))
+    if (get_valve(name, value_string))
         return true;
-    if (get_rollo(name, value))
+    if (get_rollo(name, value_string))
         return true;
-    if (get_output(name, value))
+    if (get_output(name, value_string))
         return true;
-    if (get_timer(name, value))
+    if (get_timer(name, value_string))
         return true;
     return false;
 }

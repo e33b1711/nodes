@@ -25,7 +25,7 @@ void update_temps() {
             for (int i = 0; i < num_temps; i++) {
                 if (temps[i].pin == address[7]) {
                     temps[i].temp_value = ds.getTempC();
-                    send_state(temps[i].name, String(ds.getTempC()));
+                    send_state(temps[i].name, String(temps[i].temp_value));
                     temps[i].last_update = millis();
                     continue;
                 }
@@ -33,26 +33,14 @@ void update_temps() {
             }
         }
     }
-    // todo ensure update
+    //ensure we got a recent update, or set NAN
     for (int i = 0; i < num_temps; i++) {
         if (temps[i].last_update + period_t * 2 < millis()) {
             Serial.println("WARNING: Temperature too old: " + temps[i].name);
-            temps[i].temp_value = 999;
-            send_state(temps[i].name, "NaN");
+            temps[i].temp_value = NAN;
+            send_state(temps[i].name, String(temps[i].temp_value));
         }
     }
-}
-
-bool get_temp(String name, int &value) {
-    // cant handle float
-    // wait for it!
-    return false;
-}
-
-bool get_humi(String name, int &value) {
-    // cant handle float
-    // wait for it!
-    return false;
 }
 
 #endif

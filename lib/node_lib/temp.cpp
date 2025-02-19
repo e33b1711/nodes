@@ -1,7 +1,38 @@
-#ifndef __ds18b20__
-
 #include "node.h"
 #include "temp.h"
+
+bool get_temp(String name, String &value) {
+    for (int i = 0; i < num_temps; i++) {
+        if (name == ("TI_" + temps[i].name)) {
+            value = String(temps[i].temp_value);
+            return true;
+        }
+    }
+    return false;
+}
+
+bool get_temp(String name, int &value) {
+    for (int i = 0; i < num_temps; i++) {
+        if (name == ("TI_" + temps[i].name)) {
+            value = (int) temps[i].temp_value;
+            return true;
+        }
+    }
+    return false;
+}
+
+bool get_humi(String name, String &value) {
+    for (int i = 0; i < num_temps; i++) {
+        if (name == ("HI_" + temps[i].name)) {
+            value = String(temps[i].humi_value);
+            return true;
+        }
+    }
+    return false;
+}
+
+#ifndef __ds18b20__
+
 #include "SDHT.h"
 
 SDHT dht;
@@ -9,27 +40,22 @@ SDHT dht;
 unsigned long s_time_t;
 int this_temp = 0;
 
-String divide10(int in){
-    return String(in/10) + "." + String(in % 10);
-}
+String divide10(int in) { return String(in / 10) + "." + String(in % 10); }
 
 void handle_one_temp(int i) {
     if (!(i < num_temps))
         return;
     bool good = dht.read(DHT22, temps[i].pin);
     if (good) {
-        send_state("TI_" + temps[i].name, divide10(dht.celsius));
-        send_state("HI_" + temps[i].name, divide10(dht.humidity));
         temps[i].temp_value = dht.humidity;
         temps[i].humi_value = dht.humidity;
     } else {
-        send_state("TI_" + temps[i].name, "NaN");
-        send_state("HI_" + temps[i].name, "NaN");
-        temps[i].temp_value = 9999;
-        temps[i].humi_value = 9999;
+        temps[i].temp_value = NAN;
+        temps[i].humi_value = NAN;
         Serial.println("ERROR: reading from dth22 failed: " + temps[i].name);
     }
-
+    send_state("TI_" + temps[i].name, String(temps[i].temp_value));
+    send_state("HI_" + temps[i].name, String(temps[i].temp_value));
 }
 
 void setup_temps() {
@@ -47,18 +73,6 @@ void update_temps() {
         handle_one_temp(this_temp);
         this_temp = (this_temp + 1) % num_temps;
     }
-}
-
-bool get_temp(String name, int &value) {
-    //cant handle float
-    //wait for it!
-    return false;
-}
-
-bool get_humi(String name, int &value) {
-    //cant handle float
-    //wait for it!
-    return false;
 }
 
 #endif

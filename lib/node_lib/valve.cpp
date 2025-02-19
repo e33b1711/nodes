@@ -50,10 +50,10 @@ bool write_valve(String name, int value, bool silent) {
     return false;
 }
 
-bool get_valve(String name, int &value) {
+bool get_valve(String name, String &value) {
     for (int i = 0; i < num_valves; i++) {
         if (valves[i].name == name) {
-            value = valves[i].value;
+            value = String(valves[i].value);
             return true;
         }
     }

@@ -4,14 +4,15 @@
 
 void update_temps();
 void setup_temps();
+bool get_temp(String name, String &String);
 bool get_temp(String name, int &value);
-bool get_humi(String name, int &value);
+bool get_humi(String name, String &String);
 
 struct temp_t {
     const String name;
     const uint8_t pin;
-    int temp_value;
-    int humi_value;
+    float temp_value;
+    float humi_value;
     unsigned long last_update;
 };
 

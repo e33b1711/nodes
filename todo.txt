@@ -5,7 +5,7 @@ allgemain
 (x) test bett mit 2 nodes
 (x) other temp
 (x) pwm
-( ) power
+(x) power
 ( ) OTA
 ( ) thermostat
 ( ) delta-sigma valve, with light state

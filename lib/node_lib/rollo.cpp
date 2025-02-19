@@ -58,10 +58,10 @@ bool write_rollo(String name, int value, bool silent) {
     return false;
 }
 
-bool get_rollo(String name, int &value) {
+bool get_rollo(String name, String &value) {
     for (int i = 0; i < num_rollos; i++) {
         if (rollos[i].name == name) {
-            value = rollos[i].value;
+            value = String(rollos[i].value, DEC);
             return true;
         }
     }
