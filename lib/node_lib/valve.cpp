@@ -24,11 +24,10 @@ void setup_valves() {
 
 void update_valves() {
     unsigned long next_time = millis() + valve_interval;
-    int i;
     if (valve_next_time <= millis()) {
         valve_next_time += valve_interval;
         valve_phase = (valve_phase + 1) % max_phase;
-        for (i = 0; i < num_valves; i++) {
+        for (int i = 0; i < num_valves; i++) {
             if (valves[i].value > ((valve_phase + 2 * i) % max_phase)) {
                 digitalWrite(valves[i].pin, HIGH);
             } else {
@@ -39,8 +38,7 @@ void update_valves() {
 }
 
 bool write_valve(String name, int value, bool silent) {
-    int i;
-    for (i = 0; i < num_valves; i++) {
+    for (int i = 0; i < num_valves; i++) {
         if (valves[i].name == name) {
             if ((value >= 0) and (value < max_phase)) {
                 valves[i].value = value;

@@ -3,8 +3,7 @@
 
 void setup_timers() {
     Serial.println("INFO: setup timers");
-    int i;
-    for (i = 0; i < num_timers; i++) {
+    for (int i = 0; i < num_timers; i++) {
         timers[i].value = false;
         timers[i].running = false;
         send_state(timers[i].name, (int)timers[i].value);
@@ -40,8 +39,7 @@ void handle_timers() {
 }
 
 bool write_timer(String name, int value, bool silent) {
-    int i;
-    for (i = 0; i < num_timers; i++) {
+    for (int i = 0; i < num_timers; i++) {
         if (timers[i].name == name) {
             timers[i].set_time = millis();
             switch (value) {

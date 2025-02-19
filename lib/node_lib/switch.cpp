@@ -5,8 +5,7 @@ int this_switch = 0;
 
 void setup_switches() {
     Serial.println("INFO: setup switches");
-    int i;
-    for (i = 0; i < num_switches; i++) {
+    for (int i = 0; i < num_switches; i++) {
         alloc_pin(switches[i].pin);
         pinMode(switches[i].pin, INPUT);
         digitalWrite(switches[i].pin, HIGH);
@@ -28,24 +27,18 @@ int get_edge(int value, int prev_value) {
 }
 
 void update_switches() {
-    int i = this_switch;
+    if (num_switches > 0) {
+        switches[this_switch].prev_value = switches[this_switch].value;
+        switches[this_switch].value = invert(digitalRead(switches[this_switch].pin));
+        int edge = get_edge(switches[this_switch].value, switches[this_switch].prev_value);
+        switches[this_switch].edge = edge;
+        if (edge == 1)
+            switches[this_switch].last_rising_edge = millis();
+        if (edge == -1)
+            switches[this_switch].last_falling_edge = millis();
 
-    // read pin, store previous value
-    switches[i].prev_value = switches[i].value;
-    switches[i].value = invert(digitalRead(switches[i].pin));
-
-    // get the edges
-    int edge = get_edge(switches[i].value, switches[i].prev_value);
-    switches[i].edge = edge;
-    if (edge == 1) {
-        switches[i].last_rising_edge = millis();
+        this_switch = (this_switch + 1) % num_switches;
     }
-    if (edge == -1) {
-        switches[i].last_falling_edge = millis();
-    }
-
-    // count up
-    this_switch = (this_switch + 1) % num_switches;
     if (this_switch == 0)
         user_logic();
 }
