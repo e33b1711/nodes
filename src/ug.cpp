@@ -7,6 +7,8 @@
 #include "valve.h"
 #include "pwm.h"
 
+
+
 #ifndef __TEST__
 
 const IPAddress ip(192, 168, 178, 211);
@@ -39,6 +41,7 @@ switch_t switches[num_switches] = {
 
 const int num_temps = 6;
 const long period_t = 60000;
+const int ds18b_pin = 61;
 temp_t temps[num_temps] = {
         {"TI_UG_WK", 26, 0, 0, 0},  //
         {"TI_UG_HN", 27, 0, 0, 0},  //

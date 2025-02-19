@@ -1,3 +1,5 @@
+#ifndef __ds18b20__
+
 #include "node.h"
 #include "temp.h"
 #include "SDHT.h"
@@ -58,3 +60,5 @@ bool get_humi(String name, int &value) {
     //wait for it!
     return false;
 }
+
+#endif

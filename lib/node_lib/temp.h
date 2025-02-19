@@ -18,5 +18,6 @@ struct temp_t {
 extern const int num_temps;
 extern const long period_t;
 extern temp_t temps[];
+extern const int ds18b_pin;
 
 #endif
