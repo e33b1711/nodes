@@ -36,9 +36,7 @@ bool get_humi(String name, String &value) {
 
 #ifndef __ds18b20__
 
-#include "SDHT.h"
-
-SDHT dht;
+#include <DHT22.h>
 
 unsigned long s_time_t;
 int this_temp = 0;
@@ -48,17 +46,20 @@ String divide10(int in) { return String(in / 10) + "." + String(in % 10); }
 void handle_one_temp(int i) {
     if (!(i < num_temps))
         return;
-    bool good = dht.read(DHT22, temps[i].pin);
-    if (good) {
-        temps[i].temp_value = dht.humidity;
-        temps[i].humi_value = dht.humidity;
+    DHT22 dht22(temps[i].pin);
+    float t = dht22.getTemperature();
+    float h = dht22.getHumidity();
+
+    if (dht22.getLastError() == dht22.OK) {
+        temps[i].temp_value = t;
+        temps[i].humi_value = h;
     } else {
         temps[i].temp_value = NAN;
         temps[i].humi_value = NAN;
         Serial.println("ERROR: reading from dth22 failed: " + temps[i].name);
     }
     send_state("TI_" + temps[i].name, String(temps[i].temp_value));
-    send_state("HI_" + temps[i].name, String(temps[i].temp_value));
+    send_state("HI_" + temps[i].name, String(temps[i].humi_value));
 }
 
 void setup_temps() {
