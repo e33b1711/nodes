@@ -69,6 +69,20 @@ void handle_couples(String name, int value) {
     }
 }
 
+void execute_message(String type, String name, int value) {
+    if (type == "restart") {
+        if (name == node_info.unit_name)
+            delay(100000);
+    } else if (type == "r") {
+        if (get_any(name, value))
+            send_state(name, value);
+    } else if (type == "c") {
+        write_any(name, value, false);
+    } else if (type == "s") {
+        handle_couples(name, value);
+    }
+}
+
 void handle_message() {
     String type;
     String name;
