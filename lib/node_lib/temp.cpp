@@ -1,67 +1,60 @@
 #include "node.h"
 #include "temp.h"
+#include "SDHT.h"
 
-#include <AM2302-Sensor.h>
+SDHT dht;
 
 unsigned long s_time_t;
+int this_temp = 0;
 
-AM2302::AM2302_Sensor *sensor_array[6];
-
-void setup_temps() {
-    Serial.println("INFO: setup temps");
-    s_time_t = millis();
-    for (int i = 0; i < num_temps; i++) {
-        alloc_pin(temps[i].pin);
-        sensor_array[i] = new AM2302::AM2302_Sensor{temps[i].pin};
-        sensor_array[i]->begin();
-    }
+String divide10(int in){
+    return String(in/10) + "." + String(in % 10);
 }
 
 void handle_one_temp(int i) {
     if (!(i < num_temps))
         return;
-    auto status = sensor_array[i]->read();
-    if (status != AM2302::AM2302_READ_OK) {
-        if (temps[i].last_update + period_t * 10 > millis())
-            send_state("TI_" + temps[i].name, "NaN");
-        send_state("HI_" + temps[i].name, status);
-        return;
+    bool good = dht.read(DHT22, temps[i].pin);
+    if (good) {
+        send_state("TI_" + temps[i].name, divide10(dht.celsius));
+        send_state("HI_" + temps[i].name, divide10(dht.humidity));
+        temps[i].temp_value = dht.humidity;
+        temps[i].humi_value = dht.humidity;
+    } else {
+        send_state("TI_" + temps[i].name, "NaN");
+        send_state("HI_" + temps[i].name, "NaN");
+        temps[i].temp_value = 9999;
+        temps[i].humi_value = 9999;
+        Serial.println("ERROR: reading from dth22 failed: " + temps[i].name);
     }
-    temps[i].temp_value = sensor_array[i]->get_Temperature();
-    temps[i].humi_value = sensor_array[i]->get_Humidity();
-    send_state("TI_" + temps[i].name, temps[i].temp_value);
-    send_state("HI_" + temps[i].name, temps[i].humi_value);
-    temps[i].last_update = millis();
+
 }
 
-int this_temp = 0;
+void setup_temps() {
+    Serial.println("setup_temps");
+    s_time_t = millis();
+    for (int i = 0; i < num_temps; i++) {
+        alloc_pin(temps[i].pin);
+        handle_one_temp(i);
+    }
+}
 
 void update_temps() {
     if (s_time_t + (period_t) < millis()) {
         s_time_t = millis();
-        if (num_temps > 0) {
-            handle_one_temp(this_temp);
-            this_temp = (this_temp + 1) % num_temps;
-        }
+        handle_one_temp(this_temp);
+        this_temp = (this_temp + 1) % num_temps;
     }
 }
 
 bool get_temp(String name, int &value) {
-    for (int i = 0; i < num_temps; i++) {
-        if ("TI_" + temps[i].name == name) {
-            value = temps[i].temp_value;
-            return true;
-        }
-    }
+    //cant handle float
+    //wait for it!
     return false;
 }
 
 bool get_humi(String name, int &value) {
-    for (int i = 0; i < num_temps; i++) {
-        if ("HI_" + temps[i].name == name) {
-            value = temps[i].humi_value;
-            return true;
-        }
-    }
+    //cant handle float
+    //wait for it!
     return false;
 }

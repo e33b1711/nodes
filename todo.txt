@@ -4,7 +4,7 @@ allgemain
 (x) ug
 (x) test bett mit 2 nodes
 ( ) other temp
-( ) pwm
+(x) pwm
 ( ) power
 ( ) OTA
 ( ) thermostat
