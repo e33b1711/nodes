@@ -1,16 +1,19 @@
 
 allgemain
 (x) eg_west
-( ) ug
-( ) test bett mit 2 nodes
+(x) ug
+(x) test bett mit 2 nodes
+( ) other temp
+( ) pwm
+( ) power
 ( ) OTA
 ( ) thermostat
 ( ) delta-sigma valve, with light state
 ( ) udp broadcasten
 
 ( esp) nodes:
-( ) garage
-( ) power
+( ) garage => arduino
+( ) au temp (+regensensor)
 ( ) chicken
 
 ( ) ethernet:

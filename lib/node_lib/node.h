@@ -1,4 +1,4 @@
-//just some global type definitions
+// just some global type definitions
 #ifndef __node__
 #define __node__
 
@@ -21,7 +21,11 @@ void send_command(String name, int value);
 void send_state(String name, int value);
 void send_state(String name, String value);
 
-void long_short(const int b_index, const String l_long, const int l_value, const String l_short, const int s_value);
+void long_short(const int b_index,
+                const String l_long,
+                const int l_value,
+                const String l_short,
+                const int s_value);
 void simple(const int b_index, const int value, const String l);
 void rollo_lock(const int b_index, const int value, const String l);
 
@@ -30,24 +34,21 @@ void alloc_pin(int pin);
 bool write_any(String address, int value, bool silent);
 bool get_any(String name, int &value);
 
-
 const int num_pins = 62;
 
 struct couple_t {
-  const String name;
+    const String name;
 };
 
 struct node_t {
-  const String unit_name;
-  const IPAddress ip;
-  const IPAddress server;
-  const int port;
-  const int ethernet_sc_pin;
-  const int ethernet_reset_pin;
-  const byte mac[];
+    const String unit_name;
+    const IPAddress ip;
+    const IPAddress server;
+    const int port;
+    const int ethernet_sc_pin;
+    const int ethernet_reset_pin;
+    const byte mac[];
 };
-
-void user_logic();
 
 extern const IPAddress ip;
 extern const IPAddress server;

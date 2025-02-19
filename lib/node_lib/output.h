@@ -9,16 +9,14 @@ bool write_output(String name, int value, bool silent);
 bool get_output(String name, int &value);
 
 struct output_t {
-  const String name;
-  const int pin;
-  const bool invert;
-  bool value;
-  long set_time;
+    const String name;
+    const int pin;
+    const bool invert;
+    bool value;
+    long set_time;
 };
 
 extern const int num_outputs;
 extern output_t outputs[];
-
-
 
 #endif

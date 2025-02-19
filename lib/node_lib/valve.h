@@ -9,9 +9,9 @@ bool write_valve(String name, int value, bool silent);
 bool get_valve(String name, int &value);
 
 struct valve_t {
-  const String name;
-  const int pin;
-  int value;
+    const String name;
+    const int pin;
+    int value;
 };
 
 extern const int num_valves;
