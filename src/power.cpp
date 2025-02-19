@@ -8,22 +8,17 @@
 #include "pwm.h"
 
 #ifndef __TEST__
-
 const IPAddress ip(192, 168, 178, 213);
-const IPAddress server(192, 168, 178, 23);
-node_t node_info = {
-        "power", ip, server, 8888, 53, 12, {0x4E, 0xAB, 0x7E, 0xEF, 0xFE, 0x04},
-};
-
+const int port = 8880;
 #else
-
 const IPAddress ip(192, 168, 178, 233);
+const int port = 8889;
+#endif
+
 const IPAddress server(192, 168, 178, 23);
 node_t node_info = {
-        "power", ip, server, 8889, 53, 12, {0x4E, 0xBB, 0x7E, 0xEF, 0xFE, 0x04},
+        "power", ip, server, port, 53, 12, {0x4E, 0xBB, 0x7E, 0xEF, 0xFE, 0x04},
 };
-
-#endif
 
 const int num_temps = 2;
 const long period_t = 100000;
@@ -70,7 +65,7 @@ void overtemp() {
     const int max_p = 210;
     const int temp_coeff = 40;
     int temp;
-    get_any("TI_PU_O", temp);
+    get_temp("TI_PU_O", temp);
     if (temp < thresh_temp)
         set_pwm_max("U_EL", max_p);
     if ((temp > thresh_temp) and (temp < max_temp))
