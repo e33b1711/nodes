@@ -50,6 +50,6 @@ void handle_debug() {
 void init_debug() {
     alloc_pin(0);
     alloc_pin(1);
-    Serial.begin(9600);
+    Serial.begin(115200);
     Serial.println("INFO: " + node_info.unit_name + " starting...");
 }

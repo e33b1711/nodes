@@ -85,7 +85,7 @@ const int num_valves = 0;
 valve_t valves[num_valves] = {};
 
 const int num_timers = 0;
-timer_t timers[num_timers] = {};
+ntimer_t timers[num_timers] = {};
 
 const int num_pwms = 0;
 pwm_t pwms[num_pwms] = {};

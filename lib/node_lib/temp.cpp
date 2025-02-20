@@ -35,6 +35,7 @@ bool get_humi(String name, String &value) {
 }
 
 #ifndef __ds18b20__
+#ifndef __sht31__
 
 #include <DHT22.h>
 
@@ -63,7 +64,7 @@ void handle_one_temp(int i) {
 }
 
 void setup_temps() {
-    Serial.println("INFO: setup temps");
+    Serial.println("INFO: setup temps dht22");
     s_time_t = millis();
     for (int i = 0; i < num_temps; i++) {
         alloc_pin(temps[i].pin);
@@ -79,4 +80,5 @@ void update_temps() {
     }
 }
 
+#endif
 #endif

@@ -1,13 +1,61 @@
-// handles ethernet
-#include <SPI.h>
 #include "node.h"
 
-EthernetClient client;
 unsigned long last_try_connect = 0;
 const int retry_period = 60000;
 String message_buffer = "";
 String input_buffer = "";
 
+#ifdef __esp32__
+
+#include <WiFi.h>
+#include <ESPmDNS.h>
+#include <WiFiUdp.h>
+
+WiFiClient client;
+int conn_error_count = 0;
+
+void init_hw() {}
+
+void connect_wifi() {
+    WiFi.begin(ssid, pass);
+
+    int retries = 0;
+    while (WiFi.status() != WL_CONNECTED) {
+        delay(500);
+        Serial.print(".");
+        retries++;
+        if (retries == 10) {
+            Serial.println("ERROR: Getting no WIFI, rebooting...");
+            ESP.restart();
+        }
+    }
+    Serial.println("INFO: WiFi connected");
+    Serial.println("INFO: IP address: ");
+    Serial.println(WiFi.localIP());
+}
+
+bool connect_server() {
+    connect_wifi();
+
+    if ((!client.connected())) {
+        Serial.println("INFO: trying to (re)connect to server.");
+
+        // try to reconnect
+        if (client.connect(node_info.server, node_info.port)) {
+            Serial.println("INFO: succes.");
+            return true;
+        }
+
+        Serial.println("ERROR: could not connect.");
+        return false;
+    }
+}
+
+#endif
+
+#ifndef __esp32__
+#include <SPI.h>
+EthernetClient client;
 void init_hw() {
     alloc_pin(node_info.ethernet_sc_pin);
     alloc_pin(node_info.ethernet_reset_pin);
@@ -33,6 +81,8 @@ bool connect_server() {
     Serial.println("INFO: Connected to Server.");
     return true;
 }
+
+#endif
 
 void send_command(String name, int value) {
     String message = "!c!" + name + '!' + String(value, DEC) + "$\n";
@@ -65,8 +115,6 @@ void setup_comm() {
     last_try_connect = millis();
     send_state(node_info.unit_name, "started");
 }
-
-
 
 void handle_couples(String name, int value) {
     for (int i = 0; i < num_couples; i++) {

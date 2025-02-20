@@ -84,7 +84,7 @@ switch_t switches[num_switches] = {
 };
 
 const int num_timers = 0;
-timer_t timers[num_timers] = {};
+ntimer_t timers[num_timers] = {};
 
 const int num_pwms = 0;
 pwm_t pwms[num_pwms] = {};

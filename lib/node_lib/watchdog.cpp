@@ -1,5 +1,7 @@
 #include "node.h"
 
+#ifndef __esp32__
+
 void setup_watchdog(void) {
     Serial.println("INFO: setting up watchdog...");
     cli();  // disable all interrupts
@@ -22,3 +24,16 @@ void watchdog_off(void) {
 ISR(WDT_vect) { Serial.println("WARNING: HW Watchdog Interrupt"); }
 
 void handle_watchdog() { asm("WDR"); }
+
+#endif
+
+#ifdef __esp32__
+
+
+void setup_watchdog(void) {}
+
+void watchdog_off(void) {}
+
+void handle_watchdog() {}
+
+#endif

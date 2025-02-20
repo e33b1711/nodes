@@ -8,7 +8,7 @@ void handle_timers();
 bool write_timer(String name, int value, bool silent);
 bool get_timer(String name, String &value);
 
-struct timer_t {
+struct ntimer_t {
     const String name;
     const String slave;
     bool value;
@@ -18,6 +18,6 @@ struct timer_t {
 };
 
 extern const int num_timers;
-extern timer_t timers[];
+extern ntimer_t timers[];
 
 #endif

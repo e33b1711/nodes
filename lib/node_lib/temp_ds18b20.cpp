@@ -7,6 +7,7 @@
 DS18B20 ds(ds18b_pin);
 
 void setup_temps() {
+    Serial.println("INFO: setup temps ds18b");
     alloc_pin(ds18b_pin);
     update_temps();
 }

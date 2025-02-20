@@ -2,7 +2,14 @@
 #ifndef __node__
 #define __node__
 
+#ifdef __esp32__
+#include <WiFi.h>
+#include <ESPmDNS.h>
+const int num_pins = 62;  //TODO esp32 pin alloc?
+#else
 #include <Ethernet.h>
+const int num_pins = 62;
+#endif
 #include <Arduino.h>
 
 #define __TEST__
@@ -38,7 +45,7 @@ int covert_value(String value_string);
 void execute_message(String type, String name, int value);
 void parse_message(String buffer, String &type, String &name, int &value);
 
-const int num_pins = 62;
+
 
 struct couple_t {
     const String name;
@@ -56,6 +63,8 @@ struct node_t {
 
 extern const IPAddress ip;
 extern const IPAddress server;
+extern const char *ssid;
+extern const char *pass;
 extern node_t node_info;
 
 extern const int num_couples;
