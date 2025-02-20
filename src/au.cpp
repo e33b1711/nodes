@@ -8,6 +8,7 @@
 #include "valve.h"
 #include "pwm.h"
 #include "thermos.h"
+#include "secret.h"
 
 
 #ifndef __TEST__
@@ -29,10 +30,10 @@ switch_t switches[num_switches] = {};
 const int num_temps = 1;
 const long period_t = 60000;
 const int ds18b_pin = 61;
-temp_t temps[num_temps] = {{"AU", 0, 0, 0, 0},};
+temp_t temps[num_temps] = {{"OG_GA", 0, 0, 0, 0},};
 
 const int num_thermos = 1;
-thermos_t thermos[num_thermos] = {{"AU", "VALVE", 5, 50, 0.1, 20000, 20.5, 0.0, 0},};
+thermos_t thermos[num_thermos] = {{"OG_GA", "U_OG_GA", 5, 50, 0.1, 20000, 20.5, 0.0, 0},};
 
 const int num_outputs = 0;
 output_t outputs[num_outputs] = {};
@@ -54,6 +55,3 @@ pwm_t pwms[num_pwms] = {};
 
 void user_logic() {
 }
-
-const char *ssid = "DRGREENTUMB";
-const char *pass = "JUMPAROUND2000";
