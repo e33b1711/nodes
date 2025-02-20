@@ -50,14 +50,15 @@ void update_one_thermos(int i) {
     float setpoint = base_valve + offset + linear + thermos[i].int_value;
     int i_setpoint = (int)cutoff(setpoint, full_valve, 0.0);
     send_command(thermos[i].valve, i_setpoint);
+    send_state("IT_" + thermos[i].name, String(thermos[i].int_value));
 
-    Serial.println("INFO: update thermos " + thermos[i].name);
-    Serial.println("INFO: temperature:   " + String(temperature));
-    Serial.println("INFO: target_temp:   " + String(thermos[i].target_temp));
-    Serial.println("INFO: offset:        " + String(offset));
-    Serial.println("INFO: linear:        " + String(linear));
-    Serial.println("INFO: integral:      " + String(thermos[i].int_value));
-    Serial.println("INFO: setpoint:      " + String(i_setpoint, DEC));
+    Serial.println("DEBUG: update thermos " + thermos[i].name);
+    Serial.println("DEBUG: temperature:   " + String(temperature));
+    Serial.println("DEBUG: target_temp:   " + String(thermos[i].target_temp));
+    Serial.println("DEBUG: offset:        " + String(offset));
+    Serial.println("DEBUG: linear:        " + String(linear));
+    Serial.println("DEBUG: integral:      " + String(thermos[i].int_value));
+    Serial.println("DEBUG: setpoint:      " + String(i_setpoint, DEC));
 }
 
 void setup_thermos() {

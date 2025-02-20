@@ -20,7 +20,6 @@ struct thermos_t {
 };
 
 extern const int num_thermos;
-extern const long period_thermos;
 extern thermos_t thermos[];
 
 #endif
