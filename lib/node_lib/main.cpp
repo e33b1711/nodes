@@ -6,12 +6,14 @@
 #include "timer.h"
 #include "valve.h"
 #include "pwm.h"
+#include "thermos.h"
 
 void setup() {
     init_debug();
     setup_switches();
     setup_comm();
     setup_temps();
+    setup_thermos();
     setup_valves();
     setup_rollos();
     setup_timers();
@@ -25,6 +27,7 @@ void loop() {
     handle_comm();
     update_switches();
     update_temps();
+    update_thermos();
     update_valves();
     update_rollos();
     handle_timers();

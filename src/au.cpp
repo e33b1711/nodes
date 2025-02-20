@@ -7,6 +7,7 @@
 #include "rollo.h"
 #include "valve.h"
 #include "pwm.h"
+#include "thermos.h"
 
 
 #ifndef __TEST__
@@ -19,7 +20,7 @@ const int port = 8889;
 
 const IPAddress server(192, 168, 178, 23);
 node_t node_info = {
-        "temp_esp32", ip, server, port, 53, 12, {0xDE, 0xBB, 0x7E, 0xE1, 0x1E, 0x10},
+        "au", ip, server, port, 53, 12, {0xDE, 0xBB, 0x7E, 0xE1, 0x1E, 0x10},
 };
 
 const int num_switches = 0;
@@ -29,6 +30,9 @@ const int num_temps = 1;
 const long period_t = 60000;
 const int ds18b_pin = 61;
 temp_t temps[num_temps] = {{"AU", 0, 0, 0, 0},};
+
+const int num_thermos = 1;
+thermos_t thermos[num_thermos] = {{"AU", "VALVE", 5, 50, 0.1, 20000, 20.5, 0.0, 0},};
 
 const int num_outputs = 0;
 output_t outputs[num_outputs] = {};

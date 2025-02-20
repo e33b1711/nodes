@@ -6,6 +6,7 @@
 #include "rollo.h"
 #include "valve.h"
 #include "pwm.h"
+#include "thermos.h"
 
 #ifndef __TEST__
 const IPAddress ip(192, 168, 178, 211);
@@ -43,6 +44,9 @@ temp_t temps[num_temps] = {
         {"UG_HK", 30, 0, 0, 0},  //
         {"UG_HS", 31, 0, 0, 0},  //
 };
+
+const int num_thermos = 0;
+thermos_t thermos[num_thermos] = {};
 
 const int num_outputs = 8;
 output_t outputs[num_outputs] = {

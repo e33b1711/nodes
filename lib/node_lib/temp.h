@@ -5,7 +5,7 @@
 void update_temps();
 void setup_temps();
 bool get_temp(String name, String &String);
-bool get_temp(String name, int &value);
+bool get_temp(String name, float &value);
 bool get_humi(String name, String &String);
 
 struct temp_t {

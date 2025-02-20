@@ -6,6 +6,7 @@
 #include "rollo.h"
 #include "valve.h"
 #include "pwm.h"
+#include "thermos.h"
 
 #ifndef __TEST__
 const IPAddress ip(192, 168, 178, 213);
@@ -27,6 +28,9 @@ temp_t temps[num_temps] = {
         {"PU_O", 51, 0, 0, 0},   //
         {"PU_U", 189, 0, 0, 0},  //
 };
+
+const int num_thermos = 0;
+thermos_t thermos[num_thermos] = {};
 
 const int num_switches = 8;
 switch_t switches[num_switches] = {
@@ -64,7 +68,7 @@ void overtemp() {
     const int thresh_temp = 85;
     const int max_p = 210;
     const int temp_coeff = 40;
-    int temp;
+    float temp;
     get_temp("TI_PU_O", temp);
     if (temp < thresh_temp)
         set_pwm_max("U_EL", max_p);

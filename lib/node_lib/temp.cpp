@@ -24,6 +24,16 @@ bool get_temp(String name, int &value) {
     return false;
 }
 
+bool get_temp(String name, float &value) {
+    for (int i = 0; i < num_temps; i++) {
+        if (name == ("TI_" + temps[i].name)) {
+            value = temps[i].temp_value;
+            return true;
+        }
+    }
+    return false;
+}
+
 bool get_humi(String name, String &value) {
     for (int i = 0; i < num_temps; i++) {
         if (name == ("HI_" + temps[i].name)) {
