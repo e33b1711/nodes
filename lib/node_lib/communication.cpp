@@ -17,6 +17,10 @@ int conn_error_count = 0;
 void init_hw() {}
 
 void connect_wifi() {
+
+    WiFi.mode(WIFI_STA);
+    WiFi.config(INADDR_NONE, INADDR_NONE, INADDR_NONE, INADDR_NONE);
+    WiFi.setHostname(node_info.unit_name.c_str()); //define hostname
     WiFi.begin(ssid, pass);
 
     int retries = 0;
@@ -30,8 +34,12 @@ void connect_wifi() {
         }
     }
     Serial.println("INFO: WiFi connected");
-    Serial.println("INFO: IP address: ");
+    Serial.print("INFO: IP address: ");
     Serial.println(WiFi.localIP());
+    Serial.print("INFO: ESP32 HostName: ");
+    Serial.println(WiFi.getHostname());
+    Serial.print("INFO: RRSI: ");
+    Serial.println(WiFi.RSSI());
 }
 
 bool connect_server() {
