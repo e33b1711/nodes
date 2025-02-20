@@ -49,6 +49,7 @@ void update_one_thermos(int i) {
 
     float setpoint = base_valve + offset + linear + thermos[i].int_value;
     int i_setpoint = (int)cutoff(setpoint, full_valve, 0.0);
+    send_command(thermos[i].valve, i_setpoint);
 
     Serial.println("INFO: update thermos " + thermos[i].name);
     Serial.println("INFO: temperature:   " + String(temperature));

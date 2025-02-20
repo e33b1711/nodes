@@ -12,6 +12,7 @@ struct valve_t {
     const String name;
     const int pin;
     int value;
+    int sigmadelta;
 };
 
 extern const int num_valves;
