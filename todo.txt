@@ -18,6 +18,7 @@ allgemain
 (x) thermos auf megas
 ( ) valve coupling
 (x) neue valves umbennen
+( ) dht fails first
 
 deployen:
 ( ) garage
