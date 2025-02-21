@@ -42,7 +42,7 @@ void update_switches() {
         switches[this_switch].release_late = false;
         switches[this_switch].edge = (edge != 0);
 
-        if (edge != 1) {
+        if (edge != 0) {
             switches[this_switch].press = true;
             Serial.println("INFO: Switch: " + ident_string(this_switch) + " pressed.");
         }
