@@ -52,5 +52,10 @@ void init_debug() {
     alloc_pin(1);
     Serial.begin(115200);
     Serial.println("INFO: " + node_info.unit_name + " starting...");
-    Serial.println("INFO: GIT revision:" + String(auto_version));
+    Serial.println("INFO: GIT revision:" + auto_version);
+#ifdef __TEST__
+    Serial.println("WARNING: TEST BUILD!");
+#else
+    Serial.println("INFO: Productive Version.!");
+#endif
 }

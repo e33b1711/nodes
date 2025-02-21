@@ -66,6 +66,9 @@ extern const char *ssid;
 extern const char *pass;
 extern node_t node_info;
 
-extern const char* auto_version;
+extern const int num_couples;
+extern couple_t couples[];
+
+extern const String auto_version;
 
 #endif
