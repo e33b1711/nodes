@@ -30,8 +30,11 @@ temp_t temps[num_temps] = {
         {"OG_SZ", 26, 0, 0, 0},
 };
 
-const int num_thermos = 0;
-thermos_t thermos[num_thermos] = {};
+const int num_thermos = 2;
+thermos_t thermos[num_thermos] = {
+        {"OG_BA", "V_OG_BA", 5, 50, 0.1, 60000, 20.5, 0.0, 0},
+        {"OG_SZ", "V_OG_SZ", 5, 50, 0.1, 60000, 20.5, 0.0, 0},
+};
 
 const int num_outputs = 12;
 output_t outputs[num_outputs] = {
@@ -59,7 +62,7 @@ rollo_t rollos[num_rollos] = {
 
 const int num_valves = 5;
 valve_t valves[num_valves] = {
-        {"V_OG_GA", 30, 0, 0},  // blau  //TODO was 34!!
+        {"V_OG_GA", 34, 0, 0},  // blau
         {"V_OG_KS", 35, 0, 0},  // weiß
         {"V_OG_KN", 36, 0, 0},  // grün
         {"V_OG_BA", 37, 0, 0},  // rosa

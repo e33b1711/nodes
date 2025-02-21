@@ -15,13 +15,13 @@ allgemain
 (x) toogle external instead couples
 (x) chicken node
 (x) garage node (as is esp32)
-( ) thermos auf arduinos
-( ) neue valves umbennen
+(x) thermos auf megas
+(x) neue valves umbennen
 
 deployen:
 ( ) garage
 ( ) og
-( ) eg_
+( ) eg
 ( ) keller
 ( ) chicken
 

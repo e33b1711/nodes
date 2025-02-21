@@ -69,7 +69,7 @@ const int num_valves = 7;
 valve_t valves[num_valves] = {
         {"V_EG_WZ", 34, 0},  // 34 rot    Wohnzimmer
         {"V_EG_GR", 35, 0},  // 35 rosa   Garda
-        {"V_EG_E1", 36, 0},  // 36 grau   EZ
+        {"V_EG_EZ", 36, 0},  // 36 grau   EZ
         {"V_EG_E2", 37, 0},  // 37 gelb   EZ
         {"V_EG_WC", 38, 0},  // 38 blau   WC
         {"V_EG_GA", 39, 0},  // 39 grün   Gang
@@ -100,4 +100,5 @@ void user_logic() {
     long_short(11, "DF_OG_GA", 100, "VD_OG_GA", 100);
     long_short(8, "DF_OG_GA", 0, "VD_OG_GA", 0);
     simple(13, 1, "ZE_BELL");
+    //TODO couple "V_EG_E1", "V_EG_E2" // "V_EG_WC" V_EG_GR V_EG_GA
 }

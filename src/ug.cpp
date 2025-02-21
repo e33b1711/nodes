@@ -43,12 +43,18 @@ temp_t temps[num_temps] = {
         {"UG_HN", 27, 0, 0, 0},  //
         {"UG_LA", 28, 0, 0, 0},  //
         {"UG_GA", 29, 0, 0, 0},  //
-        {"UG_HK", 30, 0, 0, 0},  //
+        {"UG_HK", 36, 0, 0, 0},  //TODO switched with 30 for testimg
         {"UG_HS", 31, 0, 0, 0},  //
 };
 
-const int num_thermos = 0;
-thermos_t thermos[num_thermos] = {};
+const int num_thermos = 5;
+thermos_t thermos[num_thermos] = {
+        {"UG_WK", "V_UG_WK", 5, 50, 0.1, 60000, 20.5, 0.0, 0},
+        {"UG_HN", "V_UG_HN", 5, 50, 0.1, 60000, 20.5, 0.0, 0},
+        {"UG_LA", "V_UG_LA", 5, 50, 0.1, 60000, 20.5, 0.0, 0},
+        {"UG_GA", "V_UG_GA", 5, 50, 0.1, 60000, 20.5, 0.0, 0},
+        {"UG_HK", "V_UG_H1", 5, 50, 0.1, 60000, 20.5, 0.0, 0},
+};
 
 const int num_outputs = 8;
 output_t outputs[num_outputs] = {
@@ -67,9 +73,9 @@ rollo_t rollos[num_rollos] = {};
 
 const int num_valves = 6;
 valve_t valves[num_valves] = {
-        {"V_UG_H1", 34, 0},  //
+        {"V_UG_H1", 34, 0},  // 
         {"V_UG_LA", 35, 0},  //
-        {"V_UG_WK", 36, 0},  //
+        {"V_UG_WK", 30, 0},  //TODO was 36
         {"V_UG_H2", 37, 0},  //
         {"V_UG_GA", 38, 0},  //
         {"V_UG_H3", 39, 0},  //
@@ -90,4 +96,5 @@ void user_logic() {
     long_short(5, "LI_UG_HN", 0, "LI_UG_HN", 3);
     long_short(5, "LI_UG_HO", 0, "none", 3);
     simple(6, 3, "LI_UG_WK");
+    //TOD couple V_UG_H1 V_UG_H2 V_UG_H3
 }
