@@ -4,8 +4,11 @@
 
 void setup_switches();
 void update_switches();
+bool get_switch(String name, String &value);
 
 struct switch_t {
+    const String name;
+    const bool is_public;
     const int pin;
     int value;
     int prev_value;

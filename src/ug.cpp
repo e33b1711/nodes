@@ -25,14 +25,14 @@ node_t node_info = {
 
 const int num_switches = 8;
 switch_t switches[num_switches] = {
-        {2, 0, 0, 0, false, false, false, false},   // 0
-        {3, 0, 0, 0, false, false, false, false},   // 1
-        {16, 0, 0, 0, false, false, false, false},  // 2 HK
-        {17, 0, 0, 0, false, false, false, false},  // 3 GA_HK
-        {22, 0, 0, 0, false, false, false, false},  // 4 GA
-        {23, 0, 0, 0, false, false, false, false},  // 5 HN
-        {24, 0, 0, 0, false, false, false, false},  // 6 WK
-        {25, 0, 0, 0, false, false, false, false},  // 7 HS
+        {"", false, 2, 0, 0, 0, false, false, false, false},   // 0
+        {"", false, 3, 0, 0, 0, false, false, false, false},   // 1
+        {"", false, 16, 0, 0, 0, false, false, false, false},  // 2 HK
+        {"", false, 17, 0, 0, 0, false, false, false, false},  // 3 GA_HK
+        {"", false, 22, 0, 0, 0, false, false, false, false},  // 4 GA
+        {"", false, 23, 0, 0, 0, false, false, false, false},  // 5 HN
+        {"", false, 24, 0, 0, 0, false, false, false, false},  // 6 WK
+        {"", false, 25, 0, 0, 0, false, false, false, false},  // 7 HS
 };
 
 const int num_temps = 6;

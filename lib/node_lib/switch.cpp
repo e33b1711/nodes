@@ -26,6 +26,12 @@ int get_edge(int value, int prev_value) {
     return 0;
 }
 
+String ident_string(int this_switch) {
+    if (switches[this_switch].name == "")
+        return "pin: " + String(switches[this_switch].pin);
+    return switches[this_switch].name;
+}
+
 void update_switches() {
     if (num_switches > 0) {
         switches[this_switch].prev_value = switches[this_switch].value;
@@ -35,20 +41,38 @@ void update_switches() {
         switches[this_switch].release_early = false;
         switches[this_switch].release_late = false;
         switches[this_switch].edge = (edge != 0);
+
         if (edge != 1) {
             switches[this_switch].press = true;
-            switches[this_switch].last_edge = millis();
+            Serial.println("INFO: Switch: " + ident_string(this_switch) + " pressed.");
         }
         if (edge == -1) {
-            if (switches[this_switch].last_edge + 500 > millis())
+            if (switches[this_switch].last_edge + 500 > millis()) {
                 switches[this_switch].release_early = true;
-            else
+                Serial.println("INFO: Switch: " + ident_string(this_switch) + " released early.");
+            } else {
                 switches[this_switch].release_late = true;
+                Serial.println("INFO: Switch: " + ident_string(this_switch) + " released late.");
+            }
+        }
+        if (edge != 0) {
             switches[this_switch].last_edge = millis();
+            if (switches[this_switch].is_public)
+                send_state(switches[this_switch].name, switches[this_switch].value);
         }
 
         this_switch = (this_switch + 1) % num_switches;
     }
     if (this_switch == 0)
         user_logic();
+}
+
+bool get_switch(String name, String &value) {
+    for (int i = 0; i < num_switches; i++) {
+        if (switches[i].name == name and switches[i].is_public) {
+            value = String(switches[i].value, DEC);
+            return true;
+        }
+    }
+    return false;
 }

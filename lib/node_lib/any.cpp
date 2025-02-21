@@ -7,6 +7,7 @@
 #include "valve.h"
 #include "pwm.h"
 #include "thermos.h"
+#include "switch.h"
 
 bool write_any(String name, int value, bool silent) {
     if (write_valve(name, value, silent))
@@ -41,6 +42,8 @@ bool get_any(String name, String &value_string) {
     if (get_pwm(name, value_string))
         return true;
     if (get_thermos(name, value_string))
+        return true;
+    if (get_switch(name, value_string))
         return true;
     Serial.println("INFO: get_any: got none");
     return false;

@@ -36,14 +36,14 @@ thermos_t thermos[num_thermos] = {};
 
 const int num_switches = 8;
 switch_t switches[num_switches] = {
-        {57, 0, 0, 0, false, false, false, false},  // 0
-        {3, 0, 0, 0, false, false, false, false},   // 1
-        {16, 0, 0, 0, false, false, false, false},  // 2
-        {17, 0, 0, 0, false, false, false, false},  // 3
-        {22, 0, 0, 0, false, false, false, false},  // 4
-        {23, 0, 0, 0, false, false, false, false},  // 5
-        {24, 0, 0, 0, false, false, false, false},  // 6
-        {25, 0, 0, 0, false, false, false, false},  // 7
+        {"", true, 57, 0, 0, 0, false, false, false, false},   // 0
+        {"", true, 3, 0, 0, 0, false, false, false, false},    // 1
+        {"", false, 16, 0, 0, 0, false, false, false, false},  // 2
+        {"", false, 17, 0, 0, 0, false, false, false, false},  // 3
+        {"", false, 22, 0, 0, 0, false, false, false, false},  // 4
+        {"", false, 23, 0, 0, 0, false, false, false, false},  // 5
+        {"", false, 24, 0, 0, 0, false, false, false, false},  // 6
+        {"", false, 25, 0, 0, 0, false, false, false, false},  // 7
 };
 
 const int num_outputs = 0;
@@ -77,31 +77,22 @@ void overtemp() {
         set_pwm_max("U_EL", 0);
 }
 
-void heat_info() {
-    // send switch state on transistions
-    static bool first = true;
-    if ((switches[0].edge) or first) {
-        send_state("F_HE", switches[0].value);
-        first = false;
-    }
-}
-
 void water_warning() {
     // repeat water after one hour
-    static bool first = true;
+    const int switch_index = 1;
     static unsigned long ww_time = 0;
     const unsigned long ww_interval = 3600000;
-    bool edge = (switches[1].edge);
-    bool sometime_ago = ((ww_time + ww_interval) < millis()) and (switches[1].value != 0);
-    if (edge or sometime_ago or first) {
-        first = false;
+    bool sometime_ago
+            = ((ww_time + ww_interval) < millis()) and (switches[switch_index].value != 0);
+    if (switches[switch_index].press)
+        ww_time = millis();
+    if (sometime_ago) {
         send_state("F_WW", switches[1].value);
         ww_time = millis();
     }
 }
 
 void user_logic() {
-    heat_info();
     water_warning();
     overtemp();
 }
