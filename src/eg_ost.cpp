@@ -62,12 +62,6 @@ output_t outputs[num_outputs] = {
 const int num_thermos = 0;
 thermos_t thermos[num_thermos] = {};
 
-const int num_couples = 2;
-couple_t couples[num_couples] = {
-        {"LI_GA_L1"},
-        {"LI_EG_GA"},
-};
-
 const int num_rollos = 0;
 rollo_t rollos[num_rollos] = {};
 
@@ -90,7 +84,7 @@ pwm_t pwms[num_pwms] = {};
 
 void user_logic() {
     long_short(6, "LI_EG_GR", 3, "LI_EG_AO", 3);
-    simple(0, 3, "LI_EG_GA");  // coupling TODO
+    toggle_couple(0, "LI_EG_GA");
     simple(0, 1, "ZE_EG_VH");
     simple(0, 1, "ZE_GR_2");
     simple(4, 3, "LI_EG_GA");

@@ -121,14 +121,7 @@ void setup_comm() {
     connect_server();
     message_buffer.reserve(100);
     last_try_connect = millis();
-    send_state(node_info.unit_name, String(AUTO_VERSION));
-}
-
-void handle_couples(String name, int value) {
-    for (int i = 0; i < num_couples; i++) {
-        if (name == couples[i].name)
-            write_any(name, value, true);
-    }
+    send_state(node_info.unit_name, String(auto_version));
 }
 
 void execute_message(String type, String name, int value) {
@@ -142,8 +135,6 @@ void execute_message(String type, String name, int value) {
             send_state(name, value_string);
     } else if (type == "c") {
         write_any(name, value, false);
-    } else if (type == "s") {
-        handle_couples(name, value);
     }
 }
 

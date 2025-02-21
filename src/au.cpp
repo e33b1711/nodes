@@ -40,9 +40,6 @@ thermos_t thermos[num_thermos] = {{"OG_GA", "U_OG_GA", 5, 50, 0.1, 60000, 20.5, 
 const int num_outputs = 0;
 output_t outputs[num_outputs] = {};
 
-const int num_couples = 0;
-couple_t couples[num_couples] = {};
-
 const int num_rollos = 0;
 rollo_t rollos[num_rollos] = {};
 

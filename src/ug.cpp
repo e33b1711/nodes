@@ -62,9 +62,6 @@ output_t outputs[num_outputs] = {
         {"LI_UG_HN", 49, 1, 0, 0},  //
 };
 
-const int num_couples = 0;
-couple_t couples[num_couples] = {};
-
 const int num_rollos = 0;
 rollo_t rollos[num_rollos] = {};
 

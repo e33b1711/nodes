@@ -75,12 +75,6 @@ output_t outputs[num_outputs] = {
         {"LI_EG_GA", 49, 0, 0, 0},     //
 };
 
-const int num_couples = 2;
-couple_t couples[num_couples] = {
-        {"LI_GA_L1"},
-        {"LI_EG_GA"},
-};
-
 const int num_rollos = 2;
 rollo_t rollos[num_rollos] = {
         {"RO_EG_SU", "RO_EG_SU_ON", "RO_EG_WE_ON", 31000, true, 50, 50, 0, false},
@@ -97,7 +91,7 @@ const int num_pwms = 0;
 pwm_t pwms[num_pwms] = {};
 
 void user_logic() {
-    simple(10, 3, "LI_EG_GA");
+    toggle_couple(10, "LI_EG_GA");
     simple(9, 3, "LI_EG_EZ_KU");
     long_short(11, "LI_EG_EZ_L1", 3, "LI_EG_EZ", 3);
     simple(4, 0, "RO_EG_SU");
@@ -113,5 +107,5 @@ void user_logic() {
     simple(13, 3, "LI_EG_KU_L1");
     simple(13, 3, "LI_EG_SP");
     simple(6, 3, "LI_UG_GA");
-    simple(5, 3, "LI_EG_GA");  // TODO sync
+    toggle_couple(5, "LI_EG_GA");
 }

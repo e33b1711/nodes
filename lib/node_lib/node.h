@@ -33,6 +33,7 @@ void long_short(const int b_index,
                 const int s_value);
 void simple(const int b_index, const int value, const String l);
 void rollo_lock(const int b_index, const int value, const String l);
+void toggle_couple(const int b_index, const String output);
 
 void alloc_pin(int pin);
 
@@ -65,9 +66,6 @@ extern const char *ssid;
 extern const char *pass;
 extern node_t node_info;
 
-extern const int num_couples;
-extern couple_t couples[];
-
-extern const char* AUTO_VERSION;
+extern const char* auto_version;
 
 #endif

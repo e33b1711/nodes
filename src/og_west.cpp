@@ -62,9 +62,6 @@ output_t outputs[num_outputs] = {
         {"VD_OG_KS_DO", 33, 0, 0, 0},  //
 };
 
-const int num_couples = 0;
-couple_t couples[num_couples] = {};
-
 const int num_rollos = 8;
 rollo_t rollos[num_rollos] = {
         {"RO_OG_KN", "RO_OG_KN_ON", "RO_OG_KN_DO", 31000, true, 50, 50, 0, false},

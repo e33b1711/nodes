@@ -8,7 +8,7 @@ void long_short(const int b_index,
                 const int l_value,
                 const String l_short,
                 const int s_value) {
-    if (switches[b_index].edge == -1) {
+   if (switches[b_index].edge == -1) { 
         if (switches[b_index].last_rising_edge + 700 > switches[b_index].last_falling_edge) {
             write_any(l_long, l_value, false);
         } else {
@@ -35,3 +35,20 @@ void rollo_lock(const int b_index, const int value, const String l) {
         }
     }
 }
+
+//toggle a output that lives here and on another unit
+void toggle_couple(const String output){
+    int value;
+    if (!get_output(output, value)){
+        Serial.println("ERROR: toggle_couple: no such state.");
+        return;
+    }
+    send_command(output, not(value));
+}
+
+//toggle a output that lives here and on another unit on press
+void toggle_couple(const int b_index, const String output){
+    if (switches[b_index].edge == 1) toggle_couple(output);
+}
+
+

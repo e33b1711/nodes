@@ -50,3 +50,13 @@ bool get_output(String name, String &value) {
     }
     return false;
 }
+
+bool get_output(String name, int &value) {
+    for (int i = 0; i < num_outputs; i++) {
+        if (outputs[i].name == name) {
+            value = outputs[i].value;
+            return true;
+        }
+    }
+    return false;
+}
