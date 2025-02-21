@@ -79,22 +79,22 @@ valve_t valves[num_valves] = {};
 
 const int num_switches = 16;
 switch_t switches[num_switches] = {
-        {4, 0, 0, 0, 0, 0},   // bini oben
-        {5, 0, 0, 0, 0, 0},   // gang bini
-        {6, 0, 0, 0, 0, 0},   // bini hoch
-        {7, 0, 0, 0, 0, 0},   // bini runter
-        {8, 0, 0, 0, 0, 0},   // leo a hoch
-        {9, 0, 0, 0, 0, 0},   // bini a runter
-        {10, 0, 0, 0, 0, 0},  // leo a runter
-        {11, 0, 0, 0, 0, 0},  // bini a hoch
-        {25, 0, 0, 0, 0, 0},  // leo hoch
-        {24, 0, 0, 0, 0, 0},  // leo unten
-        {23, 0, 0, 0, 0, 0},  // gang runter
-        {22, 0, 0, 0, 0, 0},  // leo runter
-        {17, 0, 0, 0, 0, 0},  // bini unten
-        {16, 0, 0, 0, 0, 0},  // gang hoch
-        {3, 0, 0, 0, 0, 0},   // leo oben
-        {2, 0, 0, 0, 0, 0},   // gang leo
+        {4, 0, 0, 0, false, false, false, false},   // bini oben
+        {5, 0, 0, 0, false, false, false, false},   // gang bini
+        {6, 0, 0, 0, false, false, false, false},   // bini hoch
+        {7, 0, 0, 0, false, false, false, false},   // bini runter
+        {8, 0, 0, 0, false, false, false, false},   // leo a hoch
+        {9, 0, 0, 0, false, false, false, false},   // bini a runter
+        {10, 0, 0, 0, false, false, false, false},  // leo a runter
+        {11, 0, 0, 0, false, false, false, false},  // bini a hoch
+        {25, 0, 0, 0, false, false, false, false},  // leo hoch
+        {24, 0, 0, 0, false, false, false, false},  // leo unten
+        {23, 0, 0, 0, false, false, false, false},  // gang runter
+        {22, 0, 0, 0, false, false, false, false},  // leo runter
+        {17, 0, 0, 0, false, false, false, false},  // bini unten
+        {16, 0, 0, 0, false, false, false, false},  // gang hoch
+        {3, 0, 0, 0, false, false, false, false},   // leo oben
+        {2, 0, 0, 0, false, false, false, false},   // gang leo
 };
 
 const int num_timers = 0;

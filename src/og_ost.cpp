@@ -68,22 +68,22 @@ valve_t valves[num_valves] = {
 
 const int num_switches = 16;
 switch_t switches[num_switches] = {
-        {4, 0, 0, 0, 0, 0},   // 0 sz unten
-        {5, 0, 0, 0, 0, 0},   // 1 ans
-        {6, 0, 0, 0, 0, 0},   // 2 sz rollo runter
-        {7, 0, 0, 0, 0, 0},   // 3 sz oben
-        {8, 0, 0, 0, 0, 0},   // 4 bewegung
-        {9, 0, 0, 0, 0, 0},   // 5 mell
-        {10, 0, 0, 0, 0, 0},  // 6 sz rollohoch
-        {11, 0, 0, 0, 0, 0},  // 7 gang sz
-        {25, 0, 0, 0, 0, 0},  // 8 bad runter tür
-        {24, 0, 0, 0, 0, 0},  // 9 gang bad
-        {23, 0, 0, 0, 0, 0},  // 10 bad
-        {22, 0, 0, 0, 0, 0},  // 11 bad hoch tür
-        {17, 0, 0, 0, 0, 0},  // 12 bad fenster runter
-        {16, 0, 0, 0, 0, 0},  // 13 bad fenster hoch
-        {3, 0, 0, 0, 0, 0},   // 14 df sz hoch
-        {2, 0, 0, 0, 0, 0},   // 15 df sz runter
+        {4, 0, 0, 0, false, false, false, false},   // 0 sz unten
+        {5, 0, 0, 0, false, false, false, false},   // 1 ans
+        {6, 0, 0, 0, false, false, false, false},   // 2 sz rollo runter
+        {7, 0, 0, 0, false, false, false, false},   // 3 sz oben
+        {8, 0, 0, 0, false, false, false, false},   // 4 bewegung
+        {9, 0, 0, 0, false, false, false, false},   // 5 mell
+        {10, 0, 0, 0, false, false, false, false},  // 6 sz rollohoch
+        {11, 0, 0, 0, false, false, false, false},  // 7 gang sz
+        {25, 0, 0, 0, false, false, false, false},  // 8 bad runter tür
+        {24, 0, 0, 0, false, false, false, false},  // 9 gang bad
+        {23, 0, 0, 0, false, false, false, false},  // 10 bad
+        {22, 0, 0, 0, false, false, false, false},  // 11 bad hoch tür
+        {17, 0, 0, 0, false, false, false, false},  // 12 bad fenster runter
+        {16, 0, 0, 0, false, false, false, false},  // 13 bad fenster hoch
+        {3, 0, 0, 0, false, false, false, false},   // 14 df sz hoch
+        {2, 0, 0, 0, false, false, false, false},   // 15 df sz runter
 };
 
 const int num_timers = 0;

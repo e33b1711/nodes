@@ -31,11 +31,21 @@ void update_switches() {
         switches[this_switch].prev_value = switches[this_switch].value;
         switches[this_switch].value = invert(digitalRead(switches[this_switch].pin));
         int edge = get_edge(switches[this_switch].value, switches[this_switch].prev_value);
-        switches[this_switch].edge = edge;
-        if (edge == 1)
-            switches[this_switch].last_rising_edge = millis();
-        if (edge == -1)
-            switches[this_switch].last_falling_edge = millis();
+        switches[this_switch].press = false;
+        switches[this_switch].release_early = false;
+        switches[this_switch].release_late = false;
+        switches[this_switch].edge = (edge != 0);
+        if (edge != 1) {
+            switches[this_switch].press = true;
+            switches[this_switch].last_edge = millis();
+        }
+        if (edge == -1) {
+            if (switches[this_switch].last_edge + 500 > millis())
+                switches[this_switch].release_early = true;
+            else
+                switches[this_switch].release_late = true;
+            switches[this_switch].last_edge = millis();
+        }
 
         this_switch = (this_switch + 1) % num_switches;
     }

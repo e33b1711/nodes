@@ -25,22 +25,22 @@ node_t node_info = {
 
 const int num_switches = 16;
 switch_t switches[num_switches] = {
-        {4, 0, 0, 0, 0, 0},   // 0   ht innen, unten  / treppe unten
-        {5, 0, 0, 0, 0, 0},   // 1   ht innen, oben
-        {6, 0, 0, 0, 0, 0},   // 2
-        {7, 0, 0, 0, 0, 0},   // 3
-        {8, 0, 0, 0, 0, 0},   // 4   gang bei wz
-        {9, 0, 0, 0, 0, 0},   // 5   wz bei gang
-        {10, 0, 0, 0, 0, 0},  // 6   garda
-        {11, 0, 0, 0, 0, 0},  // 7
-        {25, 0, 0, 0, 0, 0},  // 8   treppe auf
-        {24, 0, 0, 0, 0, 0},  // 9   wc
-        {23, 0, 0, 0, 0, 0},  // 10  kachelofen
-        {22, 0, 0, 0, 0, 0},  // 11  treppe runter
-        {17, 0, 0, 0, 0, 0},  // 12  wz bei ez
-        {16, 0, 0, 0, 0, 0},  // 13  klingel
-        {3, 0, 0, 0, 0, 0},   // 14
-        {2, 0, 0, 0, 0, 0},   // 15  treppe oben
+        {4, 0, 0, 0, false, false, false, false},  // 0   ht innen, unten  / treppe unten
+        {5, 0, 0, 0, false, false, false, false},  // 1   ht innen, oben
+        {6, 0, 0, 0, false, false, false, false},  // 2
+        {7, 0, 0, 0, false, false, false, false},  // 3
+        {8, 0, 0, 0, false, false, false, false},  // 4   gang bei wz
+        {9, 0, 0, 0, false, false, false, false},  // 5   wz bei gang
+        {10, 0, 0, 0,false, false, false, false},  // 6   garda
+        {11, 0, 0, 0,false, false, false, false},  // 7
+        {25, 0, 0, 0,false, false, false, false},  // 8   treppe auf
+        {24, 0, 0, 0,false, false, false, false},  // 9   wc
+        {23, 0, 0, 0,false, false, false, false},  // 10  kachelofen
+        {22, 0, 0, 0,false, false, false, false},  // 11  treppe runter
+        {17, 0, 0, 0,false, false, false, false},  // 12  wz bei ez
+        {16, 0, 0, 0,false, false, false, false},  // 13  klingel
+        {3, 0, 0, 0, false, false, false, false},  // 14
+        {2, 0, 0, 0, false, false, false, false},  // 15  treppe oben
 };
 
 const int num_temps = 0;

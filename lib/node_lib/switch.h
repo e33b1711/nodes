@@ -9,9 +9,11 @@ struct switch_t {
     const int pin;
     int value;
     int prev_value;
-    int edge;
-    unsigned long last_falling_edge;
-    unsigned long last_rising_edge;
+    unsigned long last_edge;
+    bool edge;
+    bool press;
+    bool release_early;
+    bool release_late;
 };
 
 extern const int num_switches;
