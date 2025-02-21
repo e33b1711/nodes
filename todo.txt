@@ -11,14 +11,15 @@ allgemain
 (x) thermostat
 (x) delta-sigma valve, with light state
 ( ) udp broadcasten
-( ) githash beim starten
-( ) toogle external instead couples
+(x) githash beim starten
+(x) toogle external instead couples
+(x) chicken node
+( ) garage node (as is esp32)
 
-( esp) nodes:
+umbauen:
 ( ) garage => arduino
 ( ) au temp (+regensensor)
-( ) chicken
-( ) codeschloss
+( ) codeschloss => garage
 
 ethernet:
 ( ) garagen fritzbox
