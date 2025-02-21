@@ -121,7 +121,7 @@ void setup_comm() {
     connect_server();
     message_buffer.reserve(100);
     last_try_connect = millis();
-    send_state(node_info.unit_name, "started");
+    send_state(node_info.unit_name, String(AUTO_VERSION));
 }
 
 void handle_couples(String name, int value) {

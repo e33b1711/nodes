@@ -6,15 +6,20 @@ allgemain
 (x) other temp
 (x) pwm
 (x) power
-( ) OTA
-( ) thermostat
-( ) delta-sigma valve, with light state
+( ) OTA atmrl
+( ) OTA esp32
+(x) thermostat
+(x) delta-sigma valve, with light state
 ( ) udp broadcasten
+( ) githash beim starten
+( ) toogle external instead couples
 
 ( esp) nodes:
 ( ) garage => arduino
 ( ) au temp (+regensensor)
 ( ) chicken
+( ) codeschloss
 
-( ) ethernet:
+ethernet:
 ( ) garagen fritzbox
+

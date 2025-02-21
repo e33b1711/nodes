@@ -8,6 +8,8 @@
 #include "pwm.h"
 #include "thermos.h"
 
+#include "version.h"
+
 #ifndef __TEST__
 const IPAddress ip(192, 168, 178, 218);
 const int port = 8880;

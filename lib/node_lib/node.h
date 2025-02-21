@@ -12,8 +12,6 @@ const int num_pins = 62;
 #endif
 #include <Arduino.h>
 
-#define __TEST__
-
 void init_debug();
 void setup_comm();
 void setup_watchdog();
@@ -69,5 +67,7 @@ extern node_t node_info;
 
 extern const int num_couples;
 extern couple_t couples[];
+
+extern const char* AUTO_VERSION;
 
 #endif

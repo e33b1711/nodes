@@ -8,7 +8,9 @@
 #include "valve.h"
 #include "pwm.h"
 #include "thermos.h"
+
 #include "secret.h"
+#include "version.h"
 
 
 #ifndef __TEST__
