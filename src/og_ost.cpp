@@ -32,8 +32,8 @@ temp_t temps[num_temps] = {
 
 const int num_thermos = 2;
 thermos_t thermos[num_thermos] = {
-        {"OG_BA", "V_OG_BA", 5, 50, 0.1, 60000, 20.5, 0.0, 0},
-        {"OG_SZ", "V_OG_SZ", 5, 50, 0.1, 60000, 20.5, 0.0, 0},
+        {"OG_BA", "V_OG_BA", 5, 50, 0.1, 60000, 24, 0.0, 0},
+        {"OG_SZ", "V_OG_SZ", 5, 50, 0.1, 60000, 16, 0.0, 0},
 };
 
 const int num_outputs = 12;

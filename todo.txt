@@ -16,6 +16,7 @@ allgemain
 (x) chicken node
 (x) garage node (as is esp32)
 (x) thermos auf megas
+( ) valve coupling
 (x) neue valves umbennen
 
 deployen:

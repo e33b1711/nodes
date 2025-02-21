@@ -47,13 +47,12 @@ temp_t temps[num_temps] = {
         {"UG_HS", 31, 0, 0, 0},  //
 };
 
-const int num_thermos = 5;
+const int num_thermos = 4;
 thermos_t thermos[num_thermos] = {
-        {"UG_WK", "V_UG_WK", 5, 50, 0.1, 60000, 20.5, 0.0, 0},
-        {"UG_HN", "V_UG_HN", 5, 50, 0.1, 60000, 20.5, 0.0, 0},
-        {"UG_LA", "V_UG_LA", 5, 50, 0.1, 60000, 20.5, 0.0, 0},
-        {"UG_GA", "V_UG_GA", 5, 50, 0.1, 60000, 20.5, 0.0, 0},
-        {"UG_HK", "V_UG_H1", 5, 50, 0.1, 60000, 20.5, 0.0, 0},
+        {"UG_WK", "V_UG_WK", 5, 50, 0.1, 60000, 24, 0.0, 0},
+        {"UG_HN", "V_UG_HN", 5, 50, 0.1, 60000, 20, 0.0, 0},
+        {"UG_LA", "V_UG_LA", 5, 50, 0.1, 60000, 18, 0.0, 0},
+        {"UG_GA", "V_UG_GA", 5, 50, 0.1, 60000, 18, 0.0, 0},
 };
 
 const int num_outputs = 8;

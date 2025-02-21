@@ -42,12 +42,12 @@ void update_one_thermos(int i) {
         return;
     }
 
-    float offset = thermos[i].target_temp * thermos[i].abs_weight;
-    float linear = (thermos[i].target_temp - temperature) * thermos[i].abs_weight;
+    float offset = base_valve + thermos[i].target_temp * thermos[i].abs_weight;
+    float linear = (thermos[i].target_temp - temperature) * thermos[i].lin_weight;
     thermos[i].int_value += (thermos[i].target_temp - temperature) * thermos[i].int_weight;
     thermos[i].int_value = cutoff(thermos[i].int_value, half_valve, half_valve * -1.0);
 
-    float setpoint = base_valve + offset + linear + thermos[i].int_value;
+    float setpoint = offset + linear + thermos[i].int_value;
     int i_setpoint = (int)cutoff(setpoint, full_valve, 0.0);
     send_command(thermos[i].valve, i_setpoint);
     send_state("IT_" + thermos[i].name, String(thermos[i].int_value));
