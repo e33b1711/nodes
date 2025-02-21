@@ -74,7 +74,7 @@ pwm_t pwms[num_pwms] = {};
 
 void user_logic() {
         simple(0, 3, "ZE_GR_0");
-        //coupling tor => innenbeleuchtung
-        //endlagen tor
-        //coupling vh => aussen
+        //TODO coupling tor => innenbeleuchtung
+        //TODO endlagen tor
+        //TODO coupling vh => aussen
 }

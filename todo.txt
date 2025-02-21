@@ -14,12 +14,23 @@ allgemain
 (x) githash beim starten
 (x) toogle external instead couples
 (x) chicken node
-( ) garage node (as is esp32)
+(x) garage node (as is esp32)
+( ) thermos auf arduinos
+( ) neue valves umbennen
+
+deployen:
+( ) garage
+( ) og
+( ) eg_
+( ) keller
+( ) chicken
 
 umbauen:
+( ) temp nodes
 ( ) garage => arduino
 ( ) au temp (+regensensor)
 ( ) codeschloss => garage
+( ) cheicken eval
 
 ethernet:
 ( ) garagen fritzbox

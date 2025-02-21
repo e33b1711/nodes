@@ -67,12 +67,12 @@ rollo_t rollos[num_rollos] = {};
 
 const int num_valves = 6;
 valve_t valves[num_valves] = {
-        {"U_UG_H1", 34, 0},  //
-        {"U_UG_LA", 35, 0},  //
-        {"U_UG_WK", 36, 0},  //
-        {"U_UG_H2", 37, 0},  //
-        {"U_UG_GA", 38, 0},  //
-        {"U_UG_H3", 39, 0},  //
+        {"V_UG_H1", 34, 0},  //
+        {"V_UG_LA", 35, 0},  //
+        {"V_UG_WK", 36, 0},  //
+        {"V_UG_H2", 37, 0},  //
+        {"V_UG_GA", 38, 0},  //
+        {"V_UG_H3", 39, 0},  //
 };
 
 const int num_timers = 1;
