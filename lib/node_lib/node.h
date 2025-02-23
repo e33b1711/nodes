@@ -12,6 +12,14 @@ const int num_pins = 62;
 #endif
 #include <Arduino.h>
 
+#ifndef __TEST__
+const IPAddress server(192, 168, 178, 23);
+const int port = 8888;
+#else
+const IPAddress server(192, 168, 178, 95);
+const int port = 8888;
+#endif
+
 void init_debug();
 void setup_comm();
 void setup_watchdog();
@@ -45,19 +53,11 @@ void execute_message(String type, String name, int value);
 void parse_message(String buffer, String &type, String &name, int &value);
 
 
-
-struct couple_t {
-    const String name;
-};
-
 struct node_t {
     const String unit_name;
-    const IPAddress ip;
     const IPAddress server;
     const int port;
-    const int ethernet_sc_pin;
-    const int ethernet_reset_pin;
-    uint8_t mac[];
+    uint8_t *mac;
 };
 
 extern const IPAddress ip;
@@ -66,8 +66,6 @@ extern const char *ssid;
 extern const char *pass;
 extern node_t node_info;
 
-extern const int num_couples;
-extern couple_t couples[];
 
 extern const String auto_version;
 

@@ -9,18 +9,17 @@
 #include "thermos.h"
 
 #include "version.h"
+#include "server.h"
 
 #ifndef __TEST__
-const IPAddress ip(192, 168, 178, 213);
-const int port = 8880;
+uint8_t mac[] =  {0xDE, 0xBB, 0x7E, 0xE1, 0xAA, 0x00};
 #else
-const IPAddress ip(192, 168, 178, 233);
-const int port = 8889;
+uint8_t mac[] =  {0xDE, 0xBB, 0x7E, 0xE1, 0xAB, 0x00};
 #endif
 
-const IPAddress server(192, 168, 178, 23);
+
 node_t node_info = {
-        "power", ip, server, port, 53, 12, {0x4E, 0xBB, 0x7E, 0xEF, 0xFE, 0x04},
+        "power", server, port, mac,
 };
 
 const int num_temps = 2;

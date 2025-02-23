@@ -64,11 +64,15 @@ bool connect_server() {
 #ifndef __esp32__
 #include <SPI.h>
 EthernetClient client;
+
+const int ethernet_sc_pin = 53;
+const int ethernet_reset_pin = 12;
+
 void init_hw() {
-    alloc_pin(node_info.ethernet_sc_pin);
-    alloc_pin(node_info.ethernet_reset_pin);
-    Ethernet.init(node_info.ethernet_sc_pin);
-    Ethernet.begin(node_info.mac, node_info.ip);
+    alloc_pin(ethernet_sc_pin);
+    alloc_pin(ethernet_reset_pin);
+    Ethernet.init(ethernet_sc_pin);
+    Ethernet.begin(node_info.mac);
     delay(500);
     if (Ethernet.hardwareStatus() == EthernetNoHardware) {
         Serial.println("FAILURE: Ethernet shield was not found.");

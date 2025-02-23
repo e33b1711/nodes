@@ -10,18 +10,17 @@
 
 #include "secret.h"
 #include "version.h"
+#include "server.h"
 
 #ifndef __TEST__
-const IPAddress ip(1, 1, 1, 1);
-const int port = 8880;
+uint8_t mac[] =  {0xDE, 0xBB, 0x7E, 0xE1, 0xBB, 0x02};
 #else
-const IPAddress ip(1, 1, 1, 1);
-const int port = 8889;
+uint8_t mac[] =  {0xDE, 0xBB, 0x7E, 0xE1, 0xBB, 0x02};
 #endif
 
-const IPAddress server(192, 168, 178, 23);
+
 node_t node_info = {
-        "garage", ip, server, port, 53, 12, {0xAA, 0xAA, 0xAA, 0xAA, 0xAA, 0xAA},
+        "gr", server, port, mac,
 };
 
 const int num_switches = 4;
