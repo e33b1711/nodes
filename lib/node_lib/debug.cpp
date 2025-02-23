@@ -48,8 +48,10 @@ void handle_debug() {
 }
 
 void init_debug() {
+    #ifndef __esp32__
     alloc_pin(0);
     alloc_pin(1);
+    #endif
     Serial.begin(115200);
     Serial.println("INFO: " + node_info.unit_name + " starting...");
     Serial.println("INFO: GIT revision:" + auto_version);

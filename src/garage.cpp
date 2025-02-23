@@ -43,7 +43,7 @@ thermos_t thermos[num_thermos] = {};
 
 const int num_outputs = 7;
 output_t outputs[num_outputs] = {
-        {"LI_GR", 4, 0, 0, 0},      //
+        {"LI_GR", 0, 0, 0, 0},      //
         {"LI_GR_L1", 21, 0, 0, 0},  //
         {"LI_GR_L2", 16, 0, 0, 0},  //
         {"LI_GR_L3", 17, 0, 0, 0},  //
