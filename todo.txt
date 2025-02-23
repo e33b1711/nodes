@@ -24,7 +24,7 @@ allgemain
 (x) lan DHCP / test config aufrÃ¤umen
 (x) reconnect testen esp
 (x) reconnect testen atmel
-( ) reset by switch 10 sec
+(x) reset by switch 10 sec
 (x) dht on esp
 
 deployen:
