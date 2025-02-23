@@ -1,7 +1,7 @@
 #include "node.h"
 
 unsigned long last_try_connect = 0;
-const int retry_period = 60000;
+const int retry_period = 10000;
 String message_buffer = "";
 String input_buffer = "";
 
@@ -57,6 +57,8 @@ bool connect_server() {
         Serial.println("ERROR: could not connect.");
         return false;
     }
+    Serial.println("INFO: Connected to Server.");
+    return true;
 }
 
 #endif
@@ -77,6 +79,9 @@ void init_hw() {
     if (Ethernet.hardwareStatus() == EthernetNoHardware) {
         Serial.println("FAILURE: Ethernet shield was not found.");
         while (true) delay(1);
+    } else{
+        Serial.print("INFO:IP: ");
+        Serial.println(Ethernet.localIP());
     }
 }
 

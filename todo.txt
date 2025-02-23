@@ -18,7 +18,14 @@ allgemain
 (x) thermos auf megas
 ( ) valve coupling
 (x) neue valves umbennen
-( ) dht fails first
+( ) dht fails initially
+( ) relay: dont forward states / python
+( ) logging 
+(x) lan DHCP / test config aufrÃ¤umen
+(x) reconnect testen esp
+(x) reconnect testen atmel
+( ) reset by switch 10 sec
+( ) dht on esp
 
 deployen:
 ( ) garage
