@@ -31,11 +31,11 @@ switch_t switches[num_switches] = {
         {"", false, 25, 0, 0, 0, false, false, false, false},       //
 };
 
-const int num_temps = 0;
+const int num_temps = 1;
 const long period_t = 60000;
 const int ds18b_pin = 61;
 temp_t temps[num_temps] = {
-        //{"GR", 22, 0, 0, 0},  // does dht22 work on esp32?
+        {"GR", 22, 0, 0, 0},  // does dht22 work on esp32?
 };
 
 const int num_thermos = 0;

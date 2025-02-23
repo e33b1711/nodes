@@ -25,7 +25,7 @@ allgemain
 (x) reconnect testen esp
 (x) reconnect testen atmel
 ( ) reset by switch 10 sec
-( ) dht on esp
+(x) dht on esp
 
 deployen:
 ( ) garage
