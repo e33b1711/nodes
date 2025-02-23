@@ -6,26 +6,30 @@ allgemain
 (x) other temp
 (x) pwm
 (x) power
-( ) OTA atmrl
-( ) OTA esp32
 (x) thermostat
 (x) delta-sigma valve, with light state
-( ) udp broadcasten
 (x) githash beim starten
 (x) toogle external instead couples
 (x) chicken node
 (x) garage node (as is esp32)
 (x) thermos auf megas
-( ) valve coupling
 (x) neue valves umbennen
-( ) dht fails initially
-( ) relay: dont forward states / python
-( ) logging 
 (x) lan DHCP / test config aufrÃ¤umen
 (x) reconnect testen esp
 (x) reconnect testen atmel
 (x) reset by switch 10 sec
 (x) dht on esp
+A ( ) optiboot 
+A ( ) reset by arduino (<> optiboot?)
+A ( ) git dirty flag
+A ( ) dht fails initially
+A ( ) relay: dont forward states / python
+B ( ) logging 
+A ( ) valve coupling
+B ( ) udp broadcasten
+B ( ) OTA atmrl
+B ( ) OTA esp32
+
 
 deployen:
 ( ) garage
@@ -42,5 +46,5 @@ umbauen:
 ( ) cheicken eval
 
 ethernet:
-( ) garagen fritzbox
+(x) garagen fritzbox
 

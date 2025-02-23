@@ -12,14 +12,16 @@
 #include "server.h"
 
 #ifndef __TEST__
-uint8_t mac[] =  {0xDE, 0xBB, 0x7E, 0xE1, 0xAA, 0x05};
+uint8_t mac[] = {0xDE, 0xBB, 0x7E, 0xE1, 0xAA, 0x05};
 #else
-uint8_t mac[] =  {0xDE, 0xBB, 0x7E, 0xE1, 0xAB, 0x05};
+uint8_t mac[] = {0xDE, 0xBB, 0x7E, 0xE1, 0xAB, 0x05};
 #endif
 
-
 node_t node_info = {
-        "og_west", server, port, mac,
+        "og_west",
+        server,
+        port,
+        mac,
 };
 
 const int num_temps = 3;
@@ -107,20 +109,20 @@ const int num_pwms = 0;
 pwm_t pwms[num_pwms] = {};
 
 void user_logic() {
-    long_short(15, "LI_OG_GA_L1", 3, "LI_OG_GA", 3);
+    long_short(15, "LI_OG_GA", 3, "LI_OG_GA_L1", 3);
     long_short(13, "DF_OG_GA", 0, "VD_OG_GA", 0);
     long_short(10, "DF_OG_GA", 100, "VD_OG_GA", 100);
-    long_short(1, "LI_OG_GA_L1", 3, "LI_OG_GA", 3);
+    long_short(1, "LI_OG_GA", 3, "LI_OG_GA_L1", 3);
     simple(14, 3, "LI_OG_KN");
     simple(9, 3, "LI_OG_KN_L1");
-    long_short(11, "DF_OG_KN", 100, "VD_OG_KN", 100);
-    long_short(8, "DF_OG_KN", 0, "VD_OG_KN", 0);
+    long_short(11, "VD_OG_KN", 100, "DF_OG_KN", 100);
+    long_short(8, "VD_OG_KN", 0, "DF_OG_KN", 0);
     rollo_lock(4, 0, "RO_OG_KN");
     rollo_lock(6, 100, "RO_OG_KN");
     simple(0, 3, "LI_OG_KS");
     simple(12, 3, "LI_OG_KS_L1");
-    long_short(2, "DF_OG_KS", 0, "VD_OG_KS", 0);
-    long_short(3, "DF_OG_KS", 100, "VD_OG_KS", 100);
+    long_short(2, "VD_OG_KS", 0, "DF_OG_KS", 0);
+    long_short(3, "VD_OG_KS", 100, "DF_OG_KS", 100);
     rollo_lock(5, 100, "RO_OG_KS");
     rollo_lock(7, 0, "RO_OG_KS");
 }

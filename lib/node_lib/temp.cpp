@@ -83,10 +83,12 @@ void setup_temps() {
 }
 
 void update_temps() {
-    if (s_time_t + (period_t) < millis()) {
-        s_time_t = millis();
-        handle_one_temp(this_temp);
-        this_temp = (this_temp + 1) % num_temps;
+    if (num_temps > 0) {
+        if (s_time_t + (period_t) < millis()) {
+            s_time_t = millis();
+            handle_one_temp(this_temp);
+            this_temp = (this_temp + 1) % num_temps;
+        }
     }
 }
 

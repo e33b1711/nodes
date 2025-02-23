@@ -42,7 +42,7 @@ void update_switches() {
         switches[this_switch].release_late = false;
         switches[this_switch].edge = (edge != 0);
 
-        if (edge != 0) {
+        if (edge == 1) {
             switches[this_switch].press = true;
             Serial.println("INFO: Switch: " + ident_string(this_switch) + " pressed.");
         }
@@ -54,7 +54,7 @@ void update_switches() {
                 switches[this_switch].release_late = true;
                 Serial.println("INFO: Switch: " + ident_string(this_switch) + " released late.");
             }
-            if (switches[this_switch].last_edge + 80000 > millis()) delay(10000); // restart by pressing switch 8 secs
+            if (switches[this_switch].last_edge + 80000 < millis()) delay(10000); // restart by pressing switch 8 secs
 
         }
         if (edge != 0) {
