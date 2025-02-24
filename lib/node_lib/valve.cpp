@@ -22,13 +22,15 @@ void update_valves() {
         for (int i = 0; i < num_valves; i++) {
             valves[i].sigmadelta += valves[i].value;
             if (valves[i].sigmadelta > 0) {
-                digitalWrite(valves[i].pin, LOW);
-                valves[i].sigmadelta -= (valve_max);
-            } else {
                 digitalWrite(valves[i].pin, HIGH);
+                valves[i].sigmadelta -= (valve_max);
+                Serial.println("DEBUG: HIGH " + valves[i].name);
+            } else {
+                digitalWrite(valves[i].pin, LOW);
+                Serial.println("DEBUG: LOW " + valves[i].name);
             }
-            //Serial.println("DEBUG: " + valves[i].name);
-            //Serial.println("DEBUG: sigmadelta " + String(valves[i].sigmadelta));
+           
+            Serial.println("DEBUG: sigmadelta " + String(valves[i].sigmadelta));
         }
     }
 }
@@ -36,7 +38,7 @@ void update_valves() {
 bool write_valve(String name, int value, bool silent) {
     for (int i = 0; i < num_valves; i++) {
         if (valves[i].name == name) {
-            if ((value >= 0) and (value < valve_max)) {
+            if ((value >= 0) and (value <= valve_max)) {
                 valves[i].value = value;
                 if (valves[i].couple != "") write_valve(valves[i].couple, value, false);
             }

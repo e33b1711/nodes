@@ -39,6 +39,7 @@ void update_one_thermos(int i) {
     if (temperature > 50 or temperature < -20 or isnan(temperature)) {
         Serial.println("ERROR: temp out of range. Setting 50%.");
         send_command(thermos[i].valve, half_valve);
+        write_any(thermos[i].valve, half_valve, false);
         return;
     }
 
@@ -50,6 +51,7 @@ void update_one_thermos(int i) {
     float setpoint = offset + linear + thermos[i].int_value;
     int i_setpoint = (int)cutoff(setpoint, full_valve, 0.0);
     send_command(thermos[i].valve, i_setpoint);
+    write_any(thermos[i].valve, i_setpoint, false);
     send_state("IT_" + thermos[i].name, String(thermos[i].int_value));
 
     Serial.println("DEBUG: update thermos " + thermos[i].name);
