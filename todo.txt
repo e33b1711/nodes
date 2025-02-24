@@ -26,6 +26,7 @@ A (x) reset by arduino (<> optiboot?)
 A (x) git dirty flag
 A (x) valve coupling
 
+A ( ) TODOs in code (garage)
 A ( ) wriet state => string / floats in thermos
 A ( ) remove wriet any silent
 
