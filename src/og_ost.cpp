@@ -12,14 +12,16 @@
 #include "server.h"
 
 #ifndef __TEST__
-uint8_t mac[] =  {0xDE, 0xBB, 0x7E, 0xE1, 0xAA, 0x04};
+uint8_t mac[] = {0xDE, 0xBB, 0x7E, 0xE1, 0xAA, 0x04};
 #else
-uint8_t mac[] =  {0xDE, 0xBB, 0x7E, 0xE1, 0xAB, 0x04};
+uint8_t mac[] = {0xDE, 0xBB, 0x7E, 0xE1, 0xAB, 0x04};
 #endif
 
-
 node_t node_info = {
-        "og_ost", server, port, mac,
+        "og_ost",
+        server,
+        port,
+        mac,
 };
 
 const int num_temps = 2;
@@ -61,11 +63,11 @@ rollo_t rollos[num_rollos] = {
 
 const int num_valves = 5;
 valve_t valves[num_valves] = {
-        {"V_OG_GA", 34, 0, 0},  // blau
-        {"V_OG_KS", 35, 0, 0},  // weiß
-        {"V_OG_KN", 36, 0, 0},  // grün
-        {"V_OG_BA", 37, 0, 0},  // rosa
-        {"V_OG_SZ", 38, 0, 0},  // grau
+        {"V_OG_GA", "", 34, 0, 0},  // blau
+        {"V_OG_KS", "", 35, 0, 0},  // weiß
+        {"V_OG_KN", "", 36, 0, 0},  // grün
+        {"V_OG_BA", "", 37, 0, 0},  // rosa
+        {"V_OG_SZ", "", 38, 0, 0},  // grau
 };
 
 const int num_switches = 16;

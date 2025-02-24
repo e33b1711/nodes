@@ -38,6 +38,7 @@ bool write_valve(String name, int value, bool silent) {
         if (valves[i].name == name) {
             if ((value >= 0) and (value < valve_max)) {
                 valves[i].value = value;
+                if (valves[i].couple != "") write_valve(valves[i].couple, value, false);
             }
             if (!silent)
                 send_state(name, valves[i].value);

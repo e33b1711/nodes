@@ -10,6 +10,7 @@ bool get_valve(String name, String &value);
 
 struct valve_t {
     const String name;
+    const String couple;
     const int pin;
     int value;
     int sigmadelta;

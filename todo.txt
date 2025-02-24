@@ -23,11 +23,12 @@ allgemain
 A (x) optiboot 
 A (x) reset by arduino (<> optiboot?)
 
-A ( ) git dirty flag
-A ( ) relay: dont forward states / python
-A ( ) valve coupling
+A (x) git dirty flag
+A (x) valve coupling
+
 A ( ) wriet state => string / floats in thermos
 A ( ) remove wriet any silent
+
 
 B ( ) dht fails initially
 B ( ) Rollo lock endlage zu oft 50
@@ -38,6 +39,10 @@ C ( ) OTA atmrl
 C ( ) OTA esp32
 C ( ) reset by switch
 
+
+python / oh:
+A ( ) relay: dont forward states / python
+A ( ) montitor new thermos
 
 deployen:
 ( ) garage
