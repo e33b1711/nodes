@@ -61,3 +61,12 @@ bool get_output(String name, int &value) {
     }
     return false;
 }
+
+int get_output(String name) {
+    for (int i = 0; i < num_outputs; i++) {
+        if (outputs[i].name == name) {
+            return outputs[i].value;
+        }
+    }
+    return 0;
+}

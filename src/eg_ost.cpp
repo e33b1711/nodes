@@ -48,13 +48,13 @@ temp_t temps[num_temps] = {};
 
 const int num_outputs = 8;
 output_t outputs[num_outputs] = {
-        {"LI_EG_WZ", 41, 1, 0, 0},     //
-        {"LI_EG_WZ_L1", 42, 1, 0, 0},  //
-        {"LI_EG_WC", 43, 1, 0, 0},     //
-        {"LI_GA_L1", 44, 1, 0, 0},     //
-        {"LI_EG_GR", 45, 1, 0, 0},     //
-        {"LI_EG_GA", 46, 1, 0, 0},     //
-        {"LI_EG_WZ_L2", 47, 1, 0, 0},  //
+        {"LI_EG_WZ", 42, 1, 0, 0},     //
+        {"LI_EG_WZ_L1", 43, 1, 0, 0},  //
+        {"LI_EG_WC", 44, 1, 0, 0},     //
+        {"LI_GA_L1", 45, 1, 0, 0},     //
+        {"LI_EG_GR", 46, 1, 0, 0},     //
+        {"LI_EG_GA", 47, 1, 0, 0},     //
+        {"LI_EG_WZ_L2", 48, 1, 0, 0},  //
         {"LI_EG_VH", 49, 1, 0, 0},     //
 }; 
 
@@ -82,21 +82,23 @@ const int num_pwms = 0;
 pwm_t pwms[num_pwms] = {};
 
 void user_logic() {
-    long_short(6, "LI_EG_GR", 3, "LI_EG_AO", 3);
+    long_short(6, "LI_EG_AO", 3, "LI_EG_GR", 3);
     toggle_couple(0, "LI_EG_GA");
     simple(0, 1, "ZE_EG_VH");
     simple(0, 1, "ZE_GR_2");
-    simple(4, 3, "LI_EG_GA");
+    toggle_couple(4, "LI_EG_GA");
     long_short(5, "LI_EG_WZ", 0, "LI_EG_WZ", 3);
-    long_short(5, "LI_EG_WZ_L1", 1, "LI_EG_WZ_L1", 3);
-    long_short(5, "LI_EG_WZ_L2", 0, "LI_EG_WZ_L2", 3);
+    long_short(5, "LI_EG_WZ_L1", 1, "LI_EG_WZ_L1", get_output("LI_EG_WZ"));
+    long_short(5, "LI_EG_WZ_L2", 0, "LI_EG_WZ_L2", get_output("LI_EG_WZ"));
+
     long_short(12, "LI_EG_WZ", 0, "LI_EG_WZ", 3);
-    long_short(12, "LI_EG_WZ_L1", 1, "LI_EG_WZ_L1", 3);
-    long_short(12, "LI_EG_WZ_L2", 0, "LI_EG_WZ_L2", 3);
-    long_short_extern(10, "LI_EG_EZ_KU", 3, "LI_EG_EZ_L3", 3);
-    simple_extern(9, 3, "LI_EG_WC");
-    long_short(15, "LI_OG_GA_L1", 3, "LI_OG_GA", 3);
-    long_short_extern(11, "DF_OG_GA", 100, "VD_OG_GA", 100);
-    long_short_extern(8, "DF_OG_GA", 0, "VD_OG_GA", 0);
+    long_short(12, "LI_EG_WZ_L1", 1, "LI_EG_WZ_L1", get_output("LI_EG_WZ"));
+    long_short(12, "LI_EG_WZ_L2", 0, "LI_EG_WZ_L2", get_output("LI_EG_WZ"));
+
+    long_short_extern(10, "LI_EG_EZ_KU_L3", 3, "LI_EG_EZ_KU", 3);
+    simple(9, 3, "LI_EG_WC");
+    long_short_extern(15, "LI_OG_GA", 3, "LI_OG_GA_L1", 3);
+    long_short_extern(11, "VD_OG_GA", 100, "DF_OG_GA", 100);
+    long_short_extern(8, "VD_OG_GA", 0, "DF_OG_GA", 0);
     simple_extern(13, 1, "ZE_BELL");
 }
