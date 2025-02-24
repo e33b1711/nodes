@@ -28,7 +28,7 @@ int get_edge(int value, int prev_value) {
 
 String ident_string(int this_switch) {
     if (switches[this_switch].name == "")
-        return "pin: " + String(switches[this_switch].pin);
+        return "number: " + String(this_switch);
     return switches[this_switch].name;
 }
 
