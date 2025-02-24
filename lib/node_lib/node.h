@@ -5,7 +5,7 @@
 #ifdef __esp32__
 #include <WiFi.h>
 #include <ESPmDNS.h>
-const int num_pins = 62;  // TODO esp32 pin alloc?
+const int num_pins = 36;
 #else
 #include <Ethernet.h>
 const int num_pins = 62;
