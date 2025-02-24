@@ -22,20 +22,21 @@ allgemain
 
 A (x) optiboot 
 A (x) reset by arduino (<> optiboot?)
-A ( ) Rollo lock endlage zu oft 50
+
 A ( ) git dirty flag
-A ( ) dht fails initially
 A ( ) relay: dont forward states / python
 A ( ) valve coupling
 A ( ) wriet state => string / floats in thermos
 A ( ) remove wriet any silent
 
-B ( ) logging 
-B ( ) udp broadcasten
-B ( ) OTA atmrl
-B ( ) OTA esp32
-B ( ) reset by switch
-B ( ) watchdog
+B ( ) dht fails initially
+B ( ) Rollo lock endlage zu oft 50
+
+C ( ) logging 
+C ( ) udp broadcasten
+C ( ) OTA atmrl
+C ( ) OTA esp32
+C ( ) reset by switch
 
 
 deployen:
