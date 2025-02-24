@@ -70,5 +70,6 @@ extern const char *pass;
 extern node_t node_info;
 
 extern const String auto_version;
+extern const bool dirty;
 
 #endif

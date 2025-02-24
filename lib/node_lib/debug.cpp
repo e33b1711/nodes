@@ -55,6 +55,8 @@ void init_debug() {
     Serial.begin(115200);
     Serial.println("INFO: " + node_info.unit_name + " starting...");
     Serial.println("INFO: GIT revision:" + auto_version);
+    if (dirty) Serial.println("WARNING: Dirty build!");
+
 #ifdef __TEST__
     Serial.println("WARNING: TEST BUILD!");
 #else
