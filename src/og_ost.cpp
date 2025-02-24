@@ -111,8 +111,8 @@ void user_logic() {
     long_short(1, "LI_OG_SZ", 0, "LI_OG_SZ_L2", 3);
     long_short(1, "LI_OG_SZ_L1", 0, "none", 0);
     long_short(1, "LI_OG_SZ_L2", 0, "none", 0);
-    long_short(7, "LI_OG_GA_L1", 3, "LI_OG_GA", 3);
-    long_short(9, "LI_OG_GA_L1", 3, "LI_OG_GA", 3);
+    long_short_extern(7, "LI_OG_GA", 3, "LI_OG_GA_L1", 3);
+    long_short_extern(9, "LI_OG_GA", 3, "LI_OG_GA_L1", 3);
     simple(10, 3, "LI_OG_BA");
     rollo_lock(11, 0, "RO_OG_BA");
     rollo_lock(8, 100, "RO_OG_BA");

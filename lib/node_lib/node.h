@@ -5,7 +5,7 @@
 #ifdef __esp32__
 #include <WiFi.h>
 #include <ESPmDNS.h>
-const int num_pins = 62;  //TODO esp32 pin alloc?
+const int num_pins = 62;  // TODO esp32 pin alloc?
 #else
 #include <Ethernet.h>
 const int num_pins = 62;
@@ -39,6 +39,13 @@ void long_short(const int b_index,
                 const int l_value,
                 const String l_short,
                 const int s_value);
+
+void long_short_extern(const int b_index,
+                       const String l_long,
+                       const int l_value,
+                       const String l_short,
+                       const int s_value);
+
 void simple(const int b_index, const int value, const String l);
 void rollo_lock(const int b_index, const int value, const String l);
 void toggle_couple(const int b_index, const String output);
@@ -52,7 +59,6 @@ int covert_value(String value_string);
 void execute_message(String type, String name, int value);
 void parse_message(String buffer, String &type, String &name, int &value);
 
-
 struct node_t {
     const String unit_name;
     const IPAddress server;
@@ -65,7 +71,6 @@ extern const IPAddress server;
 extern const char *ssid;
 extern const char *pass;
 extern node_t node_info;
-
 
 extern const String auto_version;
 

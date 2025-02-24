@@ -19,6 +19,7 @@ allgemain
 (x) reconnect testen atmel
 (x) reset by switch 10 sec
 (x) dht on esp
+A ( ) Rollo lock endlage zu oft 50
 A ( ) optiboot 
 A ( ) reset by arduino (<> optiboot?)
 A ( ) git dirty flag
