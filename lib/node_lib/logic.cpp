@@ -34,6 +34,12 @@ void simple(const int b_index, const int value, const String l) {
     }
 }
 
+void simple_extern(const int b_index, const int value, const String l) {
+    if (switches[b_index].press) {
+        send_command(l, value);
+    }
+}
+
 // roolo switch click for complete up/down / hold and release for partial up/down
 void rollo_lock(const int b_index, const int value, const String l) {
     if (switches[b_index].press){
@@ -54,6 +60,7 @@ void toggle_couple(const String output) {
         return;
     }
     send_command(output, not(value));
+    write_any(output, not(value), false);
 }
 
 // toggle a output that lives here and on another unit on press

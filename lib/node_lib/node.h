@@ -44,6 +44,7 @@ void long_short_extern(const int b_index,
                        const int s_value);
 
 void simple(const int b_index, const int value, const String l);
+void simple_extern(const int b_index, const int value, const String l);
 void rollo_lock(const int b_index, const int value, const String l);
 void toggle_couple(const int b_index, const String output);
 
