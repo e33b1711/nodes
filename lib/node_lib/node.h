@@ -22,9 +22,6 @@ const int port = 8888;
 
 void init_debug();
 void setup_comm();
-void setup_watchdog();
-
-void handle_watchdog();
 void handle_comm();
 void handle_debug();
 

@@ -19,11 +19,9 @@ void setup() {
     setup_timers();
     setup_outputs();
     setup_pwm();
-    setup_watchdog();
 }
 
 void loop() {
-    handle_watchdog();
     handle_comm();
     update_switches();
     update_temps();

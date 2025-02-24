@@ -19,17 +19,23 @@ allgemain
 (x) reconnect testen atmel
 (x) reset by switch 10 sec
 (x) dht on esp
+
+A (x) optiboot 
+A (x) reset by arduino (<> optiboot?)
 A ( ) Rollo lock endlage zu oft 50
-A ( ) optiboot 
-A ( ) reset by arduino (<> optiboot?)
 A ( ) git dirty flag
 A ( ) dht fails initially
 A ( ) relay: dont forward states / python
-B ( ) logging 
 A ( ) valve coupling
+A ( ) wriet state => string / floats in thermos
+A ( ) remove wriet any silent
+
+B ( ) logging 
 B ( ) udp broadcasten
 B ( ) OTA atmrl
 B ( ) OTA esp32
+B ( ) reset by switch
+B ( ) watchdog
 
 
 deployen:
@@ -45,6 +51,7 @@ umbauen:
 ( ) au temp (+regensensor)
 ( ) codeschloss => garage
 ( ) cheicken eval
+( ) taster im bad reparieren
 
 ethernet:
 (x) garagen fritzbox
