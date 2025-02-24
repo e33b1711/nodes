@@ -110,8 +110,8 @@ pwm_t pwms[num_pwms] = {};
 
 void user_logic() {
     long_short(15, "LI_OG_GA", 3, "LI_OG_GA_L1", 3);
-    long_short(13, "DF_OG_GA", 0, "VD_OG_GA", 0);
-    long_short(10, "DF_OG_GA", 100, "VD_OG_GA", 100);
+    long_short(13, "VD_OG_GA", 0, "DF_OG_GA", 0);
+    long_short(10, "VD_OG_GA", 100, "DF_OG_GA", 100);
     long_short(1, "LI_OG_GA", 3, "LI_OG_GA_L1", 3);
     simple(14, 3, "LI_OG_KN");
     simple(9, 3, "LI_OG_KN_L1");
