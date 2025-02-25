@@ -12,14 +12,16 @@
 #include "server.h"
 
 #ifndef __TEST__
-uint8_t mac[] =  {0xDE, 0xBB, 0x7E, 0xE1, 0xAA, 0x03};
+uint8_t mac[] = {0xDE, 0xBB, 0x7E, 0xE1, 0xAA, 0x03};
 #else
-uint8_t mac[] =  {0xDE, 0xBB, 0x7E, 0xE1, 0xAB, 0x03};
+uint8_t mac[] = {0xDE, 0xBB, 0x7E, 0xE1, 0xAB, 0x03};
 #endif
 
-
 node_t node_info = {
-        "eg_west", server, port, mac,
+        "eg_west",
+        server,
+        port,
+        mac,
 };
 
 const int num_switches = 16;
@@ -62,27 +64,27 @@ thermos_t thermos[num_thermos] = {
 const int num_outputs = 16;
 output_t outputs[num_outputs] = {
         {"LI_EG_EZ_KU", 34, 1, 0, 0},  //
-        {"LI_EG_SP",    35, 1, 0, 0},     //
-        {"LI_EG_AS",    36, 1, 0, 0},     //
+        {"LI_EG_SP", 35, 1, 0, 0},     //
+        {"LI_EG_AS", 36, 1, 0, 0},     //
         {"LI_EG_KU_L1", 37, 1, 0, 0},  //
         {"LI_EG_EZ_L1", 38, 1, 0, 0},  //
-        {"LI_EG_AO",    39, 1, 0, 0},     //
-        {"LI_EG_EZ",    40, 1, 0, 0},     //
-        {"LI_EG_AW",    41, 1, 0, 0},     //
+        {"LI_EG_AO", 39, 1, 0, 0},     //
+        {"LI_EG_EZ", 40, 1, 0, 0},     //
+        {"LI_EG_AW", 41, 1, 0, 0},     //
         {"RO_EG_WE_UP", 42, 1, 0, 0},  //
-        {"LI_GA_L1",    43, 1, 0, 0},     //
+        {"LI_GA_L1", 43, 1, 0, 0},     //
         {"RO_EG_SU_UP", 44, 1, 0, 0},  //
         {"RO_EG_SU_DO", 45, 1, 0, 0},  //
         {"LI_EG_EZ_KU", 46, 1, 0, 0},  //
         {"LI_EG_EZ_L3", 47, 1, 0, 0},  //
         {"RO_EG_WE_DO", 48, 1, 0, 0},  //
-        {"LI_EG_GA",    49, 1, 0, 0},     //
+        {"LI_EG_GA", 49, 1, 0, 0},     //
 };
 
 const int num_rollos = 2;
 rollo_t rollos[num_rollos] = {
-        {"RO_EG_SU", 31000, true, 50, 50, 0, false},
-        {"RO_EG_WE", 31000, true, 50, 50, 0, false},
+        {"RO_EG_SU", 31000, true, false, "", "", 50, 50, 0, false},
+        {"RO_EG_WE", 31000, true, false, "", "", 50, 50, 0, false},
 };
 
 const int num_valves = 0;

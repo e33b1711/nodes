@@ -7,13 +7,17 @@ void setup_rollos();
 
 bool write_rollo(String name, int value, bool silent);
 bool get_rollo(String name, String &value);
+int get_rollo(String name);
 
 struct rollo_t {
     const String name;
     const int duration;
     const bool is_rollo;
+    const bool has_stops;  //uses stop switches
+    const String switch_open;
+    const String switch_closed;
     int value;
-    int old_value;
+    int last_value;
     unsigned long stop_time;
     boolean stop_pending;
 };

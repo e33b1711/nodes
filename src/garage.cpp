@@ -13,22 +13,23 @@
 #include "server.h"
 
 #ifndef __TEST__
-uint8_t mac[] =  {0xDE, 0xBB, 0x7E, 0xE1, 0xBB, 0x02};
+uint8_t mac[] = {0xDE, 0xBB, 0x7E, 0xE1, 0xBB, 0x02};
 #else
-uint8_t mac[] =  {0xDE, 0xBB, 0x7E, 0xE1, 0xBB, 0x02};
+uint8_t mac[] = {0xDE, 0xBB, 0x7E, 0xE1, 0xBB, 0x02};
 #endif
 
-
 node_t node_info = {
-        "gr", server, port, mac,
+        "gr",
+        server,
+        port,
+        mac,
 };
 
-const int num_switches = 4;
+const int num_switches = 3;
 switch_t switches[num_switches] = {
-        {"innen", false, 14, 0, 0, 0, false, false, false, false},  //
-        {"", false, 27, 0, 0, 0, false, false, false, false},       //
-        {"", false, 26, 0, 0, 0, false, false, false, false},       //
-        {"", false, 25, 0, 0, 0, false, false, false, false},       //
+        {"innen", false, 14, 0, 0, 0, false, false, false, false},      //
+        {"GR_CLOSED", false, 27, 0, 0, 0, false, false, false, false},  //
+        {"GR_OPEN", false, 26, 0, 0, 0, false, false, false, false},    //
 };
 
 const int num_temps = 1;
@@ -55,7 +56,7 @@ output_t outputs[num_outputs] = {
 const int num_rollos = 1;
 
 rollo_t rollos[num_rollos] = {
-        {"DO_GR", 500, false, 50, 50, 0, false},
+        {"DO_GR", 500, false, true, "GR_CLOSED", "GR_OPEN", 50, 50, 0, false},
 };
 
 const int num_valves = 0;
@@ -65,15 +66,30 @@ const int num_timers = 3;
 ntimer_t timers[num_timers] = {
         {"ZE_GR_0", "LI_GR", false, false, 0, 120},
         {"ZE_GR_1", "LI_GR", false, false, 0, 600},
-        {"ZE_GR_2", "ZE_GR_2", false, false, 0, 180},
+        {"ZE_GR_2", "ZE_GR_2", false, false, 0, 120},
 };
 
 const int num_pwms = 0;
 pwm_t pwms[num_pwms] = {};
 
+void on_door_open() {
+    static int prev_value;
+    bool init = true;
+    if (init){
+        prev_value = get_rollo("DO_GR");
+        init = false;
+    }
+    if ((prev_value == -1) & (prev_value != get_rollo("DO_GR"))) {
+        write_any("ZE_GR_0", 1, false);
+        write_any("ZE_GR_2",1, false);
+        send_command("ZE_EG_VH",1);
+        Serial.println("DEBUG: trigger einfahrt licht.");
+    }
+    prev_value = get_rollo("DO_GR");
+}
+
 void user_logic() {
-        simple(0, 3, "ZE_GR_0");
-        //TODO coupling tor => innenbeleuchtung
-        //TODO endlagen tor
-        //TODO coupling vh => aussen
+    simple(0, 3, "ZE_GR_1");
+    // TODO coupling tor => innenbeleuchtung
+    // TODO coupling vh => aussen
 }

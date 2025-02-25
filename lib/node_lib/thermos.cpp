@@ -83,7 +83,7 @@ bool write_thermos(String name, int value, bool silent) {
     for (int i = 0; i < num_thermos; i++) {
         if ("TS_" + thermos[i].name == name) {
             float f_value = value;
-            thermos[i].target_temp = cutoff(f_value, 30.0, 10.0);  //TODO how to write .5 ?
+            thermos[i].target_temp = cutoff(f_value, 30.0, 10.0);
             thermos[i].int_value = 0;
             if (!silent)
                 send_state(name, String(thermos[i].target_temp));

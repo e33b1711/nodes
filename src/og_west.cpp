@@ -69,14 +69,14 @@ output_t outputs[num_outputs] = {
 
 const int num_rollos = 8;
 rollo_t rollos[num_rollos] = {
-        {"RO_OG_KN", 31000, true, 50, 50, 0, false},
-        {"RO_OG_KS", 31000, true, 50, 50, 0, false},
-        {"DF_OG_KN", 500, false, 50, 50, 0, false},
-        {"DF_OG_KS", 500, false, 50, 50, 0, false},
-        {"DF_OG_GA", 500, false, 50, 50, 0, false},
-        {"VD_OG_KS", 500, false, 50, 50, 0, false},
-        {"VD_OG_KN", 500, false, 50, 50, 0, false},
-        {"VD_OG_GA", 500, false, 50, 50, 0, false},
+        {"RO_OG_KN", 31000, true, false, "", "", 50, 50, 0, false},
+        {"RO_OG_KS", 31000, true, false, "", "", 50, 50, 0, false},
+        {"DF_OG_KN", 500, false, false, "", "", 50, 50, 0, false},
+        {"DF_OG_KS", 500, false, false, "", "", 50, 50, 0, false},
+        {"DF_OG_GA", 500, false, false, "", "", 50, 50, 0, false},
+        {"VD_OG_KS", 500, false, false, "", "", 50, 50, 0, false},
+        {"VD_OG_KN", 500, false, false, "", "", 50, 50, 0, false},
+        {"VD_OG_GA", 500, false, false, "", "", 50, 50, 0, false},
 };
 
 const int num_valves = 0;
