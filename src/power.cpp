@@ -36,7 +36,6 @@ thermos_t thermos[num_thermos] = {};
 const int num_switches = 2;
 switch_t switches[num_switches] = {
         {"F_HE", true, 57, 0, 0, 0, false, false, false, false},   // 0
-        {"F_WW", true, 56, 0, 0, 0, false, false, false, false},    // 1
 };
 
 const int num_outputs = 0;
@@ -70,22 +69,6 @@ void overtemp() {
         set_pwm_max("U_EL", 0);
 }
 
-void water_warning() {
-    // repeat water after one hour
-    const int switch_index = 1;
-    static unsigned long ww_time = 0;
-    const unsigned long ww_interval = 3600000;
-    bool sometime_ago
-            = ((ww_time + ww_interval) < millis()) and (switches[switch_index].value != 0);
-    if (switches[switch_index].press)
-        ww_time = millis();
-    if (sometime_ago) {
-        send_state("F_WW", switches[1].value);
-        ww_time = millis();
-    }
-}
-
 void user_logic() {
-    water_warning();
     overtemp();
 }
