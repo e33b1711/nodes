@@ -30,8 +30,9 @@ void update_temps() {
                     temps[i].temp_value = ds.getTempC();
                     temps[i].last_update = millis();
                     continue;
+                } else {
+                    Serial.println("WARNING: DS Address unknown.");
                 }
-                Serial.println("WARNING: DS Address unknown.");
             }
         }
         for (int i = 0; i < num_temps; i++) {

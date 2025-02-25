@@ -31,7 +31,7 @@ const int num_temps = 1;
 const long period_t = 60000;
 const int ds18b_pin = 61;
 temp_t temps[num_temps] = {
-        {"CH", 22, 0, 0, 0},  // does dht22 work on esp32?
+        {"CH", 22, 0, 0, 0},
 };
 
 const int num_thermos = 0;

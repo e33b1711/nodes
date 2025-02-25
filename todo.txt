@@ -33,6 +33,7 @@ A ( ) eval thermos / valves
 A (x) TODOs in code (garage)
 A ( ) wriet state => string / floats in thermos
 A ( ) remove wriet any silent
+A ( ) ater warning abwickeln
 
 
 B ( ) dht fails initially
