@@ -36,22 +36,21 @@ switch_t switches[num_switches] = {
         {"", false, 25, 0, 0, 0, false, false, false, false},  // 7 HS
 };
 
-const int num_temps = 6;
+const int num_temps = 5;
 const long period_t = 60000;
 const int ds18b_pin = 61;
 temp_t temps[num_temps] = {
         {"UG_WK", 26, 0, 0, 0},  //
-        {"UG_HN", 27, 0, 0, 0},  //
+        {"UG_HO", 27, 0, 0, 0},  //
         {"UG_LA", 28, 0, 0, 0},  //
         {"UG_GA", 29, 0, 0, 0},  //
         {"UG_HK", 30, 0, 0, 0},  //
-        {"UG_HS", 31, 0, 0, 0},  //
 };
 
 const int num_thermos = 4;
 thermos_t thermos[num_thermos] = {
         {"UG_WK", "V_UG_WK", 5, 50, 0.1, 60000, 24, 0.0, 0},
-        {"UG_HN", "V_UG_HN", 5, 50, 0.1, 60000, 20, 0.0, 0},
+        {"UG_HO", "V_UG_HO", 5, 50, 0.1, 60000, 20, 0.0, 0},
         {"UG_LA", "V_UG_LA", 5, 50, 0.1, 60000, 18, 0.0, 0},
         {"UG_GA", "V_UG_GA", 5, 50, 0.1, 60000, 18, 0.0, 0},
 };
@@ -73,7 +72,7 @@ rollo_t rollos[num_rollos] = {};
 
 const int num_valves = 6;
 valve_t valves[num_valves] = {
-        {"V_UG_H1", "V_UG_H2", 34, 0},  //
+        {"V_UG_HO", "V_UG_H2", 34, 0},  //
         {"V_UG_LA", "", 35, 0},         //
         {"V_UG_WK", "", 36, 0},         //
         {"V_UG_H2", "V_UG_H3", 37, 0},  //
