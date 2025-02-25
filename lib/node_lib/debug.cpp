@@ -29,7 +29,7 @@ void execute_message_dg(String type, String name, int value) {
         if (get_any(name, value_string))
             send_state_dg(name, value_string);
     } else if (type == "c") {
-        write_any(name, value, false);
+        write_any(name, value);
     }
 }
 

@@ -144,7 +144,7 @@ void execute_message(String type, String name, int value) {
         if (get_any(name, value_string))
             send_state(name, value_string);
     } else if (type == "c") {
-        write_any(name, value, false);
+        write_any(name, value);
     }
 }
 

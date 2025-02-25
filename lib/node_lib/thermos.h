@@ -5,7 +5,7 @@
 void update_thermos();
 void setup_thermos();
 bool get_thermos(String name, String &String);
-bool write_thermos(String name, int value, bool silent);
+bool write_thermos(String name, int value);
 
 struct thermos_t {
     const String name;      //same as a temp on same unit

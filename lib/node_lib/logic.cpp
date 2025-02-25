@@ -10,9 +10,9 @@ void long_short(const int b_index,
                 const String l_short,
                 const int s_value) {
     if (switches[b_index].release_late)
-        write_any(l_long, l_value, false);
+        write_any(l_long, l_value);
     if (switches[b_index].release_early)
-        write_any(l_short, s_value, false);
+        write_any(l_short, s_value);
 }
 
 // switch with long / short press
@@ -30,7 +30,7 @@ void long_short_extern(const int b_index,
 // simple switch to output state
 void simple(const int b_index, const int value, const String l) {
     if (switches[b_index].press) {
-        write_any(l, value, false);
+        write_any(l, value);
     }
 }
 
@@ -43,11 +43,11 @@ void simple_extern(const int b_index, const int value, const String l) {
 // roolo switch click for complete up/down / hold and release for partial up/down
 void rollo_lock(const int b_index, const int value, const String l) {
     if (switches[b_index].press){
-        write_rollo(l, value, false);
+        write_rollo(l, value);
         Serial.println("DEBUG: rollo_lock press: " + l + " " + String(value));
     }
     if (switches[b_index].release_late){
-        write_rollo(l, 50, false);
+        write_rollo(l, 50);
         Serial.println("DEBUG: rollo_lock release_late: " + l + " " + 50);
     }
 }
@@ -60,7 +60,7 @@ void toggle_couple(const String output) {
         return;
     }
     send_command(output, not(value));
-    write_any(output, not(value), false);
+    write_any(output, not(value));
 }
 
 // toggle a output that lives here and on another unit on press

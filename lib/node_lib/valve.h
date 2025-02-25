@@ -5,7 +5,7 @@
 void setup_valves();
 void update_valves();
 
-bool write_valve(String name, int value, bool silent);
+bool write_valve(String name, int value);
 bool get_valve(String name, String &value);
 
 struct valve_t {

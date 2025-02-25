@@ -15,14 +15,14 @@ void update_timer(int i) {
     if (timers[i].value and !timers[i].running) {
         timers[i].running = true;
         timers[i].set_time = millis();
-        write_any(timers[i].slave, 1, false);
+        write_any(timers[i].slave, 1);
     }
     // timer: running
     if (timers[i].value and timers[i].running) {
         if ((timers[i].set_time + 1000 * timers[i].duration) < millis()) {
             timers[i].running = false;
             timers[i].value = false;
-            write_any(timers[i].slave, 0, false);
+            write_any(timers[i].slave, 0);
             send_state(timers[i].name, timers[i].value);
         }
     }
@@ -30,7 +30,7 @@ void update_timer(int i) {
     // timer: running
     if (!timers[i].value and timers[i].running) {
         timers[i].running = false;
-        write_any(timers[i].slave, 0, false);
+        write_any(timers[i].slave, 0);
     }
 }
 
@@ -38,7 +38,7 @@ void handle_timers() {
     for (int i = 0; i < num_timers; i++) update_timer(i);
 }
 
-bool write_timer(String name, int value, bool silent) {
+bool write_timer(String name, int value) {
     for (int i = 0; i < num_timers; i++) {
         if (timers[i].name == name) {
             timers[i].set_time = millis();
@@ -53,8 +53,7 @@ bool write_timer(String name, int value, bool silent) {
                     timers[i].value = not(timers[i].value);
                     break;
             }
-            if (!silent)
-                send_state(name, timers[i].value);
+            send_state(name, timers[i].value);
             return true;
         }
     }

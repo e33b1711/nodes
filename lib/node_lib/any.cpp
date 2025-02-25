@@ -9,18 +9,18 @@
 #include "thermos.h"
 #include "switch.h"
 
-bool write_any(String name, int value, bool silent) {
-    if (write_valve(name, value, silent))
+bool write_any(String name, int value) {
+    if (write_valve(name, value))
         return true;
-    if (write_output(name, value, silent))
+    if (write_output(name, value))
         return true;
-    if (write_rollo(name, value, silent))
+    if (write_rollo(name, value))
         return true;
-    if (write_timer(name, value, silent))
+    if (write_timer(name, value))
         return true;
-    if (write_pwm(name, value, silent))
+    if (write_pwm(name, value))
         return true;
-    if (write_thermos(name, value, silent))
+    if (write_thermos(name, value))
         return true;
     return false;
 }

@@ -29,21 +29,21 @@ void update_valves() {
                 digitalWrite(valves[i].pin, LOW);
                 Serial.println("DEBUG: LOW " + valves[i].name);
             }
-           
+
             Serial.println("DEBUG: sigmadelta " + String(valves[i].sigmadelta));
         }
     }
 }
 
-bool write_valve(String name, int value, bool silent) {
+bool write_valve(String name, int value) {
     for (int i = 0; i < num_valves; i++) {
         if (valves[i].name == name) {
             if ((value >= 0) and (value <= valve_max)) {
                 valves[i].value = value;
-                if (valves[i].couple != "") write_valve(valves[i].couple, value, false);
+                if (valves[i].couple != "")
+                    write_valve(valves[i].couple, value);
             }
-            if (!silent)
-                send_state(name, valves[i].value);
+            send_state(name, valves[i].value);
             return true;
         }
     }

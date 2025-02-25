@@ -5,7 +5,7 @@
 void setup_timers();
 void handle_timers();
 
-bool write_timer(String name, int value, bool silent);
+bool write_timer(String name, int value);
 bool get_timer(String name, String &value);
 
 struct ntimer_t {

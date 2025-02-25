@@ -18,27 +18,27 @@ void update_rollos() {
             rollos[i].last_value = rollos[i].value;
             switch (rollos[i].value) {
                 case 0:
-                    write_any(l_up, 1, false);
-                    write_any(l_down, 0, false);
+                    write_any(l_up, 1);
+                    write_any(l_down, 0);
                     rollos[i].stop_time = millis() + rollos[i].duration;
                     rollos[i].stop_pending = true;
                     break;
                 case 100:
-                    write_any(l_up, rollos[i].is_rollo, false);
-                    write_any(l_down, 1, false);
+                    write_any(l_up, rollos[i].is_rollo);
+                    write_any(l_down, 1);
                     rollos[i].stop_time = millis() + rollos[i].duration;
                     rollos[i].stop_pending = true;
                     break;
                 default:
-                    write_any(l_up, 0, false);
-                    write_any(l_down, 0, false);
+                    write_any(l_up, 0);
+                    write_any(l_down, 0);
             }
         }
 
         if (rollos[i].stop_pending and rollos[i].stop_time < millis()) {
             rollos[i].stop_pending = false;
-            write_any(l_up, 0, false);
-            write_any(l_down, 0, false);
+            write_any(l_up, 0);
+            write_any(l_down, 0);
         }
 
         if (rollos[i].has_stops) {
@@ -65,7 +65,7 @@ void update_rollos() {
     }
 }
 
-bool write_rollo(String name, int value, bool silent) {
+bool write_rollo(String name, int value) {
     for (int i = 0; i < num_rollos; i++) {
         if (rollos[i].name == name) {
             if (rollos[i].is_rollo)

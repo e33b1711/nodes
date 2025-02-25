@@ -18,7 +18,7 @@ void update_outputs() {
     }
 }
 
-bool write_output(String name, int value, bool silent) {
+bool write_output(String name, int value) {
     bool found = false;
     for (int i = 0; i < num_outputs; i++) {
         if (outputs[i].name == name) {
@@ -34,8 +34,7 @@ bool write_output(String name, int value, bool silent) {
                     outputs[i].value = not(outputs[i].value);
                     break;
             }
-            if (!silent)
-                send_state(name, outputs[i].value);
+            send_state(name, outputs[i].value);
             found =  true;
         }
     }

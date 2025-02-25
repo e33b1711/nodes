@@ -30,8 +30,7 @@ A (x) check name of thermos and valves (like rooms + hidden slaves)
 A (x) redundant names in rollos and others
 A (x) TODOs in code (garage)
 A ( ) wriet state => string / floats in thermos
-A ( ) remove wriet any silent
-A ( ) ater warning abwickeln
+A (x) remove wriet any silent
 A ( ) git revision on sucessfull reconnect
 
 deployen:
@@ -62,6 +61,7 @@ A ( ) VD OG GA
 A ( ) rules => noedes
 A ( ) how to turn off thermos
 A (x) monitor git hashes
+A ( ) ater warning abwickeln
 
 
 

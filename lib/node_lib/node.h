@@ -50,7 +50,7 @@ void toggle_couple(const int b_index, const String output);
 
 void alloc_pin(int pin);
 
-bool write_any(String address, int value, bool silent);
+bool write_any(String address, int value);
 bool get_any(String name, String &value);
 
 int covert_value(String value_string);
