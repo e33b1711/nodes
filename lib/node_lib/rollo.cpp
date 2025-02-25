@@ -45,13 +45,17 @@ void update_rollos() {
             bool open = get_switch(rollos[i].switch_open);
             bool closed = get_switch(rollos[i].switch_closed);
             int new_val = 50;
-            if (open and !closed)
+            if (open and !closed) //TODO polarity seems false. 100 is down not up
                 new_val = 100;
             if (!open and closed)
                 new_val = 0;
-            if (open and closed)
-            //some static guard
-                Serial.println("ERROR Rollo with stops:: both are HIGH.");
+            static bool trapped = false;
+            if (open and closed and !trapped) {
+                trapped = true;
+                Serial.println("ERROR Rollo with stops: open and closed");
+            } else {
+                trapped = false;
+            }
             if (rollos[i].value != new_val) {
                 rollos[i].value = new_val;
                 rollos[i].last_value = new_val;
@@ -66,7 +70,6 @@ bool write_rollo(String name, int value, bool silent) {
         if (rollos[i].name == name) {
             if (rollos[i].is_rollo)
                 rollos[i].value = 50;
-
             if (value == 100)
                 rollos[i].value = 100;
             if (value == 0)
