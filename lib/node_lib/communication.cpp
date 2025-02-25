@@ -130,7 +130,8 @@ void setup_comm() {
     connect_server();
     message_buffer.reserve(100);
     last_try_connect = millis();
-    send_state(node_info.unit_name, String(auto_version));
+    if (dirty) send_state(node_info.unit_name, "dirty_" + String(auto_version.substring(0,8)));
+    else send_state(node_info.unit_name, String(auto_version.substring(0,8)));
 }
 
 void execute_message(String type, String name, int value) {
