@@ -58,7 +58,7 @@ deployen:
 (x) ( )garage
 (x) ( )og
 (x) ( )eg
-( ) ( )keller
+(x) ( )keller
 ( ) ( )chicken
 
 umbauen:

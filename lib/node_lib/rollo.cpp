@@ -1,6 +1,7 @@
 #include "node.h"
 #include "rollo.h"
 #include "output.h"
+#include "switch.h"
 
 void setup_rollos() {
     for (int i = 0; i < num_rollos; i++) {
@@ -41,17 +42,19 @@ void update_rollos() {
         }
 
         if (rollos[i].has_stops) {
-            bool open = get_output(rollos[i].switch_open);
-            bool closed = get_output(rollos[i].switch_closed);
+            bool open = get_switch(rollos[i].switch_open);
+            bool closed = get_switch(rollos[i].switch_closed);
             int new_val = 50;
             if (open and !closed)
-                new_val = 0;
+                new_val = 100;
             if (!open and closed)
                 new_val = 0;
             if (open and closed)
+            //some static guard
                 Serial.println("ERROR Rollo with stops:: both are HIGH.");
             if (rollos[i].value != new_val) {
                 rollos[i].value = new_val;
+                rollos[i].last_value = new_val;
                 send_state(rollos[i].name, rollos[i].value);
             }
         }
@@ -63,6 +66,7 @@ bool write_rollo(String name, int value, bool silent) {
         if (rollos[i].name == name) {
             if (rollos[i].is_rollo)
                 rollos[i].value = 50;
+
             if (value == 100)
                 rollos[i].value = 100;
             if (value == 0)
@@ -90,5 +94,6 @@ int get_rollo(String name) {
             return rollos[i].value;
         }
     }
+    Serial.println("WARNING: no such rollo.");
     return 300;
 }

@@ -49,8 +49,8 @@ output_t outputs[num_outputs] = {
         {"LI_GR_L2", 16, 0, 0, 0},  //
         {"LI_GR_L3", 17, 0, 0, 0},  //
         {"LI_GR_L4", 5, 0, 0, 0},   //
-        {"DO_GR_UP", 18, 0, 0, 0},  //
         {"DO_GR_DO", 19, 0, 0, 0},  //
+        {"DO_GR_UP", 18, 0, 0, 0},  //
 };
 
 const int num_rollos = 1;
@@ -74,12 +74,12 @@ pwm_t pwms[num_pwms] = {};
 
 void on_door_open() {
     static int prev_value;
-    bool init = true;
+    static bool init = true;
     if (init){
         prev_value = get_rollo("DO_GR");
         init = false;
     }
-    if ((prev_value == -1) & (prev_value != get_rollo("DO_GR"))) {
+    if ((prev_value == 100) & (prev_value != get_rollo("DO_GR"))) {
         write_any("ZE_GR_0", 1, false);
         write_any("ZE_GR_2",1, false);
         send_command("ZE_EG_VH",1);
@@ -90,6 +90,5 @@ void on_door_open() {
 
 void user_logic() {
     simple(0, 3, "ZE_GR_1");
-    // TODO coupling tor => innenbeleuchtung
-    // TODO coupling vh => aussen
+    on_door_open();
 }

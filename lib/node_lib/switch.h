@@ -5,6 +5,7 @@
 void setup_switches();
 void update_switches();
 bool get_switch(String name, String &value);
+int get_switch(String name);
 
 struct switch_t {
     const String name;

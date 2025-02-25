@@ -78,3 +78,12 @@ bool get_switch(String name, String &value) {
     }
     return false;
 }
+
+int get_switch(String name){
+    for (int i = 0; i < num_switches; i++) {
+        if (switches[i].name == name) {
+            return switches[i].value;
+        }
+    }
+    return -99;
+}
