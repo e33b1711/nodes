@@ -29,9 +29,9 @@ A (x) valve coupling
 A (x) check name of thermos and valves (like rooms + hidden slaves)
 A (x) redundant names in rollos and others
 A (x) TODOs in code (garage)
-A ( ) wriet state => string / floats in thermos
+A ( ) write state => string / floats in thermos
 A (x) remove wriet any silent
-A ( ) git revision on sucessfull reconnect
+A (x) git revision on sucessfull reconnect
 
 deployen:
 (x) ( )garage

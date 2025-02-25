@@ -5,6 +5,11 @@ const int retry_period = 10000;
 String message_buffer = "";
 String input_buffer = "";
 
+void send_git_revision(){
+    if (dirty) send_state(node_info.unit_name, "dirty_" + String(auto_version.substring(0,8)));
+    else send_state(node_info.unit_name, String(auto_version.substring(0,8)));
+}
+
 #ifdef __esp32__
 
 #include <WiFi.h>
@@ -58,6 +63,7 @@ bool connect_server() {
         return false;
     }
     Serial.println("INFO: Connected to Server.");
+    send_git_revision();
     return true;
 }
 
@@ -96,6 +102,7 @@ bool connect_server() {
         return false;
     }
     Serial.println("INFO: Connected to Server.");
+    send_git_revision();
     return true;
 }
 
@@ -130,8 +137,6 @@ void setup_comm() {
     connect_server();
     message_buffer.reserve(100);
     last_try_connect = millis();
-    if (dirty) send_state(node_info.unit_name, "dirty_" + String(auto_version.substring(0,8)));
-    else send_state(node_info.unit_name, String(auto_version.substring(0,8)));
 }
 
 void execute_message(String type, String name, int value) {
