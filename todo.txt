@@ -26,7 +26,7 @@ A (x) reset by arduino (<> optiboot?)
 A (x) git dirty flag
 A (x) valve coupling
 
-A ( ) check name of thermos and valves (like rooms + hidden slaves)
+A (x) check name of thermos and valves (like rooms + hidden slaves)
 A ( ) eval: commands back to unit <> write_any / send command
 A ( ) redundant names in rollos and others
 A ( ) eval thermos / valves
@@ -47,9 +47,11 @@ C ( ) reset by switch
 
 python / oh:
 A ( ) relay: dont forward states / python
-A ( ) montitor new thermos / set target temps
+A (x) montitor new thermos / set target temps
+A ( ) VD OG GA
+A ( ) rules => noedes
 A ( ) how to turn off thermos
-A ( ) monitor git hashes
+A (x) monitor git hashes
 
 deployen:
 (x) ( )garage

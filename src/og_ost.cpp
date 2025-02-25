@@ -39,14 +39,14 @@ thermos_t thermos[num_thermos] = {
 
 const int num_outputs = 12;
 output_t outputs[num_outputs] = {
-        {"RO_OG_SZ_ON", 41, 1, 0, 0},  //
+        {"RO_OG_SZ_UP", 41, 1, 0, 0},  //
         {"LI_OG_BA", 42, 1, 0, 0},     //
         {"RO_OG_BA_DO", 43, 1, 0, 0},  //
         {"LI_OG_SZ", 44, 1, 0, 0},     //
         {"LI_OG_SZ_L2", 45, 1, 0, 0},  //
         {"RO_OG_SZ_DO", 46, 1, 0, 0},  //
         {"LI_OG_SZ_L1", 47, 1, 0, 0},  //
-        {"RO_OG_BA_ON", 49, 1, 0, 0},  //
+        {"RO_OG_BA_UP", 49, 1, 0, 0},  //
         {"VD_OG_SZ_DO", 58, 0, 0, 0},  //
         {"DF_OG_SZ_DO", 59, 0, 0, 0},  //
         {"VD_OG_SZ_UP", 60, 0, 0, 0},  //
@@ -55,10 +55,10 @@ output_t outputs[num_outputs] = {
 
 const int num_rollos = 4;
 rollo_t rollos[num_rollos] = {
-        {"RO_OG_SZ", "RO_OG_SZ_ON", "RO_OG_SZ_DO", 31000, true, 50, 50, 0, false},
-        {"RO_OG_BA", "RO_OG_BA_ON", "RO_OG_BA_DO", 31000, true, 50, 50, 0, false},
-        {"DF_OG_SZ", "DF_OG_SZ_UP", "DF_OG_SZ_DO", 500, false, 50, 50, 0, false},
-        {"VD_OG_SZ", "VD_OG_SZ_UP", "VD_OG_SZ_DO", 500, false, 50, 50, 0, false},
+        {"RO_OG_SZ", 31000, true, 50, 50, 0, false},
+        {"RO_OG_BA", 31000, true, 50, 50, 0, false},
+        {"DF_OG_SZ", 500, false, 50, 50, 0, false},
+        {"VD_OG_SZ", 500, false, 50, 50, 0, false},
 };
 
 const int num_valves = 5;

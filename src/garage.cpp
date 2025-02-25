@@ -55,7 +55,7 @@ output_t outputs[num_outputs] = {
 const int num_rollos = 1;
 
 rollo_t rollos[num_rollos] = {
-        {"DO_GR", "DO_GR_UP", "DO_GR_DO", 500, false, 50, 50, 0, false},
+        {"DO_GR", 500, false, 50, 50, 0, false},
 };
 
 const int num_valves = 0;

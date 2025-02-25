@@ -44,11 +44,11 @@ output_t outputs[num_outputs] = {
         {"LI_34", 34, 1, 0, 0},        //
         {"RO_OG_KS_DO", 35, 1, 0, 0},  //
         {"LI_OG_KS", 36, 1, 0, 0},     //
-        {"RO_OG_KS_ON", 37, 1, 0, 0},  //
+        {"RO_OG_KS_UP", 37, 1, 0, 0},  //
         {"LI_OG_KS_L1", 42, 1, 0, 0},  //
         {"LI_OG_KN_L1", 43, 1, 0, 0},  //
         {"LI_OG_KN", 44, 1, 0, 0},     //
-        {"RO_OG_KN_ON", 45, 1, 0, 0},  //
+        {"RO_OG_KN_UP", 45, 1, 0, 0},  //
         {"LI_GA_L1", 46, 1, 0, 0},     //
         {"RO_OG_KN_DO", 47, 1, 0, 0},  //
         {"LI_OG_GA_L1", 48, 1, 0, 0},  //
@@ -69,14 +69,14 @@ output_t outputs[num_outputs] = {
 
 const int num_rollos = 8;
 rollo_t rollos[num_rollos] = {
-        {"RO_OG_KN", "RO_OG_KN_ON", "RO_OG_KN_DO", 31000, true, 50, 50, 0, false},
-        {"RO_OG_KS", "RO_OG_KS_ON", "RO_OG_KS_DO", 31000, true, 50, 50, 0, false},
-        {"DF_OG_KN", "DF_OG_KN_UP", "DF_OG_KN_DO", 500, false, 50, 50, 0, false},
-        {"DF_OG_KS", "DF_OG_KS_UP", "DF_OG_KS_DO", 500, false, 50, 50, 0, false},
-        {"DF_OG_GA", "DF_OG_GA_UP", "DF_OG_GA_DO", 500, false, 50, 50, 0, false},
-        {"VD_OG_KS", "VD_OG_KS_UP", "VD_OG_KS_DO", 500, false, 50, 50, 0, false},
-        {"VD_OG_KN", "VD_OG_KN_UP", "VD_OG_KN_DO", 500, false, 50, 50, 0, false},
-        {"VD_OG_GA", "VD_OG_GA_UP", "VD_OG_GA_DO", 500, false, 50, 50, 0, false},
+        {"RO_OG_KN", 31000, true, 50, 50, 0, false},
+        {"RO_OG_KS", 31000, true, 50, 50, 0, false},
+        {"DF_OG_KN", 500, false, 50, 50, 0, false},
+        {"DF_OG_KS", 500, false, 50, 50, 0, false},
+        {"DF_OG_GA", 500, false, 50, 50, 0, false},
+        {"VD_OG_KS", 500, false, 50, 50, 0, false},
+        {"VD_OG_KN", 500, false, 50, 50, 0, false},
+        {"VD_OG_GA", 500, false, 50, 50, 0, false},
 };
 
 const int num_valves = 0;

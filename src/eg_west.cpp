@@ -69,9 +69,9 @@ output_t outputs[num_outputs] = {
         {"LI_EG_AO",    39, 1, 0, 0},     //
         {"LI_EG_EZ",    40, 1, 0, 0},     //
         {"LI_EG_AW",    41, 1, 0, 0},     //
-        {"RO_EG_WE_ON", 42, 1, 0, 0},  //
+        {"RO_EG_WE_UP", 42, 1, 0, 0},  //
         {"LI_GA_L1",    43, 1, 0, 0},     //
-        {"RO_EG_SU_ON", 44, 1, 0, 0},  //
+        {"RO_EG_SU_UP", 44, 1, 0, 0},  //
         {"RO_EG_SU_DO", 45, 1, 0, 0},  //
         {"LI_EG_EZ_KU", 46, 1, 0, 0},  //
         {"LI_EG_EZ_L3", 47, 1, 0, 0},  //
@@ -81,8 +81,8 @@ output_t outputs[num_outputs] = {
 
 const int num_rollos = 2;
 rollo_t rollos[num_rollos] = {
-        {"RO_EG_SU", "RO_EG_SU_ON", "RO_EG_SU_DO", 31000, true, 50, 50, 0, false},
-        {"RO_EG_WE", "RO_EG_WE_ON", "RO_EG_WE_DO", 31000, true, 50, 50, 0, false},
+        {"RO_EG_SU", 31000, true, 50, 50, 0, false},
+        {"RO_EG_WE", 31000, true, 50, 50, 0, false},
 };
 
 const int num_valves = 0;

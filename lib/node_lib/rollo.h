@@ -10,8 +10,6 @@ bool get_rollo(String name, String &value);
 
 struct rollo_t {
     const String name;
-    const String l_up;
-    const String l_down;
     const int duration;
     const bool is_rollo;
     int value;
