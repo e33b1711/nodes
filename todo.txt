@@ -43,6 +43,7 @@ deployen:
 
 A ( ) eval: commands back to unit <> write_any / send command
 A ( ) eval thermos / valves
+A (x) still no git rev from garage
 
 
 B ( ) dht fails initially
