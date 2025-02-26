@@ -33,7 +33,7 @@ temp_t temps[num_temps] = {
 const int num_thermos = 0;
 thermos_t thermos[num_thermos] = {};
 
-const int num_switches = 2;
+const int num_switches = 1;
 switch_t switches[num_switches] = {
         {"F_HE", true, 57, 0, 0, 0, false, false, false, false},   // 0
 };

@@ -12,12 +12,7 @@
 #include "version.h"
 #include "server.h"
 
-#ifndef __TEST__
-uint8_t mac[] = {0xDE, 0xBB, 0x7E, 0xE1, 0xBB, 0x02};
-#else
-uint8_t mac[] = {0xDE, 0xBB, 0x7E, 0xE1, 0xBB, 0x02};
-#endif
-
+uint8_t mac[] =  {0x00, 0x00, 0x00, 0x00, 0x00, 0x00}; //unused on esp32
 node_t node_info = {
         "gr",
         server,
@@ -66,7 +61,7 @@ const int num_timers = 3;
 ntimer_t timers[num_timers] = {
         {"ZE_GR_0", "LI_GR", false, false, 0, 120},
         {"ZE_GR_1", "LI_GR", false, false, 0, 600},
-        {"ZE_GR_2", "LI_GR_2", false, false, 0, 120},
+        {"ZE_GR_2", "LI_GR_L2", false, false, 0, 120},
 };
 
 const int num_pwms = 0;
