@@ -10,7 +10,7 @@
 SHT31 sht;
 
 void setup_temps() {
-    Serial.print("INFO: setup temps sht31");
+    Serial.println("INFO: setup temps sht31");
     if (num_temps == 0)
         return;
     if (num_temps > 1) {
