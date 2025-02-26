@@ -5,6 +5,7 @@
 void update_rollos();
 void setup_rollos();
 
+bool write_rollo(String name, String val_str);
 bool write_rollo(String name, int value);
 bool get_rollo(String name, String &value);
 int get_rollo(String name);

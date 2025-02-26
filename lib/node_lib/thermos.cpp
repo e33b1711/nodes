@@ -1,6 +1,7 @@
 #include "node.h"
 #include "thermos.h"
 #include "temp.h"
+#include "valve.h"
 
 const int half_valve = 128;
 const int full_valve = 256;
@@ -39,7 +40,14 @@ void update_one_thermos(int i) {
     if (temperature > 50 or temperature < -20 or isnan(temperature)) {
         Serial.println("ERROR: temp out of range. Setting 50%.");
         send_command(thermos[i].valve, half_valve);
-        write_any(thermos[i].valve, half_valve);
+        write_valve(thermos[i].valve, half_valve);
+        return;
+    }
+
+    if (isnan(thermos[i].target_temp)) {
+        thermos[i].int_value = 0.0;
+        send_command(thermos[i].valve, 1);
+        write_valve(thermos[i].valve, 1);
         return;
     }
 
@@ -51,7 +59,7 @@ void update_one_thermos(int i) {
     float setpoint = offset + linear + thermos[i].int_value;
     int i_setpoint = (int)cutoff(setpoint, full_valve, 0.0);
     send_command(thermos[i].valve, i_setpoint);
-    write_any(thermos[i].valve, i_setpoint);
+    write_valve(thermos[i].valve, i_setpoint);
     send_state("IT_" + thermos[i].name, String(thermos[i].int_value));
 
     Serial.println("DEBUG: update thermos " + thermos[i].name);
@@ -78,10 +86,18 @@ void update_thermos() {
     }
 }
 
-bool write_thermos(String name, int value) {
+bool write_thermos(String name, String val_str) {
     for (int i = 0; i < num_thermos; i++) {
         if ("TS_" + thermos[i].name == name) {
-            float f_value = value;
+            if (val_str == "OFF") {
+                thermos[i].target_temp = NAN;
+                thermos[i].int_value = 0.0;
+                Serial.println("INFO: Turned off valve: " + name);
+                Serial.println("INFO: Reset Integrator " + name);
+                send_state(name, String(thermos[i].target_temp));
+                return true;
+            }
+            float f_value = val_str.toFloat();
             thermos[i].target_temp = cutoff(f_value, 30.0, 10.0);
             thermos[i].int_value = 0;
             send_state(name, String(thermos[i].target_temp));

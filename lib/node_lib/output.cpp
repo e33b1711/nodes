@@ -18,6 +18,11 @@ void update_outputs() {
     }
 }
 
+bool write_output(String name, String val_str) {
+    int value = convert_value(val_str);
+    return write_output(name, value);
+}
+
 bool write_output(String name, int value) {
     bool found = false;
     for (int i = 0; i < num_outputs; i++) {

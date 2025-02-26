@@ -38,7 +38,8 @@ void set_pwm_max(String name, int value) {
     }
 }
 
-bool write_pwm(String name, int value) {
+bool write_pwm(String name, String val_str) {
+    int value = convert_value(val_str);
     for (int i = 0; i < num_pwms; i++) {
         if (pwms[i].name == name) {
             pwms[i].set_time = millis();

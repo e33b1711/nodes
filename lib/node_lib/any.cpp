@@ -9,18 +9,18 @@
 #include "thermos.h"
 #include "switch.h"
 
-bool write_any(String name, int value) {
-    if (write_valve(name, value))
+bool write_any(String name, String val_str) {
+    if (write_valve(name, val_str))
         return true;
-    if (write_output(name, value))
+    if (write_output(name, val_str))
         return true;
-    if (write_rollo(name, value))
+    if (write_rollo(name, val_str))
         return true;
-    if (write_timer(name, value))
+    if (write_timer(name, val_str))
         return true;
-    if (write_pwm(name, value))
+    if (write_pwm(name, val_str))
         return true;
-    if (write_thermos(name, value))
+    if (write_thermos(name, val_str))
         return true;
     return false;
 }
@@ -79,13 +79,12 @@ int convert_value(String value_string) {
     return value_string.toInt();
 }
 
-void parse_message(String buffer, String &type, String &name, int &value) {
+void parse_message(String buffer, String &type, String &name, String &val_str) {
     int index1 = buffer.indexOf('!');
     int index2 = buffer.indexOf('!', index1 + 1);
     int index3 = buffer.indexOf('!', index2 + 1);
     int index4 = buffer.indexOf('$');
     type = buffer.substring(index1 + 1, index2);
     name = buffer.substring(index2 + 1, index3);
-    String value_string = buffer.substring(index3 + 1, index4);
-    value = convert_value(value_string);
+    val_str = buffer.substring(index3 + 1, index4);
 }

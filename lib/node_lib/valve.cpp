@@ -35,6 +35,11 @@ void update_valves() {
     }
 }
 
+bool write_valve(String name, String val_str) {
+    int value = convert_value(val_str);
+    return write_valve(name, value);
+}
+
 bool write_valve(String name, int value) {
     for (int i = 0; i < num_valves; i++) {
         if (valves[i].name == name) {

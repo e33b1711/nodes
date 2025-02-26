@@ -29,9 +29,10 @@ A (x) valve coupling
 A (x) check name of thermos and valves (like rooms + hidden slaves)
 A (x) redundant names in rollos and others
 A (x) TODOs in code (garage)
-A ( ) write state => string / floats in thermos
+A (x) write state => string / floats in thermos
 A (x) remove wriet any silent
 A (x) git revision on sucessfull reconnect
+A (x) how to turn off thermos / resetting integrator
 
 deployen:
 (x) ( )garage
@@ -54,15 +55,16 @@ C ( ) OTA esp32
 C ( ) reset by switch
 
 
-python / oh:
+python:
 A ( ) relay: dont forward states / python / vereinheitlichen mit mqtt relay
-A (x) montitor new thermos / set target temps
-A ( ) VD OG GA
-A ( ) rules => noedes
-A ( ) how to turn off thermos
-A (x) monitor git hashes
-A ( ) ater warning abwickeln
 
+oh:
+A ( ) water warning abwickeln
+A (x) monitor git hashes
+A ( ) VD OG GA
+A ( ) temps without thermos
+A ( ) rules => noedes
+A (x) montitor new thermos / set target temps
 
 
 umbauen:
@@ -70,7 +72,7 @@ umbauen:
 ( ) garage => arduino
 ( ) au temp (+regensensor)
 ( ) codeschloss => garage
-( ) cheicken eval
+( ) chicken eval hw
 ( ) taster im bad reparieren
 ( ) water warning ersatz
 (x) garagen fritzbox

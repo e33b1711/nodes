@@ -66,7 +66,7 @@ const int num_timers = 3;
 ntimer_t timers[num_timers] = {
         {"ZE_GR_0", "LI_GR", false, false, 0, 120},
         {"ZE_GR_1", "LI_GR", false, false, 0, 600},
-        {"ZE_GR_2", "ZE_GR_2", false, false, 0, 120},
+        {"ZE_GR_2", "LI_GR_2", false, false, 0, 120},
 };
 
 const int num_pwms = 0;
@@ -80,8 +80,8 @@ void on_door_open() {
         init = false;
     }
     if ((prev_value == 100) & (prev_value != get_rollo("DO_GR"))) {
-        write_any("ZE_GR_0", 1);
-        write_any("ZE_GR_2",1);
+        write_any("ZE_GR_0", "ON");
+        write_any("ZE_GR_2", "ON");
         send_command("ZE_EG_VH",1);
         Serial.println("DEBUG: trigger einfahrt licht.");
     }

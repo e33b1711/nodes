@@ -139,8 +139,8 @@ void setup_comm() {
     last_try_connect = millis();
 }
 
-void execute_message(String type, String name, int value) {
-    Serial.println("INFO: execute_message: " + type + " " + name + " " + String(value, DEC));
+void execute_message(String type, String name, String val_str) {
+    Serial.println("INFO: execute_message: " + type + " " + name + " " + val_str);
     if (type == "restart") {
         if (name == node_info.unit_name)
             delay(100000);
@@ -149,17 +149,15 @@ void execute_message(String type, String name, int value) {
         if (get_any(name, value_string))
             send_state(name, value_string);
     } else if (type == "c") {
-        write_any(name, value);
+        write_any(name, val_str);
     }
 }
 
 void handle_message() {
-    String type;
-    String name;
-    int value;
-    parse_message(input_buffer, type, name, value);
+    String type, name, val_str;
+    parse_message(input_buffer, type, name, val_str);
     input_buffer = "";
-    execute_message(type, name, value);
+    execute_message(type, name, val_str);
 }
 
 void send_messages() {

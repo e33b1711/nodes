@@ -50,12 +50,12 @@ void toggle_couple(const int b_index, const String output);
 
 void alloc_pin(int pin);
 
-bool write_any(String address, int value);
+bool write_any(String address, String val_str);
 bool get_any(String name, String &value);
 
-int covert_value(String value_string);
-void execute_message(String type, String name, int value);
-void parse_message(String buffer, String &type, String &name, int &value);
+void execute_message(String type, String name, String val_str);
+void parse_message(String buffer, String &type, String &name, String &val_str);
+int convert_value(String value_string);
 
 struct node_t {
     const String unit_name;

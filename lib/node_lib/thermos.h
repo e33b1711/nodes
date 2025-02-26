@@ -5,11 +5,11 @@
 void update_thermos();
 void setup_thermos();
 bool get_thermos(String name, String &String);
-bool write_thermos(String name, int value);
+bool write_thermos(String name, String);
 
 struct thermos_t {
-    const String name;      //same as a temp on same unit
-    const String valve;     //any valve 
+    const String name;   // same as a temp on same unit
+    const String valve;  // any valve
     const float abs_weight;
     const float lin_weight;
     const float int_weight;

@@ -5,6 +5,7 @@
 void setup_valves();
 void update_valves();
 
+bool write_valve(String name, String val_str);
 bool write_valve(String name, int value);
 bool get_valve(String name, String &value);
 

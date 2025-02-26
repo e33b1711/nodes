@@ -18,34 +18,34 @@ void update_rollos() {
             rollos[i].last_value = rollos[i].value;
             switch (rollos[i].value) {
                 case 0:
-                    write_any(l_up, 1);
-                    write_any(l_down, 0);
+                    write_output(l_up, 1);
+                    write_output(l_down, 0);
                     rollos[i].stop_time = millis() + rollos[i].duration;
                     rollos[i].stop_pending = true;
                     break;
                 case 100:
-                    write_any(l_up, rollos[i].is_rollo);
-                    write_any(l_down, 1);
+                    write_output(l_up, rollos[i].is_rollo);
+                    write_output(l_down, 1);
                     rollos[i].stop_time = millis() + rollos[i].duration;
                     rollos[i].stop_pending = true;
                     break;
                 default:
-                    write_any(l_up, 0);
-                    write_any(l_down, 0);
+                    write_output(l_up, 0);
+                    write_output(l_down, 0);
             }
         }
 
         if (rollos[i].stop_pending and rollos[i].stop_time < millis()) {
             rollos[i].stop_pending = false;
-            write_any(l_up, 0);
-            write_any(l_down, 0);
+            write_output(l_up, 0);
+            write_output(l_down, 0);
         }
 
         if (rollos[i].has_stops) {
             bool open = get_switch(rollos[i].switch_open);
             bool closed = get_switch(rollos[i].switch_closed);
             int new_val = 50;
-            if (open and !closed) //TODO polarity seems false. 100 is down not up
+            if (open and !closed)  // TODO polarity seems false. 100 is down not up
                 new_val = 100;
             if (!open and closed)
                 new_val = 0;
@@ -63,6 +63,11 @@ void update_rollos() {
             }
         }
     }
+}
+
+bool write_rollo(String name, String val_str) {
+    int value = convert_value(val_str);
+    return write_rollo(name, value);
 }
 
 bool write_rollo(String name, int value) {

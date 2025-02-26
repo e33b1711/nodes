@@ -1,5 +1,6 @@
 #include "node.h"
 #include "timer.h"
+#include "output.h"
 
 void setup_timers() {
     Serial.println("INFO: setup timers");
@@ -15,22 +16,22 @@ void update_timer(int i) {
     if (timers[i].value and !timers[i].running) {
         timers[i].running = true;
         timers[i].set_time = millis();
-        write_any(timers[i].slave, 1);
+        write_output(timers[i].slave, 1);
     }
     // timer: running
     if (timers[i].value and timers[i].running) {
         if ((timers[i].set_time + 1000 * timers[i].duration) < millis()) {
             timers[i].running = false;
             timers[i].value = false;
-            write_any(timers[i].slave, 0);
-            send_state(timers[i].name, timers[i].value);
+            write_output(timers[i].slave, 0);
+            write_output(timers[i].name, timers[i].value);
         }
     }
     // timer: external off
     // timer: running
     if (!timers[i].value and timers[i].running) {
         timers[i].running = false;
-        write_any(timers[i].slave, 0);
+        write_output(timers[i].slave, 0);
     }
 }
 
@@ -38,7 +39,8 @@ void handle_timers() {
     for (int i = 0; i < num_timers; i++) update_timer(i);
 }
 
-bool write_timer(String name, int value) {
+bool write_timer(String name, String val_str) {
+    int value = convert_value(val_str);
     for (int i = 0; i < num_timers; i++) {
         if (timers[i].name == name) {
             timers[i].set_time = millis();
