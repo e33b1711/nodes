@@ -4,7 +4,8 @@
 #include "valve.h"
 
 const int half_valve = 128;
-const int full_valve = 256;
+const int full_valve = 254;  //almost full, we want some movement
+const int closed_valve = 2;  //almost closed, we want some movement
 const float base_valve = 32.0;
 
 bool get_thermos(String name, String &value) {
@@ -46,8 +47,8 @@ void update_one_thermos(int i) {
 
     if (isnan(thermos[i].target_temp)) {
         thermos[i].int_value = 0.0;
-        send_command(thermos[i].valve, 1);
-        write_valve(thermos[i].valve, 1);
+        send_command(thermos[i].valve, closed_valve);
+        write_valve(thermos[i].valve, closed_valve);
         return;
     }
 
@@ -57,7 +58,7 @@ void update_one_thermos(int i) {
     thermos[i].int_value = cutoff(thermos[i].int_value, half_valve, half_valve * -1.0);
 
     float setpoint = offset + linear + thermos[i].int_value;
-    int i_setpoint = (int)cutoff(setpoint, full_valve, 0.0);
+    int i_setpoint = (int)cutoff(setpoint, full_valve, closed_valve);
     send_command(thermos[i].valve, i_setpoint);
     write_valve(thermos[i].valve, i_setpoint);
     send_state("IT_" + thermos[i].name, String(thermos[i].int_value));
