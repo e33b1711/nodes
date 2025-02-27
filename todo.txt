@@ -43,7 +43,7 @@ deployen:
 
 A ( ) eval: commands back to unit <> write_any / send command
 A ( ) eval thermos / valves
-A (x) still no git rev from garage
+A ( ) still no git rev from garage
 A ( ) lib dependencies
 A ( ) dht fails initially
 
@@ -57,7 +57,7 @@ C ( ) reset by switch
 
 
 python:
-A ( ) relay: dont forward states / python / vereinheitlichen mit mqtt relay
+A (x) relay: dont forward states / python / vereinheitlichen mit mqtt relay
 
 oh:
 A (x) water warning abwickeln

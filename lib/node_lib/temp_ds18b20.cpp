@@ -36,7 +36,7 @@ void update_temps() {
             }
         }
         for (int i = 0; i < num_temps; i++) {
-            send_state(temps[i].name, String(temps[i].temp_value));
+            send_state("TI_" + temps[i].name, String(temps[i].temp_value));
         }
     }
 }
