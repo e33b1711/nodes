@@ -69,12 +69,12 @@ A ( ) regular get all
 
 
 umbauen:
-( ) temp nodes
 ( ) garage => arduino
 ( ) au temp (+regensensor)
 ( ) codeschloss => garage
 ( ) chicken eval hw
 ( ) taster im bad reparieren
 ( ) water warning ersatz
+( ) temp garage defekt
 (x) garagen fritzbox
 
