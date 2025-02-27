@@ -3,6 +3,7 @@ import socket
 import threading
 import sys
 import logging
+import signal
 import re
 import time
 import paho.mqtt.client as mqtt
@@ -45,8 +46,6 @@ def handle_client(client_socket):
         # only relay commands via tcp
         if not message.count('!c!') > 0:
             broadcast(data, client_socket)
-
-    client_socket.close()
 
 
 def broadcast(message, connection=None):
@@ -122,7 +121,7 @@ def on_message(client, userdata, message):
     if topic[0] == "ard_command":
         echo_message = f"!c!{topic[1]}!{payload}$\n"
         logger.info("Outgoing on ECHO: %s", echo_message.strip())
-        broadcast(echo_message.decode())
+        broadcast(echo_message.encode())
 
 
 def on_disconnect(client, userdata, rc):
@@ -154,6 +153,16 @@ def init_mqtt():
     client.loop_start()
     client.subscribe([("ard_state/#", 1), ("ard_command/#", 1)])
 
+def signal_handler(sig, frame):
+    """Clean up on exit"""
+    server_socket.close()
+
+    for sock in list_of_clients:
+        sock.close()
+
+    logger.info('Exit...')
+    sys.exit(0)
+
 
 def main():
     """Main function"""
@@ -165,6 +174,7 @@ def main():
     port = int(sys.argv[2])
     init_socket(ip_address, port)
     init_mqtt()
+    signal.signal(signal.SIGINT, signal_handler)
 
     while True:
         client_socket, client_address = server_socket.accept()
