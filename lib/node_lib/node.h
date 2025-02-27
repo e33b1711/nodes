@@ -13,7 +13,7 @@ const int num_pins = 62;
 #include <Arduino.h>
 
 #ifndef __TEST__
-const IPAddress server(192, 168, 178, 23);
+const IPAddress server(192, 168, 178, 91);
 const int port = 8888;
 #else
 const IPAddress server(192, 168, 178, 95);
