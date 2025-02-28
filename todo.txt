@@ -43,10 +43,13 @@ deployen:
 
 A ( ) eval: commands back to unit <> write_any / send command
 A ( ) eval thermos / valves
-A ( ) still no git rev from garage
+A (x) still no git rev from garage
 A ( ) lib dependencies
 A ( ) dht fails initially
+A (x) read temp seems not to work
+A (x) bewegungsmelder
 
+B ( ) Uptime counter / revision periodically
 B ( ) Rollo lock endlage zu oft 50
 
 C ( ) logging 
@@ -64,6 +67,7 @@ A (x) water warning abwickeln
 A (x) monitor git hashes
 A (x) VD OG GA
 A (x) montitor new thermos / set target temps
+A (x) formatting
 A ( ) rules => nodes
 A ( ) regular get all
 

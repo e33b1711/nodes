@@ -81,7 +81,7 @@ valve_t valves[num_valves] = {
 };
 
 const int num_timers = 1;
-ntimer_t timers[num_timers] = {{"ZE_BELL", "BELL", false, false, 0, 1}};
+ntimer_t timers[num_timers] = {{"ZE_BELL", "BELL", false, false, 0, 5}};
 
 const int num_pwms = 0;
 pwm_t pwms[num_pwms] = {};
