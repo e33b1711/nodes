@@ -121,6 +121,6 @@ void user_logic() {
     rollo_lock(8, 100, "RO_OG_BA");
     rollo_lock(13, 0, "RO_OG_BA");
     rollo_lock(12, 100, "RO_OG_BA");
-    simple(4, 1, "ZE_EG_VH");
-    simple(4, 1, "ZE_GR_2");
+    simple_extern(4, 1, "ZE_EG_VH");
+    simple_extern(4, 1, "ZE_GR_2");
 }
