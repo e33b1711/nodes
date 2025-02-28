@@ -21,7 +21,9 @@ int conn_error_count = 0;
 
 void init_hw() {}
 
-void connect_wifi() {
+bool connect_wifi() {
+
+    if (WiFi.status() == WL_CONNECTED)  return true;
 
     WiFi.mode(WIFI_STA);
     WiFi.config(INADDR_NONE, INADDR_NONE, INADDR_NONE, INADDR_NONE);
@@ -33,9 +35,9 @@ void connect_wifi() {
         delay(500);
         Serial.print(".");
         retries++;
-        if (retries == 10) {
-            Serial.println("ERROR: Getting no WIFI, rebooting...");
-            ESP.restart();
+        if (retries == 4) {
+            Serial.println("ERROR: Getting no WIFI");
+            return false;
         }
     }
     Serial.println("INFO: WiFi connected");
@@ -45,21 +47,14 @@ void connect_wifi() {
     Serial.println(WiFi.getHostname());
     Serial.print("INFO: RRSI: ");
     Serial.println(WiFi.RSSI());
+    return true;
 }
 
 bool connect_server() {
-    connect_wifi();
+    if (!connect_wifi()) return false;
 
-    if ((!client.connected())) {
-        Serial.println("INFO: trying to (re)connect to server.");
-
-        // try to reconnect
-        if (client.connect(node_info.server, node_info.port)) {
-            Serial.println("INFO: succes.");
-            return true;
-        }
-
-        Serial.println("ERROR: could not connect.");
+    if (!client.connect(node_info.server, node_info.port)) {
+        Serial.println("ERROR: Server connection failed.");
         return false;
     }
     Serial.println("INFO: Connected to Server.");
