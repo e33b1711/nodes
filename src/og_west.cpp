@@ -126,3 +126,5 @@ void user_logic() {
     rollo_lock(5, 100, "RO_OG_KS");
     rollo_lock(7, 0, "RO_OG_KS");
 }
+
+void user_init() {}

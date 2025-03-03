@@ -124,3 +124,5 @@ void user_logic() {
     simple_extern(4, 1, "ZE_EG_VH");
     simple_extern(4, 1, "ZE_GR_2");
 }
+
+void user_init() {}

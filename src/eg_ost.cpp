@@ -102,3 +102,5 @@ void user_logic() {
     long_short_extern(8, "VD_OG_GA", 0, "DF_OG_GA", 0);
     simple_extern(13, 1, "ZE_BELL");
 }
+
+void user_init() {}

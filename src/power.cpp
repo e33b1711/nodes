@@ -72,3 +72,5 @@ void overtemp() {
 void user_logic() {
     overtemp();
 }
+
+void user_init() {}

@@ -11,10 +11,12 @@
 #include "version.h"
 #include "server.h"
 
+#include "Wiegand.h"
+
 #ifndef __TEST__
-uint8_t mac[] =  {0xDE, 0xBB, 0x7E, 0xE1, 0xAA, 0x06};
+uint8_t mac[] = {0xDE, 0xBB, 0x7E, 0xE1, 0xAA, 0x06};
 #else
-uint8_t mac[] =  {0xDE, 0xBB, 0x7E, 0xE1, 0xAB, 0x06};
+uint8_t mac[] = {0xDE, 0xBB, 0x7E, 0xE1, 0xAB, 0x06};
 #endif
 
 node_t node_info = {
@@ -43,7 +45,7 @@ thermos_t thermos[num_thermos] = {};
 
 const int num_outputs = 10;
 output_t outputs[num_outputs] = {
-        {"LI_GR", 48, 1, 0, 0},      //
+        {"LI_GR", 48, 1, 0, 0},     //
         {"LI_GR_L2", 49, 1, 0, 0},  //
         {"DO_GR_DO", 33, 0, 0, 0},  //
         {"DO_GR_UP", 32, 0, 0, 0},  //
@@ -77,20 +79,120 @@ pwm_t pwms[num_pwms] = {};
 void on_door_open() {
     static int prev_value;
     static bool init = true;
-    if (init){
+    if (init) {
         prev_value = get_rollo("DO_GR");
         init = false;
     }
     if ((prev_value == 100) & (prev_value != get_rollo("DO_GR"))) {
         write_any("ZE_GR_0", "ON");
         write_any("ZE_GR_2", "ON");
-        send_command("ZE_EG_VH",1);
+        send_command("ZE_EG_VH", 1);
         Serial.println("DEBUG: trigger einfahrt licht.");
     }
     prev_value = get_rollo("DO_GR");
 }
 
+WIEGAND wg;
+
+const int num_codes = 4;
+const String code[num_codes] = {"1171", "2105", "8533", "5473"};
+unsigned long buzz_set, led_set;
+
+void init_code_lock() {
+    alloc_pin(2);  // wiegand
+    alloc_pin(3);  // wiegand
+    alloc_pin(4);  // led
+    alloc_pin(5);  // buzz
+    wg.begin(2, 3);
+
+    digitalWrite(4, 1);
+    digitalWrite(5, 1);
+    pinMode(4, OUTPUT);
+    pinMode(5, OUTPUT);
+    buzz_set = millis();
+    led_set = millis();
+}
+
+void toggle_door() {
+    if (get_rollo("DO_GR") == 0) {
+        write_rollo("DO_GR", 100);
+        Serial.println("DEBUG: Door down");
+        return;
+    }
+    write_rollo("DO_GR", 0);
+    Serial.println("DEBUG: Door up");
+}
+
+void error_signal() {
+    digitalWrite(4, 0);
+    buzz_set = millis();
+}
+
+void success_signal() {
+    digitalWrite(5, 0);
+    led_set = millis();
+}
+
+void code_lock() {
+    static String code_in = "";
+    static unsigned long last_press = 0;
+
+    if (wg.available()) {
+        unsigned long button_in = wg.getCode();
+        last_press = millis();
+
+        Serial.print("DEBUG: Wiegand");
+        Serial.println(button_in);
+
+        if (button_in < 9) {
+            code_in += String(button_in);
+            Serial.println("DEBUG:code_in += " + code_in);
+        }
+        if (button_in == 13) {
+            code_in = "";
+            Serial.println("DEBUG: code clear");
+        }
+        if (button_in == 27) {
+            bool found = false;
+            Serial.println("DEBUG: code to check: " + code_in);
+            for (int i = 0; i < num_codes; i++) {
+                if (code_in == code[i]) {
+                    Serial.println("DEBUG: code match: " + String(i));
+                    success_signal();
+                    toggle_door();
+                    found = true;
+                    break;
+                }
+            }
+            code_in = "";
+            if (!found)
+                error_signal();
+        }
+        if (code_in.length() > 8) {
+            code_in = "";
+        }
+    }
+
+    if (last_press + 5000 < millis() and not(code_in == "")) {
+        Serial.println("DEBUG: timeout");
+        error_signal();
+        code_in = "";
+    }
+
+    if (buzz_set + 1000 < millis()) {
+        digitalWrite(4, 1);
+    }
+
+    if (led_set + 1000 < millis()) {
+        digitalWrite(5, 1);
+    }
+}
+
 void user_logic() {
     simple(0, 3, "ZE_GR_1");
     on_door_open();
+
+    code_lock();
 }
+
+void user_init() { init_code_lock(); }

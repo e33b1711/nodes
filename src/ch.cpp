@@ -58,3 +58,5 @@ const int num_pwms = 0;
 pwm_t pwms[num_pwms] = {};
 
 void user_logic() {}
+
+void user_init() {}

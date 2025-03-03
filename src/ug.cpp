@@ -96,3 +96,5 @@ void user_logic() {
     long_short(5, "LI_UG_HO", 0, "none", 3);
     simple(6, 3, "LI_UG_WK");
 }
+
+void user_init() {}

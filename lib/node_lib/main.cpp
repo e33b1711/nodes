@@ -19,6 +19,7 @@ void setup() {
     setup_timers();
     setup_outputs();
     setup_pwm();
+    user_init();
 }
 
 void loop() {

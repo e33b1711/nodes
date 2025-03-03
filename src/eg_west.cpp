@@ -116,3 +116,5 @@ void user_logic() {
     simple_extern(6, 3, "LI_UG_GA");
     toggle_couple(5, "LI_EG_GA");
 }
+
+void user_init() {}
