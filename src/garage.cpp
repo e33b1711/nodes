@@ -37,7 +37,7 @@ const int num_temps = 1;
 const long period_t = 60000;
 const int ds18b_pin = 61;
 temp_t temps[num_temps] = {
-        {"GR", 17, 0, 0, 0},  // does dht22 work on esp32?
+        {"GR", 8, 0, 0, 0},  // does dht22 work on esp32?
 };
 
 const int num_thermos = 0;
@@ -95,7 +95,7 @@ void on_door_open() {
 WIEGAND wg;
 
 const int num_codes = 4;
-const String code[num_codes] = {"1171", "2105", "8533", "5473"};
+const String code[num_codes] = {"1171", "2105", "6539", "5473"};
 unsigned long buzz_set, led_set;
 
 void init_code_lock() {
@@ -147,11 +147,11 @@ void code_lock() {
             code_in += String(button_in);
             // Serial.println("DEBUG:code_in += " + code_in);
         }
-        if (button_in == 13) {
+        if (button_in == 27) {
             code_in = "";
             // Serial.println("DEBUG: code clear");
         }
-        if (button_in == 27) {
+        if (button_in == 13) {
             bool found = false;
             Serial.println("DEBUG: code to check: " + code_in);
             for (int i = 0; i < num_codes; i++) {
