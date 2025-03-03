@@ -99,6 +99,7 @@ const String code[num_codes] = {"1171", "2105", "8533", "5473"};
 unsigned long buzz_set, led_set;
 
 void init_code_lock() {
+    Serial.println("INFO: init wiegand keypad");
     alloc_pin(2);  // wiegand
     alloc_pin(3);  // wiegand
     alloc_pin(4);  // led
@@ -140,24 +141,22 @@ void code_lock() {
     if (wg.available()) {
         unsigned long button_in = wg.getCode();
         last_press = millis();
-
-        Serial.print("DEBUG: Wiegand");
-        Serial.println(button_in);
-
+        // Serial.print("DEBUG: Wiegand");
+        // Serial.println(button_in);
         if (button_in < 9) {
             code_in += String(button_in);
-            Serial.println("DEBUG:code_in += " + code_in);
+            // Serial.println("DEBUG:code_in += " + code_in);
         }
         if (button_in == 13) {
             code_in = "";
-            Serial.println("DEBUG: code clear");
+            // Serial.println("DEBUG: code clear");
         }
         if (button_in == 27) {
             bool found = false;
             Serial.println("DEBUG: code to check: " + code_in);
             for (int i = 0; i < num_codes; i++) {
                 if (code_in == code[i]) {
-                    Serial.println("DEBUG: code match: " + String(i));
+                    // Serial.println("DEBUG: code match: " + String(i));
                     success_signal();
                     toggle_door();
                     found = true;
@@ -174,24 +173,19 @@ void code_lock() {
     }
 
     if (last_press + 5000 < millis() and not(code_in == "")) {
-        Serial.println("DEBUG: timeout");
+        // Serial.println("DEBUG: timeout");
         error_signal();
         code_in = "";
     }
-
-    if (buzz_set + 1000 < millis()) {
+    if (buzz_set + 1000 < millis())
         digitalWrite(4, 1);
-    }
-
-    if (led_set + 1000 < millis()) {
+    if (led_set + 1000 < millis())
         digitalWrite(5, 1);
-    }
 }
 
 void user_logic() {
     simple(0, 3, "ZE_GR_1");
     on_door_open();
-
     code_lock();
 }
 
