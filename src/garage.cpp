@@ -8,11 +8,15 @@
 #include "pwm.h"
 #include "thermos.h"
 
-#include "secret.h"
 #include "version.h"
 #include "server.h"
 
-uint8_t mac[] =  {0x00, 0x00, 0x00, 0x00, 0x00, 0x00}; //unused on esp32
+#ifndef __TEST__
+uint8_t mac[] =  {0xDE, 0xBB, 0x7E, 0xE1, 0xAA, 0x06};
+#else
+uint8_t mac[] =  {0xDE, 0xBB, 0x7E, 0xE1, 0xAB, 0x06};
+#endif
+
 node_t node_info = {
         "gr",
         server,
@@ -22,30 +26,33 @@ node_t node_info = {
 
 const int num_switches = 3;
 switch_t switches[num_switches] = {
-        {"innen", false, 14, 0, 0, 0, false, false, false, false},      //
-        {"GR_CLOSED", false, 27, 0, 0, 0, false, false, false, false},  //
-        {"GR_OPEN", false, 26, 0, 0, 0, false, false, false, false},    //
+        {"innen", false, 25, 0, 0, 0, false, false, false, false},      //
+        {"GR_CLOSED", false, 24, 0, 0, 0, false, false, false, false},  //
+        {"GR_OPEN", false, 23, 0, 0, 0, false, false, false, false},    //
 };
 
 const int num_temps = 1;
 const long period_t = 60000;
 const int ds18b_pin = 61;
 temp_t temps[num_temps] = {
-        {"GR", 22, 0, 0, 0},  // does dht22 work on esp32?
+        {"GR", 17, 0, 0, 0},  // does dht22 work on esp32?
 };
 
 const int num_thermos = 0;
 thermos_t thermos[num_thermos] = {};
 
-const int num_outputs = 7;
+const int num_outputs = 10;
 output_t outputs[num_outputs] = {
-        {"LI_GR", 0, 0, 0, 0},      //
-        {"LI_GR_L1", 21, 0, 0, 0},  //
-        {"LI_GR_L2", 16, 0, 0, 0},  //
-        {"LI_GR_L3", 17, 0, 0, 0},  //
-        {"LI_GR_L4", 5, 0, 0, 0},   //
-        {"DO_GR_DO", 19, 0, 0, 0},  //
-        {"DO_GR_UP", 18, 0, 0, 0},  //
+        {"LI_GR", 48, 1, 0, 0},      //
+        {"LI_GR_L2", 49, 1, 0, 0},  //
+        {"DO_GR_DO", 33, 0, 0, 0},  //
+        {"DO_GR_UP", 32, 0, 0, 0},  //
+        {"DO_GR_DO", 31, 0, 0, 0},  //
+        {"DO_GR_UP", 30, 0, 0, 0},  //
+        {"DO_GR_DO", 29, 0, 0, 0},  //
+        {"DO_GR_UP", 28, 0, 0, 0},  //
+        {"DO_GR_DO", 27, 0, 0, 0},  //
+        {"DO_GR_UP", 26, 0, 0, 0},  //
 };
 
 const int num_rollos = 1;
