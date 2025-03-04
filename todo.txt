@@ -44,7 +44,7 @@ deployen:
 A (x) eval: commands back to unit <> write_any / send command
 A ( ) eval thermos / valves
 A (x) still no git rev from garage
-A ( ) lib dependencies
+A (x) lib dependencies
 A ( ) dht fails initially
 A (x) ZE not sate message on stop
 
