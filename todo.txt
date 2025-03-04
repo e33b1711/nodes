@@ -20,7 +20,7 @@ allgemain
 (x) reset by switch 10 sec
 (x) dht on esp
 
-A (x) optiboot 
+A (x) optiboot
 A (x) reset by arduino (<> optiboot?)
 
 A (x) git dirty flag
@@ -46,13 +46,17 @@ A ( ) eval thermos / valves
 A (x) still no git rev from garage
 A ( ) lib dependencies
 A ( ) dht fails initially
+<<<<<<< HEAD
 A (x) read temp seems not to work
 A (x) bewegungsmelder
+=======
+A (x) ZE not sate message on stop
+>>>>>>> 0b1ef50 (Fix timer (no state write on end))
 
 B ( ) Uptime counter / revision periodically
 B ( ) Rollo lock endlage zu oft 50
 
-C ( ) logging 
+C ( ) logging
 C ( ) udp broadcasten
 C ( ) OTA atmrl
 C ( ) OTA esp32
