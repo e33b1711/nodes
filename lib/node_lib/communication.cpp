@@ -149,7 +149,7 @@ void execute_message(String type, String name, String val_str) {
         if (get_any(name, value_string))
             send_state(name, value_string);
     } else if (type == "c") {
-        write_any(name, val_str);
+        write_any_internal(name, val_str);
     }
 }
 

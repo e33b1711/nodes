@@ -11,6 +11,10 @@
 
 bool write_any(String name, String val_str) {
     send_command(name, val_str);
+    return write_any_internal(name, val_str);
+}
+
+bool write_any_internal(String name, String val_str) {
     if (write_valve(name, val_str))
         return true;
     if (write_output(name, val_str))
