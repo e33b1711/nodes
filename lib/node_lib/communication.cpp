@@ -103,6 +103,11 @@ bool connect_server() {
 
 #endif
 
+void send_command(String name, String val_str) {
+    String message = "!c!" + name + '!' + val_str + "$\n";
+    message_buffer += message;
+}
+
 void send_command(String name, int value) {
     String message = "!c!" + name + '!' + String(value, DEC) + "$\n";
     message_buffer += message;

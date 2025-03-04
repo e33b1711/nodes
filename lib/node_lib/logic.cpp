@@ -14,28 +14,10 @@ void long_short(const int b_index,
         write_any(l_short, String(s_value));
 }
 
-// switch with long / short press
-void long_short_extern(const int b_index,
-                       const String l_long,
-                       const int l_value,
-                       const String l_short,
-                       const int s_value) {
-    if (switches[b_index].release_late)
-        send_command(l_long, l_value);
-    if (switches[b_index].release_early)
-        send_command(l_short, s_value);
-}
-
 // simple switch to output state
 void simple(const int b_index, const int value, const String l) {
     if (switches[b_index].press) {
         write_any(l, String(value));
-    }
-}
-
-void simple_extern(const int b_index, const int value, const String l) {
-    if (switches[b_index].press) {
-        send_command(l, value);
     }
 }
 
@@ -58,7 +40,6 @@ void toggle_couple(const String output) {
         Serial.println("ERROR: toggle_couple: no such state.");
         return;
     }
-    send_command(output, not(value));
     write_any(output, String(not(value)));
 }
 
