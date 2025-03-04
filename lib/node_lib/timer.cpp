@@ -31,7 +31,7 @@ void update_timer(int i) {
     // timer: running
     if (!timers[i].value and timers[i].running) {
         timers[i].running = false;
-        write_output(timers[i].slave, 0);
+        write_timer(timers[i].slave, "0");
     }
 }
 
