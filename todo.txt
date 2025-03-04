@@ -47,6 +47,7 @@ A (x) still no git rev from garage
 A (x) lib dependencies
 A ( ) dht fails initially
 A (x) ZE not sate message on stop
+A ( ) Garege clean outputs
 
 B ( ) Rollo lock endlage zu oft 50
 
@@ -65,12 +66,11 @@ A (x) water warning abwickeln
 A (x) monitor git hashes
 A (x) VD OG GA
 A (x) montitor new thermos / set target temps
-A ( ) rules => nodes
+A (x) rules => nodes
 A ( ) regular get all
 
 
 umbauen:
-( ) temp nodes
 ( ) garage => arduino
 ( ) au temp (+regensensor)
 ( ) codeschloss => garage
