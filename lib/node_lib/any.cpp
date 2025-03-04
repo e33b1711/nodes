@@ -10,6 +10,7 @@
 #include "switch.h"
 
 bool write_any(String name, String val_str) {
+    send_command(name, val_str);
     if (write_valve(name, val_str))
         return true;
     if (write_output(name, val_str))
