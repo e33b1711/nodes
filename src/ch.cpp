@@ -31,7 +31,7 @@ temp_t temps[num_temps] = {
 const int num_thermos = 0;
 thermos_t thermos[num_thermos] = {};
 
-const int num_outputs = 8;
+const int num_outputs = 7;
 output_t outputs[num_outputs] = {
         {"DO_CH_UP", 17, 0, 0, 0},  //
         {"DO_CH_DO", 19, 0, 0, 0},  //
