@@ -45,7 +45,7 @@ void update_one_thermos(int i) {
         return;
     }
 
-    if (isnan(thermos[i].target_temp)) {
+    if (thermos[i].target_temp < 0) {
         thermos[i].int_value = 0.0;
         send_command(thermos[i].valve, closed_valve);
         write_valve(thermos[i].valve, closed_valve);
@@ -90,15 +90,15 @@ void update_thermos() {
 bool write_thermos(String name, String val_str) {
     for (int i = 0; i < num_thermos; i++) {
         if ("TS_" + thermos[i].name == name) {
-            if (val_str == "OFF") {
-                thermos[i].target_temp = NAN;
+            float f_value = val_str.toFloat();
+            if (f_value < 0) {
+                thermos[i].target_temp = -99.0;
                 thermos[i].int_value = 0.0;
                 Serial.println("INFO: Turned off valve: " + name);
                 Serial.println("INFO: Reset Integrator " + name);
                 send_state(name, String(thermos[i].target_temp));
                 return true;
             }
-            float f_value = val_str.toFloat();
             thermos[i].target_temp = cutoff(f_value, 30.0, 10.0);
             thermos[i].int_value = 0;
             send_state(name, String(thermos[i].target_temp));
