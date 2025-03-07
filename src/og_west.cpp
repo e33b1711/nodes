@@ -53,18 +53,18 @@ output_t outputs[num_outputs] = {
         {"RO_OG_KN_DO", 47, 1, 0, 0},  //
         {"LI_OG_GA_L1", 48, 1, 0, 0},  //
         {"LI_OG_GA", 49, 1, 0, 0},     //
-        {"DF_OG_GA_UP", 54, 0, 0, 0},  //
-        {"DF_OG_GA_DO", 55, 0, 0, 0},  //
-        {"DF_OG_KS_UP", 56, 0, 0, 0},  //
-        {"DF_OG_KS_DO", 57, 0, 0, 0},  //
-        {"VD_OG_GA_UP", 58, 0, 0, 0},  //
-        {"DF_OG_KN_UP", 59, 0, 0, 0},  //
-        {"VD_OG_GA_DO", 60, 0, 0, 0},  //
+        {"VD_OG_KS_DO", 54, 0, 0, 0},  //
+        {"VD_OG_KS_UP", 55, 0, 0, 0},  //
+        {"DF_OG_KS_DO", 56, 0, 0, 0},  //
+        {"DF_OG_KS_UP", 57, 0, 0, 0},  //
+        {"VD_OG_KN_DO", 58, 0, 0, 0},  //
+        {"VD_OG_KN_UP", 59, 0, 0, 0},  //
+        {"DF_OG_KN_UP", 60, 0, 0, 0},  //
         {"DF_OG_KN_DO", 61, 0, 0, 0},  //
-        {"VD_OG_KN_DO", 30, 0, 0, 0},  //
-        {"VD_OG_KS_UP", 31, 0, 0, 0},  //
-        {"VD_OG_KN_UP", 32, 0, 0, 0},  //
-        {"VD_OG_KS_DO", 33, 0, 0, 0},  //
+        {"VD_OG_GA_UP", 30, 0, 0, 0},  //
+        {"DF_OG_GA_DO", 31, 0, 0, 0},  //
+        {"VD_OG_GA_DO", 32, 0, 0, 0},  //
+        {"DF_OG_GA_UP", 33, 0, 0, 0},  //
 };
 
 const int num_rollos = 8;
