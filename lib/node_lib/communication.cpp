@@ -1,13 +1,18 @@
 #include "node.h"
 
 unsigned long last_try_connect = 0;
+unsigned long last_keep_alive = 0;
+const unsigned long keep_alive_period = 300000;
 const int retry_period = 10000;
 String message_buffer = "";
 String input_buffer = "";
 
-void send_git_revision(){
-    if (dirty) send_state(node_info.unit_name, "dirty_" + String(auto_version.substring(0,8)));
-    else send_state(node_info.unit_name, String(auto_version.substring(0,8)));
+void send_git_revision() {
+    Serial.println("INFO: Sending git revision.");
+    if (dirty)
+        send_state(node_info.unit_name, "dirty_" + String(auto_version.substring(0, 8)));
+    else
+        send_state(node_info.unit_name, String(auto_version.substring(0, 8)));
 }
 
 #ifdef __esp32__
@@ -19,25 +24,24 @@ void send_git_revision(){
 WiFiClient client;
 int conn_error_count = 0;
 
-void init_hw() {}
-
-bool connect_wifi() {
-
-    if (WiFi.status() == WL_CONNECTED)  return true;
+void init_link() {
+    if (WiFi.status() == WL_CONNECTED){
+        Serial.println("INFO: WIFI connected.");
+        return;
+    }
 
     WiFi.mode(WIFI_STA);
     WiFi.config(INADDR_NONE, INADDR_NONE, INADDR_NONE, INADDR_NONE);
-    WiFi.setHostname(node_info.unit_name.c_str()); //define hostname
+    WiFi.setHostname(node_info.unit_name.c_str());  // define hostname
     WiFi.begin(ssid, pass);
 
     int retries = 0;
     while (WiFi.status() != WL_CONNECTED) {
         delay(500);
-        Serial.print(".");
         retries++;
         if (retries == 4) {
             Serial.println("ERROR: Getting no WIFI");
-            return false;
+            return;
         }
     }
     Serial.println("INFO: WiFi connected");
@@ -47,12 +51,10 @@ bool connect_wifi() {
     Serial.println(WiFi.getHostname());
     Serial.print("INFO: RRSI: ");
     Serial.println(WiFi.RSSI());
-    return true;
+    return;
 }
 
 bool connect_server() {
-    if (!connect_wifi()) return false;
-
     if (!client.connect(node_info.server, node_info.port)) {
         Serial.println("ERROR: Server connection failed.");
         return false;
@@ -71,18 +73,28 @@ EthernetClient client;
 const int ethernet_sc_pin = 53;
 const int ethernet_reset_pin = 12;
 
-void init_hw() {
-    alloc_pin(ethernet_sc_pin);
-    alloc_pin(ethernet_reset_pin);
+void init_link() {
+    static bool pins_allocated = false;
+    if (!pins_allocated){
+        alloc_pin(ethernet_sc_pin);
+        alloc_pin(ethernet_reset_pin);
+        pins_allocated = true;
+    }
+
+    static bool link_up = false;
+    if (link_up) return;
+    
     Ethernet.init(ethernet_sc_pin);
-    Ethernet.begin(node_info.mac);
+    if (!Ethernet.begin(node_info.mac, 2000, 2000)) {
+        Serial.println("ERROR: Got no IP from DHCP.");
+    } else {
+        Serial.print("INFO: IP: ");
+        Serial.println(Ethernet.localIP());
+        link_up = true;
+    }
     delay(500);
     if (Ethernet.hardwareStatus() == EthernetNoHardware) {
-        Serial.println("FAILURE: Ethernet shield was not found.");
-        while (true) delay(1);
-    } else{
-        Serial.print("INFO:IP: ");
-        Serial.println(Ethernet.localIP());
+        Serial.println("ERROR: Ethernet shield was not found.");
     }
 }
 
@@ -128,10 +140,11 @@ void send_state(String name, float value) {
 
 void setup_comm() {
     Serial.println("INFO: setup comm");
-    init_hw();
+    init_link();
     connect_server();
     message_buffer.reserve(100);
     last_try_connect = millis();
+    last_keep_alive = millis();
 }
 
 void execute_message(String type, String name, String val_str) {
@@ -175,17 +188,22 @@ bool get_message() {
 
 bool maintain_connection() {
     if (client.connected()) {
-        return true;
-    } else {
-        input_buffer = "";
-        message_buffer = "";
-        if (last_try_connect + retry_period < millis()) {
-            last_try_connect = millis();
-            Serial.println("INFO: Trying to recover server connection.");
-            return connect_server();
+        if (last_keep_alive + keep_alive_period < millis()) {
+            send_git_revision();
+            last_keep_alive = millis();
         }
-        return false;
+        return true;
     }
+
+    input_buffer = "";
+    message_buffer = "";
+    if (last_try_connect + retry_period < millis()) {
+        last_try_connect = millis();
+        Serial.println("INFO: Trying to recover server connection.");
+        init_link();
+        return connect_server();
+    }
+    return false;
 }
 
 void handle_comm() {
