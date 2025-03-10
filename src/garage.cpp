@@ -46,7 +46,7 @@ thermos_t thermos[num_thermos] = {};
 const int num_outputs = 10;
 output_t outputs[num_outputs] = {
         {"LI_GR", 48, 1, 0, 0},     //
-        {"LI_GR_L2", 49, 1, 0, 0},  //
+        {"LI_GR_L1", 49, 1, 0, 0},  //
         {"DO_GR_DO", 33, 0, 0, 0},  //
         {"DO_GR_UP", 32, 0, 0, 0},  //
         {"DO_GR_DO", 31, 0, 0, 0},  //
@@ -70,7 +70,7 @@ const int num_timers = 3;
 ntimer_t timers[num_timers] = {
         {"ZE_GR_0", "LI_GR", false, false, 0, 120},
         {"ZE_GR_1", "LI_GR", false, false, 0, 600},
-        {"ZE_GR_2", "LI_GR_L2", false, false, 0, 120},
+        {"ZE_GR_2", "LI_GR_L1", false, false, 0, 120},
 };
 
 const int num_pwms = 0;

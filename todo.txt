@@ -49,10 +49,10 @@ A ( ) dht fails initially
 A (x) read temp seems not to work
 A (x) bewegungsmelder
 A (x) ZE not sate message on stop
-A ( ) Lights garage aufräumen (including oh)
-A ( ) Dont stop without ethernet shield. comm bypass mode
-A ( ) Uptime counter / hard beat / revision periodically
-A ( ) Start behavior without DHCP (retry when local IP)
+A (x) Lights garage aufräumen (including oh)
+A (x) Dont stop without ethernet shield. comm bypass mode
+A (x) Uptime counter / hard beat / revision periodically
+A (x) Start behavior without DHCP (retry when local IP)
 
 B ( ) Rollo lock endlage zu oft 50
 
