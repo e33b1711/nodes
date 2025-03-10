@@ -35,11 +35,11 @@ A (x) git revision on sucessfull reconnect
 A (x) how to turn off thermos / resetting integrator
 
 deployen:
-(x) ( )garage
-(x) ( )og
-(x) ( )eg
-(x) ( )keller
-( ) ( )chicken
+(x)garage
+(x)og
+(x)eg
+(x)keller
+( )chicken
 
 A ( ) eval: commands back to unit <> write_any / send command
 A ( ) eval thermos / valves
@@ -72,4 +72,5 @@ Hardware:
 ( ) water warning ersatz
 (x) temp garage defekt
 (x) garagen fritzbox
+( ) ethernet shield verkleben
 
