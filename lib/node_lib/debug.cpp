@@ -58,6 +58,6 @@ void init_debug() {
 #ifdef __TEST__
     Serial.println("WARNING: TEST BUILD!");
 #else
-    Serial.println("INFO: Productive Version.!");
+    Serial.println("INFO: Productive Version!");
 #endif
 }
