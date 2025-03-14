@@ -24,7 +24,7 @@ void update_timer(int i) {
             timers[i].running = false;
             timers[i].value = false;
             write_output(timers[i].slave, 0);
-            write_output(timers[i].name, timers[i].value);
+            send_state(timers[i].name, timers[i].value);
         }
     }
     // timer: external off
