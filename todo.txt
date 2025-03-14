@@ -72,5 +72,5 @@ Hardware:
 ( ) water warning ersatz
 (x) temp garage defekt
 (x) garagen fritzbox
-( ) ethernet shield verkleben
+(x) ethernet shield verkleben
 
