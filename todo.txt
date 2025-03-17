@@ -39,13 +39,11 @@ deployen:
 (x)og
 (x)eg
 (x)keller
-( )chicken
+(x)chicken
 
-A ( ) eval: commands back to unit <> write_any / send command
-A ( ) eval thermos / valves
+
 A (x) still no git rev from garage
 A (x) lib dependencies
-A ( ) dht fails initially
 A (x) read temp seems not to work
 A (x) bewegungsmelder
 A (x) ZE not sate message on stop
@@ -53,21 +51,22 @@ A (x) Lights garage aufräumen (including oh)
 A (x) Dont stop without ethernet shield. comm bypass mode
 A (x) Uptime counter / hard beat / revision periodically
 A (x) Start behavior without DHCP (retry when local IP)
+A ( ) dht fails initially
+A ( ) eval: commands back to unit <> write_any / send command
+A ( ) eval thermos / valves
 
 B ( ) Rollo lock endlage zu oft 50
 
 C ( ) logging
-C ( ) udp broadcasten
 C ( ) OTA atmrl
 C ( ) OTA esp32
-C ( ) reset by switch
 
 
 Hardware:
 (x) garage => arduino
-( ) au temp (+regensensor)
+( ) au temp (+regensensor) => garage
 (x) codeschloss => garage
-( ) chicken eval hw
+(x) chicken eval hw
 ( ) taster im bad reparieren
 ( ) water warning ersatz
 (x) temp garage defekt
