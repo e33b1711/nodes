@@ -33,13 +33,13 @@ thermos_t thermos[num_thermos] = {};
 
 const int num_outputs = 7;
 output_t outputs[num_outputs] = {
-        {"DO_CH_UP", 17, 0, 0, 0},  //
-        {"DO_CH_DO", 19, 0, 0, 0},  //
-        {"PUMP", 18, 0, 0, 0},      //
-        {"LI_CH", 5, 0, 0, 0},      //
-        {"LI_CH_L2", 25, 0, 0, 0},  //
+        {"DO_CH_UP", 18, 0, 0, 0},  //
+        {"DO_CH_DO", 5, 0, 0, 0},  //
+        {"PUMP", 17, 0, 0, 0},      //
+        {"LI_CH", 19, 0, 0, 0},      //
+        {"LI_CH_L2", 27, 0, 0, 0},  //
         {"LI_CH_L3", 26, 0, 0, 0},  //
-        {"LI_CH_L4", 27, 0, 0, 0},  //
+        {"LI_CH_L4", 25, 0, 0, 0},  //
 };
 
 const int num_rollos = 1;
