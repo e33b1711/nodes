@@ -149,10 +149,7 @@ void setup_comm() {
 
 void execute_message(String type, String name, String val_str) {
     Serial.println("INFO: execute_message: " + type + " " + name + " " + val_str);
-    if (type == "restart") {
-        if (name == node_info.unit_name)
-            delay(100000);
-    } else if (type == "r") {
+    if (type == "r") {
         String value_string;
         if (get_any(name, value_string))
             send_state(name, value_string);
