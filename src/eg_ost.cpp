@@ -84,8 +84,8 @@ pwm_t pwms[num_pwms] = {};
 void user_logic() {
     long_short(6, "LI_EG_AO", 3, "LI_EG_GR", 3);
     toggle_couple(0, "LI_EG_GA");
-    simple(0, 1, "ZE_EG_VH");
-    simple(0, 1, "ZE_GR_2");
+    simple(1, 1, "ZE_EG_VH");
+    simple(1, 1, "ZE_GR_2");
     toggle_couple(4, "LI_EG_GA");
     long_short(5, "LI_EG_WZ", 0, "LI_EG_WZ", 3);
     long_short(5, "LI_EG_WZ_L1", 1, "LI_EG_WZ_L1", get_output("LI_EG_WZ"));
