@@ -139,11 +139,11 @@ void code_lock() {
     if (wg.available()) {
         unsigned long button_in = wg.getCode();
         last_press = millis();
-        // Serial.print("DEBUG: Wiegand");
-        // Serial.println(button_in);
-        if (button_in < 9) {
+        Serial.print("DEBUG: Wiegand");
+        Serial.println(button_in);
+        if (button_in <= 9) {
             code_in += String(button_in);
-            // Serial.println("DEBUG:code_in += " + code_in);
+            Serial.println("DEBUG:code_in += " + code_in);
         }
         if (button_in == 27) {
             code_in = "";
