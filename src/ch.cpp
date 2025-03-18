@@ -13,6 +13,8 @@
 #include "server.h"
 
 uint8_t mac[] =  {0x00, 0x00, 0x00, 0x00, 0x00, 0x00}; //unused on esp32
+const byte bssid[] = {0x3C, 0xa6, 0x2f, 0xd8, 0x8e, 0xfd};
+const int channel = 6;
 node_t node_info = {
         "ch", server, port, mac,
 };

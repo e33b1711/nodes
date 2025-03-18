@@ -24,6 +24,16 @@ void send_git_revision() {
 WiFiClient client;
 int conn_error_count = 0;
 
+void print_bssid(){
+    const uint8_t *bssid = WiFi.BSSID();   
+    Serial.print("INFO BSSID: ");
+    for(int i=0;i<6;i++){
+        Serial.print(bssid[i],HEX);
+        if (i<5) Serial.print(":");
+    }
+    Serial.println("");
+}
+
 void init_link() {
     if (WiFi.status() == WL_CONNECTED){
         Serial.println("INFO: WIFI connected.");
@@ -33,7 +43,7 @@ void init_link() {
     WiFi.mode(WIFI_STA);
     WiFi.config(INADDR_NONE, INADDR_NONE, INADDR_NONE, INADDR_NONE);
     WiFi.setHostname(node_info.unit_name.c_str());  // define hostname
-    WiFi.begin(ssid, pass);
+    WiFi.begin(ssid, pass, 6, bssid);
 
     int retries = 0;
     while (WiFi.status() != WL_CONNECTED) {
@@ -51,6 +61,7 @@ void init_link() {
     Serial.println(WiFi.getHostname());
     Serial.print("INFO: RRSI: ");
     Serial.println(WiFi.RSSI());
+    print_bssid();
     return;
 }
 

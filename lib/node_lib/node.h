@@ -69,6 +69,7 @@ extern const IPAddress ip;
 extern const IPAddress server;
 extern const char *ssid;
 extern const char *pass;
+extern const byte bssid[];
 extern node_t node_info;
 
 extern const String auto_version;
