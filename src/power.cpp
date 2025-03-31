@@ -33,9 +33,11 @@ temp_t temps[num_temps] = {
 const int num_thermos = 0;
 thermos_t thermos[num_thermos] = {};
 
-const int num_switches = 1;
+const int num_switches = 3;
 switch_t switches[num_switches] = {
         {"F_HE", true, 57, 0, 0, 0, false, false, false, false},   // 0
+        {"F_WW", true, 58, 0, 0, 0, false, false, false, false},   // 0
+        {"F_WW_N", true, 59, 0, 0, 0, false, false, false, false},   // 0
 };
 
 const int num_outputs = 0;
