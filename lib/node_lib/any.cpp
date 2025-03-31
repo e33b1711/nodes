@@ -9,20 +9,23 @@
 #include "thermos.h"
 #include "switch.h"
 
-bool write_any(String name, String val_str) {
+void write_any_internal(String name, String val_str) {
     if (write_valve(name, val_str))
-        return true;
+        return;
     if (write_output(name, val_str))
-        return true;
+        return;
     if (write_rollo(name, val_str))
-        return true;
+        return;
     if (write_timer(name, val_str))
-        return true;
+        return;
     if (write_pwm(name, val_str))
-        return true;
-    if (write_thermos(name, val_str))
-        return true;
-    return false;
+        return;
+    write_thermos(name, val_str);
+}
+
+void write_any(String name, String val_str) {
+    write_any_internal(name, val_str);
+    send_command(name, val_str);
 }
 
 bool get_any(String name, String &value_string) {

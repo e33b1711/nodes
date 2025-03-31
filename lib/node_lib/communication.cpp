@@ -131,6 +131,11 @@ void send_command(String name, int value) {
     message_buffer += message;
 }
 
+void send_command(String name, String value) {
+    String message = "!c!" + name + '!' + value + "$\n";
+    message_buffer += message;
+}
+
 void send_state(String name, int value) {
     String message = "!s!" + name + '!' + String(value, DEC) + "$\n";
     Serial.print("INFO: send_state: " + message);
@@ -165,7 +170,7 @@ void execute_message(String type, String name, String val_str) {
         if (get_any(name, value_string))
             send_state(name, value_string);
     } else if (type == "c") {
-        write_any(name, val_str);
+        write_any_internal(name, val_str);
     }
 }
 

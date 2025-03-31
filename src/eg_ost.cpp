@@ -95,12 +95,12 @@ void user_logic() {
     long_short(12, "LI_EG_WZ_L1", 1, "LI_EG_WZ_L1", get_output("LI_EG_WZ"));
     long_short(12, "LI_EG_WZ_L2", 0, "LI_EG_WZ_L2", get_output("LI_EG_WZ"));
 
-    long_short_extern(10, "LI_EG_EZ_L3", 3, "LI_EG_EZ_KU", 3);
+    long_short(10, "LI_EG_EZ_L3", 3, "LI_EG_EZ_KU", 3);
     simple(9, 3, "LI_EG_WC");
-    long_short_extern(15, "LI_OG_GA", 3, "LI_OG_GA_L1", 3);
-    long_short_extern(11, "VD_OG_GA", 100, "DF_OG_GA", 100);
-    long_short_extern(8, "VD_OG_GA", 0, "DF_OG_GA", 0);
-    simple_extern(13, 1, "ZE_BELL");
+    long_short(15, "LI_OG_GA", 3, "LI_OG_GA_L1", 3);
+    long_short(11, "VD_OG_GA", 100, "DF_OG_GA", 100);
+    long_short(8, "VD_OG_GA", 0, "DF_OG_GA", 0);
+    simple(13, 1, "ZE_BELL");
 }
 
 void user_init() {}

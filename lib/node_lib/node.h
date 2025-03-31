@@ -29,6 +29,7 @@ void user_logic();
 void user_init();
 
 void send_command(String name, int value);
+void send_command(String name, String value);
 void send_state(String name, int value);
 void send_state(String name, String value);
 
@@ -38,20 +39,14 @@ void long_short(const int b_index,
                 const String l_short,
                 const int s_value);
 
-void long_short_extern(const int b_index,
-                       const String l_long,
-                       const int l_value,
-                       const String l_short,
-                       const int s_value);
-
 void simple(const int b_index, const int value, const String l);
-void simple_extern(const int b_index, const int value, const String l);
 void rollo_lock(const int b_index, const int value, const String l);
 void toggle_couple(const int b_index, const String output);
 
 void alloc_pin(int pin);
 
-bool write_any(String address, String val_str);
+void write_any(String address, String val_str);
+void write_any_internal(String address, String val_str);
 bool get_any(String name, String &value);
 
 void execute_message(String type, String name, String val_str);

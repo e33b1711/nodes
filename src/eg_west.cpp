@@ -105,7 +105,7 @@ void user_logic() {
     simple(8, 100, "RO_EG_SU");
     simple(8, 100, "RO_EG_WE");
     long_short(3, "none", 1, "LI_EG_AS", 3);
-    long_short_extern(3, "PUMP", 3, "none", 3);
+    long_short(3, "PUMP", 3, "none", 3);
     rollo_lock(0, 0, "RO_EG_SU");
     rollo_lock(2, 100, "RO_EG_SU");
     simple(14, 3, "LI_EG_AW");
@@ -113,7 +113,7 @@ void user_logic() {
     rollo_lock(15, 100, "RO_EG_WE");
     simple(13, 3, "LI_EG_KU_L1");
     simple(13, 3, "LI_EG_SP");
-    simple_extern(6, 3, "LI_UG_GA");
+    simple(6, 3, "LI_UG_GA");
     toggle_couple(5, "LI_EG_GA");
 }
 
