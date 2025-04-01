@@ -10,10 +10,8 @@ bool write_thermos(String name, String);
 struct thermos_t {
     const String name;   // same as a temp on same unit
     const String valve;  // any valve
-    const float abs_weight;
     const float lin_weight;
     const float int_weight;
-    const unsigned long period;
     float target_temp;
     float int_value;
     unsigned long last_update;
