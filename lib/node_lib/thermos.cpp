@@ -1,7 +1,6 @@
 #include "node.h"
 #include "thermos.h"
 #include "temp.h"
-#include "valve.h"
 
 const int half_valve = 128;
 const int full_valve = 254;  //almost full, we want some movement
@@ -31,6 +30,9 @@ float cutoff(float &in, const float max, const float min) {
 void update_one_thermos(int i) {
     if (!(i < num_thermos))
         return;
+    
+    if (thermos[i].target_temp < 0)
+        return;
 
     float temperature;
     if (!get_temp("TI_" + thermos[i].name, temperature)) {
@@ -40,15 +42,7 @@ void update_one_thermos(int i) {
 
     if (temperature > 50 or temperature < -20 or isnan(temperature)) {
         Serial.println("ERROR: temp out of range. Setting 50%.");
-        send_command(thermos[i].valve, half_valve);
-        write_valve(thermos[i].valve, half_valve);
-        return;
-    }
-
-    if (thermos[i].target_temp < 0) {
-        thermos[i].int_value = 0.0;
-        send_command(thermos[i].valve, closed_valve);
-        write_valve(thermos[i].valve, closed_valve);
+        write_any(thermos[i].valve, String(half_valve, DEC));
         return;
     }
 
@@ -58,8 +52,7 @@ void update_one_thermos(int i) {
 
     float setpoint = linear + thermos[i].int_value;
     int i_setpoint = (int)cutoff(setpoint, full_valve, closed_valve);
-    send_command(thermos[i].valve, i_setpoint);
-    write_valve(thermos[i].valve, i_setpoint);
+    write_any(thermos[i].valve, String(i_setpoint, DEC));
     send_state("IT_" + thermos[i].name, String(thermos[i].int_value));
 
     Serial.println("DEBUG: update thermos " + thermos[i].name);
@@ -81,7 +74,10 @@ void update_thermos() {
     if (((s_time_t + period_t) < millis()) or initial) {
         initial = false;
         s_time_t = millis();
-        for (int i = 0; i < num_temps; i++) update_one_thermos(i);
+        for (int i = 0; i < num_temps; i++){
+            send_state("TS_" + thermos[i].name, String(thermos[i].target_temp));
+            update_one_thermos(i);
+        }
     }
 }
 
@@ -94,11 +90,11 @@ bool write_thermos(String name, String val_str) {
                 thermos[i].int_value = 0.0;
                 Serial.println("INFO: Turned off valve: " + name);
                 Serial.println("INFO: Reset Integrator " + name);
+                write_any(thermos[i].valve, String(closed_valve, DEC));
                 send_state(name, String(thermos[i].target_temp));
                 return true;
             }
             thermos[i].target_temp = cutoff(f_value, 30.0, 10.0);
-            thermos[i].int_value = 0;
             send_state(name, String(thermos[i].target_temp));
             return true;
         }
