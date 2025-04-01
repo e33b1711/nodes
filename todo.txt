@@ -52,7 +52,7 @@ A (x) Dont stop without ethernet shield. comm bypass mode
 A (x) Uptime counter / hard beat / revision periodically
 A (x) Start behavior without DHCP (retry when local IP)
 A ( ) dht fails initially
-A ( ) eval: commands back to unit <> write_any / send command
+A (x) eval: commands back to unit <> write_any / send command
 A ( ) eval thermos / valves
 
 B ( ) Rollo lock endlage zu oft 50
