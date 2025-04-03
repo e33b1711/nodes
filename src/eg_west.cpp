@@ -55,10 +55,10 @@ temp_t temps[num_temps] = {
 
 const int num_thermos = 4;
 thermos_t thermos[num_thermos] = {
-        {"EG_GA", "V_EG_GA", 120, 0.2, 22, 0.0, 0},
-        {"EG_KU", "V_EG_KU", 120, 0.2, 22, 0.0, 0},
-        {"EG_WZ", "V_EG_WZ", 120, 0.2, 21, 0.0, 0},
-        {"EG_EZ", "V_EG_EZ", 120, 0.2, 22, 0.0, 0},
+        {"EG_GA", "V_EG_GA", 120, 0.2, 22, 0.0},
+        {"EG_KU", "V_EG_KU", 120, 0.2, 22, 0.0},
+        {"EG_WZ", "V_EG_WZ", 120, 0.2, 21, 0.0},
+        {"EG_EZ", "V_EG_EZ", 120, 0.2, 22, 0.0},
 };
 
 const int num_outputs = 16;

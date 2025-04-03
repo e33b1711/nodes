@@ -14,7 +14,6 @@ struct thermos_t {
     const float int_weight;
     float target_temp;
     float int_value;
-    unsigned long last_update;
 };
 
 extern const int num_thermos;

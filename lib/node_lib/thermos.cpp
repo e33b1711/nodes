@@ -74,7 +74,7 @@ void update_thermos() {
     if (((s_time_t + period_t) < millis()) or initial) {
         initial = false;
         s_time_t = millis();
-        for (int i = 0; i < num_temps; i++){
+        for (int i = 0; i < num_thermos; i++){
             send_state("TS_" + thermos[i].name, String(thermos[i].target_temp));
             update_one_thermos(i);
         }
