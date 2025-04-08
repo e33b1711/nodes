@@ -25,9 +25,8 @@ switch_t switches[num_switches] = {
 
 const int num_temps = 1;
 const long period_t = 60000;
-const int ds18b_pin = 61;
 temp_t temps[num_temps] = {
-        {"CH", 22, 0, 0, 0},
+        {"CH", 22, SHT31_T, 0, 0, 0},
 };
 
 const int num_thermos = 0;

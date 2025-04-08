@@ -36,15 +36,16 @@ switch_t switches[num_switches] = {
         {"", false, 25, 0, 0, 0, false, false, false, false},  // 7 HS
 };
 
-const int num_temps = 5;
+const int num_temps = 7;
 const long period_t = 60000;
-const int ds18b_pin = 61;
 temp_t temps[num_temps] = {
-        {"UG_WK", 26, 0, 0, 0},  //
-        {"UG_HO", 27, 0, 0, 0},  //
-        {"UG_LA", 28, 0, 0, 0},  //
-        {"UG_GA", 29, 0, 0, 0},  //
-        {"UG_HK", 30, 0, 0, 0},  //
+        {"UG_WK", 26, DHT22_T, 0, 0, 0},  //
+        {"UG_HO", 27, DHT22_T, 0, 0, 0},  //
+        {"UG_LA", 28, DHT22_T, 0, 0, 0},  //
+        {"UG_GA", 29, DHT22_T, 0, 0, 0},  //
+        {"UG_HK", 30, DHT22_T, 0, 0, 0},  //
+        {"PU_O", 51, DS18B20_T, 0, 0, 0},   //
+        {"PU_U", 52, DS18B20_T, 0, 0, 0},  //
 };
 
 const int num_thermos = 4;

@@ -22,12 +22,9 @@ node_t node_info = {
         "power", server, port, mac,
 };
 
-const int num_temps = 2;
+const int num_temps = 0;
 const long period_t = 100000;
-const int ds18b_pin = 61;
 temp_t temps[num_temps] = {
-        {"PU_O", 51, 0, 0, 0},   //
-        {"PU_U", 189, 0, 0, 0},  //
 };
 
 const int num_thermos = 0;

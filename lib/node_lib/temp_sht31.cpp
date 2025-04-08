@@ -1,4 +1,4 @@
-#ifdef __sht31__
+#ifdef __esp_temp__
 
 #include "node.h"
 #include "temp.h"

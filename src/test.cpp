@@ -27,7 +27,6 @@ node_t node_info = {
 
 const int num_temps = 0;
 const long period_t = 100000;
-const int ds18b_pin = 61;
 temp_t temps[num_temps] = {};
 
 const int num_thermos = 0;
