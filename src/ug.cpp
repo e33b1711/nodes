@@ -24,27 +24,30 @@ node_t node_info = {
         mac,
 };
 
-const int num_switches = 8;
+const int num_switches = 11;
 switch_t switches[num_switches] = {
-        {"", false, 2, 0, 0, 0, false, false, false, false},   // 0
-        {"", false, 3, 0, 0, 0, false, false, false, false},   // 1
-        {"", false, 16, 0, 0, 0, false, false, false, false},  // 2 HK
-        {"", false, 17, 0, 0, 0, false, false, false, false},  // 3 GA_HK
-        {"", false, 22, 0, 0, 0, false, false, false, false},  // 4 GA
-        {"", false, 23, 0, 0, 0, false, false, false, false},  // 5 HN
-        {"", false, 24, 0, 0, 0, false, false, false, false},  // 6 WK
-        {"", false, 25, 0, 0, 0, false, false, false, false},  // 7 HS
+        {"", false, 2, 0, 0, 0, false, false, false, false},        // 0
+        {"", false, 3, 0, 0, 0, false, false, false, false},        // 1
+        {"", false, 16, 0, 0, 0, false, false, false, false},       // 2 HK
+        {"", false, 17, 0, 0, 0, false, false, false, false},       // 3 GA_HK
+        {"", false, 22, 0, 0, 0, false, false, false, false},       // 4 GA
+        {"", false, 23, 0, 0, 0, false, false, false, false},       // 5 HN
+        {"", false, 24, 0, 0, 0, false, false, false, false},       // 6 WK
+        {"", false, 25, 0, 0, 0, false, false, false, false},       // 7 HS
+        {"F_HE", true, 57, 0, 0, 0, false, false, false, false},    //
+        {"F_WW", true, 58, 0, 0, 0, false, false, false, false},    //
+        {"F_WW_N", true, 59, 0, 0, 0, false, false, false, false},  //
 };
 
 const int num_temps = 7;
 const long period_t = 60000;
 temp_t temps[num_temps] = {
-        {"UG_WK", 26, DHT22_T, 0, 0, 0},  //
-        {"UG_HO", 27, DHT22_T, 0, 0, 0},  //
-        {"UG_LA", 28, DHT22_T, 0, 0, 0},  //
-        {"UG_GA", 29, DHT22_T, 0, 0, 0},  //
-        {"UG_HK", 30, DHT22_T, 0, 0, 0},  //
-        {"PU_O", 51, DS18B20_T, 0, 0, 0},   //
+        {"UG_WK", 26, DHT22_T, 0, 0, 0},   //
+        {"UG_HO", 27, DHT22_T, 0, 0, 0},   //
+        {"UG_LA", 28, DHT22_T, 0, 0, 0},   //
+        {"UG_GA", 29, DHT22_T, 0, 0, 0},   //
+        {"UG_HK", 30, DHT22_T, 0, 0, 0},   //
+        {"PU_O", 51, DS18B20_T, 0, 0, 0},  //
         {"PU_U", 52, DS18B20_T, 0, 0, 0},  //
 };
 
@@ -84,8 +87,24 @@ valve_t valves[num_valves] = {
 const int num_timers = 1;
 ntimer_t timers[num_timers] = {{"ZE_BELL", "BELL", false, false, 0, 5}};
 
-const int num_pwms = 0;
-pwm_t pwms[num_pwms] = {};
+const int num_pwms = 1;
+pwm_t pwms[num_pwms] = {{"U_EL", 5, 210, 30000, 0, 210, 0}};
+
+void overtemp() {
+    // overtemp for elo heating, 85°
+    const int max_temp = 90;
+    const int thresh_temp = 85;
+    const int max_p = 210;
+    const int temp_coeff = 40;
+    float temp;
+    get_temp("TI_PU_O", temp);
+    if (temp < thresh_temp)
+        set_pwm_max("U_EL", max_p);
+    if ((temp > thresh_temp) and (temp < max_temp))
+        set_pwm_max("U_EL", (max_temp - temp) * temp_coeff);
+    if (temp > max_temp)
+        set_pwm_max("U_EL", 0);
+}
 
 void user_logic() {
     simple(2, 3, "LI_UG_HK");
@@ -96,6 +115,7 @@ void user_logic() {
     long_short(5, "LI_UG_HN", 0, "LI_UG_HN", 3);
     long_short(5, "LI_UG_HO", 0, "none", 3);
     simple(6, 3, "LI_UG_WK");
+    overtemp();
 }
 
 void user_init() {}
