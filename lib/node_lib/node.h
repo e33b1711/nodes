@@ -8,7 +8,7 @@
 const int num_pins = 36;
 #else
 #include <Ethernet.h>
-const int num_pins = 62;
+const int num_pins = PIN_A15;
 #endif
 #include <Arduino.h>
 
