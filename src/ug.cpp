@@ -34,21 +34,22 @@ switch_t switches[num_switches] = {
         {"", false, 23, 0, 0, 0, false, false, false, false},       // 5 HN
         {"", false, 24, 0, 0, 0, false, false, false, false},       // 6 WK
         {"", false, 25, 0, 0, 0, false, false, false, false},       // 7 HS
-        {"F_HE", true, 57, 0, 0, 0, false, false, false, false},    //
-        {"F_WW", true, 58, 0, 0, 0, false, false, false, false},    //
-        {"F_WW_N", true, 59, 0, 0, 0, false, false, false, false},  //
+        {"F_HE", true, PIN_A7, 0, 0, 0, false, false, false, false},    //
+        {"F_WW", true, PIN_A6, 0, 0, 0, false, false, false, false},    //
+        {"F_WW_N", true, PIN_A5, 0, 0, 0, false, false, false, false},  //
 };
 
 const int num_temps = 7;
 const long period_t = 60000;
 temp_t temps[num_temps] = {
+        {"PU_O", 8, DS18B20_T, 0, 0, 0},  //
+        {"PU_U", 9, DS18B20_T, 0, 0, 0},  //
         {"UG_WK", 26, DHT22_T, 0, 0, 0},   //
         {"UG_HO", 27, DHT22_T, 0, 0, 0},   //
         {"UG_LA", 28, DHT22_T, 0, 0, 0},   //
         {"UG_GA", 29, DHT22_T, 0, 0, 0},   //
         {"UG_HK", 30, DHT22_T, 0, 0, 0},   //
-        {"PU_O", 51, DS18B20_T, 0, 0, 0},  //
-        {"PU_U", 52, DS18B20_T, 0, 0, 0},  //
+      
 };
 
 const int num_thermos = 4;
@@ -88,7 +89,7 @@ const int num_timers = 1;
 ntimer_t timers[num_timers] = {{"ZE_BELL", "BELL", false, false, 0, 5}};
 
 const int num_pwms = 1;
-pwm_t pwms[num_pwms] = {{"U_EL", 5, 210, 30000, 0, 210, 0}};
+pwm_t pwms[num_pwms] = {{"U_EL", 6, 210, 30000, 0, 210, 0}};
 
 void overtemp() {
     // overtemp for elo heating, 85°
