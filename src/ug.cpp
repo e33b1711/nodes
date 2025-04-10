@@ -26,17 +26,17 @@ node_t node_info = {
 
 const int num_switches = 11;
 switch_t switches[num_switches] = {
-        {"", false, 2, 0, 0, 0, false, false, false, false},        // 0
-        {"", false, 3, 0, 0, 0, false, false, false, false},        // 1
-        {"", false, 16, 0, 0, 0, false, false, false, false},       // 2 HK
-        {"", false, 17, 0, 0, 0, false, false, false, false},       // 3 GA_HK
-        {"", false, 22, 0, 0, 0, false, false, false, false},       // 4 GA
-        {"", false, 23, 0, 0, 0, false, false, false, false},       // 5 HN
-        {"", false, 24, 0, 0, 0, false, false, false, false},       // 6 WK
-        {"", false, 25, 0, 0, 0, false, false, false, false},       // 7 HS
-        {"F_HE", true, PIN_A7, 0, 0, 0, false, false, false, false},    //
-        {"F_WW", true, PIN_A6, 0, 0, 0, false, false, false, false},    //
-        {"F_WW_N", true, PIN_A5, 0, 0, 0, false, false, false, false},  //
+        {"", false, 2, 0, 0, 0, false, false, false, false},             // 0
+        {"", false, 3, 0, 0, 0, false, false, false, false},             // 1
+        {"", false, 16, 0, 0, 0, false, false, false, false},            // 2 HK
+        {"", false, 17, 0, 0, 0, false, false, false, false},            // 3 GA_HK
+        {"", false, 22, 0, 0, 0, false, false, false, false},            // 4 GA
+        {"", false, 23, 0, 0, 0, false, false, false, false},            // 5 HN
+        {"", false, 24, 0, 0, 0, false, false, false, false},            // 6 WK
+        {"", false, 25, 0, 0, 0, false, false, false, false},            // 7 HS
+        {"F_HE", true, PIN_A7, 0, 0, 0, false, false, false, false},     // gastherme anforderung
+        {"F_WW_NO", true, PIN_A6, 0, 0, 0, false, false, false, false},  // pumpensumpf NC
+        {"F_WW_NC", true, PIN_A5, 0, 0, 0, false, false, false, false},  // pumepensumpf NO
 };
 
 const int num_temps = 7;
@@ -44,12 +44,12 @@ const long period_t = 60000;
 temp_t temps[num_temps] = {
         {"PU_O", 8, DS18B20_T, 0, 0, 0},  //
         {"PU_U", 9, DS18B20_T, 0, 0, 0},  //
-        {"UG_WK", 26, DHT22_T, 0, 0, 0},   //
-        {"UG_HO", 27, DHT22_T, 0, 0, 0},   //
-        {"UG_LA", 28, DHT22_T, 0, 0, 0},   //
-        {"UG_GA", 29, DHT22_T, 0, 0, 0},   //
-        {"UG_HK", 30, DHT22_T, 0, 0, 0},   //
-      
+        {"UG_WK", 26, DHT22_T, 0, 0, 0},  //
+        {"UG_HO", 27, DHT22_T, 0, 0, 0},  //
+        {"UG_LA", 28, DHT22_T, 0, 0, 0},  //
+        {"UG_GA", 29, DHT22_T, 0, 0, 0},  //
+        {"UG_HK", 30, DHT22_T, 0, 0, 0},  //
+
 };
 
 const int num_thermos = 4;
@@ -107,6 +107,33 @@ void overtemp() {
         set_pwm_max("U_EL", 0);
 }
 
+void water_warning() {
+    static unsigned long last_time;
+    const unsigned long period = 3600000;
+    static bool initial = true;
+    if (((last_time + period) < millis()) or initial) {
+        initial = false;
+        last_time = millis();
+
+        int nc = get_switch("F_WW_NC");
+        int no = get_switch("F_WW_NO");
+
+        if (nc == no) {
+            Serial.println("ERROR: water warning nc = no");
+            send_state("F_WW", "1");
+            return;
+        }
+        if (nc == 0 and no == 1) {
+            Serial.println("INFO: water warning!!!");
+            send_state("F_WW", "1");
+            return;
+        }
+        Serial.println("INFO: water warning: all good.");
+        send_state("F_WW", "0");
+        return;
+    }
+}
+
 void user_logic() {
     simple(2, 3, "LI_UG_HK");
     simple(3, 3, "LI_UG_GA");
@@ -117,6 +144,7 @@ void user_logic() {
     long_short(5, "LI_UG_HO", 0, "none", 3);
     simple(6, 3, "LI_UG_WK");
     overtemp();
+    water_warning();
 }
 
 void user_init() {}
