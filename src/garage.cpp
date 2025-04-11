@@ -26,17 +26,19 @@ node_t node_info = {
         mac,
 };
 
-const int num_switches = 3;
+const int num_switches = 4;
 switch_t switches[num_switches] = {
         {"innen", false, 25, 0, 0, 0, false, false, false, false},      //
         {"GR_CLOSED", false, 24, 0, 0, 0, false, false, false, false},  //
         {"GR_OPEN", false, 23, 0, 0, 0, false, false, false, false},    //
+        {"F_RAIN", true, PIN_A7, 0, 0, 0, false, false, false, false},      //
 };
 
-const int num_temps = 1;
+const int num_temps = 2;
 const long period_t = 60000;
 temp_t temps[num_temps] = {
-        {"GR", 8, DHT22_T, 0, 0, 0},  // does dht22 work on esp32?
+        {"GR", 8, DHT22_T, 0, 0, 0},  //
+        {"AU", 9, DHT22_T, 0, 0, 0},  //
 };
 
 const int num_thermos = 0;
@@ -180,10 +182,25 @@ void code_lock() {
         digitalWrite(5, 1);
 }
 
+void rain() {
+    static unsigned long last_time;
+    const unsigned long period = 3600000;
+    static bool initial = true;
+    if (((last_time + period) < millis()) or initial) {
+        initial = false;
+        last_time = millis();
+        String value;
+        get_switch("F_RAIN", value);
+        send_state("F_RAIN", "0");
+        return;
+    }
+}
+
 void user_logic() {
     simple(0, 3, "ZE_GR_1");
     on_door_open();
     code_lock();
+    rain();
 }
 
 void user_init() { init_code_lock(); }
