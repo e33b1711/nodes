@@ -1,8 +1,6 @@
 #include "node.h"
 #include "switch.h"
 
-int this_switch = 0;
-
 void setup_switches() {
     Serial.println("INFO: setup switches");
     for (int i = 0; i < num_switches; i++) {
@@ -33,6 +31,9 @@ String ident_string(int this_switch) {
 }
 
 void update_switches() {
+    static bool first_update = true;
+    static int this_switch = 0;
+
     if (num_switches > 0) {
         switches[this_switch].prev_value = switches[this_switch].value;
         switches[this_switch].value = invert(digitalRead(switches[this_switch].pin));
@@ -54,19 +55,23 @@ void update_switches() {
                 switches[this_switch].release_late = true;
                 Serial.println("INFO: Switch: " + ident_string(this_switch) + " released late.");
             }
-            if (switches[this_switch].last_edge + 80000 < millis()) delay(10000); // restart by pressing switch 8 secs
-
+            if (switches[this_switch].last_edge + 80000 < millis())
+                delay(10000);  // restart by pressing switch 8 secs
         }
         if (edge != 0) {
             switches[this_switch].last_edge = millis();
+        }
+        if ((edge != 0) | first_update) {
             if (switches[this_switch].is_public)
                 send_state(switches[this_switch].name, switches[this_switch].value);
         }
 
         this_switch = (this_switch + 1) % num_switches;
     }
-    if (this_switch == 0)
+    if (this_switch == 0) {
+        first_update = false;
         user_logic();
+    }
 }
 
 bool get_switch(String name, String &value) {
@@ -79,7 +84,7 @@ bool get_switch(String name, String &value) {
     return false;
 }
 
-int get_switch(String name){
+int get_switch(String name) {
     for (int i = 0; i < num_switches; i++) {
         if (switches[i].name == name) {
             return switches[i].value;
