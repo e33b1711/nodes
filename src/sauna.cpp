@@ -12,6 +12,8 @@
 #include "version.h"
 #include "server.h"
 
+#include "pinio.h"
+
 uint8_t mac[] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00};  // unused on esp32
 const byte bssid[] = {0x3C, 0xa6, 0x2f, 0xd8, 0x8e, 0xfd};
 const int channel = 6;
@@ -32,7 +34,7 @@ switch_t switches[num_switches] = {
 const int num_temps = 1;
 const long period_t = 60000;
 temp_t temps[num_temps] = {
-        {"CH", 22, DS18B20_T, 0, 0, 0},
+        {"SA", 22, DS18B20_T, 0, 0, 0},
 };
 
 const int num_thermos = 1;
@@ -53,7 +55,7 @@ rollo_t rollos[num_rollos] = {};
 
 const int num_valves = 1;
 valve_t valves[num_valves] = {
-        {"V_SA", "", 4, 0},
+        {"V_SA", "", 3, 0},
 };
 
 const int num_timers = 0;
@@ -62,6 +64,12 @@ ntimer_t timers[num_timers] = {};
 const int num_pwms = 0;
 pwm_t pwms[num_pwms] = {};
 
-void user_logic() {}
+void user_logic() {
+    delay(200);
+    //TODO better ensure 200ms cycle
+     simple(0, 3, "LI_SA_L1");
+     simple(1, 3, "LI_SA_L2");
+     simple(2, 3, "LI_SA_L3");
+}
 
 void user_init() {}

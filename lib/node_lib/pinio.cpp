@@ -75,7 +75,7 @@ int pinio_read(uint8_t pin) {
         return pcfIn1.digitalRead(pin - 16);
     }
     if (pin < 32) {
-        return pcfIn1.digitalRead(pin - 24);
+        return pcfIn2.digitalRead(pin - 24);
     }
     Serial.println("WARNING: pinio_write pin to high");
     return 0;

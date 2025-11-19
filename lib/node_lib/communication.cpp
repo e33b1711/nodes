@@ -43,7 +43,7 @@ void init_link() {
     WiFi.mode(WIFI_STA);
     WiFi.config(INADDR_NONE, INADDR_NONE, INADDR_NONE, INADDR_NONE);
     WiFi.setHostname(node_info.unit_name.c_str());  // define hostname
-    WiFi.begin(ssid, pass, 6);
+    WiFi.begin(ssid, pass, 6, bssid);
 
     int retries = 0;
     while (WiFi.status() != WL_CONNECTED) {
