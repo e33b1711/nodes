@@ -1,5 +1,6 @@
 #include "node.h"
 #include "valve.h"
+#include "pinio.h"
 
 unsigned long valve_last_time;
 const unsigned long valve_interval = 60000;
@@ -10,8 +11,8 @@ void setup_valves() {
     for (int i = 0; i < num_valves; i++) {
         alloc_pin(valves[i].pin);
         send_state(valves[i].name, valves[i].value);
-        digitalWrite(valves[i].pin, HIGH);
-        pinMode(valves[i].pin, OUTPUT);
+        pinio_write(valves[i].pin, HIGH);
+        pinio_mode(valves[i].pin, OUTPUT);
     }
     valve_last_time = millis();
 }
@@ -22,11 +23,11 @@ void update_valves() {
         for (int i = 0; i < num_valves; i++) {
             valves[i].sigmadelta += valves[i].value;
             if (valves[i].sigmadelta > 0) {
-                digitalWrite(valves[i].pin, HIGH);
+                pinio_write(valves[i].pin, HIGH);
                 valves[i].sigmadelta -= (valve_max);
                 Serial.println("DEBUG: HIGH " + valves[i].name);
             } else {
-                digitalWrite(valves[i].pin, LOW);
+                pinio_write(valves[i].pin, LOW);
                 Serial.println("DEBUG: LOW " + valves[i].name);
             }
 

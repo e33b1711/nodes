@@ -7,9 +7,11 @@
 #include "valve.h"
 #include "pwm.h"
 #include "thermos.h"
+#include "pinio.h"
 
 void setup() {
     init_debug();
+    setup_pinio();
     setup_switches();
     setup_comm();
     setup_temps();

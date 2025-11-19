@@ -12,6 +12,7 @@
 #include "server.h"
 
 #include "Wiegand.h"
+#include "pinio.h"
 
 #ifndef __TEST__
 uint8_t mac[] = {0xDE, 0xBB, 0x7E, 0xE1, 0xCC, 0x06};
@@ -107,8 +108,8 @@ void init_code_lock() {
 
     digitalWrite(4, 1);
     digitalWrite(5, 1);
-    pinMode(4, OUTPUT);
-    pinMode(5, OUTPUT);
+    pinio_mode(4, OUTPUT);
+    pinio_mode(5, OUTPUT);
     buzz_set = millis();
     led_set = millis();
 }

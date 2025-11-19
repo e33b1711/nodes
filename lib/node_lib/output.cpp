@@ -1,12 +1,13 @@
 #include "node.h"
 #include "output.h"
+#include "pinio.h"
 
 void setup_outputs() {
     Serial.println("INFO: setup outputs");
     for (int i = 0; i < num_outputs; i++) {
         alloc_pin(outputs[i].pin);
-        digitalWrite(outputs[i].pin, !outputs[i].invert);
-        pinMode(outputs[i].pin, OUTPUT);
+        pinio_write(outputs[i].pin, !outputs[i].invert);
+        pinio_mode(outputs[i].pin, OUTPUT);
         outputs[i].value = 0;
         send_state(outputs[i].name, int(outputs[i].value));
     }
@@ -14,7 +15,7 @@ void setup_outputs() {
 
 void update_outputs() {
     for (int i = 0; i < num_outputs; i++) {
-        digitalWrite(outputs[i].pin, !outputs[i].invert ^ outputs[i].value);
+        pinio_write(outputs[i].pin, !outputs[i].invert ^ outputs[i].value);
     }
 }
 
