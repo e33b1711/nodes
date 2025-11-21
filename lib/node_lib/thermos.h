@@ -12,6 +12,8 @@ struct thermos_t {
     const String valve;  // any valve
     const float lin_weight;
     const float int_weight;
+    const float max_temp;
+    const float min_temp;
     float target_temp;
     float int_value;
 };

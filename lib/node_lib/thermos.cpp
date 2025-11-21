@@ -94,7 +94,7 @@ bool write_thermos(String name, String val_str) {
                 send_state(name, String(thermos[i].target_temp));
                 return true;
             }
-            thermos[i].target_temp = cutoff(f_value, 30.0, 10.0);
+            thermos[i].target_temp = cutoff(f_value, thermos[i].max_temp, thermos[i].min_temp);
             send_state(name, String(thermos[i].target_temp));
             return true;
         }

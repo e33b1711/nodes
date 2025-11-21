@@ -51,7 +51,7 @@ temp_t temps[num_temps] = {
 
 const int num_thermos = 1;
 thermos_t thermos[num_thermos] = {
-        {"SA", "V_SA", 120, 0.2, 22, 0.0},
+        {"SA", "V_SA", 120, 0.2, 95.0, 5.0, 6.0, 0.0},
 };
 
 const int num_outputs = 3;
