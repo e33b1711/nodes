@@ -47,10 +47,10 @@ switch_t switches[num_switches] = {
 const int num_temps = 4;
 const long period_t = 60000;
 temp_t temps[num_temps] = {
-        {"EG_GA", 58, DHT22_T, 0, 0, 0},  //
-        {"EG_KU", 59, DHT22_T, 0, 0, 0},  //
-        {"EG_WZ", 60, DHT22_T, 0, 0, 0},  //
-        {"EG_EZ", 61, DHT22_T, 0, 0, 0},  //
+        {"EG_GA", 58, {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, DHT22_T, 0, 0, 0},  //
+        {"EG_KU", 59, {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, DHT22_T, 0, 0, 0},  //
+        {"EG_WZ", 60, {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, DHT22_T, 0, 0, 0},  //
+        {"EG_EZ", 61, {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, DHT22_T, 0, 0, 0},  //
 };
 
 const int num_thermos = 4;

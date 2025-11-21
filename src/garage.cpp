@@ -38,8 +38,8 @@ switch_t switches[num_switches] = {
 const int num_temps = 2;
 const long period_t = 60000;
 temp_t temps[num_temps] = {
-        {"GR", 8, DHT22_T, 0, 0, 0},  //
-        {"AU", 9, DHT22_T, 0, 0, 0},  //
+        {"GR", 8, {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, DHT22_T, 0, 0, 0},  //
+        {"AU", 9, {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, DHT22_T, 0, 0, 0},  //
 };
 
 const int num_thermos = 0;

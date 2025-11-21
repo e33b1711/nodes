@@ -27,9 +27,9 @@ node_t node_info = {
 const int num_temps = 3;
 const long period_t = 60000;
 temp_t temps[num_temps] = {
-        {"OG_KN", 28, DHT22_T, 0, 0, 0},
-        {"OG_KS", 27, DHT22_T, 0, 0, 0},
-        {"OG_GA", 26, DHT22_T, 0, 0, 0},
+        {"OG_KN", 28, {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, DHT22_T, 0, 0, 0},
+        {"OG_KS", 27, {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, DHT22_T, 0, 0, 0},
+        {"OG_GA", 26, {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, DHT22_T, 0, 0, 0},
 };
 
 const int num_thermos = 3;

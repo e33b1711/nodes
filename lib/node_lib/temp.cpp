@@ -47,7 +47,7 @@ bool get_humi(String name, String &value) {
     return false;
 }
 
-#ifdef __ard_temp__
+#ifndef __temp_sh31__
 
 void setup_temps() {
     Serial.println("INFO: setup temps dht22");
