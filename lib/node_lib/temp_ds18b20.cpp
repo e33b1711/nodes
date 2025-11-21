@@ -6,7 +6,7 @@
 #include <OneWire.h>
 #include <DallasTemperature.h>
 
-OneWire oneWire(temps[0].pin);
+OneWire oneWire(ds18b_pin);
 // Pass our oneWire reference to Dallas Temperature sensor
 DallasTemperature sensors(&oneWire);
 
@@ -16,9 +16,8 @@ void discoverOneWireDevices(void) {
     byte data[12];
     byte addr[8];
 
-    Serial.print("INFO: Looking for 1-Wire devices...\n\r");
+    Serial.println("INFO: Looking for 1-Wire devices...");
     while (oneWire.search(addr)) {
-        Serial.print("\n\rINFO: Found \'1-Wire\' device with address:\n\r");
         Serial.print("INFO: ");
         for (i = 0; i < 8; i++) {
             Serial.print("0x");
@@ -30,12 +29,12 @@ void discoverOneWireDevices(void) {
                 Serial.print(", ");
             }
         }
+        Serial.println("");
         if (OneWire::crc8(addr, 7) != addr[7]) {
-            Serial.print("WARNING: CRC is not valid!\n");
+            Serial.println("WARNING: CRC is not valid!\n");
             return;
         }
     }
-    Serial.print("\n\r");
     oneWire.reset_search();
     return;
 }
@@ -43,6 +42,7 @@ void discoverOneWireDevices(void) {
 void handle_ds18b20(int this_temp) {
     static boolean init = true;
     if (init) {
+        discoverOneWireDevices();
         sensors.begin();
         init = false;
     }

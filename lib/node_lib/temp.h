@@ -27,6 +27,8 @@ struct temp_t {
 
 extern const int num_temps;
 extern const long period_t;
+extern const int ds18b_pin;
 extern temp_t temps[];
+
 
 #endif

@@ -34,6 +34,7 @@ switch_t switches[num_switches] = {
 
 const int num_temps = 4;
 const long period_t = 6000;
+const int ds18b_pin = 14;
 temp_t temps[num_temps] = {
         {"SA",  14, {0x28, 0x16, 0xD0, 0xBD, 0x00, 0x00, 0x00, 0xA5}, DS18B20_T, 0, 0, 0},
         {"SA1", 99, {0x28, 0xBF, 0x28, 0x54, 0x00, 0x00, 0x00, 0x2D}, DS18B20_T, 0, 0, 0},
