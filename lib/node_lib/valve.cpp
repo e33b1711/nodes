@@ -11,7 +11,7 @@ void setup_valves() {
     for (int i = 0; i < num_valves; i++) {
         alloc_pin(valves[i].pin);
         send_state(valves[i].name, valves[i].value);
-        pinio_write(valves[i].pin, HIGH);
+        pinio_write(valves[i].pin, not(valves[i].invert));
         pinio_mode(valves[i].pin, OUTPUT);
     }
     valve_last_time = millis();
@@ -23,12 +23,12 @@ void update_valves() {
         for (int i = 0; i < num_valves; i++) {
             valves[i].sigmadelta += valves[i].value;
             if (valves[i].sigmadelta > 0) {
-                pinio_write(valves[i].pin, HIGH);
+                pinio_write(valves[i].pin, not(valves[i].invert));
                 valves[i].sigmadelta -= (valve_max);
-                Serial.println("DEBUG: HIGH " + valves[i].name);
+                Serial.println("DEBUG: ON " + valves[i].name);
             } else {
-                pinio_write(valves[i].pin, LOW);
-                Serial.println("DEBUG: LOW " + valves[i].name);
+                pinio_write(valves[i].pin, valves[i].invert);
+                Serial.println("DEBUG: OFF " + valves[i].name);
             }
 
             Serial.println("DEBUG: sigmadelta " + String(valves[i].sigmadelta));

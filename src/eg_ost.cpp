@@ -66,13 +66,13 @@ rollo_t rollos[num_rollos] = {};
 
 const int num_valves = 7;
 valve_t valves[num_valves] = {
-        {"V_EG_WZ", "", 34, 0},  // 34 rot    Wohnzimmer
-        {"V_EG_GR", "V_EG_WC", 35, 0},  // 35 rosa   Garda
-        {"V_EG_EZ", "V_EG_E2", 36, 0},  // 36 grau   EZ
-        {"V_EG_E2", "", 37, 0},  // 37 gelb   EZ
-        {"V_EG_WC", "", 38, 0},  // 38 blau   WC
-        {"V_EG_GA", "V_EG_GR", 39, 0},  // 39 grün   Gang
-        {"V_EG_KU", "", 40, 0},  // 40 weiß   Küche
+        {"V_EG_WZ", "", 34, false, 0},                  // 34 rot    Wohnzimmer
+        {"V_EG_GR", "V_EG_WC", 35, false, 0},           // 35 rosa   Garda
+        {"V_EG_EZ", "V_EG_E2", 36, false, 0},           // 36 grau   EZ
+        {"V_EG_E2", "", 37, false, 0},                  // 37 gelb   EZ
+        {"V_EG_WC", "", 38, false, 0},                  // 38 blau   WC
+        {"V_EG_GA", "V_EG_GR", 39, false, 0},           // 39 grün   Gang
+        {"V_EG_KU", "", 40, false, 0},                  // 40 weiß   Küche
 };
 
 const int num_timers = 1;

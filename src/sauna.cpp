@@ -66,7 +66,7 @@ rollo_t rollos[num_rollos] = {};
 
 const int num_valves = 1;
 valve_t valves[num_valves] = {
-        {"V_SA", "", 3, 0},
+        {"V_SA", "", 3, true, 0},
 };
 
 const int num_timers = 0;

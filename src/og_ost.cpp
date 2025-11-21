@@ -64,11 +64,11 @@ rollo_t rollos[num_rollos] = {
   const int num_valves
   = 5;
 valve_t valves[num_valves] = {
-        {"V_OG_GA", "", 34, 0, 0},  // blau
-        {"V_OG_KS", "", 35, 0, 0},  // weiß
-        {"V_OG_KN", "", 36, 0, 0},  // grün
-        {"V_OG_BA", "", 37, 0, 0},  // rosa
-        {"V_OG_SZ", "", 38, 0, 0},  // grau
+        {"V_OG_GA", "", 34, false, 0, 0},  // blau
+        {"V_OG_KS", "", 35, false, 0, 0},  // weiß
+        {"V_OG_KN", "", 36, false, 0, 0},  // grün
+        {"V_OG_BA", "", 37, false, 0, 0},  // rosa
+        {"V_OG_SZ", "", 38, false, 0, 0},  // grau
 };
 
 const int num_switches = 16;
