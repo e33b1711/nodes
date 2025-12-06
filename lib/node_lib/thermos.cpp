@@ -2,11 +2,6 @@
 #include "thermos.h"
 #include "temp.h"
 
-const int half_valve = 128;
-const int full_valve = 254;  //almost full, we want some movement
-const int closed_valve = 2;  //almost closed, we want some movement
-const float base_valve = 32.0;
-
 bool get_thermos(String name, String &value) {
     for (int i = 0; i < num_thermos; i++) {
         if (name == ("TS_" + thermos[i].name)) {
@@ -40,9 +35,9 @@ void update_one_thermos(int i) {
         return;
     }
 
-    if (temperature > 50 or temperature < -20 or isnan(temperature)) {
+    if (temperature > 100 or temperature < -20 or isnan(temperature)) {
         Serial.println("ERROR: temp out of range. Setting 50%.");
-        write_any(thermos[i].valve, String(half_valve, DEC));
+        write_any(thermos[i].valve, String(default_valve, DEC));
         return;
     }
 

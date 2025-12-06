@@ -11,7 +11,7 @@ void setup_valves() {
     for (int i = 0; i < num_valves; i++) {
         alloc_pin(valves[i].pin);
         send_state(valves[i].name, valves[i].value);
-        pinio_write(valves[i].pin, not(valves[i].invert));
+        pinio_write(valves[i].pin, valves[i].invert);
         pinio_mode(valves[i].pin, OUTPUT);
     }
     valve_last_time = millis();

@@ -32,14 +32,15 @@ switch_t switches[num_switches] = {
         {"", false, 18, 0, 0, 0, false, false, false, false},  // 2 sü runter
 };
 
-const int num_temps = 4;
-const long period_t = 6000;
+const int num_temps = 5;
+const long period_t = 60000;
 const int ds18b_pin = 14;
 temp_t temps[num_temps] = {
-        {"SA",  14, {0x28, 0x16, 0xD0, 0xBD, 0x00, 0x00, 0x00, 0xA5}, DS18B20_T, 0, 0, 0},
+        {"SA", 14, {0x28, 0x16, 0xD0, 0xBD, 0x00, 0x00, 0x00, 0xA5}, DS18B20_T, 0, 0, 0},
         {"SA1", 99, {0x28, 0xBF, 0x28, 0x54, 0x00, 0x00, 0x00, 0x2D}, DS18B20_T, 0, 0, 0},
         {"SA2", 99, {0x28, 0xB4, 0xE8, 0xBD, 0x00, 0x00, 0x00, 0x2D}, DS18B20_T, 0, 0, 0},
         {"SA3", 99, {0x28, 0x10, 0x52, 0xBC, 0x00, 0x00, 0x00, 0xD0}, DS18B20_T, 0, 0, 0},
+        {"SA4", 99, {0x28, 0x82, 0x11, 0x54, 0x00, 0x00, 0x00, 0xFD}, DS18B20_T, 0, 0, 0},
 };
 
 // gelb 0x28, 0x16, 0xD0, 0xBD, 0x00, 0x00, 0x00, 0xA5
@@ -48,10 +49,13 @@ temp_t temps[num_temps] = {
 // blau 0x28, 0x10, 0x52, 0xBC, 0x00, 0x00, 0x00, 0xD0
 // schw 0x28, 0x82, 0x11, 0x54, 0x00, 0x00, 0x00, 0xFD
 
-
 const int num_thermos = 1;
+const int full_valve = 255;
+const int closed_valve = 0;
+const int default_valve = 0;
+
 thermos_t thermos[num_thermos] = {
-        {"SA", "V_SA", 120, 0.2, 95.0, 5.0, 6.0, 0.0},
+        {"SA", "V_SA", 10, 0.1, 90.0, 30.0, -99.0, 0.0},
 };
 
 const int num_outputs = 3;
@@ -67,7 +71,7 @@ rollo_t rollos[num_rollos] = {};
 
 const int num_valves = 1;
 valve_t valves[num_valves] = {
-        {"V_SA", "", 3, true, 0},
+        {"V_SA", "", 3, true, 0, -10},
 };
 
 const int num_timers = 0;

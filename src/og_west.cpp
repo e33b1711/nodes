@@ -33,6 +33,9 @@ temp_t temps[num_temps] = {
 };
 
 const int num_thermos = 3;
+const int full_valve = 254;
+const int closed_valve = 2;
+const int default_valve = 128;
 thermos_t thermos[num_thermos] = {
         {"OG_KN", "V_OG_KN", 120, 0.2, 30.0, 10.0, 20, 0.0},
         {"OG_KS", "V_OG_KS", 120, 0.2, 30.0, 10.0, 21, 0.0},
