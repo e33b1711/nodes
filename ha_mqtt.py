@@ -31,28 +31,54 @@ def ro_format(item):
 #TODO rollos stop => node side (more state updates)
 #TI / HI V TS revision
 
-def sensor_format(item, unit = "°C", precision = 0.5):  
+def sensor_format(item, unit = "°C", precision = 0.5, device_class = "temperature"):  
     str = f'''
   - unique_id: "{item}"
+    state_class: "measurement"
     name: "{item}"
     state_topic: "ard_state/{item}"
     suggested_display_precision: {precision}
+    device_class: "{device_class}"
     unit_of_measurement: "{unit}"
     '''
     return str
 
-def number_format(item, unit = "", min = 0, max = 255):  
+def number_format(item, unit = "", min = 0, max = 255, device_class = "temperature"):  
     str = f'''
   - unique_id: "{item}"
     name: "{item}"
     command_topic: "ard_command/{item}"
     state_topic: "ard_state/{item}"
+    device_class: "{device_class}"
     unit_of_measurement: "{unit}"
     min: "{min}"
     max: "{max}"
     optimistic: false
     '''
     return str
+
+
+def thermos_format(ts_item, ti_item, hi_item, min = 10, max = 30):
+    str = f'''
+  - unique_id: "{ts_item}"
+    name: "{ts_item}"
+    modes:
+      - "off"
+      - "heat"
+    temperature_command_topic: "ard_command/{ts_item}"
+    temperature_state_topic: "ard_state/{ts_item}"
+    current_humidity_topic: "ard_state/{hi_item}"
+    current_temperature_topic: "ard_state/{ti_item}"
+    mode_command_topic: "ard_command/{ts_item}"
+    mode_state_topic: "ard_state/{ts_item}"
+    min_temp: "{min}"
+    max_temp: "{max}"
+    optimistic: false
+    '''
+    return str
+
+# TODO thermos on off as seperate topic
+
 
 
 light_items = [
@@ -127,40 +153,6 @@ sensor_items = [
 "F_HE",
 "F_WW",
 "F_RAIN",
-"TI_EG_WZ",
-"TI_EG_KU",
-"TI_EG_EZ",
-"TI_EG_GA",
-"TI_OG_BA",
-"TI_OG_KN",
-"TI_OG_KS",
-"TI_OG_SZ",
-"TI_OG_GA",
-"TI_UG_HO",
-"TI_UG_WK",
-"TI_UG_HK",
-"TI_UG_GA",
-"TI_UG_LA",
-"TI_GR",
-"TI_AU",
-"TI_CH", 	   
-"HI_EG_WZ",
-"HI_EG_KU",
-"HI_EG_EZ",
-"HI_EG_GA",
-"HI_OG_BA",
-"HI_OG_KN",
-"HI_OG_KS",
-"HI_OG_SZ",
-"HI_OG_GA",
-"HI_UG_HO",
-"HI_UG_WK",
-"HI_UG_HK",
-"HI_UG_GA",
-"HI_UG_LA",
-"HI_GR",
-"HI_AU",
-"HI_CH",
 "V_UG_HO",
 "V_UG_LA",
 "V_UG_GA",
@@ -178,25 +170,27 @@ sensor_items = [
 "V_OG_SZ",
 ]
 
-#TODO unfy U_ + V_
+#TODO unfy U_ + V_ as number items
 
-number_items = [
-"U_EL",
-"TS_UG_HO",     
-"TS_UG_LA",     
-"TS_UG_GA",     
-"TS_UG_WK",     
-"TS_EG_KU",     
-"TS_EG_EZ",     
-"TS_EG_GA",     
-"TS_EG_WZ",     
-"TS_EG_GR",     
-"TS_EG_WC",     
-"TS_OG_KS",     
-"TS_OG_KN",     
-"TS_OG_GA",     
-"TS_OG_BA",     
-"TS_OG_SZ",
+thermos_items = [
+"GR",
+"AU",
+"CH",
+"UG_HO",     
+"UG_LA",     
+"UG_GA",     
+"UG_WK",     
+"EG_KU",     
+"EG_EZ",     
+"EG_GA",     
+"EG_WZ",     
+"EG_GR",     
+"EG_WC",     
+"OG_KS",     
+"OG_KN",     
+"OG_GA",     
+"OG_BA",     
+"OG_SZ",
 ]
 
 
@@ -217,15 +211,12 @@ if __name__ == "__main__":
         fh.write("\n\n- sensor:\n")
         for item in sensor_items:
             if item.startswith("TI_"):
-                fh.write(sensor_format(item, "°C", 0.5))
+                fh.write(sensor_format(item, "°C", 0.5, "temperature"))
             elif item.startswith("HI_"):
-                fh.write(sensor_format(item, "%", 1))
+                fh.write(sensor_format(item, "%", 1, "humidity"))
             else:
-                fh.write(sensor_format(item, "", 1))
+                fh.write(sensor_format(item, "", 1, "power"))
         
-        fh.write("\n\n- number:\n")
-        for item in number_items:
-            if item.startswith("TS_"):
-                fh.write(number_format(item, "°C", 10, 30))
-            else:
-                fh.write(number_format(item, "", 0, 255))
+        fh.write("\n\n- climate:\n")
+        for item in thermos_items:
+            fh.write(thermos_format("TS_" + item, "TI_" + item, "HI_" + item))
