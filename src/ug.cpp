@@ -53,11 +53,14 @@ temp_t temps[num_temps] = {
 };
 
 const int num_thermos = 4;
+const int full_valve = 254;
+const int closed_valve = 2;
+const int default_valve = 128;
 thermos_t thermos[num_thermos] = {
-        {"UG_WK", "V_UG_WK", 120, 0.2, 22, 0.0},
-        {"UG_HO", "V_UG_HO", 120, 0.2, 20, 0.0},
-        {"UG_LA", "V_UG_LA", 120, 0.2, 18, 0.0},
-        {"UG_GA", "V_UG_GA", 120, 0.2, 18, 0.0},
+        {"UG_WK", "V_UG_WK", 120, 0.2, 30.0, 10.0, 22, 0.0},
+        {"UG_HO", "V_UG_HO", 120, 0.2, 30.0, 10.0, 20, 0.0},
+        {"UG_LA", "V_UG_LA", 120, 0.2, 30.0, 10.0, 18, 0.0},
+        {"UG_GA", "V_UG_GA", 120, 0.2, 30.0, 10.0, 18, 0.0},
 };
 
 const int num_outputs = 8;
@@ -77,12 +80,12 @@ rollo_t rollos[num_rollos] = {};
 
 const int num_valves = 6;
 valve_t valves[num_valves] = {
-        {"V_UG_HO", "V_UG_H2", 34, 0},  //
-        {"V_UG_LA", "", 35, 0},         //
-        {"V_UG_WK", "", 36, 0},         //
-        {"V_UG_H2", "V_UG_H3", 37, 0},  //
-        {"V_UG_GA", "", 38, 0},         //
-        {"V_UG_H3", "", 39, 0},         //
+        {"V_UG_HO", "V_UG_H2", 34, false, 0},  //
+        {"V_UG_LA", "", 35, false, 0},         //
+        {"V_UG_WK", "", 36, false, 0},         //
+        {"V_UG_H2", "V_UG_H3", 37, false, 0},  //
+        {"V_UG_GA", "", 38, false, 0},         //
+        {"V_UG_H3", "", 39, false, 0},         //
 };
 
 const int num_timers = 1;

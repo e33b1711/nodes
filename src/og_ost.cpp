@@ -27,14 +27,17 @@ node_t node_info = {
 const int num_temps = 2;
 const long period_t = 60000;
 temp_t temps[num_temps] = {
-        {"OG_BA", 27, DHT22_T, 0, 0, 0},
-        {"OG_SZ", 26, DHT22_T, 0, 0, 0},
+        {"OG_BA", 27, {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, DHT22_T, 0, 0, 0},
+        {"OG_SZ", 26, {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, DHT22_T, 0, 0, 0},
 };
 
 const int num_thermos = 2;
+const int full_valve = 254;
+const int closed_valve = 2;
+const int default_valve = 128;
 thermos_t thermos[num_thermos] = {
-        {"OG_BA", "V_OG_BA", 120, 0.2, 23, 0.0},
-        {"OG_SZ", "V_OG_SZ", 120, 0.2, 16, 0.0},
+        {"OG_BA", "V_OG_BA", 120, 0.2, 30.0, 10.0, 23, 0.0},
+        {"OG_SZ", "V_OG_SZ", 120, 0.2, 30.0, 10.0, 16, 0.0},
 };
 
 const int num_outputs = 12;
@@ -64,11 +67,11 @@ rollo_t rollos[num_rollos] = {
   const int num_valves
   = 5;
 valve_t valves[num_valves] = {
-        {"V_OG_GA", "", 34, 0, 0},  // blau
-        {"V_OG_KS", "", 35, 0, 0},  // weiß
-        {"V_OG_KN", "", 36, 0, 0},  // grün
-        {"V_OG_BA", "", 37, 0, 0},  // rosa
-        {"V_OG_SZ", "", 38, 0, 0},  // grau
+        {"V_OG_GA", "", 34, false, 0, 0},  // blau
+        {"V_OG_KS", "", 35, false, 0, 0},  // weiß
+        {"V_OG_KN", "", 36, false, 0, 0},  // grün
+        {"V_OG_BA", "", 37, false, 0, 0},  // rosa
+        {"V_OG_SZ", "", 38, false, 0, 0},  // grau
 };
 
 const int num_switches = 16;

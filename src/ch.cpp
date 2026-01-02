@@ -26,10 +26,13 @@ switch_t switches[num_switches] = {
 const int num_temps = 1;
 const long period_t = 60000;
 temp_t temps[num_temps] = {
-        {"CH", 22, SHT31_T, 0, 0, 0},
+        {"CH", 22, {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, SHT31_T, 0, 0, 0},
 };
 
 const int num_thermos = 0;
+const int full_valve = 254;
+const int closed_valve = 2;
+const int default_valve = 128;
 thermos_t thermos[num_thermos] = {};
 
 const int num_outputs = 7;

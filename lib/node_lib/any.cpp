@@ -55,6 +55,7 @@ bool get_any(String name, String &value_string) {
 bool pin_alloc[num_pins] = {false};
 
 void alloc_pin(int pin) {
+    if (pin == pseudo_pin) return;
     if (pin >= num_pins) {
         Serial.println("FAILURE: pin undefinied: " + String(pin, DEC));
         Serial.println("Exit...");

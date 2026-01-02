@@ -1,7 +1,7 @@
 #include "node.h"
 #include "temp.h"
 
-#ifdef __ard_temp__
+#ifndef __esp32__
 #include <DHT22.h>
 
 String divide10(int in) { return String(in / 10) + "." + String(in % 10); }

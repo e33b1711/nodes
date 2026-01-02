@@ -1,11 +1,12 @@
 #include "node.h"
 #include "pwm.h"
+#include "pinio.h"
 
 void setup_pwm() {
     Serial.println("INFO: setupPWM");
     for (int i = 0; i < num_pwms; i++) {
         alloc_pin(pwms[i].pin);
-        pinMode(pwms[i].pin, OUTPUT);
+        pinio_mode(pwms[i].pin, OUTPUT);
         pwms[i].value = 0;
         send_state(pwms[i].name, pwms[i].value);
         pwms[i].set_time = millis();

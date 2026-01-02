@@ -1,12 +1,13 @@
 #include "node.h"
 #include "switch.h"
+#include "pinio.h"
 
 void setup_switches() {
     Serial.println("INFO: setup switches");
     for (int i = 0; i < num_switches; i++) {
         alloc_pin(switches[i].pin);
-        pinMode(switches[i].pin, INPUT);
-        digitalWrite(switches[i].pin, HIGH);
+        pinio_mode(switches[i].pin, INPUT);
+        pinio_write(switches[i].pin, HIGH);
     }
 }
 
@@ -36,7 +37,7 @@ void update_switches() {
 
     if (num_switches > 0) {
         switches[this_switch].prev_value = switches[this_switch].value;
-        switches[this_switch].value = invert(digitalRead(switches[this_switch].pin));
+        switches[this_switch].value = invert(pinio_read(switches[this_switch].pin));
         int edge = get_edge(switches[this_switch].value, switches[this_switch].prev_value);
         switches[this_switch].press = false;
         switches[this_switch].release_early = false;

@@ -13,6 +13,7 @@ struct valve_t {
     const String name;
     const String couple;
     const int pin;
+    const bool invert;
     int value;
     int sigmadelta;
 };
