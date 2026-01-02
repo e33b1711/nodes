@@ -12,6 +12,27 @@ def l_format(id, friendly_name):
     '''
     return str
 
+def fan_format(id, friendly_name):  
+    str = f'''  
+  - unique_id: "{id}"
+    name: "{friendly_name}"
+    state_topic: "ard_state/{id}"
+    command_topic: "ard_command/{id}"
+    payload_on: "1"
+    payload_off: "0"
+    optimistic: false
+    '''
+    return str
+
+def text_format(id, friendly_name):  
+    str = f'''  
+  - unique_id: "{id}"
+    name: "{friendly_name}"
+    state_topic: "ard_state/{id}"
+    command_topic: "void/{id}"
+    '''
+    return str
+
 
 def siren_format(id, friendly_name):  
     str = f'''  
@@ -73,13 +94,12 @@ def sensor_format(id, friendly_name, unit = "°C", precision = 0.5, device_class
     '''
     return str
 
-def number_format(item, unit = "", min = 0, max = 255, device_class = "temperature"):  
+def number_format(item, friendly_name, unit = "", min = 0, max = 255):  
     str = f'''
   - unique_id: "{item}"
-    name: "{item}"
+    name: "{friendly_name}"
     command_topic: "ard_command/{item}"
     state_topic: "ard_state/{item}"
-    device_class: "{device_class}"
     unit_of_measurement: "{unit}"
     min: "{min}"
     max: "{max}"
@@ -105,11 +125,13 @@ def thermos_format(id, friendly_name, min = 10, max = 30):
     '''
     return str
 
+# mixed stuff
 # TODO thermos on off as seperate topic
-#TODO rollos stop => node side (more state updates)
-#TODO revision strings
-#TODO unfy U_ + V_ as number items  U_EL missing!!
-##TODO bell must report off
+# TODO rollos stop => node side (more state updates)
+# TODO bell must report off
+
+# server only
+# TODO revision strings / availibilty warning
 
 
 
@@ -150,25 +172,25 @@ light_items = [
 ('LI_EG_AO',    "Außen Ost"),
 ('LI_GR',       "Garage"), 
 ('LI_GR_L1',    "Garag L1"),
-('ZE_GR_0',	    "Garage Timer"),
-('ZE_GR_1',	    "Garage Timer l1"),
-('ZE_GR_2',	    "Garage Timer l2"),
-('LI_CH',       "Hühnerhaus"),
-('LI_CH_L2',    "Hühnerhaus l2"),
-('LI_CH_L3',    "Hühnerhaus l3"),
-('LI_CH_L4',    "Hühnerhaus l4"),
+('ZE_GR_0',	    "Garage Timer 10min"),
+('ZE_GR_1',	    "Garage Timer 2 min"),
+('ZE_GR_2',	    "Garage Timer außen"),
+('LI_CH_L2',    "Licht Hühnerhaus Zaun"),
+('LI_CH_L3',    "Hühnerhaus (L3)"),
+('LI_CH_L4',    "Hühnerhaus (L4)"),
 ]
 
 siren_items = [
 ('BELL',        "Klingel"), 
 ]
 
-
-
 valve_items=[
 ('PUMP', "Zisterne"), 
 ]
-  
+
+fan_items=[
+('LI_CH',       "Lüftung Hühnerhaus"),  
+]
 
 ro_items = [
 ("RO_EG_SU", "Rollo Esszimmer Süd"),
@@ -229,7 +251,10 @@ sensor_items = [
 ("HI_UG_LA", "Lager", ""),
 ("HI_GR",    "Garage", ""),
 ("HI_AU",    "Außen", ""),
-("HI_CH",    "Hühnerhaus", ""),   
+("HI_CH",    "Hühnerhaus", ""),
+]
+
+number_items = [
 ("V_UG_HO",  "Hobby", ""),
 ("V_UG_LA",  "Lager", ""),
 ("V_UG_GA",  "Gang UG", ""),
@@ -237,7 +262,7 @@ sensor_items = [
 ("V_EG_KU",  "Küche", ""),
 ("V_EG_EZ",  "Esszimmer", ""),
 ("V_EG_GA",  "Gang EG", ""),
-("V_EG_WZ",  "Woghnzimmer", ""),
+("V_EG_WZ",  "Wohnzimmer", ""),
 ("V_EG_GR",  "Gardarobe", ""),
 ("V_EG_WC",  "WC", ""),
 ("V_OG_KS",  "Bini", ""),
@@ -245,6 +270,7 @@ sensor_items = [
 ("V_OG_GA",  "Gang OG", ""),
 ("V_OG_BA",  "Badezimmer", ""),
 ("V_OG_SZ",  "Schlafzimmer", ""),
+("U_EL",     "Elektrische Heizung", ""),
 ]
 
 
@@ -256,7 +282,7 @@ thermos_items = [
 ("UG_WK", "Klima Waschküche"),     
 ("EG_KU", "Klima Küche"),     
 ("EG_EZ", "Klima Esszimmer"),     
-("EG_GA", "Klima Gangg EG"),     
+("EG_GA", "Klima Gang EG"),     
 ("EG_WZ", "Klima Wohnzimmer"),        
 ("OG_KS", "Klima Bini"),     
 ("OG_KN", "Klima Leo"),     
@@ -265,6 +291,20 @@ thermos_items = [
 ("OG_SZ", "Klima Schlafzimmer"),
 ]
 
+
+text_items = [
+("og_west",	       "revision_og_west"         ),
+("og_ost", 	       "revision_og_ost"          ),
+("eg_west",	       "revision_eg_west"         ),
+("eg_ost", 	       "revision_eg_ost"          ),
+("ug",     	       "revision_ug"              ),
+("power",  	       "revision_power"           ),
+("ch",     	       "revision_ch"              ),
+("garage", 	       "revision_garage"          ),
+("relay_service",  "revision_relay_service"   ),
+("bridge_service", "revision_bridge_service"  ),
+
+]
 
 
 
@@ -303,3 +343,15 @@ if __name__ == "__main__":
         fh.write("\n\n- climate:\n")
         for item in thermos_items:
             fh.write(thermos_format(item[0], item[1]))
+
+        fh.write("\n\n- fan:\n")
+        for item in fan_items:
+            fh.write(fan_format(item[0], item[1]))
+
+        fh.write("\n\n- text:\n")
+        for item in text_items:
+            fh.write(text_format(item[0], item[1]))
+
+        fh.write("\n\n- number:\n")
+        for item in number_items:
+            fh.write(number_format(item[0], item[1]))
