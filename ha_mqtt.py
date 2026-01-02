@@ -59,15 +59,14 @@ def ro_format(id, friendly_name):
     '''
     return str
 
-#TODO rollos stop => node side (more state updates)
-#TI / HI V TS revision
 
-def sensor_format(item, unit = "°C", precision = 0.5, device_class = "temperature"):  
+
+def sensor_format(id, friendly_name, unit = "°C", precision = 0.5, device_class = "temperature"):  
     str = f'''
-  - unique_id: "{item}"
+  - unique_id: "{id}"
     state_class: "measurement"
-    name: "{item}"
-    state_topic: "ard_state/{item}"
+    name: "{friendly_name}"
+    state_topic: "ard_state/{id}"
     suggested_display_precision: {precision}
     device_class: "{device_class}"
     unit_of_measurement: "{unit}"
@@ -98,8 +97,6 @@ def thermos_format(id, friendly_name, min = 10, max = 30):
       - "heat"
     temperature_command_topic: "ard_command/TS_{id}"
     temperature_state_topic: "ard_state/TS_{id}"
-    current_humidity_topic: "ard_state/HI_{id}"
-    current_temperature_topic: "ard_state/TI_{id}"
     mode_command_topic: "ard_command/TM_{id}"
     mode_state_topic: "ard_state/TM_{id}"
     min_temp: "{min}"
@@ -109,6 +106,10 @@ def thermos_format(id, friendly_name, min = 10, max = 30):
     return str
 
 # TODO thermos on off as seperate topic
+#TODO rollos stop => node side (more state updates)
+#TODO revision strings
+#TODO unfy U_ + V_ as number items  U_EL missing!!
+##TODO bell must report off
 
 
 
@@ -162,7 +163,7 @@ siren_items = [
 ('BELL',        "Klingel"), 
 ]
 
-##TODO bell must report off
+
 
 valve_items=[
 ('PUMP', "Zisterne"), 
@@ -190,34 +191,65 @@ ro_items = [
 
 
 sensor_items = [
-"TI_PU_O ",
-"TI_PU_U ",
-"F_HE",
-"F_WW",
-"F_RAIN",
-"V_UG_HO",
-"V_UG_LA",
-"V_UG_GA",
-"V_UG_WK",
-"V_EG_KU",
-"V_EG_EZ",
-"V_EG_GA",
-"V_EG_WZ",
-"V_EG_GR",
-"V_EG_WC",
-"V_OG_KS",
-"V_OG_KN",
-"V_OG_GA",
-"V_OG_BA",
-"V_OG_SZ",
+("TI_PU_O ", "Puffer oben", ""),
+("TI_PU_U ", "Puffer unten", ""),
+("F_HE",     "Gastherme", ""),
+("F_WW",     "Warnung Pumpensumpf", ""),
+("F_RAIN",   "Regen", ""),
+("TI_EG_WZ", "Wohnzimmer", ""),
+("TI_EG_KU", "Küche", ""),
+("TI_EG_EZ", "Esszimmer", ""),
+("TI_EG_GA", "Gang EG", ""),
+("TI_OG_BA", "Badezimmer", ""),
+("TI_OG_KN", "Leo", ""),
+("TI_OG_KS", "Bini", ""),
+("TI_OG_SZ", "Schlafzimmer", ""),
+("TI_OG_GA", "Gang OG", ""),
+("TI_UG_HO", "Hobby", ""),
+("TI_UG_WK", "Waschküche", ""),
+("TI_UG_HK", "Technik", ""),
+("TI_UG_GA", "Gang UG", ""),
+("TI_UG_LA", "Lager", ""),
+("TI_GR",    "Garage", ""),
+("TI_AU",    "Außen", ""),
+("TI_CH", 	 "Hühnerhaus", ""),   
+("HI_EG_WZ", "Wohnzimmer", ""),
+("HI_EG_KU", "Küche", ""),
+("HI_EG_EZ", "Esszimmer", ""),
+("HI_EG_GA", "Gang EG", ""),
+("HI_OG_BA", "Badezimmer", ""),
+("HI_OG_KN", "Leo", ""),
+("HI_OG_KS", "Bini", ""),
+("HI_OG_SZ", "Schlafzimmer", ""),
+("HI_OG_GA", "Gang OG", ""),
+("HI_UG_HO", "Hobby", ""),
+("HI_UG_WK", "Waschküche", ""),
+("HI_UG_HK", "Technik", ""),
+("HI_UG_GA", "Gang UG", ""),
+("HI_UG_LA", "Lager", ""),
+("HI_GR",    "Garage", ""),
+("HI_AU",    "Außen", ""),
+("HI_CH",    "Hühnerhaus", ""),   
+("V_UG_HO",  "Hobby", ""),
+("V_UG_LA",  "Lager", ""),
+("V_UG_GA",  "Gang UG", ""),
+("V_UG_WK",  "Waschküche", ""),
+("V_EG_KU",  "Küche", ""),
+("V_EG_EZ",  "Esszimmer", ""),
+("V_EG_GA",  "Gang EG", ""),
+("V_EG_WZ",  "Woghnzimmer", ""),
+("V_EG_GR",  "Gardarobe", ""),
+("V_EG_WC",  "WC", ""),
+("V_OG_KS",  "Bini", ""),
+("V_OG_KN",  "Leo", ""),
+("V_OG_GA",  "Gang OG", ""),
+("V_OG_BA",  "Badezimmer", ""),
+("V_OG_SZ",  "Schlafzimmer", ""),
 ]
 
-#TODO unfy U_ + V_ as number items  U_EL missing!!
+
 
 thermos_items = [
-("GR",    "Klima Garage"),
-("AU",    "Klima Außen"),
-("CH",    "Klima Hühnerhaus"),
 ("UG_HO", "Klima Hobby"),     
 ("UG_LA", "Klima Lager"),     
 ("UG_GA", "Klima Gang UG"),     
@@ -261,12 +293,12 @@ if __name__ == "__main__":
 
         fh.write("\n\n- sensor:\n")
         for item in sensor_items:
-            if item.startswith("TI_"):
-                fh.write(sensor_format(item, "°C", 0.5, "temperature"))
-            elif item.startswith("HI_"):
-                fh.write(sensor_format(item, "%", 1, "humidity"))
+            if item[0].startswith("TI_"):
+                fh.write(sensor_format(item[0], item[1], "°C", 0.5, "temperature"))
+            elif item[0].startswith("HI_"):
+                fh.write(sensor_format(item[0], item[1], "%", 1, "humidity"))
             else:
-                fh.write(sensor_format(item, "", 1, "power"))
+                fh.write(sensor_format(item[0], item[1], "", 1, "power"))
         
         fh.write("\n\n- climate:\n")
         for item in thermos_items:
