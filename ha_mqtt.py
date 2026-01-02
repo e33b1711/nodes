@@ -1,23 +1,54 @@
 
 
-def l_format(item):  
+def l_format(id, friendly_name):  
     str = f'''  
-  - unique_id: "{item}"
-    name: "{item}"
-    state_topic: "ard_state/{item}"
-    command_topic: "ard_command/{item}"
+  - unique_id: "{id}"
+    name: "{friendly_name}"
+    state_topic: "ard_state/{id}"
+    command_topic: "ard_command/{id}"
     payload_on: "1"
     payload_off: "0"
     optimistic: false
     '''
     return str
 
-def ro_format(item):  
+
+def siren_format(id, friendly_name):  
+    str = f'''  
+  - unique_id: "{id}"
+    name: "{friendly_name}"
+    state_topic: "ard_state/{id}"
+    command_topic: "ard_command/{id}"
+    '''
+    str2 = '''command_template: "{{ value }}"
+    payload_on: "1"
+    payload_off: "0"
+    optimistic: false
+    '''
+    return str + str2
+
+def valve_format(id, friendly_name):  
+    str = f'''  
+  - unique_id: "{id}"
+    name: "{friendly_name}"
+    state_topic: "ard_state/{id}"
+    command_topic: "ard_command/{id}"
+    payload_open: "1"
+    payload_close: "0"
+    state_open: "1"
+    state_closed: "0"
+    optimistic: false
+    '''
+    return str
+
+    
+
+def ro_format(id, friendly_name):  
     str = f'''
-  - unique_id: "{item}"
-    name: "{item}"
-    command_topic: "ard_command/{item}"
-    state_topic: "ard_state/{item}"
+  - unique_id: "{id}"
+    name: "{friendly_name}"
+    command_topic: "ard_command/{id}"
+    state_topic: "ard_state/{id}"
     payload_open: "0"
     payload_close: "100"
     payload_stop: "50"
@@ -58,19 +89,19 @@ def number_format(item, unit = "", min = 0, max = 255, device_class = "temperatu
     return str
 
 
-def thermos_format(ts_item, ti_item, hi_item, min = 10, max = 30):
+def thermos_format(id, friendly_name, min = 10, max = 30):
     str = f'''
-  - unique_id: "{ts_item}"
-    name: "{ts_item}"
+  - unique_id: "TS_{id}"
+    name: "{friendly_name}"
     modes:
       - "off"
       - "heat"
-    temperature_command_topic: "ard_command/{ts_item}"
-    temperature_state_topic: "ard_state/{ts_item}"
-    current_humidity_topic: "ard_state/{hi_item}"
-    current_temperature_topic: "ard_state/{ti_item}"
-    mode_command_topic: "ard_command/{ts_item}"
-    mode_state_topic: "ard_state/{ts_item}"
+    temperature_command_topic: "ard_command/TS_{id}"
+    temperature_state_topic: "ard_state/TS_{id}"
+    current_humidity_topic: "ard_state/HI_{id}"
+    current_temperature_topic: "ard_state/TI_{id}"
+    mode_command_topic: "ard_command/TM_{id}"
+    mode_state_topic: "ard_state/TM_{id}"
     min_temp: "{min}"
     max_temp: "{max}"
     optimistic: false
@@ -82,69 +113,80 @@ def thermos_format(ts_item, ti_item, hi_item, min = 10, max = 30):
 
 
 light_items = [
-'LI_EG_WZ',	 
-'LI_EG_WZ_L1',
-'LI_EG_WZ_L2',
-'LI_EG_KU_L1',
-'LI_EG_EZ', 	
-'LI_EG_EZ_L1',
-'LI_EG_EZ_L3',
-'LI_EG_EZ_KU',
-'LI_EG_GA',  
-'LI_GA_L1',	
-'LI_EG_GR',  
-'LI_EG_WC',	 
-'LI_EG_SP',	
-'LI_OG_BA',  
-'LI_OG_KN',	 
-'LI_OG_KN_L1',
-'LI_OG_KS', 	 
-'LI_OG_KS_L1',
-'LI_OG_SZ', 	 
-'LI_OG_SZ_L1',
-'LI_OG_SZ_L2',
-'LI_OG_GA', 	 
-'LI_OG_GA_L1',
-'LI_UG_HO', 	 
-'LI_UG_WK',   
-'LI_UG_HK',   
-'LI_UG_GA',   
-'LI_UG_HN',   
-'LI_UG_TR',   
-'LI_EG_VH',   
-'ZE_EG_VH',   
-'LI_EG_AS',   
-'LI_EG_AW',   
-'LI_EG_AO',   
-'LI_GR',  
-'LI_GR_L1',   
-'ZE_GR_0',	   
-'ZE_GR_1',	   
-'ZE_GR_2',	   
-'LI_CH',  
-'LI_CH_L2',   
-'LI_CH_L3',   
-'LI_CH_L4',   
-'BELL',   
-'PUMP']  
+('LI_EG_WZ',    "Wohnzimmer Mitte"),	 
+('LI_EG_WZ_L1', "Wohnzimmer Vorn"),
+('LI_EG_WZ_L2', "Wohnzimmer Hinten"),
+('LI_EG_KU_L1', "Küche Arbeitsbeleuchtung"),
+('LI_EG_EZ', 	  "Esstisch"),
+('LI_EG_EZ_L1', "Esszimmer Wandlampen"),
+('LI_EG_EZ_L3', "Esszimmer Leselampe"),
+('LI_EG_EZ_KU', "Esszimmer Grundbeleuchtung"),
+('LI_EG_GA',    "Gang EG"),
+('LI_GA_L1',    "Gang EG Wandlampen"),
+('LI_EG_GR',    "Gardarobe"),
+('LI_EG_WC',    "WC"),
+('LI_EG_SP',    "Speisekammer"),
+('LI_OG_BA',    "Badezimmer"),
+('LI_OG_KN',    "Leo"),
+('LI_OG_KN_L1', "Leo Spots"),
+('LI_OG_KS', 	  "Bini"),
+('LI_OG_KS_L1', "Bini Spots"),
+('LI_OG_SZ', 	  "Schlafzimmer"),
+('LI_OG_SZ_L1', "Leselampe Melli"),
+('LI_OG_SZ_L2', "Leselampe Anselm"),
+('LI_OG_GA', 	  "Gang OG"),
+('LI_OG_GA_L1', "Gang OG Spots"),
+('LI_UG_HO', 	  "Hobby Schreibtisch"),
+('LI_UG_WK',    "Waschküche"),
+('LI_UG_HK',    "Technik"),
+('LI_UG_GA',    "Gang UG"),
+('LI_UG_HN',    "Hobby Hinten"),
+('LI_UG_TR',    "UG Treppe"),
+('LI_EG_VH',    "Vorhaus"),
+('ZE_EG_VH',    "Vorhaus Timer"),
+('LI_EG_AS',    "Außen Süd"),
+('LI_EG_AW',    "Außen West"),
+('LI_EG_AO',    "Außen Ost"),
+('LI_GR',       "Garage"), 
+('LI_GR_L1',    "Garag L1"),
+('ZE_GR_0',	    "Garage Timer"),
+('ZE_GR_1',	    "Garage Timer l1"),
+('ZE_GR_2',	    "Garage Timer l2"),
+('LI_CH',       "Hühnerhaus"),
+('LI_CH_L2',    "Hühnerhaus l2"),
+('LI_CH_L3',    "Hühnerhaus l3"),
+('LI_CH_L4',    "Hühnerhaus l4"),
+]
+
+siren_items = [
+('BELL',        "Klingel"), 
+]
+
+##TODO bell must report off
+
+valve_items=[
+('PUMP', "Zisterne"), 
+]
+  
 
 ro_items = [
-"RO_EG_SU",  
-"RO_EG_WE",  
-"RO_OG_BA",  
-"DF_OG_GA",  
-"VD_OG_GA",  
-"RO_OG_KN",  
-"VD_OG_KN",  
-"DF_OG_KN",  
-"RO_OG_KS",  
-"VD_OG_KS",  
-"DF_OG_KS",  
-"RO_OG_SZ",  
-"VD_OG_SZ",  
-"DF_OG_SZ",  
-"DO_GR",  
-"DO_CH"]
+("RO_EG_SU", "Rollo Esszimmer Süd"),
+("RO_EG_WE", "Rollo Esszimmer West"),
+("RO_OG_BA", "Rollo Bad"),  
+("DF_OG_GA", "Dachfenster Gang"),  
+("VD_OG_GA", "Verdunkelung Gang"),  
+("RO_OG_KN", "Rollo Leo"),  
+("VD_OG_KN", "Verdunkelung Leo"),  
+("DF_OG_KN", "Dachfenster Leo"),
+("RO_OG_KS", "Rollo Bini"),
+("VD_OG_KS", "Verdunkelung Bini"),
+("DF_OG_KS", "Dachfenster Bini"),
+("RO_OG_SZ", "Rollo Schlafzimmer"),
+("VD_OG_SZ", "Verdunkelung Schlafzimmer"),
+("DF_OG_SZ", "Dachfenster Schlafzimmer"),
+("DO_GR",    "Garagentor"),
+("DO_CH",    "Hühnerklappe"),
+]  
 
 
 sensor_items = [
@@ -170,27 +212,25 @@ sensor_items = [
 "V_OG_SZ",
 ]
 
-#TODO unfy U_ + V_ as number items
+#TODO unfy U_ + V_ as number items  U_EL missing!!
 
 thermos_items = [
-"GR",
-"AU",
-"CH",
-"UG_HO",     
-"UG_LA",     
-"UG_GA",     
-"UG_WK",     
-"EG_KU",     
-"EG_EZ",     
-"EG_GA",     
-"EG_WZ",     
-"EG_GR",     
-"EG_WC",     
-"OG_KS",     
-"OG_KN",     
-"OG_GA",     
-"OG_BA",     
-"OG_SZ",
+("GR",    "Klima Garage"),
+("AU",    "Klima Außen"),
+("CH",    "Klima Hühnerhaus"),
+("UG_HO", "Klima Hobby"),     
+("UG_LA", "Klima Lager"),     
+("UG_GA", "Klima Gang UG"),     
+("UG_WK", "Klima Waschküche"),     
+("EG_KU", "Klima Küche"),     
+("EG_EZ", "Klima Esszimmer"),     
+("EG_GA", "Klima Gangg EG"),     
+("EG_WZ", "Klima Wohnzimmer"),        
+("OG_KS", "Klima Bini"),     
+("OG_KN", "Klima Leo"),     
+("OG_GA", "Klima Gang OG"),     
+("OG_BA", "Klima Bad"),     
+("OG_SZ", "Klima Schlafzimmer"),
 ]
 
 
@@ -200,13 +240,24 @@ thermos_items = [
 if __name__ == "__main__":
 
     with open("mqtt.yaml", "w", encoding="utf-8") as fh:
-        fh.write("- light:\n")
+
+      
+        
+        fh.write("\n\n- light:\n")
         for item in light_items:
-            fh.write(l_format(item))
+            fh.write(l_format(item[0],item[1]))
+
+        fh.write("\n\n- siren:\n")
+        for item in siren_items:
+            fh.write(siren_format(item[0],item[1]))
+           
+        fh.write("\n\n- valve:\n")
+        for item in valve_items:
+            fh.write(valve_format(item[0], item[1]))
         
         fh.write("\n\n- cover:\n")
         for item in ro_items:
-            fh.write(ro_format(item))
+            fh.write(ro_format(item[0], item[1]))
 
         fh.write("\n\n- sensor:\n")
         for item in sensor_items:
@@ -219,4 +270,4 @@ if __name__ == "__main__":
         
         fh.write("\n\n- climate:\n")
         for item in thermos_items:
-            fh.write(thermos_format("TS_" + item, "TI_" + item, "HI_" + item))
+            fh.write(thermos_format(item[0], item[1]))
