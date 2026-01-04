@@ -12,6 +12,16 @@ bool get_thermos(String name, String &value) {
     return false;
 }
 
+bool get_thermos_mode(String name, String &value) {
+    for (int i = 0; i < num_thermos; i++) {
+        if (name == ("TM_" + thermos[i].name)) {
+            value = String(thermos[i].mode);
+            return true;
+        }
+    }
+    return false;
+}
+
 float cutoff(float &in, const float max, const float min) {
     if (in > max) {
         return max;
@@ -25,9 +35,18 @@ float cutoff(float &in, const float max, const float min) {
 void update_one_thermos(int i) {
     if (!(i < num_thermos))
         return;
-    
-    if (thermos[i].target_temp < 0)
+
+    if (thermos[i].mode == 0) {
+        // off set valve closed, reset integrator
+        write_any(thermos[i].valve, String(closed_valve, DEC));
+        thermos[i].int_value = 0.0;
         return;
+    }
+
+    if (thermos[i].mode == 2) {
+        //bypass dont do anything
+        return;
+    }
 
     float temperature;
     if (!get_temp("TI_" + thermos[i].name, temperature)) {
@@ -69,8 +88,9 @@ void update_thermos() {
     if (((s_time_t + period_t) < millis()) or initial) {
         initial = false;
         s_time_t = millis();
-        for (int i = 0; i < num_thermos; i++){
+        for (int i = 0; i < num_thermos; i++) {
             send_state("TS_" + thermos[i].name, String(thermos[i].target_temp));
+            send_state("TM_" + thermos[i].name, String(thermos[i].mode));
             update_one_thermos(i);
         }
     }
@@ -80,17 +100,25 @@ bool write_thermos(String name, String val_str) {
     for (int i = 0; i < num_thermos; i++) {
         if ("TS_" + thermos[i].name == name) {
             float f_value = val_str.toFloat();
-            if (f_value < 0) {
-                thermos[i].target_temp = -99.0;
-                thermos[i].int_value = 0.0;
-                Serial.println("INFO: Turned off valve: " + name);
-                Serial.println("INFO: Reset Integrator " + name);
-                write_any(thermos[i].valve, String(closed_valve, DEC));
-                send_state(name, String(thermos[i].target_temp));
-                return true;
-            }
             thermos[i].target_temp = cutoff(f_value, thermos[i].max_temp, thermos[i].min_temp);
             send_state(name, String(thermos[i].target_temp));
+            return true;
+        }
+    }
+    return false;
+}
+
+bool write_thermos_mode(String name, String val_str) {
+    for (int i = 0; i < num_thermos; i++) {
+        if ("TM_" + thermos[i].name == name) {
+            int mode = 0;
+            if ((val_str == "heat") or (val_str == "on") or (val_str == "1"))
+                mode = 1;
+            if ((val_str == "bypass") or (val_str == "2"))
+                mode = 2;
+            thermos[i].mode = mode;
+            Serial.println("INFO: Write thermos mode " + name + " / " + String(mode));
+            send_state(name, String(thermos[i].mode));
             return true;
         }
     }

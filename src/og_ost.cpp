@@ -36,8 +36,8 @@ const int full_valve = 254;
 const int closed_valve = 2;
 const int default_valve = 128;
 thermos_t thermos[num_thermos] = {
-        {"OG_BA", "V_OG_BA", 120, 0.2, 30.0, 10.0, 23, 0.0},
-        {"OG_SZ", "V_OG_SZ", 120, 0.2, 30.0, 10.0, 16, 0.0},
+        {"OG_BA", "V_OG_BA", 120, 0.2, 30.0, 10.0, 23, 0.0, 0},
+        {"OG_SZ", "V_OG_SZ", 120, 0.2, 30.0, 10.0, 16, 0.0, 0},
 };
 
 const int num_outputs = 12;
