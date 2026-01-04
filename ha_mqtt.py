@@ -82,7 +82,7 @@ def ro_format(id, friendly_name):
 
 
 
-def sensor_format(id, friendly_name, unit = "°C", precision = 0.5, device_class = "temperature"):  
+def sensor_format(id, friendly_name, unit = "°C", precision = 0.1, device_class = "temperature"):  
     str = f'''
   - unique_id: "{id}"
     state_class: "measurement"
@@ -121,9 +121,17 @@ def thermos_format(id, friendly_name, min = 10, max = 30):
     mode_state_topic: "ard_state/TM_{id}"
     min_temp: "{min}"
     max_temp: "{max}"
-    optimistic: false
+    optimistic: false'''
+    str2 = '''
+    mode_state_template: >-
+      {% set modes = { '0':'off', '1':'heat' } %}
+      {{ modes[value] if value in modes else 'off' }}
+    mode_command_template: >-
+        {% set modes = { 'off':'0', 'heat':'1' } %}
+        {{ modes[value] if value in modes else '0' }}
+
     '''
-    return str
+    return str + str2
 
 # mixed stuff
 # TODO thermos on off as seperate topic
@@ -171,13 +179,16 @@ light_items = [
 ('LI_EG_AW',    "Außen West"),
 ('LI_EG_AO',    "Außen Ost"),
 ('LI_GR',       "Garage"), 
-('LI_GR_L1',    "Garag L1"),
+('LI_GR_L1',    "Garage Außen"),
 ('ZE_GR_0',	    "Garage Timer 10min"),
 ('ZE_GR_1',	    "Garage Timer 2 min"),
 ('ZE_GR_2',	    "Garage Timer außen"),
 ('LI_CH_L2',    "Licht Hühnerhaus Zaun"),
 ('LI_CH_L3',    "Hühnerhaus (L3)"),
 ('LI_CH_L4',    "Hühnerhaus (L4)"),
+('LI_SA_L1',    "Sauna (L1)"),
+('LI_SA_L2',    "Sauna (L2)"),
+('LI_SA_L3',    "Sauna (L3)"),
 ]
 
 siren_items = [
@@ -234,7 +245,12 @@ sensor_items = [
 ("TI_UG_LA", "Lager", ""),
 ("TI_GR",    "Garage", ""),
 ("TI_AU",    "Außen", ""),
-("TI_CH", 	 "Hühnerhaus", ""),   
+("TI_CH", 	 "Hühnerhaus", ""),  
+("TI_SA",    "Sauna", ""),
+("TI_SA1",   "Sauna oben/hinten", ""),
+("TI_SA2",   "Sauna mitte", ""),
+("TI_SA3",   "Sauna unten", ""),
+("TI_SA4",   "Sauna außen", ""), 
 ("HI_EG_WZ", "Wohnzimmer", ""),
 ("HI_EG_KU", "Küche", ""),
 ("HI_EG_EZ", "Esszimmer", ""),
@@ -270,25 +286,27 @@ number_items = [
 ("V_OG_GA",  "Gang OG", ""),
 ("V_OG_BA",  "Badezimmer", ""),
 ("V_OG_SZ",  "Schlafzimmer", ""),
+("V_SA",     "Sauna", ""),
 ("U_EL",     "Elektrische Heizung", ""),
 ]
 
 
 
 thermos_items = [
-("UG_HO", "Klima Hobby"),     
-("UG_LA", "Klima Lager"),     
-("UG_GA", "Klima Gang UG"),     
-("UG_WK", "Klima Waschküche"),     
-("EG_KU", "Klima Küche"),     
-("EG_EZ", "Klima Esszimmer"),     
-("EG_GA", "Klima Gang EG"),     
-("EG_WZ", "Klima Wohnzimmer"),        
-("OG_KS", "Klima Bini"),     
-("OG_KN", "Klima Leo"),     
-("OG_GA", "Klima Gang OG"),     
-("OG_BA", "Klima Bad"),     
-("OG_SZ", "Klima Schlafzimmer"),
+("UG_HO", "Klima Hobby", 10, 30),     
+("UG_LA", "Klima Lager", 10, 30),     
+("UG_GA", "Klima Gang UG", 10, 30),     
+("UG_WK", "Klima Waschküche", 10, 30),     
+("EG_KU", "Klima Küche", 10, 30),     
+("EG_EZ", "Klima Esszimmer", 10, 30),     
+("EG_GA", "Klima Gang EG", 10, 30),     
+("EG_WZ", "Klima Wohnzimmer", 10, 30),        
+("OG_KS", "Klima Bini", 10, 30),     
+("OG_KN", "Klima Leo", 10, 30),     
+("OG_GA", "Klima Gang OG", 10, 30),     
+("OG_BA", "Klima Bad", 10, 30),     
+("OG_SZ", "Klima Schlafzimmer", 10, 30),
+("SA",    "Klima Sauna", 30, 90),
 ]
 
 
@@ -300,6 +318,7 @@ text_items = [
 ("ug",     	       "revision_ug"              ),
 ("power",  	       "revision_power"           ),
 ("ch",     	       "revision_ch"              ),
+("sauna",     	   "revision_sauna"           ),
 ("garage", 	       "revision_garage"          ),
 ("relay_service",  "revision_relay_service"   ),
 ("bridge_service", "revision_bridge_service"  ),
@@ -334,7 +353,7 @@ if __name__ == "__main__":
         fh.write("\n\n- sensor:\n")
         for item in sensor_items:
             if item[0].startswith("TI_"):
-                fh.write(sensor_format(item[0], item[1], "°C", 0.5, "temperature"))
+                fh.write(sensor_format(item[0], item[1], "°C", 0.1, "temperature"))
             elif item[0].startswith("HI_"):
                 fh.write(sensor_format(item[0], item[1], "%", 1, "humidity"))
             else:
@@ -342,7 +361,7 @@ if __name__ == "__main__":
         
         fh.write("\n\n- climate:\n")
         for item in thermos_items:
-            fh.write(thermos_format(item[0], item[1]))
+            fh.write(thermos_format(item[0], item[1], item[2], item[3]))
 
         fh.write("\n\n- fan:\n")
         for item in fan_items:
