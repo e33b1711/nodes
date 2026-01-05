@@ -13,10 +13,22 @@ void setup_outputs() {
     }
 }
 
+void post_all_outputs() {
+     static unsigned long last_time = millis();
+    const unsigned long post_interval = 80000;
+    if ((last_time + post_interval) < millis()) {
+        last_time = millis();
+        for (int i = 0; i < num_outputs; i++) {
+            send_state(outputs[i].name, outputs[i].value);
+        }
+    }
+}
+
 void update_outputs() {
     for (int i = 0; i < num_outputs; i++) {
         pinio_write(outputs[i].pin, !outputs[i].invert ^ outputs[i].value);
     }
+    post_all_outputs();
 }
 
 bool write_output(String name, String val_str) {
@@ -41,7 +53,7 @@ bool write_output(String name, int value) {
                     break;
             }
             send_state(name, outputs[i].value);
-            found =  true;
+            found = true;
         }
     }
     return found;

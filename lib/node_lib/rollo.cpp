@@ -9,6 +9,17 @@ void setup_rollos() {
     }
 }
 
+void post_all_rollos() {
+    static unsigned long last_time = millis();
+    const unsigned long post_interval = 75000;
+    if ((last_time + post_interval) < millis()) {
+        last_time = millis();
+        for (int i = 0; i < num_rollos; i++) {
+            send_state(rollos[i].name, rollos[i].value);
+        }
+    }
+}
+
 void update_rollos() {
     for (int i = 0; i < num_rollos; i++) {
         String l_up = rollos[i].name + "_UP";
@@ -63,6 +74,7 @@ void update_rollos() {
             }
         }
     }
+    post_all_rollos();
 }
 
 bool write_rollo(String name, String val_str) {

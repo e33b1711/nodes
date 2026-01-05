@@ -9,8 +9,10 @@ String input_buffer = "";
 
 void send_git_revision() {
     Serial.println("INFO: Sending git revision.");
+    static unsigned int entropy = 0;
+    entropy ++;
     if (dirty)
-        send_state(node_info.unit_name, "dirty_" + String(auto_version.substring(0, 8)));
+        send_state(node_info.unit_name, "dirty_" + String(auto_version.substring(0, 8) + " " + String(entropy)));
     else
         send_state(node_info.unit_name, String(auto_version.substring(0, 8)));
 }

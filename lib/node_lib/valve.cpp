@@ -17,6 +17,17 @@ void setup_valves() {
     valve_last_time = millis();
 }
 
+void post_all_valves() {
+    static unsigned long last_time = millis();
+    const unsigned long post_interval = 65000;
+    if ((last_time + post_interval) < millis()) {
+        last_time = millis();
+        for (int i = 0; i < num_valves; i++) {
+            send_state(valves[i].name, valves[i].value);
+        }
+    }
+}
+
 void update_valves() {
     if (valve_last_time + valve_interval < millis()) {
         valve_last_time += valve_interval;
@@ -34,6 +45,7 @@ void update_valves() {
             Serial.println("DEBUG: sigmadelta " + String(valves[i].sigmadelta));
         }
     }
+    post_all_valves();
 }
 
 bool write_valve(String name, String val_str) {

@@ -11,6 +11,17 @@ void setup_timers() {
     }
 }
 
+void post_all_timers() {
+     static unsigned long last_time = millis();
+    const unsigned long post_interval = 70000;
+    if ((last_time + post_interval) < millis()) {
+        last_time = millis();
+        for (int i = 0; i < num_timers; i++) {
+            send_state(timers[i].name, timers[i].value);
+        }
+    }
+}
+
 void update_timer(int i) {
     // start
     if (timers[i].value and !timers[i].running) {
@@ -37,6 +48,7 @@ void update_timer(int i) {
 
 void handle_timers() {
     for (int i = 0; i < num_timers; i++) update_timer(i);
+    post_all_timers();
 }
 
 bool write_timer(String name, String val_str) {
