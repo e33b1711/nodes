@@ -10,11 +10,13 @@ String input_buffer = "";
 void send_git_revision() {
     Serial.println("INFO: Sending git revision.");
     static unsigned int entropy = 0;
-    entropy ++;
+    entropy++;
     if (dirty)
-        send_state(node_info.unit_name, "dirty_" + String(auto_version.substring(0, 8) + " " + String(entropy)));
+        send_state(node_info.unit_name,
+                   "dirty_" + String(auto_version.substring(0, 8) + " " + String(entropy)));
     else
-        send_state(node_info.unit_name, String(auto_version.substring(0, 8)));
+        send_state(node_info.unit_name,
+                   String(auto_version.substring(0, 8) + " " + String(entropy)));
 }
 
 #ifdef __esp32__
@@ -26,18 +28,19 @@ void send_git_revision() {
 WiFiClient client;
 int conn_error_count = 0;
 
-void print_bssid(){
-    const uint8_t *bssid = WiFi.BSSID();   
+void print_bssid() {
+    const uint8_t *bssid = WiFi.BSSID();
     Serial.print("INFO BSSID: ");
-    for(int i=0;i<6;i++){
-        Serial.print(bssid[i],HEX);
-        if (i<5) Serial.print(":");
+    for (int i = 0; i < 6; i++) {
+        Serial.print(bssid[i], HEX);
+        if (i < 5)
+            Serial.print(":");
     }
     Serial.println("");
 }
 
 void init_link() {
-    if (WiFi.status() == WL_CONNECTED){
+    if (WiFi.status() == WL_CONNECTED) {
         Serial.println("INFO: WIFI connected.");
         return;
     }
@@ -88,15 +91,16 @@ const int ethernet_reset_pin = 12;
 
 void init_link() {
     static bool pins_allocated = false;
-    if (!pins_allocated){
+    if (!pins_allocated) {
         alloc_pin(ethernet_sc_pin);
         alloc_pin(ethernet_reset_pin);
         pins_allocated = true;
     }
 
     static bool link_up = false;
-    if (link_up) return;
-    
+    if (link_up)
+        return;
+
     Ethernet.init(ethernet_sc_pin);
     if (!Ethernet.begin(node_info.mac, 2000, 2000)) {
         Serial.println("ERROR: Got no IP from DHCP.");
