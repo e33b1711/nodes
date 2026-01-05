@@ -311,7 +311,6 @@ text_items = [
 ("eg_west",	       "revision_eg_west"         ),
 ("eg_ost", 	       "revision_eg_ost"          ),
 ("ug",     	       "revision_ug"              ),
-("power",  	       "revision_power"           ),
 ("ch",     	       "revision_ch"              ),
 ("sauna",     	   "revision_sauna"           ),
 ("garage", 	       "revision_garage"          ),
