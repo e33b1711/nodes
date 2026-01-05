@@ -69,13 +69,12 @@ def ro_format(id, friendly_name):
   - unique_id: "{id}"
     name: "{friendly_name}"
     command_topic: "ard_command/{id}"
-    state_topic: "ard_state/{id}"
+    position_topic: "ard_state/{id}"
     payload_open: "0"
     payload_close: "100"
     payload_stop: "50"
-    state_open: "0"
-    state_stopped: "50"
-    state_closed: "100"
+    position_open: 0
+    position_closed: 100
     optimistic: false
     '''
     return str
@@ -133,13 +132,8 @@ def thermos_format(id, friendly_name, min = 10, max = 30):
     '''
     return str + str2
 
-# mixed stuff
-# TODO thermos on off as seperate topic
-# TODO rollos stop => node side (more state updates)
-# TODO bell must report off
-
-# server only
 # TODO revision strings / availibilty warning
+# TODO something like post all rule
 
 
 
@@ -192,7 +186,8 @@ light_items = [
 ]
 
 siren_items = [
-('BELL',        "Klingel"), 
+('BELL',        "Klingel (dauer)"), 
+('ZE_BELL',     "Klingel"), 
 ]
 
 valve_items=[
