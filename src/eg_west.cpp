@@ -58,10 +58,10 @@ const int full_valve = 254;
 const int closed_valve = 2;
 const int default_valve = 128;
 thermos_t thermos[num_thermos] = {
-        {"EG_GA", "V_EG_GA", 120, 0.2, 30.0, 10.0, 22, 0.0},
-        {"EG_KU", "V_EG_KU", 120, 0.2, 30.0, 10.0, 22, 0.0},
-        {"EG_WZ", "V_EG_WZ", 120, 0.2, 30.0, 10.0, 21, 0.0},
-        {"EG_EZ", "V_EG_EZ", 120, 0.2, 30.0, 10.0, 22, 0.0},
+        {"EG_GA", "V_EG_GA", 120, 0.2, 30.0, 10.0, 22, 0.0, 0},
+        {"EG_KU", "V_EG_KU", 120, 0.2, 30.0, 10.0, 22, 0.0, 0},
+        {"EG_WZ", "V_EG_WZ", 120, 0.2, 30.0, 10.0, 21, 0.0, 0},
+        {"EG_EZ", "V_EG_EZ", 120, 0.2, 30.0, 10.0, 22, 0.0, 0},
 };
 
 const int num_outputs = 16;

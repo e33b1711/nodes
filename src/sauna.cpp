@@ -55,7 +55,7 @@ const int closed_valve = 0;
 const int default_valve = 0;
 
 thermos_t thermos[num_thermos] = {
-        {"SA", "V_SA", 10, 0.1, 90.0, 30.0, -99.0, 0.0},
+        {"SA", "V_SA", 10, 0.1, 90.0, 30.0, -99.0, 0.0, 0},
 };
 
 const int num_outputs = 3;

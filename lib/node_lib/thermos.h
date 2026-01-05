@@ -7,6 +7,9 @@ void setup_thermos();
 bool get_thermos(String name, String &String);
 bool write_thermos(String name, String);
 
+bool get_thermos_mode(String name, String &String);
+bool write_thermos_mode(String name, String);
+
 struct thermos_t {
     const String name;   // same as a temp on same unit
     const String valve;  // any valve
@@ -16,6 +19,7 @@ struct thermos_t {
     const float min_temp;
     float target_temp;
     float int_value;
+    int mode; // 0 off / 1 on / 2 bypass
 };
 
 extern const int num_thermos;
