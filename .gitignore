@@ -5,3 +5,4 @@
 .vscode/ipch
 **/secret*
 include/version.h
+mqtt.yaml
