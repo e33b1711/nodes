@@ -313,7 +313,7 @@ text_items = [
 ("ug",     	       "revision_ug"              ),
 ("ch",     	       "revision_ch"              ),
 ("sauna",     	   "revision_sauna"           ),
-("garage", 	       "revision_garage"          ),
+("gr", 	           "revision_garage"          ),
 ("relay_service",  "revision_relay_service"   ),
 ("bridge_service", "revision_bridge_service"  ),
 
