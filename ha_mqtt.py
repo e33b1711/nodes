@@ -86,12 +86,20 @@ def sensor_format(id, friendly_name, unit = "°C", precision = 0.1, device_class
   - unique_id: "{id}"
     state_class: "measurement"
     name: "{friendly_name}"
-    state_topic: "ard_state/{id}"
+    state_topic: "ard_state/{id}"'''
+    str2 = '''
+    value_template: >
+      {% if value | lower == 'nan' %}
+        {{ None }}
+      {% else %}
+        {{ value }}
+      {% endif %}'''
+    str3 = f'''
     suggested_display_precision: {precision}
     device_class: "{device_class}"
     unit_of_measurement: "{unit}"
     '''
-    return str
+    return str + str2 + str3
 
 def number_format(item, friendly_name, unit = "", min = 0, max = 255):  
     str = f'''
