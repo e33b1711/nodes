@@ -1,0 +1,16 @@
+[Unit]
+Description=tcp mqtt bridge
+After=network.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=20
+User=ak
+WorkingDirectory=/home/ak/power_raspi
+Environment=PYTHONPATH=/home/ak/power_raspi
+ExecStart=/home/ak/power_raspi/venv/bin/python bridge.py
+
+[Install]
+WantedBy=multi-user.target
