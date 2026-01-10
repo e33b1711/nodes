@@ -8,9 +8,9 @@ Type=simple
 Restart=always
 RestartSec=20
 User=ak
-WorkingDirectory=/home/ak/power_raspi
-Environment=PYTHONPATH=/home/ak/power_raspi
-ExecStart=/home/ak/power_raspi/venv/bin/python bridge.py
+WorkingDirectory=/home/ak/nodes/relay_bridge
+Environment=PYTHONPATH=/home/ak/nodes/relay_bridge
+ExecStart=/home/ak/nodes/relay_bridge/venv/bin/python bridge.py
 
 [Install]
 WantedBy=multi-user.target

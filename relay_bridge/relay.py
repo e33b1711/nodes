@@ -14,6 +14,7 @@ from lib.git_revision import get_git_rev
 end_threads = False
 HEART_RATE = 60
 last_haert_beat = 0
+beat_count = 0
 git_rev = get_git_rev()
 
 # tcp stuff
@@ -143,11 +144,13 @@ def shut_down(server, verbose_server):
 def beat_heart():
     """Send git rev message all n minutes."""
     global last_haert_beat
+    global beat_count
     if last_haert_beat + HEART_RATE < time.time():
         logger.info("Sending heart beat: %s", git_rev)
-        message = "!s!relay_service!" + git_rev + "$"
+        message = "!s!relay_service!" + git_rev + " " + str(beat_count) + "$"
         relay(message.encode(), None, VERBOSE_PORT)
         last_haert_beat = time.time()
+        beat_count += 1
 
 
 def main_loop(server, verbose_server):

@@ -14,6 +14,7 @@ from lib.git_revision import get_git_rev
 end_threads = False
 HEART_RATE = 60
 last_haert_beat = 0
+beat_count = 0
 git_rev = get_git_rev()
 
 # tcp stuff
@@ -81,10 +82,12 @@ def signal_handler(sig, frame):
 def beat_heart():
     """Send git rev message all n minutes."""
     global last_haert_beat
+    global beat_count
     if last_haert_beat + HEART_RATE < time.time():
         logger.info("Sending heart beat: %s", git_rev)
-        mqtt_publish_ard_state({"bridge_service": git_rev})
+        mqtt_publish_ard_state({"bridge_service": git_rev + " " + str(beat_count)})
         last_haert_beat = time.time()
+        beat_count += 1
 
 
 def main_loop():
