@@ -227,8 +227,8 @@ ro_items = [
 
 
 sensor_items = [
-("TI_PU_O ", "Temperatur Puffer oben", ""),
-("TI_PU_U ", "Temperatur Puffer unten", ""),
+("TI_PU_O", "Temperatur Puffer oben", ""),
+("TI_PU_U", "Temperatur Puffer unten", ""),
 ("F_HE",     "Gastherme", ""),
 ("F_WW",     "Warnung Pumpensumpf", ""),
 ("F_RAIN",   "Regen", ""),
