@@ -188,9 +188,6 @@ light_items = [
 ('LI_CH_L2',    "Licht Hühnerhaus Zaun"),
 ('LI_CH_L3',    "Hühnerhaus (L3)"),
 ('LI_CH_L4',    "Hühnerhaus (L4)"),
-('LI_SA_L1',    "Sauna (L1)"),
-('LI_SA_L2',    "Sauna (L2)"),
-('LI_SA_L3',    "Sauna (L3)"),
 ]
 
 siren_items = [
@@ -249,11 +246,6 @@ sensor_items = [
 ("TI_GR",    "Temperatur Garage", ""),
 ("TI_AU",    "Temperatur Außen", ""),
 ("TI_CH", 	 "Temperatur Hühnerhaus", ""),  
-("TI_SA",    "Temperatur Sauna", ""),
-("TI_SA1",   "Temperatur Sauna oben/hinten", ""),
-("TI_SA2",   "Temperatur Sauna mitte", ""),
-("TI_SA3",   "Temperatur Sauna unten", ""),
-("TI_SA4",   "Temperatur Sauna außen", ""), 
 ("HI_EG_WZ", "Feuchte Wohnzimmer", ""),
 ("HI_EG_KU", "Feuchte Küche", ""),
 ("HI_EG_EZ", "Feuchte Esszimmer", ""),
@@ -289,7 +281,6 @@ number_items = [
 ("V_OG_GA",  "Gang OG", ""),
 ("V_OG_BA",  "Badezimmer", ""),
 ("V_OG_SZ",  "Schlafzimmer", ""),
-("V_SA",     "Sauna", ""),
 ("U_EL",     "Elektrische Heizung", ""),
 ]
 
@@ -309,7 +300,6 @@ thermos_items = [
 ("OG_GA", "Klima Gang OG", 10, 30),     
 ("OG_BA", "Klima Bad", 10, 30),     
 ("OG_SZ", "Klima Schlafzimmer", 10, 30),
-("SA",    "Klima Sauna", 30, 90),
 ]
 
 
@@ -320,7 +310,6 @@ text_items = [
 ("eg_ost", 	       "revision_eg_ost"          ),
 ("ug",     	       "revision_ug"              ),
 ("ch",     	       "revision_ch"              ),
-("sauna",     	   "revision_sauna"           ),
 ("gr", 	           "revision_garage"          ),
 ("relay_service",  "revision_relay_service"   ),
 ("bridge_service", "revision_bridge_service"  ),
