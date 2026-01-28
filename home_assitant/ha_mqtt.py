@@ -12,17 +12,6 @@ def l_format(id, friendly_name):
     '''
     return str
 
-def fan_format(id, friendly_name):  
-    str = f'''  
-  - unique_id: "{id}"
-    name: "{friendly_name}"
-    state_topic: "ard_state/{id}"
-    command_topic: "ard_command/{id}"
-    payload_on: "1"
-    payload_off: "0"
-    optimistic: false
-    '''
-    return str
 
 def text_format(id, friendly_name):  
     str = f'''  
@@ -48,21 +37,6 @@ def siren_format(id, friendly_name):
     '''
     return str + str2
 
-def valve_format(id, friendly_name):  
-    str = f'''  
-  - unique_id: "{id}"
-    name: "{friendly_name}"
-    state_topic: "ard_state/{id}"
-    command_topic: "ard_command/{id}"
-    payload_open: "1"
-    payload_close: "0"
-    state_open: "1"
-    state_closed: "0"
-    optimistic: false
-    '''
-    return str
-
-    
 
 def ro_format(id, friendly_name):  
     str = f'''
@@ -78,7 +52,6 @@ def ro_format(id, friendly_name):
     optimistic: false
     '''
     return str
-
 
 
 def sensor_format(id, friendly_name, unit = "°C", precision = 0.1, device_class = "temperature"):  
@@ -140,10 +113,6 @@ def thermos_format(id, friendly_name, min = 10, max = 30):
     '''
     return str + str2
 
-# TODO revision strings / availibilty warning
-# TODO something like post all rule
-
-
 
 light_items = [
 ('LI_EG_WZ',    "Wohnzimmer Mitte"),	 
@@ -185,22 +154,11 @@ light_items = [
 ('ZE_GR_0',	    "Garage Timer 10min"),
 ('ZE_GR_1',	    "Garage Timer 2 min"),
 ('ZE_GR_2',	    "Garage Timer außen"),
-('LI_CH_L2',    "Licht Hühnerhaus Zaun"),
-('LI_CH_L3',    "Hühnerhaus (L3)"),
-('LI_CH_L4',    "Hühnerhaus (L4)"),
 ]
 
 siren_items = [
 ('BELL',        "Klingel (dauer)"), 
 ('ZE_BELL',     "Klingel"), 
-]
-
-valve_items=[
-('PUMP', "Zisterne"), 
-]
-
-fan_items=[
-('LI_CH',       "Lüftung Hühnerhaus"),  
 ]
 
 ro_items = [
@@ -219,7 +177,6 @@ ro_items = [
 ("VD_OG_SZ", "Verdunkelung Schlafzimmer"),
 ("DF_OG_SZ", "Dachfenster Schlafzimmer"),
 ("DO_GR",    "Garagentor"),
-("DO_CH",    "Hühnerklappe"),
 ]  
 
 
@@ -245,7 +202,6 @@ sensor_items = [
 ("TI_UG_LA", "Temperatur Lager", ""),
 ("TI_GR",    "Temperatur Garage", ""),
 ("TI_AU",    "Temperatur Außen", ""),
-("TI_CH", 	 "Temperatur Hühnerhaus", ""),  
 ("HI_EG_WZ", "Feuchte Wohnzimmer", ""),
 ("HI_EG_KU", "Feuchte Küche", ""),
 ("HI_EG_EZ", "Feuchte Esszimmer", ""),
@@ -262,7 +218,6 @@ sensor_items = [
 ("HI_UG_LA", "Feuchte Lager", ""),
 ("HI_GR",    "Feuchte Garage", ""),
 ("HI_AU",    "Feuchte Außen", ""),
-("HI_CH",    "Feuchte Hühnerhaus", ""),
 ]
 
 number_items = [
@@ -309,11 +264,9 @@ text_items = [
 ("eg_west",	       "revision_eg_west"         ),
 ("eg_ost", 	       "revision_eg_ost"          ),
 ("ug",     	       "revision_ug"              ),
-("ch",     	       "revision_ch"              ),
 ("gr", 	           "revision_garage"          ),
 ("relay_service",  "revision_relay_service"   ),
 ("bridge_service", "revision_bridge_service"  ),
-
 ]
 
 
@@ -332,10 +285,6 @@ if __name__ == "__main__":
         fh.write("\n\n- siren:\n")
         for item in siren_items:
             fh.write(siren_format(item[0],item[1]))
-           
-        fh.write("\n\n- valve:\n")
-        for item in valve_items:
-            fh.write(valve_format(item[0], item[1]))
         
         fh.write("\n\n- cover:\n")
         for item in ro_items:
@@ -353,10 +302,6 @@ if __name__ == "__main__":
         fh.write("\n\n- climate:\n")
         for item in thermos_items:
             fh.write(thermos_format(item[0], item[1], item[2], item[3]))
-
-        fh.write("\n\n- fan:\n")
-        for item in fan_items:
-            fh.write(fan_format(item[0], item[1]))
 
         fh.write("\n\n- text:\n")
         for item in text_items:
