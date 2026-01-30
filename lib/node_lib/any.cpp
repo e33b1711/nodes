@@ -4,14 +4,10 @@
 #include "temp.h"
 #include "timer.h"
 #include "rollo.h"
-#include "valve.h"
 #include "pwm.h"
-#include "thermos.h"
 #include "switch.h"
 
 void write_any_internal(String name, String val_str) {
-    if (write_valve(name, val_str))
-        return;
     if (write_output(name, val_str))
         return;
     if (write_rollo(name, val_str))
@@ -20,9 +16,6 @@ void write_any_internal(String name, String val_str) {
         return;
     if (write_pwm(name, val_str))
         return;
-    if (write_thermos_mode(name, val_str))
-        return;
-    write_thermos(name, val_str);
 }
 
 void write_any(String name, String val_str) {
@@ -36,8 +29,6 @@ bool get_any(String name, String &value_string) {
         return true;
     if (get_humi(name, value_string))
         return true;
-    if (get_valve(name, value_string))
-        return true;
     if (get_rollo(name, value_string))
         return true;
     if (get_output(name, value_string))
@@ -45,10 +36,6 @@ bool get_any(String name, String &value_string) {
     if (get_timer(name, value_string))
         return true;
     if (get_pwm(name, value_string))
-        return true;
-    if (get_thermos(name, value_string))
-        return true;
-    if (get_thermos_mode(name, value_string))
         return true;
     if (get_switch(name, value_string))
         return true;

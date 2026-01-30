@@ -4,9 +4,7 @@
 #include "temp.h"
 #include "timer.h"
 #include "rollo.h"
-#include "valve.h"
 #include "pwm.h"
-#include "thermos.h"
 
 #include "version.h"
 #include "server.h"
@@ -52,41 +50,26 @@ temp_t temps[num_temps] = {
 
 };
 
-const int num_thermos = 4;
-const int full_valve = 254;
-const int closed_valve = 2;
-const int default_valve = 128;
-thermos_t thermos[num_thermos] = {
-        {"UG_WK", "V_UG_WK", 120, 0.2, 30.0, 10.0, 22, 0.0, 0},
-        {"UG_HO", "V_UG_HO", 120, 0.2, 30.0, 10.0, 20, 0.0, 0},
-        {"UG_LA", "V_UG_LA", 120, 0.2, 30.0, 10.0, 18, 0.0, 0},
-        {"UG_GA", "V_UG_GA", 120, 0.2, 30.0, 10.0, 18, 0.0, 0},
-};
-
-const int num_outputs = 8;
+const int num_outputs = 14;
 output_t outputs[num_outputs] = {
-        {"LI_UG_HO", 42, 1, 0, 0},  //
-        {"LI_UG_HK", 43, 1, 0, 0},  //
-        {"LI_UG_TR", 44, 1, 0, 0},  //
-        {"BELL", 45, 1, 0, 0},      //
-        {"PUMP", 46, 1, 0, 0},      //
-        {"LI_UG_GA", 47, 1, 0, 0},  //
-        {"LI_UG_WK", 48, 1, 0, 0},  //
-        {"LI_UG_HN", 49, 1, 0, 0},  //
+        {"LI_UG_HO", 42, 1, 0, 0},    //
+        {"LI_UG_HK", 43, 1, 0, 0},    //
+        {"LI_UG_TR", 44, 1, 0, 0},    //
+        {"BELL", 45, 1, 0, 0},        //
+        {"PUMP", 46, 1, 0, 0},        //
+        {"LI_UG_GA", 47, 1, 0, 0},    //
+        {"LI_UG_WK", 48, 1, 0, 0},    //
+        {"LI_UG_HN", 49, 1, 0, 0},    //
+        {"V_UG_HO", 34, true, 0, 0},  //
+        {"V_UG_LA", 35, true, 0, 0},  //
+        {"V_UG_WK", 36, true, 0, 0},  //
+        {"V_UG_H2", 37, true, 0, 0},  //
+        {"V_UG_GA", 38, true, 0, 0},  //
+        {"V_UG_H3", 39, true, 0, 0},  //
 };
 
 const int num_rollos = 0;
 rollo_t rollos[num_rollos] = {};
-
-const int num_valves = 6;
-valve_t valves[num_valves] = {
-        {"V_UG_HO", "V_UG_H2", 34, false, 0},  //
-        {"V_UG_LA", "", 35, false, 0},         //
-        {"V_UG_WK", "", 36, false, 0},         //
-        {"V_UG_H2", "V_UG_H3", 37, false, 0},  //
-        {"V_UG_GA", "", 38, false, 0},         //
-        {"V_UG_H3", "", 39, false, 0},         //
-};
 
 const int num_timers = 1;
 ntimer_t timers[num_timers] = {{"ZE_BELL", "BELL", false, false, 0, 5}};

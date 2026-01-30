@@ -4,22 +4,22 @@
 #include "temp.h"
 #include "timer.h"
 #include "rollo.h"
-#include "valve.h"
 #include "pwm.h"
-#include "thermos.h"
 
 #include "version.h"
 #include "server.h"
 
 #ifndef __TEST__
-uint8_t mac[] =  {0xDE, 0xBB, 0x7E, 0xE1, 0xCC, 0x02};
+uint8_t mac[] = {0xDE, 0xBB, 0x7E, 0xE1, 0xCC, 0x02};
 #else
-uint8_t mac[] =  {0xDE, 0xBB, 0x7E, 0xE1, 0xAB, 0x02};
+uint8_t mac[] = {0xDE, 0xBB, 0x7E, 0xE1, 0xAB, 0x02};
 #endif
 
-
 node_t node_info = {
-        "eg_ost", server, port, mac,
+        "eg_ost",
+        server,
+        port,
+        mac,
 };
 
 const int num_switches = 16;
@@ -30,23 +30,23 @@ switch_t switches[num_switches] = {
         {"", false, 7, 0, 0, 0, false, false, false, false},  // 3
         {"", false, 8, 0, 0, 0, false, false, false, false},  // 4   gang bei wz
         {"", false, 9, 0, 0, 0, false, false, false, false},  // 5   wz bei gang
-        {"", false, 10, 0, 0, 0,false, false, false, false},  // 6   garda
-        {"", false, 11, 0, 0, 0,false, false, false, false},  // 7
-        {"", false, 25, 0, 0, 0,false, false, false, false},  // 8   treppe auf
-        {"", false, 24, 0, 0, 0,false, false, false, false},  // 9   wc
-        {"", false, 23, 0, 0, 0,false, false, false, false},  // 10  kachelofen
-        {"", false, 22, 0, 0, 0,false, false, false, false},  // 11  treppe runter
-        {"", false, 17, 0, 0, 0,false, false, false, false},  // 12  wz bei ez
-        {"", false, 16, 0, 0, 0,false, false, false, false},  // 13  klingel
-        {"", false, 3, 0, 0, 0, false, false, false, false},  // 14
-        {"", false, 2, 0, 0, 0, false, false, false, false},  // 15  treppe oben
+        {"", false, 10, 0, 0, 0, false, false, false, false},  // 6   garda
+        {"", false, 11, 0, 0, 0, false, false, false, false},  // 7
+        {"", false, 25, 0, 0, 0, false, false, false, false},  // 8   treppe auf
+        {"", false, 24, 0, 0, 0, false, false, false, false},  // 9   wc
+        {"", false, 23, 0, 0, 0, false, false, false, false},  // 10  kachelofen
+        {"", false, 22, 0, 0, 0, false, false, false, false},  // 11  treppe runter
+        {"", false, 17, 0, 0, 0, false, false, false, false},  // 12  wz bei ez
+        {"", false, 16, 0, 0, 0, false, false, false, false},  // 13  klingel
+        {"", false, 3, 0, 0, 0, false, false, false, false},   // 14
+        {"", false, 2, 0, 0, 0, false, false, false, false},   // 15  treppe oben
 };
 
 const int num_temps = 0;
 const long period_t = 60000;
 temp_t temps[num_temps] = {};
 
-const int num_outputs = 8;
+const int num_outputs = 15;
 output_t outputs[num_outputs] = {
         {"LI_EG_WZ", 42, 1, 0, 0},     //
         {"LI_EG_WZ_L1", 43, 1, 0, 0},  //
@@ -56,24 +56,17 @@ output_t outputs[num_outputs] = {
         {"LI_EG_GA", 47, 1, 0, 0},     //
         {"LI_EG_WZ_L2", 48, 1, 0, 0},  //
         {"LI_EG_VH", 49, 1, 0, 0},     //
-}; 
-
-const int num_thermos = 0;
-thermos_t thermos[num_thermos] = {};
+        {"V_EG_WZ", 34, true, 0, 0},     // 34 rot    Wohnzimmer
+        {"V_EG_GR", 35, true, 0, 0},     // 35 rosa   Garda
+        {"V_EG_EZ", 36, true, 0, 0},     // 36 grau   EZ
+        {"V_EG_E2", 37, true, 0, 0},     // 37 gelb   EZ
+        {"V_EG_WC", 38, true, 0, 0},     // 38 blau   WC
+        {"V_EG_GA", 39, true, 0, 0},     // 39 grün   Gang
+        {"V_EG_KU", 40, true, 0, 0},     // 40 weiß   Küche
+};
 
 const int num_rollos = 0;
 rollo_t rollos[num_rollos] = {};
-
-const int num_valves = 7;
-valve_t valves[num_valves] = {
-        {"V_EG_WZ", "", 34, false, 0},                  // 34 rot    Wohnzimmer
-        {"V_EG_GR", "V_EG_WC", 35, false, 0},           // 35 rosa   Garda
-        {"V_EG_EZ", "V_EG_E2", 36, false, 0},           // 36 grau   EZ
-        {"V_EG_E2", "", 37, false, 0},                  // 37 gelb   EZ
-        {"V_EG_WC", "", 38, false, 0},                  // 38 blau   WC
-        {"V_EG_GA", "V_EG_GR", 39, false, 0},           // 39 grün   Gang
-        {"V_EG_KU", "", 40, false, 0},                  // 40 weiß   Küche
-};
 
 const int num_timers = 1;
 ntimer_t timers[num_timers] = {{"ZE_EG_VH", "LI_EG_VH", false, false, 0, 180}};

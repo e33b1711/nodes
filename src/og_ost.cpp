@@ -4,9 +4,7 @@
 #include "temp.h"
 #include "timer.h"
 #include "rollo.h"
-#include "valve.h"
 #include "pwm.h"
-#include "thermos.h"
 
 #include "version.h"
 #include "server.h"
@@ -31,16 +29,12 @@ temp_t temps[num_temps] = {
         {"OG_SZ", 26, {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, DHT22_T, 0, 0, 0},
 };
 
-const int num_thermos = 2;
+const int num_thermos = 0;
 const int full_valve = 254;
 const int closed_valve = 2;
 const int default_valve = 128;
-thermos_t thermos[num_thermos] = {
-        {"OG_BA", "V_OG_BA", 120, 0.2, 30.0, 10.0, 23, 0.0, 0},
-        {"OG_SZ", "V_OG_SZ", 120, 0.2, 30.0, 10.0, 16, 0.0, 0},
-};
 
-const int num_outputs = 12;
+const int num_outputs =17;
 output_t outputs[num_outputs] = {
         {"RO_OG_SZ_UP", 41, 1, 0, 0},  //
         {"LI_OG_BA", 42, 1, 0, 0},     //
@@ -54,6 +48,11 @@ output_t outputs[num_outputs] = {
         {"DF_OG_SZ_DO", 59, 0, 0, 0},  //
         {"VD_OG_SZ_UP", 60, 0, 0, 0},  //
         {"DF_OG_SZ_UP", 61, 0, 0, 0},  //
+        {"V_OG_GA", 34, true, 0, 0},  // blau
+        {"V_OG_KS", 35, true, 0, 0},  // weiß
+        {"V_OG_KN", 36, true, 0, 0},  // grün
+        {"V_OG_BA", 37, true, 0, 0},  // rosa
+        {"V_OG_SZ", 38, true, 0, 0},  // grau
 };
 
 const int num_rollos = 4;
@@ -62,16 +61,6 @@ rollo_t rollos[num_rollos] = {
         {"RO_OG_BA", 31000, true, false, "", "", 50, 50, 0, false},
         {"DF_OG_SZ", 500, false, false, "", "", 50, 50, 0, false },
         {"VD_OG_SZ", 500, false, false, "", "", 50, 50, 0, false },
-};
-
-  const int num_valves
-  = 5;
-valve_t valves[num_valves] = {
-        {"V_OG_GA", "", 34, false, 0, 0},  // blau
-        {"V_OG_KS", "", 35, false, 0, 0},  // weiß
-        {"V_OG_KN", "", 36, false, 0, 0},  // grün
-        {"V_OG_BA", "", 37, false, 0, 0},  // rosa
-        {"V_OG_SZ", "", 38, false, 0, 0},  // grau
 };
 
 const int num_switches = 16;

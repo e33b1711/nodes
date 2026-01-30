@@ -12,6 +12,18 @@ def l_format(id, friendly_name):
     '''
     return str
 
+def switch_format(id, friendly_name):  
+    str = f'''  
+  - unique_id: "{id}"
+    name: "{friendly_name}"
+    state_topic: "ard_state/{id}"
+    command_topic: "ard_command/{id}"
+    payload_on: "1"
+    payload_off: "0"
+    optimistic: false
+    '''
+    return str
+
 
 def text_format(id, friendly_name):  
     str = f'''  
@@ -88,30 +100,6 @@ def number_format(item, friendly_name, unit = "", min = 0, max = 255):
     return str
 
 
-def thermos_format(id, friendly_name, min = 10, max = 30):
-    str = f'''
-  - unique_id: "TS_{id}"
-    name: "{friendly_name}"
-    modes:
-      - "off"
-      - "heat"
-    temperature_command_topic: "ard_command/TS_{id}"
-    temperature_state_topic: "ard_state/TS_{id}"
-    mode_command_topic: "ard_command/TM_{id}"
-    mode_state_topic: "ard_state/TM_{id}"
-    min_temp: "{min}"
-    max_temp: "{max}"
-    optimistic: false'''
-    str2 = '''
-    mode_state_template: >-
-      {% set modes = { '0':'off', '1':'heat' } %}
-      {{ modes[value] if value in modes else 'off' }}
-    mode_command_template: >-
-        {% set modes = { 'off':'0', 'heat':'1' } %}
-        {{ modes[value] if value in modes else '0' }}
-
-    '''
-    return str + str2
 
 
 light_items = [
@@ -221,40 +209,27 @@ sensor_items = [
 ]
 
 number_items = [
-("V_UG_HO",  "Hobby", ""),
-("V_UG_LA",  "Lager", ""),
-("V_UG_GA",  "Gang UG", ""),
-("V_UG_WK",  "Waschküche", ""),
-("V_EG_KU",  "Küche", ""),
-("V_EG_EZ",  "Esszimmer", ""),
-("V_EG_GA",  "Gang EG", ""),
-("V_EG_WZ",  "Wohnzimmer", ""),
-("V_EG_GR",  "Gardarobe", ""),
-("V_EG_WC",  "WC", ""),
-("V_OG_KS",  "Bini", ""),
-("V_OG_KN",  "Leo", ""),
-("V_OG_GA",  "Gang OG", ""),
-("V_OG_BA",  "Badezimmer", ""),
-("V_OG_SZ",  "Schlafzimmer", ""),
 ("U_EL",     "Elektrische Heizung", ""),
 ]
 
-
-
-thermos_items = [
-("UG_HO", "Klima Hobby", 10, 30),     
-("UG_LA", "Klima Lager", 10, 30),     
-("UG_GA", "Klima Gang UG", 10, 30),     
-("UG_WK", "Klima Waschküche", 10, 30),     
-("EG_KU", "Klima Küche", 10, 30),     
-("EG_EZ", "Klima Esszimmer", 10, 30),     
-("EG_GA", "Klima Gang EG", 10, 30),     
-("EG_WZ", "Klima Wohnzimmer", 10, 30),        
-("OG_KS", "Klima Bini", 10, 30),     
-("OG_KN", "Klima Leo", 10, 30),     
-("OG_GA", "Klima Gang OG", 10, 30),     
-("OG_BA", "Klima Bad", 10, 30),     
-("OG_SZ", "Klima Schlafzimmer", 10, 30),
+switch_items = [
+("V_OG_KS",  "Heizventil Bini", ""),
+("V_OG_KN",  "Heizventil Leo", ""),
+("V_OG_GA",  "Heizventil Gang OG", ""),
+("V_OG_BA",  "Heizventil Badezimmer", ""),
+("V_OG_SZ",  "Heizventil Schlafzimmer", ""),
+("V_UG_HO",  "Heizventil Hobby", ""),
+("V_UG_H2",  "Heizventil Hobby", ""),
+("V_UG_LA",  "Heizventil Lager", ""),
+("V_UG_GA",  "Heizventil Gang UG", ""),
+("V_UG_WK",  "Heizventil Waschküche", ""),
+("V_EG_KU",  "Heizventil Küche", ""),
+("V_EG_EZ",  "Heizventil Esszimmer", ""),
+("V_EG_E2",  "Heizventil Esszimmer", ""),
+("V_EG_GA",  "Heizventil Gang EG", ""),
+("V_EG_WZ",  "Heizventil Wohnzimmer", ""),
+("V_EG_GR",  "Heizventil Gardarobe", ""),
+("V_EG_WC",  "Heizventil WC", ""),
 ]
 
 
@@ -274,10 +249,9 @@ text_items = [
 
 if __name__ == "__main__":
 
+
     with open("mqtt.yaml", "w", encoding="utf-8") as fh:
 
-      
-        
         fh.write("\n\n- light:\n")
         for item in light_items:
             fh.write(l_format(item[0],item[1]))
@@ -298,10 +272,6 @@ if __name__ == "__main__":
                 fh.write(sensor_format(item[0], item[1], "%", 1, "humidity"))
             else:
                 fh.write(sensor_format(item[0], item[1], "", 1, "power"))
-        
-        fh.write("\n\n- climate:\n")
-        for item in thermos_items:
-            fh.write(thermos_format(item[0], item[1], item[2], item[3]))
 
         fh.write("\n\n- text:\n")
         for item in text_items:
@@ -310,3 +280,7 @@ if __name__ == "__main__":
         fh.write("\n\n- number:\n")
         for item in number_items:
             fh.write(number_format(item[0], item[1]))
+
+        fh.write("\n\n- switch:\n")
+        for item in switch_items:
+            fh.write(switch_format(item[0], item[1]))

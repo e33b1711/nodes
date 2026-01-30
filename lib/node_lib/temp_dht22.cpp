@@ -1,7 +1,6 @@
 #include "node.h"
 #include "temp.h"
 
-#ifndef __esp32__
 #include <DHT22.h>
 
 String divide10(int in) { return String(in / 10) + "." + String(in % 10); }
@@ -25,11 +24,3 @@ void handle_dht22(int i) {
     send_state("HI_" + temps[i].name, String(temps[i].humi_value));
 }
 
-#else
-
-void handle_dht22(int i) {
-    Serial.println("FAILURE: dth22 not implemented.");
-    while (true) {} 
-}
-
-#endif

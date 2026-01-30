@@ -4,9 +4,7 @@
 #include "temp.h"
 #include "timer.h"
 #include "rollo.h"
-#include "valve.h"
 #include "pwm.h"
-#include "thermos.h"
 
 #include "version.h"
 #include "server.h"
@@ -28,9 +26,6 @@ node_t node_info = {
 const int num_temps = 0;
 const long period_t = 100000;
 temp_t temps[num_temps] = {};
-
-const int num_thermos = 0;
-thermos_t thermos[num_thermos] = {};
 
 const int num_switches = 0;
 switch_t switches[num_switches] = {};
@@ -95,9 +90,6 @@ output_t outputs[num_outputs] = {
 
 const int num_rollos = 0;
 rollo_t rollos[num_rollos] = {};
-
-const int num_valves = 0;
-valve_t valves[num_valves] = {};
 
 const int num_timers = 0;
 ntimer_t timers[num_timers] = {};

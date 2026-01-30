@@ -4,9 +4,7 @@
 #include "temp.h"
 #include "timer.h"
 #include "rollo.h"
-#include "valve.h"
 #include "pwm.h"
-#include "thermos.h"
 
 #include "version.h"
 #include "server.h"
@@ -30,16 +28,6 @@ temp_t temps[num_temps] = {
         {"OG_KN", 28, {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, DHT22_T, 0, 0, 0},
         {"OG_KS", 27, {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, DHT22_T, 0, 0, 0},
         {"OG_GA", 26, {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, DHT22_T, 0, 0, 0},
-};
-
-const int num_thermos = 3;
-const int full_valve = 254;
-const int closed_valve = 2;
-const int default_valve = 128;
-thermos_t thermos[num_thermos] = {
-        {"OG_KN", "V_OG_KN", 120, 0.2, 30.0, 10.0, 20, 0.0, 0},
-        {"OG_KS", "V_OG_KS", 120, 0.2, 30.0, 10.0, 21, 0.0, 0},
-        {"OG_GA", "V_OG_GA", 120, 0.2, 30.0, 10.0, 21, 0.0, 0},
 };
 
 const int num_outputs = 24;
@@ -81,9 +69,6 @@ rollo_t rollos[num_rollos] = {
         {"VD_OG_KN", 500, false, false, "", "", 50, 50, 0, false},
         {"VD_OG_GA", 500, false, false, "", "", 50, 50, 0, false},
 };
-
-const int num_valves = 0;
-valve_t valves[num_valves] = {};
 
 const int num_switches = 16;
 switch_t switches[num_switches] = {

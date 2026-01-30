@@ -1,62 +1,6 @@
 #include "node.h"
 #include "temp.h"
 
-#ifdef __esp32__
-
-#include <OneWire.h>
-#include <DallasTemperature.h>
-
-OneWire oneWire(ds18b_pin);
-// Pass our oneWire reference to Dallas Temperature sensor
-DallasTemperature sensors(&oneWire);
-
-void discoverOneWireDevices(void) {
-    byte i;
-    byte present = 0;
-    byte data[12];
-    byte addr[8];
-
-    Serial.println("INFO: Looking for 1-Wire devices...");
-    while (oneWire.search(addr)) {
-        Serial.print("INFO: ");
-        for (i = 0; i < 8; i++) {
-            Serial.print("0x");
-            if (addr[i] < 16) {
-                Serial.print('0');
-            }
-            Serial.print(addr[i], HEX);
-            if (i < 7) {
-                Serial.print(", ");
-            }
-        }
-        Serial.println("");
-        if (OneWire::crc8(addr, 7) != addr[7]) {
-            Serial.println("WARNING: CRC is not valid!\n");
-            return;
-        }
-    }
-    oneWire.reset_search();
-    return;
-}
-
-void handle_ds18b20(int this_temp) {
-    static boolean init = true;
-    if (init) {
-        discoverOneWireDevices();
-        sensors.begin();
-        init = false;
-    }
-    sensors.requestTemperatures();
-    float temperatureC = sensors.getTempC(temps[this_temp].addr);
-
-    temps[this_temp].temp_value = temperatureC;
-    temps[this_temp].last_update = millis();
-
-    send_state("TI_" + temps[this_temp].name, String(temps[this_temp].temp_value));
-}
-
-#else
-
 #include <DS18B20.h>
 
 void handle_ds18b20(int this_temp) {
@@ -72,5 +16,3 @@ void handle_ds18b20(int this_temp) {
 
     send_state("TI_" + temps[this_temp].name, String(temps[this_temp].temp_value));
 }
-
-#endif

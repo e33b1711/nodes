@@ -4,9 +4,7 @@
 #include "temp.h"
 #include "timer.h"
 #include "rollo.h"
-#include "valve.h"
 #include "pwm.h"
-#include "thermos.h"
 
 #include "version.h"
 #include "server.h"
@@ -42,9 +40,6 @@ temp_t temps[num_temps] = {
         {"AU", 9, {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, DHT22_T, 0, 0, 0},  //
 };
 
-const int num_thermos = 0;
-thermos_t thermos[num_thermos] = {};
-
 const int num_outputs = 10;
 output_t outputs[num_outputs] = {
         {"LI_GR", 48, 1, 0, 0},     //
@@ -64,9 +59,6 @@ const int num_rollos = 1;
 rollo_t rollos[num_rollos] = {
         {"DO_GR", 500, false, true, "GR_CLOSED", "GR_OPEN", 50, 50, 0, false},
 };
-
-const int num_valves = 0;
-valve_t valves[num_valves] = {};
 
 const int num_timers = 3;
 ntimer_t timers[num_timers] = {
