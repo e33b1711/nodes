@@ -1,12 +1,13 @@
 """mqtt to openhab interface"""
 import logging
+import os
 import time
 import sys
 import paho.mqtt.client as mqtt
 
 
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.ERROR)
+logger.setLevel(logging.INFO)
 
 BROKER = "127.0.0.1"
 STATE_PREFIX = "power_state/"
@@ -63,51 +64,35 @@ def callback3(client, userdata, message):
     payload = str(message.payload.decode("utf-8"))
     print(payload)
 
-def on_disconnect_exit(arg_client, userdata, flags, reason_code, properties):
-    """MQTT dont recover."""
-    logger.warning("Disconnected with result code: %s", reason_code)
-    sys.exit(-1)
-
-
 def on_disconnect(arg_client, userdata, flags, reason_code, properties):
     """MQTT recoverer."""
-    logger.warning("Disconnected with result code: %s", reason_code)
-    reconnect_count, reconnect_delay = 0, FIRST_RECONNECT_DELAY
-    while True:
-        logging.info("Reconnecting in %d seconds...", reconnect_delay)
-        time.sleep(reconnect_delay)
-
-        try:
-            client.reconnect()
-            logging.info("Reconnected successfully!")
-            return
-        except Exception as err:
-            logger.error("%s. Reconnect failed. Retrying...", err)
-
-        reconnect_delay *= RECONNECT_RATE
-        reconnect_delay = min(reconnect_delay, MAX_RECONNECT_DELAY)
-        reconnect_count += 1
-    logging.info("Reconnect failed after %s attempts. Exiting...",
-                 reconnect_count)
+    logger.error("Disconnected with result code: %s", reason_code)
+    os._exit(1)
 
 
 def mqtt_init(topics, callbacks, reconnect=True, broker=BROKER):
     """Initialize the client"""
+    
+    # Configure Paho's native auto-reconnect behavior
+    client.reconnect_delay_set(min_delay=FIRST_RECONNECT_DELAY, max_delay=MAX_RECONNECT_DELAY)
+    
     try:
         client.connect(broker)
     except Exception as e:
         logger.error(e)
-        logger.error("Mqtt server unavaible. Good bye.")
-        sys.exit(-1)
+        logger.error("Mqtt server unavailable. Good bye.")
+        os._exit(1)
 
     client.on_message = callback0
     if reconnect:
         client.on_disconnect = on_disconnect
     else:
         client.on_disconnect = on_disconnect_exit
+        
     for topic, callback in zip(topics, callbacks):
         client.subscribe(topic)
         client.message_callback_add(topic, callback)
+        
     client.loop_start()
     logger.info('mqtt client initialized.')
 

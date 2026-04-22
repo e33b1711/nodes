@@ -111,7 +111,7 @@ def main(broker):
     """Main function"""
 
     get_ip(exit_on_fail=True)
-    mqtt_init(TOPICS, [on_message], broker=broker, reconnect=False)
+    mqtt_init(TOPICS, [on_message], broker=broker, reconnect=True)
     init_socket("127.0.0.1", 8889)
     signal.signal(signal.SIGINT, signal_handler)
     main_loop()
