@@ -38,6 +38,12 @@ i2c:
     number: GPIO22
 
 
+text_sensor:
+  - platform: wifi_info
+    bssid:
+      name: Device Connected BSSID
+
+
 sensor:
   - platform: wifi_signal
     name: "WiFi Signal Sensor"
@@ -119,7 +125,7 @@ light:
   - platform: binary
     name: "Pump"
     id: "PUMP"
-    output: gpio_25
+    output: gpio_17
     icon: "mdi:pump"
 
 
