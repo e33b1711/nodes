@@ -139,8 +139,8 @@ light_items = [
 ('LI_EG_AO',    "Außen Ost"),
 ('LI_GR',       "Garage"), 
 ('LI_GR_L1',    "Garage Außen"),
-('ZE_GR_0',	    "Garage Timer 10min"),
-('ZE_GR_1',	    "Garage Timer 2 min"),
+('ZE_GR_0',	    "Garage Timer 2 min"),
+('ZE_GR_1',	    "Garage Timer 10 min"),
 ('ZE_GR_2',	    "Garage Timer außen"),
 ]
 
