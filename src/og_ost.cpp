@@ -23,16 +23,12 @@ node_t node_info = {
 };
 
 const int num_temps = 2;
-const long period_t = 60000;
+const long period_t = 30000;
 temp_t temps[num_temps] = {
         {"OG_BA", 27, {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, DHT22_T, 0, 0, 0},
         {"OG_SZ", 26, {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, DHT22_T, 0, 0, 0},
 };
 
-const int num_thermos = 0;
-const int full_valve = 254;
-const int closed_valve = 2;
-const int default_valve = 128;
 
 const int num_outputs =17;
 output_t outputs[num_outputs] = {
