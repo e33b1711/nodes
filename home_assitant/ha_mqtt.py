@@ -177,13 +177,15 @@ ro_items = [
 ("DO_GR",    "Garagentor"),
 ]  
 
+binary_sensor_items =  [
+("F_HE",     "Gastherme", ""),
+("F_WW",     "Warnung Pumpensumpf", ""),
+("F_RAIN",   "Regen", ""),
+]
 
 sensor_items = [
 ("TI_PU_O", "Temperatur Puffer oben", ""),
 ("TI_PU_U", "Temperatur Puffer unten", ""),
-("F_HE",     "Gastherme", ""),
-("F_WW",     "Warnung Pumpensumpf", ""),
-("F_RAIN",   "Regen", ""),
 ("TI_EG_WZ", "Temperatur Wohnzimmer", ""),
 ("TI_EG_KU", "Temperatur Küche", ""),
 ("TI_EG_EZ", "Temperatur Esszimmer", ""),
@@ -280,8 +282,10 @@ if __name__ == "__main__":
                 fh.write(sensor_format(item[0], item[1], "°C", 0.1, "temperature"))
             elif item[0].startswith("HI_"):
                 fh.write(sensor_format(item[0], item[1], "%", 1, "humidity"))
-            else:
-                fh.write(sensor_format(item[0], item[1], "", 1, "power"))
+
+        fh.write("\n\n- binary_sensor:\n")
+        for item in binary_sensor_items:
+            fh.write(sensor_format(item[0], item[1], "", 1, ""))
 
         fh.write("\n\n- text:\n")
         for item in text_items:
