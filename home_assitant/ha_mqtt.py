@@ -74,17 +74,28 @@ def sensor_format(id, friendly_name, unit = "°C", precision = 0.1, device_class
     state_topic: "ard_state/{id}"'''
     str2 = '''
     value_template: >
-      {% if value | lower == 'nan' %}
-        {{ None }}
+      {% set clean_val = value.strip() | lower %}
+      {% if clean_val == 'nan' or clean_val == '' %}
+        0
       {% else %}
-        {{ value }}
-      {% endif %}'''
+        {{ value.strip() }}
+      {% endif %}
+    availability:'''
     str3 = f'''
+      - topic: "ard_state/{id}"
+        value_template: >'''
+    str4 = '''
+          {% set clean_val = value.strip() | lower %}
+          {{ 'offline' if clean_val == 'nan' or clean_val == '' else 'online' }}
+        payload_available: "online"
+        payload_not_available: "offline"'''
+    str5 = f'''
     suggested_display_precision: {precision}
     device_class: "{device_class}"
     unit_of_measurement: "{unit}"
     '''
-    return str + str2 + str3
+    return str + str2 + str3 +str4 + str5
+
 
 def number_format(item, friendly_name, unit = "", min = 0, max = 255):  
     str = f'''
