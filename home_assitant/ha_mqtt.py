@@ -1,6 +1,6 @@
 
 
-def l_format(id, friendly_name):  
+def l_format(id, friendly_name, node_id):  
     str = f'''  
   - unique_id: "{id}"
     name: "{friendly_name}"
@@ -12,7 +12,7 @@ def l_format(id, friendly_name):
     '''
     return str
 
-def switch_format(id, friendly_name):  
+def switch_format(id, friendly_name, node_id):  
     str = f'''  
   - unique_id: "{id}"
     name: "{friendly_name}"
@@ -25,7 +25,7 @@ def switch_format(id, friendly_name):
     return str
 
 
-def text_format(id, friendly_name):  
+def text_format(id, friendly_name, node_id):  
     str = f'''  
   - unique_id: "{id}"
     name: "{friendly_name}"
@@ -35,22 +35,21 @@ def text_format(id, friendly_name):
     return str
 
 
-def siren_format(id, friendly_name):  
+def siren_format(id, friendly_name, node_id):  
     str = f'''  
   - unique_id: "{id}"
     name: "{friendly_name}"
     state_topic: "ard_state/{id}"
     command_topic: "ard_command/{id}"
-    '''
-    str2 = '''command_template: "{{ value }}"
+    command_template: "{{{{ value }}}}"
     payload_on: "1"
     payload_off: "0"
     optimistic: false
     '''
-    return str + str2
+    return str
 
 
-def ro_format(id, friendly_name):  
+def ro_format(id, friendly_name, node_id):  
     str = f'''
   - unique_id: "{id}"
     name: "{friendly_name}"
@@ -66,38 +65,43 @@ def ro_format(id, friendly_name):
     return str
 
 
-def sensor_format(id, friendly_name, unit = "°C", precision = 0.1, device_class = "temperature"):  
+def sensor_format(id, friendly_name, node_id, unit = "°C", precision = 0.1, device_class = "temperature"):  
     str = f'''
   - unique_id: "{id}"
     state_class: "measurement"
     name: "{friendly_name}"
-    state_topic: "ard_state/{id}"'''
-    str2 = '''
+    state_topic: "ard_state/{id}"
     value_template: >
-      {% set clean_val = value.strip() | lower %}
-      {% if clean_val == 'nan' or clean_val == '' %}
+      {{% set clean_val = value.strip() | lower %}}
+      {{% if clean_val == 'nan' or clean_val == '' %}}
         0
-      {% else %}
-        {{ value.strip() }}
-      {% endif %}
-    availability:'''
-    str3 = f'''
-      - topic: "ard_state/{id}"
-        value_template: >'''
-    str4 = '''
-          {% set clean_val = value.strip() | lower %}
-          {{ 'offline' if clean_val == 'nan' or clean_val == '' else 'online' }}
-        payload_available: "online"
-        payload_not_available: "offline"'''
-    str5 = f'''
+      {{% else %}}
+        {{{{ value.strip() }}}}
+      {{% endif %}}
     suggested_display_precision: {precision}
     device_class: "{device_class}"
     unit_of_measurement: "{unit}"
     '''
-    return str + str2 + str3 +str4 + str5
+    return str 
 
 
-def number_format(item, friendly_name, unit = "", min = 0, max = 255):  
+def binary_sensor_format(id, friendly_name, node_id):  
+    str = f'''
+  - unique_id: "{id}"
+    name: "{friendly_name}"
+    state_topic: "ard_state/{id}"
+    value_template: >
+      {{% set clean_val = value.strip() | lower %}}
+      {{% if clean_val == 'nan' or clean_val == '' %}}
+        0
+      {{% else %}}
+        {{{{ value.strip() }}}}
+      {{% endif %}}
+    '''
+    return str
+
+
+def number_format(item, friendly_name, node_id, unit = "", min = 0, max = 255):  
     str = f'''
   - unique_id: "{item}"
     name: "{friendly_name}"
@@ -114,67 +118,67 @@ def number_format(item, friendly_name, unit = "", min = 0, max = 255):
 
 
 light_items = [
-('LI_EG_WZ',    "Wohnzimmer Mitte"),	 
-('LI_EG_WZ_L1', "Wohnzimmer Vorn"),
-('LI_EG_WZ_L2', "Wohnzimmer Hinten"),
-('LI_EG_KU_L1', "Küche Arbeitsbeleuchtung"),
-('LI_EG_EZ', 	  "Esstisch"),
-('LI_EG_EZ_L1', "Esszimmer Wandlampen"),
-('LI_EG_EZ_L3', "Esszimmer Leselampe"),
-('LI_EG_EZ_KU', "Esszimmer Grundbeleuchtung"),
-('LI_EG_GA',    "Gang EG"),
-('LI_GA_L1',    "Gang EG Wandlampen"),
-('LI_EG_GR',    "Gardarobe"),
-('LI_EG_WC',    "WC"),
-('LI_EG_SP',    "Speisekammer"),
-('LI_OG_BA',    "Badezimmer"),
-('LI_OG_KN',    "Leo"),
-('LI_OG_KN_L1', "Leo Spots"),
-('LI_OG_KS', 	  "Bini"),
-('LI_OG_KS_L1', "Bini Spots"),
-('LI_OG_SZ', 	  "Schlafzimmer"),
-('LI_OG_SZ_L1', "Leselampe Melli"),
-('LI_OG_SZ_L2', "Leselampe Anselm"),
-('LI_OG_GA', 	  "Gang OG"),
-('LI_OG_GA_L1', "Gang OG Spots"),
-('LI_UG_HO', 	  "Hobby Schreibtisch"),
-('LI_UG_WK',    "Waschküche"),
-('LI_UG_HK',    "Technik"),
-('LI_UG_GA',    "Gang UG"),
-('LI_UG_HN',    "Hobby Hinten"),
-('LI_UG_TR',    "UG Treppe"),
-('LI_EG_VH',    "Vorhaus"),
-('ZE_EG_VH',    "Vorhaus Timer"),
-('LI_EG_AS',    "Außen Süd"),
-('LI_EG_AW',    "Außen West"),
-('LI_EG_AO',    "Außen Ost"),
-('LI_GR',       "Garage"), 
-('LI_GR_L1',    "Garage Außen"),
-('ZE_GR_1',	    "Garage Timer 10 min"),
-('ZE_GR_2',	    "Garage Timer außen"),
+('LI_EG_WZ',    "Wohnzimmer Mitte",             "eg_ost"),
+('LI_EG_WZ_L1', "Wohnzimmer Vorn",              "eg_ost"),
+('LI_EG_WZ_L2', "Wohnzimmer Hinten",            "eg_ost"),
+('LI_EG_KU_L1', "Küche Arbeitsbeleuchtung",     "eg_west"),
+('LI_EG_EZ', 	"Esstisch",                     "eg_west"),
+('LI_EG_EZ_L1', "Esszimmer Wandlampen",         "eg_west"),
+('LI_EG_EZ_L3', "Esszimmer Leselampe",          "eg_west"),
+('LI_EG_EZ_KU', "Esszimmer Grundbeleuchtung",   "eg_west"),
+('LI_EG_GA',    "Gang EG",                      "gr"),
+('LI_GA_L1',    "Gang EG Wandlampen",           "gr"),
+('LI_EG_GR',    "Gardarobe",                    "gr"),
+('LI_EG_WC',    "WC",                           "gr"),
+('LI_EG_SP',    "Speisekammer",                 "eg_west"),
+('LI_OG_BA',    "Badezimmer",                   "og_ost"),
+('LI_OG_KN',    "Leo",                          "og_west"),
+('LI_OG_KN_L1', "Leo Spots",                    "og_west"),
+('LI_OG_KS', 	"Bini",                         "og_west"),
+('LI_OG_KS_L1', "Bini Spots",                   "og_west"),
+('LI_OG_SZ', 	"Schlafzimmer",                 "og_ost"),
+('LI_OG_SZ_L1', "Leselampe Melli",              "og_ost"),
+('LI_OG_SZ_L2', "Leselampe Anselm",             "og_ost"),
+('LI_OG_GA', 	"Gang OG",                      "og_west"),
+('LI_OG_GA_L1', "Gang OG Spots",                "og_west"),
+('LI_UG_HO', 	"Hobby Schreibtisch",           "ug"),
+('LI_UG_WK',    "Waschküche",                   "ug"),
+('LI_UG_HK',    "Technik",                      "ug"),
+('LI_UG_GA',    "Gang UG",                      "ug"),
+('LI_UG_HN',    "Hobby Hinten",                 "ug"),
+('LI_UG_TR',    "UG Treppe",                    "eg_ost"),
+('LI_EG_VH',    "Vorhaus",                      "eg_ost"),
+('ZE_EG_VH',    "Vorhaus Timer",                "eg_ost"),
+('LI_EG_AS',    "Außen Süd",                    "eg_ost"),
+('LI_EG_AW',    "Außen West",                   "eg_ost"),
+('LI_EG_AO',    "Außen Ost",                    "eg_ost"),
+('LI_GR',       "Garage",                       "gr"),
+('LI_GR_L1',    "Garage Außen",                 "gr"),
+('ZE_GR_1',	    "Garage Timer 10 min",          "gr"),
+('ZE_GR_2',	    "Garage Timer außen",           "gr"),
 ]
 
 siren_items = [
-('BELL',        "Klingel (dauer)"), 
-('ZE_BELL',     "Klingel"), 
+('BELL',        "Klingel (dauer)",   "ug"),
+('ZE_BELL',     "Klingel",          "ug"),
 ]
 
 ro_items = [
-("RO_EG_SU", "Rollo Esszimmer Süd"),
-("RO_EG_WE", "Rollo Esszimmer West"),
-("RO_OG_BA", "Rollo Bad"),  
-("DF_OG_GA", "Dachfenster Gang"),  
-("VD_OG_GA", "Verdunkelung Gang"),  
-("RO_OG_KN", "Rollo Leo"),  
-("VD_OG_KN", "Verdunkelung Leo"),  
-("DF_OG_KN", "Dachfenster Leo"),
-("RO_OG_KS", "Rollo Bini"),
-("VD_OG_KS", "Verdunkelung Bini"),
-("DF_OG_KS", "Dachfenster Bini"),
-("RO_OG_SZ", "Rollo Schlafzimmer"),
-("VD_OG_SZ", "Verdunkelung Schlafzimmer"),
-("DF_OG_SZ", "Dachfenster Schlafzimmer"),
-("DO_GR",    "Garagentor"),
+("RO_EG_SU", "Rollo Esszimmer Süd",                 "eg_west"),
+("RO_EG_WE", "Rollo Esszimmer West",                "eg_west"),
+("RO_OG_BA", "Rollo Bad",                           "og_ost"),
+("DF_OG_GA", "Dachfenster Gang",                    "og_west"),
+("VD_OG_GA", "Verdunkelung Gang",                   "og_west"),
+("RO_OG_KN", "Rollo Leo",                           "og_west"),
+("VD_OG_KN", "Verdunkelung Leo",                    "og_west"),
+("DF_OG_KN", "Dachfenster Leo",                     "og_west"),
+("RO_OG_KS", "Rollo Bini",                          "og_west"),
+("VD_OG_KS", "Verdunkelung Bini",                   "og_west"),
+("DF_OG_KS", "Dachfenster Bini",                    "og_west"),
+("RO_OG_SZ", "Rollo Schlafzimmer",                  "og_ost"),
+("VD_OG_SZ", "Verdunkelung Schlafzimmer",           "og_ost"),
+("DF_OG_SZ", "Dachfenster Schlafzimmer",            "og_ost"),
+("DO_GR",    "Garagentor",                          "gr"),
 ]  
 
 binary_sensor_items =  [
@@ -184,76 +188,76 @@ binary_sensor_items =  [
 ]
 
 sensor_items = [
-("TI_PU_O", "Temperatur Puffer oben", ""),
-("TI_PU_U", "Temperatur Puffer unten", ""),
-("TI_EG_WZ", "Temperatur Wohnzimmer", ""),
-("TI_EG_KU", "Temperatur Küche", ""),
-("TI_EG_EZ", "Temperatur Esszimmer", ""),
-("TI_EG_GA", "Temperatur Gang EG", ""),
-("TI_OG_BA", "Temperatur Badezimmer", ""),
-("TI_OG_KN", "Temperatur Leo", ""),
-("TI_OG_KS", "Temperatur Bini", ""),
-("TI_OG_SZ", "Temperatur Schlafzimmer", ""),
-("TI_OG_GA", "Temperatur Gang OG", ""),
-("TI_UG_HO", "Temperatur Hobby", ""),
-("TI_UG_WK", "Temperatur Waschküche", ""),
-("TI_UG_HK", "Temperatur Technik", ""),
-("TI_UG_GA", "Temperatur Gang UG", ""),
-("TI_UG_LA", "Temperatur Lager", ""),
-("TI_GR",    "Temperatur Garage", ""),
-("TI_AU",    "Temperatur Außen", ""),
-("HI_EG_WZ", "Feuchte Wohnzimmer", ""),
-("HI_EG_KU", "Feuchte Küche", ""),
-("HI_EG_EZ", "Feuchte Esszimmer", ""),
-("HI_EG_GA", "Feuchte Gang EG", ""),
-("HI_OG_BA", "Feuchte Badezimmer", ""),
-("HI_OG_KN", "Feuchte Leo", ""),
-("HI_OG_KS", "Feuchte Bini", ""),
-("HI_OG_SZ", "Feuchte Schlafzimmer", ""),
-("HI_OG_GA", "Feuchte Gang OG", ""),
-("HI_UG_HO", "Feuchte Hobby", ""),
-("HI_UG_WK", "Feuchte Waschküche", ""),
-("HI_UG_HK", "Feuchte Technik", ""),
-("HI_UG_GA", "Feuchte Gang UG", ""),
-("HI_UG_LA", "Feuchte Lager", ""),
-("HI_GR",    "Feuchte Garage", ""),
-("HI_AU",    "Feuchte Außen", ""),
+("TI_PU_O",  "Temperatur Puffer oben",     "ug"),   
+("TI_PU_U",  "Temperatur Puffer unten",    "ug"),  
+("TI_EG_WZ", "Temperatur Wohnzimmer",      "eg_west"),      
+("TI_EG_KU", "Temperatur Küche",           "eg_west"),           
+("TI_EG_EZ", "Temperatur Esszimmer",       "eg_west"),      
+("TI_EG_GA", "Temperatur Gang EG",         "eg_west"),             
+("TI_OG_BA", "Temperatur Badezimmer",      "og_ost"),             
+("TI_OG_KN", "Temperatur Leo",             "og_west"),         
+("TI_OG_KS", "Temperatur Bini",            "og_west"),        
+("TI_OG_SZ", "Temperatur Schlafzimmer",    "og_ost"),                  
+("TI_OG_GA", "Temperatur Gang OG",         "og_west"),        
+("TI_UG_HO", "Temperatur Hobby",           "ug"),       
+("TI_UG_WK", "Temperatur Waschküche",      "ug"),            
+("TI_UG_HK", "Temperatur Technik",         "ug"),           
+("TI_UG_GA", "Temperatur Gang UG",         "ug"),           
+("TI_UG_LA", "Temperatur Lager",           "ug"),      
+("TI_GR",    "Temperatur Garage",          "gr"),         
+("TI_AU",    "Temperatur Außen",           "gr"),         
+("HI_EG_WZ", "Feuchte Wohnzimmer",         "eg_west"),         
+("HI_EG_KU", "Feuchte Küche",              "eg_west"),     
+("HI_EG_EZ", "Feuchte Esszimmer",          "eg_west"),          
+("HI_EG_GA", "Feuchte Gang EG",            "eg_west"),       
+("HI_OG_BA", "Feuchte Badezimmer",         "og_ost"),      
+("HI_OG_KN", "Feuchte Leo",                "og_west"),    
+("HI_OG_KS", "Feuchte Bini",               "og_west"),    
+("HI_OG_SZ", "Feuchte Schlafzimmer",       "og_ost"),           
+("HI_OG_GA", "Feuchte Gang OG",            "og_west"),     
+("HI_UG_HO", "Feuchte Hobby",              "ug"),   
+("HI_UG_WK", "Feuchte Waschküche",         "ug"),      
+("HI_UG_HK", "Feuchte Technik",            "ug"),      
+("HI_UG_GA", "Feuchte Gang UG",            "ug"),     
+("HI_UG_LA", "Feuchte Lager",              "ug"),   
+("HI_GR",    "Feuchte Garage",             "gr"),     
+("HI_AU",    "Feuchte Außen",              "gr"),    
 ]
 
 number_items = [
-("U_EL",     "Elektrische Heizung", ""),
+("U_EL",     "Elektrische Heizung", "ug"),
 ]
 
 switch_items = [
-("V_OG_KS",  "Heizventil Bini", ""),
-("V_OG_KN",  "Heizventil Leo", ""),
-("V_OG_GA",  "Heizventil Gang OG", ""),
-("V_OG_BA",  "Heizventil Badezimmer", ""),
-("V_OG_SZ",  "Heizventil Schlafzimmer", ""),
-("V_UG_HO",  "Heizventil Hobby", ""),
-("V_UG_H2",  "Heizventil Hobby", ""),
-("V_UG_LA",  "Heizventil Lager", ""),
-("V_UG_GA",  "Heizventil Gang UG", ""),
-("V_UG_WK",  "Heizventil Waschküche", ""),
-("V_EG_KU",  "Heizventil Küche", ""),
-("V_EG_EZ",  "Heizventil Esszimmer", ""),
-("V_EG_E2",  "Heizventil Esszimmer", ""),
-("V_EG_GA",  "Heizventil Gang EG", ""),
-("V_EG_WZ",  "Heizventil Wohnzimmer", ""),
-("V_EG_GR",  "Heizventil Gardarobe", ""),
-("V_EG_WC",  "Heizventil WC", ""),
+("V_OG_KS",  "Heizventil Bini",             "og_ost"),
+("V_OG_KN",  "Heizventil Leo",              "og_ost"),
+("V_OG_GA",  "Heizventil Gang OG",          "og_ost"),
+("V_OG_BA",  "Heizventil Badezimmer",       "og_ost"),
+("V_OG_SZ",  "Heizventil Schlafzimmer",     "og_ost"),
+("V_UG_HO",  "Heizventil Hobby",            "ug"),
+("V_UG_H2",  "Heizventil Hobby",            "ug"),
+("V_UG_LA",  "Heizventil Lager",            "ug"),
+("V_UG_GA",  "Heizventil Gang UG",          "ug"),
+("V_UG_WK",  "Heizventil Waschküche",       "ug"),
+("V_EG_KU",  "Heizventil Küche",            "eg_ost"),
+("V_EG_EZ",  "Heizventil Esszimmer",        "eg_ost"),
+("V_EG_E2",  "Heizventil Esszimmer",        "eg_ost"),
+("V_EG_GA",  "Heizventil Gang EG",          "eg_ost"),
+("V_EG_WZ",  "Heizventil Wohnzimmer",       "eg_ost"),
+("V_EG_GR",  "Heizventil Gardarobe",        "eg_ost"),
+("V_EG_WC",  "Heizventil WC",               "eg_ost"),
 ]
 
 
 text_items = [
-("og_west",	       "revision_og_west"         ),
-("og_ost", 	       "revision_og_ost"          ),
-("eg_west",	       "revision_eg_west"         ),
-("eg_ost", 	       "revision_eg_ost"          ),
-("ug",     	       "revision_ug"              ),
-("gr", 	           "revision_garage"          ),
-("relay_service",  "revision_relay_service"   ),
-("bridge_service", "revision_bridge_service"  ),
+("og_west",	       "revision_og_west",         "og_west"	     ),
+("og_ost", 	       "revision_og_ost",          "og_ost"	         ),
+("eg_west",	       "revision_eg_west",         "eg_west"	     ),
+("eg_ost", 	       "revision_eg_ost",          "eg_ost"	         ),
+("ug",     	       "revision_ug",              "ug"    	         ),
+("gr", 	           "revision_garage",          "gr"	             ),
+("relay_service",  "revision_relay_service",   "relay_service"   ),
+("bridge_service", "revision_bridge_service",  "bridge_service"  ),
 ]
 
 
@@ -266,35 +270,35 @@ if __name__ == "__main__":
 
         fh.write("\n\n- light:\n")
         for item in light_items:
-            fh.write(l_format(item[0],item[1]))
+            fh.write(l_format(item[0],item[1], item[2]))
 
         fh.write("\n\n- siren:\n")
         for item in siren_items:
-            fh.write(siren_format(item[0],item[1]))
+            fh.write(siren_format(item[0],item[1], item[2]))
         
         fh.write("\n\n- cover:\n")
         for item in ro_items:
-            fh.write(ro_format(item[0], item[1]))
+            fh.write(ro_format(item[0], item[1], item[2]))
 
         fh.write("\n\n- sensor:\n")
         for item in sensor_items:
             if item[0].startswith("TI_"):
-                fh.write(sensor_format(item[0], item[1], "°C", 0.1, "temperature"))
+                fh.write(sensor_format(item[0], item[1], item[2], "°C", 0.1, "temperature"))
             elif item[0].startswith("HI_"):
-                fh.write(sensor_format(item[0], item[1], "%", 1, "humidity"))
+                fh.write(sensor_format(item[0], item[1], item[2], "%", 1, "humidity"))
 
         fh.write("\n\n- binary_sensor:\n")
         for item in binary_sensor_items:
-            fh.write(sensor_format(item[0], item[1], "", 1, ""))
+            fh.write(binary_sensor_format(item[0], item[1], item[2]))
 
         fh.write("\n\n- text:\n")
         for item in text_items:
-            fh.write(text_format(item[0], item[1]))
+            fh.write(text_format(item[0], item[1], item[2]))
 
         fh.write("\n\n- number:\n")
         for item in number_items:
-            fh.write(number_format(item[0], item[1]))
+            fh.write(number_format(item[0], item[1], item[2]))
 
         fh.write("\n\n- switch:\n")
         for item in switch_items:
-            fh.write(switch_format(item[0], item[1]))
+            fh.write(switch_format(item[0], item[1], item[2]))
