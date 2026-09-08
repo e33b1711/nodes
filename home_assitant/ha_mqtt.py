@@ -4,8 +4,8 @@ def l_format(id, friendly_name, node_id):
     str = f'''  
   - unique_id: "{id}"
     name: "{friendly_name}"
-    state_topic: "ard_state/{id}"
-    command_topic: "ard_command/{id}"
+    state_topic: "nodes/state/{id}"
+    command_topic: "nodes/cmd/{id}"
     payload_on: "1"
     payload_off: "0"
     optimistic: false
@@ -19,8 +19,8 @@ def switch_format(id, friendly_name, node_id):
     str = f'''  
   - unique_id: "{id}"
     name: "{friendly_name}"
-    state_topic: "ard_state/{id}"
-    command_topic: "ard_command/{id}"
+    state_topic: "nodes/state/{id}"
+    command_topic: "nodes/cmd/{id}"
     payload_on: "1"
     payload_off: "0"
     optimistic: false
@@ -35,8 +35,8 @@ def text_format(id, friendly_name, node_id):
     str = f'''  
   - unique_id: "{id}"
     name: "{friendly_name}"
-    state_topic: "ard_state/{id}"
-    command_topic: "void/{id}"
+    state_topic: "nodes/state/{id}"
+    command_topic: "nodes/cmd/{id}"
     availability_topic: "nodes/{node_id}/status"
     payload_available: "online"
     payload_not_available: "offline"
@@ -48,8 +48,8 @@ def siren_format(id, friendly_name, node_id):
     str = f'''  
   - unique_id: "{id}"
     name: "{friendly_name}"
-    state_topic: "ard_state/{id}"
-    command_topic: "ard_command/{id}"
+    state_topic: "nodes/state/{id}"
+    command_topic: "nodes/cmd/{id}"
     command_template: "{{{{ value }}}}"
     payload_on: "1"
     payload_off: "0"
@@ -65,8 +65,8 @@ def ro_format(id, friendly_name, node_id):
     str = f'''
   - unique_id: "{id}"
     name: "{friendly_name}"
-    command_topic: "ard_command/{id}"
-    position_topic: "ard_state/{id}"
+    command_topic: "nodes/cmd/{id}"
+    position_topic: "nodes/state/{id}"
     payload_open: "0"
     payload_close: "100"
     payload_stop: "50"
@@ -85,7 +85,7 @@ def sensor_format(id, friendly_name, node_id, unit = "°C", precision = 0.1, dev
   - unique_id: "{id}"
     state_class: "measurement"
     name: "{friendly_name}"
-    state_topic: "ard_state/{id}"
+    state_topic: "nodes/state/{id}"
     value_template: >
       {{% set clean_val = value.strip() | lower %}}
       {{% if clean_val == 'nan' or clean_val == '' %}}
@@ -107,7 +107,7 @@ def binary_sensor_format(id, friendly_name, node_id):
     str = f'''
   - unique_id: "{id}"
     name: "{friendly_name}"
-    state_topic: "ard_state/{id}"
+    state_topic: "nodes/state/{id}"
     value_template: >
       {{% set clean_val = value.strip() | lower %}}
       {{% if clean_val == 'nan' or clean_val == '' %}}
@@ -126,8 +126,8 @@ def number_format(item, friendly_name, node_id, unit = "", min = 0, max = 255):
     str = f'''
   - unique_id: "{item}"
     name: "{friendly_name}"
-    command_topic: "ard_command/{item}"
-    state_topic: "ard_state/{item}"
+    command_topic: "nodes/cmd/{item}"
+    state_topic: "nodes/state/{item}"
     unit_of_measurement: "{unit}"
     min: "{min}"
     max: "{max}"
