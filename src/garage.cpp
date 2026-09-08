@@ -77,7 +77,7 @@ void on_door_open() {
         init = false;
     }
     if ((prev_value == 100) & (prev_value != get_rollo("DO_GR"))) {
-        send_command("ZE_GR_1", "ON");
+        write_any("ZE_GR_1", "ON");
         Serial.println("DEBUG: trigger einfahrt licht.");
     }
     prev_value = get_rollo("DO_GR");

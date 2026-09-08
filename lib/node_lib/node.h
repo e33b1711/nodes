@@ -42,6 +42,7 @@ void toggle_couple(const int b_index, const String output);
 
 void alloc_pin(int pin);
 
+void write_any(String address, String val_str);
 void write_any_internal(String address, String val_str);
 bool get_any(String name, String &value);
 
