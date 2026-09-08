@@ -9,6 +9,9 @@ def l_format(id, friendly_name, node_id):
     payload_on: "1"
     payload_off: "0"
     optimistic: false
+    availability_topic: "nodes/{node_id}/status"
+    payload_available: "online"
+    payload_not_available: "offline"
     '''
     return str
 
@@ -21,6 +24,9 @@ def switch_format(id, friendly_name, node_id):
     payload_on: "1"
     payload_off: "0"
     optimistic: false
+    availability_topic: "nodes/{node_id}/status"
+    payload_available: "online"
+    payload_not_available: "offline"
     '''
     return str
 
@@ -31,6 +37,9 @@ def text_format(id, friendly_name, node_id):
     name: "{friendly_name}"
     state_topic: "ard_state/{id}"
     command_topic: "void/{id}"
+    availability_topic: "nodes/{node_id}/status"
+    payload_available: "online"
+    payload_not_available: "offline"
     '''
     return str
 
@@ -45,6 +54,9 @@ def siren_format(id, friendly_name, node_id):
     payload_on: "1"
     payload_off: "0"
     optimistic: false
+    availability_topic: "nodes/{node_id}/status"
+    payload_available: "online"
+    payload_not_available: "offline"
     '''
     return str
 
@@ -61,6 +73,9 @@ def ro_format(id, friendly_name, node_id):
     position_open: 0
     position_closed: 100
     optimistic: false
+    availability_topic: "nodes/{node_id}/status"
+    payload_available: "online"
+    payload_not_available: "offline"
     '''
     return str
 
@@ -81,6 +96,9 @@ def sensor_format(id, friendly_name, node_id, unit = "°C", precision = 0.1, dev
     suggested_display_precision: {precision}
     device_class: "{device_class}"
     unit_of_measurement: "{unit}"
+    availability_topic: "nodes/{node_id}/status"
+    payload_available: "online"
+    payload_not_available: "offline"
     '''
     return str 
 
@@ -97,6 +115,9 @@ def binary_sensor_format(id, friendly_name, node_id):
       {{% else %}}
         {{{{ value.strip() }}}}
       {{% endif %}}
+    availability_topic: "nodes/{node_id}/status"
+    payload_available: "online"
+    payload_not_available: "offline"
     '''
     return str
 
@@ -111,6 +132,9 @@ def number_format(item, friendly_name, node_id, unit = "", min = 0, max = 255):
     min: "{min}"
     max: "{max}"
     optimistic: false
+    availability_topic: "nodes/{node_id}/status"
+    payload_available: "online"
+    payload_not_available: "offline"
     '''
     return str
 
