@@ -13,7 +13,7 @@ const int pseudo_pin = 99;
 const IPAddress server(192, 168, 178, 73);
 const int port = 1883;
 #else
-const IPAddress server(192, 168, 178, 95);
+const IPAddress server(192, 168, 178, 73);
 const int port = 1883;
 #endif
 
