@@ -18,11 +18,6 @@ void write_any_internal(String name, String val_str) {
         return;
 }
 
-void write_any(String name, String val_str) {
-    write_any_internal(name, val_str);
-    send_command(name, val_str);
-}
-
 bool get_any(String name, String &value_string) {
     Serial.println("INFO: get_any: " + name + " " + value_string);
     if (get_temp(name, value_string))
