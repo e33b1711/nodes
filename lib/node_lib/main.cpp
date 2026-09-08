@@ -10,8 +10,8 @@
 void setup() {
     init_debug();
     setup_pinio();
-    setup_switches();
     setup_comm();
+    setup_switches();
     setup_temps();
     setup_rollos();
     setup_timers();

@@ -2,24 +2,19 @@
 #ifndef __node__
 #define __node__
 
-#ifdef __esp32__
-#include <WiFi.h>
-#include <ESPmDNS.h>
-const int num_pins = 36;
-const int pseudo_pin = 99;
-#else
+
 #include <Ethernet.h>
 const int num_pins = PIN_A15;
 const int pseudo_pin = 99;
-#endif
+
 #include <Arduino.h>
 
 #ifndef __TEST__
-const IPAddress server(192, 168, 178, 91);
-const int port = 8888;
+const IPAddress server(192, 168, 178, 73);
+const int port = 1883;
 #else
 const IPAddress server(192, 168, 178, 95);
-const int port = 8888;
+const int port = 1883;
 #endif
 
 void init_debug();
