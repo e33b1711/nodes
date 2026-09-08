@@ -156,6 +156,11 @@ light_items = [
 ('LI_GR_L1',    "Garage Außen",                 "gr"),
 ('ZE_GR_1',	    "Garage Timer 10 min",          "gr"),
 ('ZE_GR_2',	    "Garage Timer außen",           "gr"),
+
+('LI_TEST_04',  "LI_TEST_04",        "test"),
+('LI_TEST_05',  "LI_TEST_05",        "test"),
+('LI_TEST_06',	"LI_TEST_06",        "test"),
+('LI_TEST_07',	"LI_TEST_07",        "test"),
 ]
 
 siren_items = [

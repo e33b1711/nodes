@@ -20,7 +20,7 @@ void send_git_revision() {
     static unsigned int entropy = 0;
     entropy++;
     String val = (dirty ? "dirty_" : "") + auto_version.substring(0, 8) + " " + String(entropy);
-    send_state("git_revision", val);
+    send_state(node_info.unit_name + "/git_revision", val);
 }
 
 // --- Netzwerk-Interface initialisieren ---
@@ -49,7 +49,7 @@ void init_link() {
 
 // --- MQTT Sender-Funktionen ---
 void send_state(String name, String value) {
-    String topic = "nodes/" + node_info.unit_name + "/state/" + name;
+    String topic = "nodes/state/" + name;
     Serial.println("INFO: Publish [" + topic + "]: " + value);
     mqttClient.publish(topic.c_str(), value.c_str());
 }
@@ -63,7 +63,7 @@ void send_state(String name, float value) {
 }
 
 void send_command(String name, String value) {
-    String topic = "nodes/" + node_info.unit_name + "/cmd/" + name;
+    String topic = "nodes/cmd/" + name;
     mqttClient.publish(topic.c_str(), value.c_str());
 }
 
@@ -137,8 +137,8 @@ bool maintain_connection() {
             mqttClient.publish(statusTopic.c_str(), "online", true);
 
             // 2. Abonnieren der Befehle und Leseaufforderungen
-            String subCmdTopic = "nodes/" + node_info.unit_name + "/cmd/#";
-            String subReadTopic = "nodes/" + node_info.unit_name + "/read/#";
+            String subCmdTopic = "nodes/cmd/#";
+            String subReadTopic = "nodes/read/#";
 
             mqttClient.subscribe(subCmdTopic.c_str());
             mqttClient.subscribe(subReadTopic.c_str());
