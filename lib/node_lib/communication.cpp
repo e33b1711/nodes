@@ -62,13 +62,16 @@ void send_state(String name, float value) {
     send_state(name, String(value, 1));
 }
 
-void send_command(String name, String value) {
+bool send_command(String name, String value) {
+    if (!mqttClient.connected()) {
+        return false;
+    }
     String topic = "nodes/cmd/" + name;
-    mqttClient.publish(topic.c_str(), value.c_str());
+    return mqttClient.publish(topic.c_str(), value.c_str());
 }
 
-void send_command(String name, int value) {
-    send_command(name, String(value));
+bool send_command(String name, int value) {
+    return send_command(name, String(value));
 }
 
 

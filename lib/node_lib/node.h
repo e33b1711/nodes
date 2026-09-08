@@ -25,8 +25,8 @@ void handle_debug();
 void user_logic();
 void user_init();
 
-void send_command(String name, int value);
-void send_command(String name, String value);
+bool send_command(String name, int value);
+bool send_command(String name, String value);
 void send_state(String name, int value);
 void send_state(String name, String value);
 
