@@ -35,7 +35,7 @@ def text_format(id, friendly_name, node_id):
     str = f'''  
   - unique_id: "{id}"
     name: "{friendly_name}"
-    state_topic: "nodes/state/{id}"
+    state_topic: "nodes/state/{node_id}/git_revision"
     command_topic: "nodes/cmd/{id}"
     availability_topic: "nodes/{node_id}/status"
     payload_available: "online"
@@ -146,26 +146,26 @@ light_items = [
 ('LI_EG_WZ_L1', "Wohnzimmer Vorn",              "eg_ost"),
 ('LI_EG_WZ_L2', "Wohnzimmer Hinten",            "eg_ost"),
 ('LI_EG_KU_L1', "Küche Arbeitsbeleuchtung",     "eg_west"),
-('LI_EG_EZ', 	"Esstisch",                     "eg_west"),
+('LI_EG_EZ', 	  "Esstisch",                     "eg_west"),
 ('LI_EG_EZ_L1', "Esszimmer Wandlampen",         "eg_west"),
 ('LI_EG_EZ_L3', "Esszimmer Leselampe",          "eg_west"),
 ('LI_EG_EZ_KU', "Esszimmer Grundbeleuchtung",   "eg_west"),
-('LI_EG_GA',    "Gang EG",                      "gr"),
-('LI_GA_L1',    "Gang EG Wandlampen",           "gr"),
-('LI_EG_GR',    "Gardarobe",                    "gr"),
-('LI_EG_WC',    "WC",                           "gr"),
+('LI_EG_GA',    "Gang EG",                      "eg_ost"),
+('LI_GA_L1',    "Gang EG Wandlampen",           "eg_ost"),
+('LI_EG_GR',    "Gardarobe",                    "eg_ost"),
+('LI_EG_WC',    "WC",                           "eg_ost"),
 ('LI_EG_SP',    "Speisekammer",                 "eg_west"),
 ('LI_OG_BA',    "Badezimmer",                   "og_ost"),
 ('LI_OG_KN',    "Leo",                          "og_west"),
 ('LI_OG_KN_L1', "Leo Spots",                    "og_west"),
-('LI_OG_KS', 	"Bini",                         "og_west"),
+('LI_OG_KS', 	  "Bini",                         "og_west"),
 ('LI_OG_KS_L1', "Bini Spots",                   "og_west"),
-('LI_OG_SZ', 	"Schlafzimmer",                 "og_ost"),
+('LI_OG_SZ', 	  "Schlafzimmer",                 "og_ost"),
 ('LI_OG_SZ_L1', "Leselampe Melli",              "og_ost"),
 ('LI_OG_SZ_L2', "Leselampe Anselm",             "og_ost"),
-('LI_OG_GA', 	"Gang OG",                      "og_west"),
+('LI_OG_GA', 	  "Gang OG",                      "og_west"),
 ('LI_OG_GA_L1', "Gang OG Spots",                "og_west"),
-('LI_UG_HO', 	"Hobby Schreibtisch",           "ug"),
+('LI_UG_HO', 	  "Hobby Schreibtisch",           "ug"),
 ('LI_UG_WK',    "Waschküche",                   "ug"),
 ('LI_UG_HK',    "Technik",                      "ug"),
 ('LI_UG_GA',    "Gang UG",                      "ug"),
@@ -180,11 +180,6 @@ light_items = [
 ('LI_GR_L1',    "Garage Außen",                 "gr"),
 ('ZE_GR_1',	    "Garage Timer 10 min",          "gr"),
 ('ZE_GR_2',	    "Garage Timer außen",           "gr"),
-
-('LI_TEST_04',  "LI_TEST_04",        "test"),
-('LI_TEST_05',  "LI_TEST_05",        "test"),
-('LI_TEST_06',	"LI_TEST_06",        "test"),
-('LI_TEST_07',	"LI_TEST_07",        "test"),
 ]
 
 siren_items = [
@@ -211,9 +206,9 @@ ro_items = [
 ]  
 
 binary_sensor_items =  [
-("F_HE",     "Gastherme", ""),
-("F_WW",     "Warnung Pumpensumpf", ""),
-("F_RAIN",   "Regen", ""),
+("F_HE",     "Gastherme", "ug"),
+("F_WW",     "Warnung Pumpensumpf", "ug"),
+("F_RAIN",   "Regen", "ug"),
 ]
 
 sensor_items = [
@@ -285,8 +280,6 @@ text_items = [
 ("eg_ost", 	       "revision_eg_ost",          "eg_ost"	         ),
 ("ug",     	       "revision_ug",              "ug"    	         ),
 ("gr", 	           "revision_garage",          "gr"	             ),
-("relay_service",  "revision_relay_service",   "relay_service"   ),
-("bridge_service", "revision_bridge_service",  "bridge_service"  ),
 ]
 
 
