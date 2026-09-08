@@ -10,7 +10,7 @@
 PubSubClient mqttClient(netClient);
 
 unsigned long last_try_connect = 0;
-const int retry_period = 5000;
+const int retry_period = 60000;
 
 void mqtt_callback(char* topic, byte* payload, unsigned int length);
 
