@@ -88,10 +88,10 @@ def sensor_format(id, friendly_name, node_id, unit = "°C", precision = 0.1, dev
     state_topic: "nodes/state/{id}"
     value_template: >
       {{% set clean_val = value.strip() | lower %}}
-      {{% if clean_val == 'nan' or clean_val == '' %}}
-        0
+      {{% if clean_val in ['nan', ''] %}}
+        {{{{ None }}}}
       {{% else %}}
-        {{{{ value.strip() }}}}
+        {{{{ clean_val | float }}}}
       {{% endif %}}
     suggested_display_precision: {precision}
     device_class: "{device_class}"
@@ -101,25 +101,6 @@ def sensor_format(id, friendly_name, node_id, unit = "°C", precision = 0.1, dev
     payload_not_available: "offline"
     '''
     return str 
-
-
-def binary_sensor_format(id, friendly_name, node_id):  
-    str = f'''
-  - unique_id: "{id}"
-    name: "{friendly_name}"
-    state_topic: "nodes/state/{id}"
-    value_template: >
-      {{% set clean_val = value.strip() | lower %}}
-      {{% if clean_val == 'nan' or clean_val == '' %}}
-        0
-      {{% else %}}
-        {{{{ value.strip() }}}}
-      {{% endif %}}
-    availability_topic: "nodes/{node_id}/status"
-    payload_available: "online"
-    payload_not_available: "offline"
-    '''
-    return str
 
 
 def number_format(item, friendly_name, node_id, unit = "", min = 0, max = 255):  
@@ -206,14 +187,15 @@ ro_items = [
 ]  
 
 binary_sensor_items =  [
-("F_HE",     "Gastherme", "ug"),
-("F_WW",     "Warnung Pumpensumpf", "ug"),
-("F_RAIN",   "Regen", "ug"),
+
 ]
 
 sensor_items = [
+("F_HE",     "Gastherme",                  "ug"),
+("F_WW",     "Warnung Pumpensumpf",        "ug"),
+("F_RAIN",   "Regen",                      "ug"),
 ("TI_PU_O",  "Temperatur Puffer oben",     "ug"),   
-("TI_PU_U",  "Temperatur Puffer unten",    "ug"),  
+("TI_PU_U",  "Temperatur Puffer unten",    "gr"),  
 ("TI_EG_WZ", "Temperatur Wohnzimmer",      "eg_west"),      
 ("TI_EG_KU", "Temperatur Küche",           "eg_west"),           
 ("TI_EG_EZ", "Temperatur Esszimmer",       "eg_west"),      
@@ -274,12 +256,12 @@ switch_items = [
 
 
 text_items = [
-("og_west",	       "revision_og_west",         "og_west"	     ),
-("og_ost", 	       "revision_og_ost",          "og_ost"	         ),
-("eg_west",	       "revision_eg_west",         "eg_west"	     ),
-("eg_ost", 	       "revision_eg_ost",          "eg_ost"	         ),
-("ug",     	       "revision_ug",              "ug"    	         ),
-("gr", 	           "revision_garage",          "gr"	             ),
+("og_west",	       "revision_og_west",         "og_west"	    ),
+("og_ost", 	       "revision_og_ost",          "og_ost"	      ),
+("eg_west",	       "revision_eg_west",         "eg_west"	    ),
+("eg_ost", 	       "revision_eg_ost",          "eg_ost"	      ),
+("ug",     	       "revision_ug",              "ug"    	      ),
+("gr", 	           "revision_garage",          "gr"	          ),
 ]
 
 
@@ -308,10 +290,9 @@ if __name__ == "__main__":
                 fh.write(sensor_format(item[0], item[1], item[2], "°C", 0.1, "temperature"))
             elif item[0].startswith("HI_"):
                 fh.write(sensor_format(item[0], item[1], item[2], "%", 1, "humidity"))
+            else:
+                fh.write(sensor_format(item[0], item[1], item[2], "", 1, "water"))
 
-        fh.write("\n\n- binary_sensor:\n")
-        for item in binary_sensor_items:
-            fh.write(binary_sensor_format(item[0], item[1], item[2]))
 
         fh.write("\n\n- text:\n")
         for item in text_items:
