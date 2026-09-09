@@ -80,13 +80,18 @@ void user_logic() {
     simple(1, 1, "ZE_EG_VH");
     simple(1, 1, "ZE_GR_2");
     toggle_couple(4, "LI_EG_GA");
-    long_short(5, "LI_EG_WZ", 0, "LI_EG_WZ", 3);
-    long_short(5, "LI_EG_WZ_L1", 1, "LI_EG_WZ_L1", get_output("LI_EG_WZ"));
-    long_short(5, "LI_EG_WZ_L2", 0, "LI_EG_WZ_L2", get_output("LI_EG_WZ"));
 
-    long_short(12, "LI_EG_WZ", 0, "LI_EG_WZ", 3);
-    long_short(12, "LI_EG_WZ_L1", 1, "LI_EG_WZ_L1", get_output("LI_EG_WZ"));
-    long_short(12, "LI_EG_WZ_L2", 0, "LI_EG_WZ_L2", get_output("LI_EG_WZ"));
+    int li_eg_wz_inv = 0;
+    if (get_output("LI_EG_WZ") == 0) li_eg_wz_inv = 1;
+    long_short(5, "LI_EG_WZ", 0, "LI_EG_WZ", li_eg_wz_inv);
+    long_short(5, "LI_EG_WZ_L1", 1, "LI_EG_WZ_L1", li_eg_wz_inv);
+    long_short(5, "LI_EG_WZ_L2", 0, "LI_EG_WZ_L2", li_eg_wz_inv);
+
+    li_eg_wz_inv = 0;
+    if (get_output("LI_EG_WZ") == 0) li_eg_wz_inv = 1;
+    long_short(12, "LI_EG_WZ", 0, "LI_EG_WZ", li_eg_wz_inv);
+    long_short(12, "LI_EG_WZ_L1", 1, "LI_EG_WZ_L1", li_eg_wz_inv);
+    long_short(12, "LI_EG_WZ_L2", 0, "LI_EG_WZ_L2", li_eg_wz_inv);
 
     long_short(10, "LI_EG_EZ_L3", 3, "LI_EG_EZ_KU", 3);
     simple(9, 3, "LI_EG_WC");
