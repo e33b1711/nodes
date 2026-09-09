@@ -10,6 +10,7 @@
 PubSubClient mqttClient(netClient);
 
 unsigned long last_try_connect = 0;
+bool initial_connect = true;
 const int retry_period = 20000;
 
 void mqtt_callback(char* topic, byte* payload, unsigned int length);
@@ -17,9 +18,7 @@ void mqtt_callback(char* topic, byte* payload, unsigned int length);
 // --- Git Revision senden ---
 void send_git_revision() {
     Serial.println("INFO: Sending git revision.");
-    static unsigned int entropy = 0;
-    entropy++;
-    String val = (dirty ? "dirty_" : "") + auto_version.substring(0, 8) + " " + String(entropy);
+    String val = (dirty ? "dirty_" : "") + auto_version.substring(0, 8);
     send_state(node_info.unit_name + "/git_revision", val);
 }
 
@@ -115,7 +114,8 @@ bool maintain_connection() {
         return true;
     }
 
-    if (millis() - last_try_connect > retry_period) {
+    if ((millis() - last_try_connect > retry_period ) or initial_connect) {
+        initial_connect = false;
         last_try_connect = millis();
         init_link();
 
@@ -147,6 +147,7 @@ bool maintain_connection() {
             mqttClient.subscribe(subReadTopic.c_str());
 
             send_git_revision();
+            
             return true;
         } else {
             Serial.print("ERROR: MQTT connection failed, rc=");
@@ -163,8 +164,6 @@ void setup_comm() {
     
     mqttClient.setServer(node_info.server, node_info.port); // Default MQTT Port ist meist 1883
     mqttClient.setCallback(mqtt_callback);
-    
-    last_try_connect = millis() - retry_period*2;
 
     handle_comm();
 }
