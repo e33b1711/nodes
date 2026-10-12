@@ -23,7 +23,7 @@ void send_state_dg(String name, String value_string) {
 void execute_message_dg(String type, String name, String val_str) {
     if (type == "restart") {
         if (name == node_info.unit_name)
-            delay(100000);
+            restart();
     } else if (type == "r") {
         String value_string;
         if (get_any(name, value_string))
@@ -37,7 +37,7 @@ void handle_message_db() {
     String type, name, val_str;
     parse_message(input_buffer_dg, type, name, val_str);
     input_buffer_dg = "";
-    execute_message(type, name, val_str);
+    execute_message_dg(type, name, val_str);
 }
 
 void handle_debug() {

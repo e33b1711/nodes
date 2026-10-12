@@ -1,6 +1,8 @@
 #include "node.h"
 #include "temp.h"
 
+#include <avr/wdt.h>
+
 unsigned long s_time_t;
 int this_temp = 0;
 
@@ -74,8 +76,7 @@ void update_temps() {
 
                 case SHT31_T:
                     Serial.println("FAILURE: no SHT31_T implemted");
-                    while (true) {
-                    }
+                    while (true) wdt_reset();
                     break;
 
                 default:

@@ -82,14 +82,15 @@ void overtemp() {
     const int thresh_temp = 85;
     const int max_p = 210;
     const int temp_coeff = 40;
-    float temp;
+    float temp = NAN;
     get_temp("TI_PU_O", temp);
-    if (temp < thresh_temp)
-        set_pwm_max("U_EL", max_p);
-    if ((temp > thresh_temp) and (temp < max_temp))
-        set_pwm_max("U_EL", (max_temp - temp) * temp_coeff);
-    if (temp > max_temp)
+    // no valid temperature: no heating
+    if (isnan(temp) or (temp >= max_temp))
         set_pwm_max("U_EL", 0);
+    else if (temp > thresh_temp)
+        set_pwm_max("U_EL", (max_temp - temp) * temp_coeff);
+    else
+        set_pwm_max("U_EL", max_p);
 }
 
 void water_warning() {

@@ -7,6 +7,8 @@
 #include "pwm.h"
 #include "switch.h"
 
+#include <avr/wdt.h>
+
 void write_any_internal(String name, String val_str) {
     if (write_output(name, val_str))
         return;
@@ -19,6 +21,7 @@ void write_any_internal(String name, String val_str) {
 }
 
 void write_any(String name, String val_str) {
+    if (name == "none") return;  //placeholder in user logic
     if (send_command(name, val_str)) return;  //normaly go over mqtt
     write_any_internal(name, val_str); //internal fallback
     Serial.println("WARNING: Internal fallback!");
@@ -51,12 +54,12 @@ void alloc_pin(int pin) {
     if (pin >= num_pins) {
         Serial.println("FAILURE: pin undefinied: " + String(pin, DEC));
         Serial.println("Exit...");
-        while (true) delay(100);
+        while (true) wdt_reset();
     }
     if (pin_alloc[pin]) {
         Serial.println("FAILURE: allready allocated: " + String(pin, DEC));
         Serial.println("Exit...");
-        while (true) delay(100);
+        while (true) wdt_reset();
     }
     pin_alloc[pin] = true;
 }

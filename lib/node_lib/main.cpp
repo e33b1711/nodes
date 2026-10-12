@@ -7,10 +7,21 @@
 #include "pwm.h"
 #include "pinio.h"
 
+#include <avr/wdt.h>
+
+// restart by letting the watchdog expire
+void restart() {
+    Serial.println("INFO: restarting...");
+    while (true) {
+    }
+}
+
 void setup() {
+    wdt_enable(WDTO_8S);
     init_debug();
     setup_pinio();
     setup_comm();
+    wdt_reset();
     setup_switches();
     setup_temps();
     setup_rollos();
@@ -21,6 +32,7 @@ void setup() {
 }
 
 void loop() {
+    wdt_reset();
     handle_comm();
     update_switches();
     update_temps();

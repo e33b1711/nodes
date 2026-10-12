@@ -59,7 +59,7 @@ rollo_t rollos[num_rollos] = {
         {"DO_GR", 500, false, true, "GR_CLOSED", "GR_OPEN", 50, 50, 0, false, "Garagentor"},
 };
 
-const int num_timers = 3;
+const int num_timers = 2;
 ntimer_t timers[num_timers] = {
         {"ZE_GR_1", "LI_GR", false, false, 0, 600, HA_LIGHT, "Garage Timer 10 min"},
         {"ZE_GR_2", "LI_GR_L1", false, false, 0, 120, HA_LIGHT, "Garage Timer außen"},
@@ -173,25 +173,10 @@ void code_lock() {
         digitalWrite(5, 1);
 }
 
-void rain() {
-    static unsigned long last_time;
-    const unsigned long period = 3600000;
-    static bool initial = true;
-    if (((last_time + period) < millis()) or initial) {
-        initial = false;
-        last_time = millis();
-        String value;
-        get_switch("F_RAIN", value);
-        send_state("F_RAIN", "0");
-        return;
-    }
-}
-
 void user_logic() {
     simple(0, 3, "ZE_GR_1");
     on_door_open();
     code_lock();
-    rain();
 }
 
 void user_init() { init_code_lock(); }

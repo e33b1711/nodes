@@ -1,5 +1,6 @@
 #include "node.h"
 #include <PubSubClient.h>
+#include <avr/wdt.h>
 
   #include <SPI.h>
   #include <Ethernet.h>
@@ -43,6 +44,8 @@ void init_link() {
             return;
         }
         Serial.println("INFO: IP: " + String(Ethernet.localIP()) );
+        // a send to a vanished peer gives up after 3 s (default 30 s), below the watchdog timeout
+        Ethernet.setRetransmissionCount(3);
     }
 }
 
@@ -142,6 +145,7 @@ bool maintain_connection() {
             "offline"                    // Last Will Message
         );
 
+        wdt_reset();
         if (connected) {
             Serial.println("INFO: Connected to MQTT.");
 
@@ -174,6 +178,7 @@ void setup_comm() {
     
     mqttClient.setServer(node_info.server, node_info.port); // Default MQTT Port ist meist 1883
     mqttClient.setCallback(mqtt_callback);
+    mqttClient.setSocketTimeout(4);  // stay below the watchdog timeout
 
     handle_comm();
 }

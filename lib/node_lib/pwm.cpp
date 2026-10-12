@@ -13,6 +13,17 @@ void setup_pwm() {
     }
 }
 
+void post_all_pwms() {
+    static unsigned long last_time = millis();
+    const unsigned long post_interval = 65000;
+    if ((millis() - last_time) > post_interval) {
+        last_time = millis();
+        for (int i = 0; i < num_pwms; i++) {
+            send_state(pwms[i].name, pwms[i].value);
+        }
+    }
+}
+
 void update_pwm() {
     for (int i = 0; i < num_pwms; i++) {
         if ((pwms[i].value != 0) and (pwms[i].set_time + pwms[i].timeout < millis())) {
@@ -20,10 +31,9 @@ void update_pwm() {
             pwms[i].value = 0;
             send_state(pwms[i].name, pwms[i].value);
         }
-        for (int i = 0; i < num_pwms; i++) {
-            analogWrite(pwms[i].pin, pwms[i].value);
-        }
+        analogWrite(pwms[i].pin, pwms[i].value);
     }
+    post_all_pwms();
 }
 
 void set_pwm_max(String name, int value) {
@@ -33,6 +43,10 @@ void set_pwm_max(String name, int value) {
                 if (pwms[i].act_max_value != value) {
                     pwms[i].act_max_value = value;
                     Serial.println("INFO: set_pwm_max: " + pwms[i].name + " " + String(value, DEC));
+                }
+                if (pwms[i].value > pwms[i].act_max_value) {
+                    pwms[i].value = pwms[i].act_max_value;
+                    send_state(pwms[i].name, pwms[i].value);
                 }
             }
         }

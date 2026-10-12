@@ -31,6 +31,18 @@ String ident_string(int this_switch) {
     return switches[this_switch].name;
 }
 
+void post_all_switches() {
+    static unsigned long last_time = millis();
+    const unsigned long post_interval = 85000;
+    if ((millis() - last_time) > post_interval) {
+        last_time = millis();
+        for (int i = 0; i < num_switches; i++) {
+            if (switches[i].is_public)
+                send_state(switches[i].name, switches[i].value);
+        }
+    }
+}
+
 void update_switches() {
     static bool first_update = true;
     static int this_switch = 0;
@@ -57,7 +69,7 @@ void update_switches() {
                 Serial.println("INFO: Switch: " + ident_string(this_switch) + " released late.");
             }
             if (switches[this_switch].last_edge + 80000 < millis())
-                delay(10000);  // restart by pressing switch 8 secs
+                restart();  // restart by pressing switch 80 secs
         }
         if (edge != 0) {
             switches[this_switch].last_edge = millis();
@@ -73,6 +85,7 @@ void update_switches() {
         first_update = false;
         user_logic();
     }
+    post_all_switches();
 }
 
 bool get_switch(String name, String &value) {

@@ -93,6 +93,7 @@ bool write_rollo(String name, int value) {
                 rollos[i].value = 0;
             if (!rollos[i].has_stops)
                 send_state(rollos[i].name, rollos[i].value);
+            return true;
         }
     }
     return false;

@@ -31,6 +31,7 @@ enum ha_t {
     HA_DIAGNOSTIC,
 };
 
+void restart();
 void init_debug();
 void setup_comm();
 void handle_comm();
