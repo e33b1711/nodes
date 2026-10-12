@@ -68,8 +68,6 @@ void update_switches() {
                 switches[this_switch].release_late = true;
                 Serial.println("INFO: Switch: " + ident_string(this_switch) + " released late.");
             }
-            if (switches[this_switch].last_edge + 80000 < millis())
-                restart();  // restart by pressing switch 80 secs
         }
         if (edge != 0) {
             switches[this_switch].last_edge = millis();
