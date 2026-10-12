@@ -31,7 +31,7 @@ switch_t switches[num_switches] = {
         {"", false, 23, 0, 0, 0, false, false, false, false},            // 5 HN
         {"", false, 24, 0, 0, 0, false, false, false, false},            // 6 WK
         {"", false, 25, 0, 0, 0, false, false, false, false},            // 7 HS
-        {"F_HE", true, PIN_A7, 0, 0, 0, false, false, false, false},     // gastherme anforderung
+        {"F_HE", true, PIN_A7, 0, 0, 0, false, false, false, false, "Gastherme"},     // gastherme anforderung
         {"F_WW_NO", true, PIN_A6, 0, 0, 0, false, false, false, false},  // pumpensumpf NC
         {"F_WW_NC", true, PIN_A5, 0, 0, 0, false, false, false, false},  // pumepensumpf NO
 };
@@ -39,31 +39,31 @@ switch_t switches[num_switches] = {
 const int num_temps = 7;
 const long period_t = 60000;
 temp_t temps[num_temps] = {
-        {"PU_O", 8, {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, DS18B20_T, 0, 0, 0},  //
-        {"PU_U", 9, {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, DS18B20_T, 0, 0, 0},  //
-        {"UG_WK", 26, {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, DHT22_T, 0, 0, 0},  //
-        {"UG_HO", 27, {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, DHT22_T, 0, 0, 0},  //
-        {"UG_LA", 28, {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, DHT22_T, 0, 0, 0},  //
-        {"UG_GA", 29, {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, DHT22_T, 0, 0, 0},  //
-        {"UG_HK", 30, {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, DHT22_T, 0, 0, 0},  //
+        {"PU_O", 8, {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, DS18B20_T, 0, 0, 0, "Puffer oben"},  //
+        {"PU_U", 9, {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, DS18B20_T, 0, 0, 0, "Puffer unten"},  //
+        {"UG_WK", 26, {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, DHT22_T, 0, 0, 0, "Waschküche"},  //
+        {"UG_HO", 27, {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, DHT22_T, 0, 0, 0, "Hobby"},  //
+        {"UG_LA", 28, {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, DHT22_T, 0, 0, 0, "Lager"},  //
+        {"UG_GA", 29, {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, DHT22_T, 0, 0, 0, "Gang UG"},  //
+        {"UG_HK", 30, {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, DHT22_T, 0, 0, 0, "Technik"},  //
 
 };
 
 const int num_outputs = 14;
 output_t outputs[num_outputs] = {
-        {"LI_UG_HO", 42, 1, 0, 0},    //
-        {"LI_UG_HK", 43, 1, 0, 0},    //
-        {"LI_UG_TR", 44, 1, 0, 0},    //
-        {"BELL", 45, 1, 0, 0},        //
+        {"LI_UG_HO", 42, 1, 0, 0, HA_LIGHT, "Hobby Schreibtisch"},    //
+        {"LI_UG_HK", 43, 1, 0, 0, HA_LIGHT, "Technik"},    //
+        {"LI_UG_TR", 44, 1, 0, 0, HA_LIGHT, "UG Treppe"},    //
+        {"BELL", 45, 1, 0, 0, HA_SIREN, "Klingel (dauer)"},        //
         {"PUMP", 46, 1, 0, 0},        //
-        {"LI_UG_GA", 47, 1, 0, 0},    //
-        {"LI_UG_WK", 48, 1, 0, 0},    //
-        {"LI_UG_HN", 49, 1, 0, 0},    //
-        {"V_UG_HO", 34, true, 0, 0},  //
-        {"V_UG_LA", 35, true, 0, 0},  //
-        {"V_UG_WK", 36, true, 0, 0},  //
-        {"V_UG_H2", 37, true, 0, 0},  //
-        {"V_UG_GA", 38, true, 0, 0},  //
+        {"LI_UG_GA", 47, 1, 0, 0, HA_LIGHT, "Gang UG"},    //
+        {"LI_UG_WK", 48, 1, 0, 0, HA_LIGHT, "Waschküche"},    //
+        {"LI_UG_HN", 49, 1, 0, 0, HA_LIGHT, "Hobby Hinten"},    //
+        {"V_UG_HO", 34, true, 0, 0, HA_SWITCH, "Heizventil Hobby"},  //
+        {"V_UG_LA", 35, true, 0, 0, HA_SWITCH, "Heizventil Lager"},  //
+        {"V_UG_WK", 36, true, 0, 0, HA_SWITCH, "Heizventil Waschküche"},  //
+        {"V_UG_H2", 37, true, 0, 0, HA_SWITCH, "Heizventil Hobby 2"},  //
+        {"V_UG_GA", 38, true, 0, 0, HA_SWITCH, "Heizventil Gang UG"},  //
         {"V_UG_H3", 39, true, 0, 0},  //
 };
 
@@ -71,10 +71,10 @@ const int num_rollos = 0;
 rollo_t rollos[num_rollos] = {};
 
 const int num_timers = 1;
-ntimer_t timers[num_timers] = {{"ZE_BELL", "BELL", false, false, 0, 5}};
+ntimer_t timers[num_timers] = {{"ZE_BELL", "BELL", false, false, 0, 5, HA_SIREN, "Klingel"}};
 
 const int num_pwms = 1;
-pwm_t pwms[num_pwms] = {{"U_EL", 6, 210, 30000, 0, 210, 0}};
+pwm_t pwms[num_pwms] = {{"U_EL", 6, 210, 30000, 0, 210, 0, "Elektrische Heizung"}};
 
 void overtemp() {
     // overtemp for elo heating, 85°
@@ -133,3 +133,5 @@ void user_logic() {
 }
 
 void user_init() {}
+
+void user_discovery() { announce(HA_BINARY_SENSOR, "F_WW", "Warnung Pumpensumpf"); }

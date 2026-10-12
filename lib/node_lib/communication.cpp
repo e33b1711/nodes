@@ -19,7 +19,7 @@ void mqtt_callback(char* topic, byte* payload, unsigned int length);
 void send_git_revision() {
     Serial.println("INFO: Sending git revision.");
     String val = (dirty ? "dirty_" : "") + auto_version.substring(0, 8);
-    send_state(node_info.unit_name + "/git_revision", val);
+    send_retained("nodes/state/" + node_info.unit_name + "/git_revision", val);
 }
 
 // --- Netzwerk-Interface initialisieren ---
@@ -59,6 +59,15 @@ void send_state(String name, int value) {
 
 void send_state(String name, float value) {
     send_state(name, String(value, 1));
+}
+
+// retained and not limited by the PubSubClient buffer size
+bool send_retained(String topic, String payload) {
+    Serial.println("INFO: Publish retained [" + topic + "]");
+    if (!mqttClient.beginPublish(topic.c_str(), payload.length(), true))
+        return false;
+    mqttClient.write((const uint8_t*)payload.c_str(), payload.length());
+    return mqttClient.endPublish();
 }
 
 bool send_command(String name, String value) {
@@ -146,6 +155,7 @@ bool maintain_connection() {
             mqttClient.subscribe(subCmdTopic.c_str());
             mqttClient.subscribe(subReadTopic.c_str());
 
+            send_discovery();
             send_git_revision();
             
             return true;

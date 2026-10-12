@@ -17,6 +17,20 @@ const IPAddress server(192, 168, 178, 73);
 const int port = 1883;
 #endif
 
+// home assistant entity types for mqtt discovery
+enum ha_t {
+    HA_NONE,  // not announced
+    HA_LIGHT,
+    HA_SWITCH,
+    HA_SIREN,
+    HA_COVER,
+    HA_BINARY_SENSOR,
+    HA_TEMPERATURE,
+    HA_HUMIDITY,
+    HA_NUMBER,
+    HA_DIAGNOSTIC,
+};
+
 void init_debug();
 void setup_comm();
 void handle_comm();
@@ -29,6 +43,11 @@ bool send_command(String name, int value);
 bool send_command(String name, String value);
 void send_state(String name, int value);
 void send_state(String name, String value);
+bool send_retained(String topic, String payload);
+
+void send_discovery();
+void user_discovery();
+void announce(ha_t type, String id, String label, int max_value = 255);
 
 void long_short(const int b_index,
                 const String l_long,

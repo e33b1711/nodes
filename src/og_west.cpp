@@ -24,25 +24,25 @@ node_t node_info = {
 const int num_temps = 3;
 const long period_t = 60000;
 temp_t temps[num_temps] = {
-        {"OG_KN", 28, {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, DHT22_T, 0, 0, 0},
-        {"OG_KS", 27, {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, DHT22_T, 0, 0, 0},
-        {"OG_GA", 26, {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, DHT22_T, 0, 0, 0},
+        {"OG_KN", 28, {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, DHT22_T, 0, 0, 0, "Leo"},
+        {"OG_KS", 27, {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, DHT22_T, 0, 0, 0, "Bini"},
+        {"OG_GA", 26, {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, DHT22_T, 0, 0, 0, "Gang OG"},
 };
 
 const int num_outputs = 24;
 output_t outputs[num_outputs] = {
         {"LI_34", 34, 1, 0, 0},        //
         {"RO_OG_KS_DO", 35, 1, 0, 0},  //
-        {"LI_OG_KS", 36, 1, 0, 0},     //
+        {"LI_OG_KS", 36, 1, 0, 0, HA_LIGHT, "Bini"},     //
         {"RO_OG_KS_UP", 37, 1, 0, 0},  //
-        {"LI_OG_KS_L1", 42, 1, 0, 0},  //
-        {"LI_OG_KN_L1", 43, 1, 0, 0},  //
-        {"LI_OG_KN", 44, 1, 0, 0},     //
+        {"LI_OG_KS_L1", 42, 1, 0, 0, HA_LIGHT, "Bini Spots"},  //
+        {"LI_OG_KN_L1", 43, 1, 0, 0, HA_LIGHT, "Leo Spots"},  //
+        {"LI_OG_KN", 44, 1, 0, 0, HA_LIGHT, "Leo"},     //
         {"RO_OG_KN_UP", 45, 1, 0, 0},  //
         {"LI_GA_L1", 46, 1, 0, 0},     //
         {"RO_OG_KN_DO", 47, 1, 0, 0},  //
-        {"LI_OG_GA_L1", 48, 1, 0, 0},  //
-        {"LI_OG_GA", 49, 1, 0, 0},     //
+        {"LI_OG_GA_L1", 48, 1, 0, 0, HA_LIGHT, "Gang OG Spots"},  //
+        {"LI_OG_GA", 49, 1, 0, 0, HA_LIGHT, "Gang OG"},     //
         {"VD_OG_KS_DO", 54, 0, 0, 0},  //
         {"VD_OG_KS_UP", 55, 0, 0, 0},  //
         {"DF_OG_KS_DO", 56, 0, 0, 0},  //
@@ -59,14 +59,14 @@ output_t outputs[num_outputs] = {
 
 const int num_rollos = 8;
 rollo_t rollos[num_rollos] = {
-        {"RO_OG_KN", 31000, true, false, "", "", 50, 50, 0, false},
-        {"RO_OG_KS", 31000, true, false, "", "", 50, 50, 0, false},
-        {"DF_OG_KN", 500, false, false, "", "", 50, 50, 0, false},
-        {"DF_OG_KS", 500, false, false, "", "", 50, 50, 0, false},
-        {"DF_OG_GA", 500, false, false, "", "", 50, 50, 0, false},
-        {"VD_OG_KS", 500, false, false, "", "", 50, 50, 0, false},
-        {"VD_OG_KN", 500, false, false, "", "", 50, 50, 0, false},
-        {"VD_OG_GA", 500, false, false, "", "", 50, 50, 0, false},
+        {"RO_OG_KN", 31000, true, false, "", "", 50, 50, 0, false, "Rollo Leo"},
+        {"RO_OG_KS", 31000, true, false, "", "", 50, 50, 0, false, "Rollo Bini"},
+        {"DF_OG_KN", 500, false, false, "", "", 50, 50, 0, false, "Dachfenster Leo"},
+        {"DF_OG_KS", 500, false, false, "", "", 50, 50, 0, false, "Dachfenster Bini"},
+        {"DF_OG_GA", 500, false, false, "", "", 50, 50, 0, false, "Dachfenster Gang"},
+        {"VD_OG_KS", 500, false, false, "", "", 50, 50, 0, false, "Verdunkelung Bini"},
+        {"VD_OG_KN", 500, false, false, "", "", 50, 50, 0, false, "Verdunkelung Leo"},
+        {"VD_OG_GA", 500, false, false, "", "", 50, 50, 0, false, "Verdunkelung Gang"},
 };
 
 const int num_switches = 16;

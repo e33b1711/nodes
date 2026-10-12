@@ -24,38 +24,38 @@ node_t node_info = {
 const int num_temps = 2;
 const long period_t = 30000;
 temp_t temps[num_temps] = {
-        {"OG_BA", 27, {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, DHT22_T, 0, 0, 0},
-        {"OG_SZ", 26, {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, DHT22_T, 0, 0, 0},
+        {"OG_BA", 27, {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, DHT22_T, 0, 0, 0, "Badezimmer"},
+        {"OG_SZ", 26, {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, DHT22_T, 0, 0, 0, "Schlafzimmer"},
 };
 
 
 const int num_outputs =17;
 output_t outputs[num_outputs] = {
         {"RO_OG_SZ_UP", 41, 1, 0, 0},  //
-        {"LI_OG_BA", 42, 1, 0, 0},     //
+        {"LI_OG_BA", 42, 1, 0, 0, HA_LIGHT, "Badezimmer"},     //
         {"RO_OG_BA_DO", 43, 1, 0, 0},  //
-        {"LI_OG_SZ", 44, 1, 0, 0},     //
-        {"LI_OG_SZ_L2", 45, 1, 0, 0},  //
+        {"LI_OG_SZ", 44, 1, 0, 0, HA_LIGHT, "Schlafzimmer"},     //
+        {"LI_OG_SZ_L2", 45, 1, 0, 0, HA_LIGHT, "Leselampe Anselm"},  //
         {"RO_OG_SZ_DO", 46, 1, 0, 0},  //
-        {"LI_OG_SZ_L1", 47, 1, 0, 0},  //
+        {"LI_OG_SZ_L1", 47, 1, 0, 0, HA_LIGHT, "Leselampe Melli"},  //
         {"RO_OG_BA_UP", 49, 1, 0, 0},  //
         {"VD_OG_SZ_DO", 58, 0, 0, 0},  //
         {"DF_OG_SZ_DO", 59, 0, 0, 0},  //
         {"VD_OG_SZ_UP", 60, 0, 0, 0},  //
         {"DF_OG_SZ_UP", 61, 0, 0, 0},  //
-        {"V_OG_GA", 34, true, 0, 0},  // blau
-        {"V_OG_KS", 35, true, 0, 0},  // weiß
-        {"V_OG_KN", 36, true, 0, 0},  // grün
-        {"V_OG_BA", 37, true, 0, 0},  // rosa
-        {"V_OG_SZ", 38, true, 0, 0},  // grau
+        {"V_OG_GA", 34, true, 0, 0, HA_SWITCH, "Heizventil Gang OG"},  // blau
+        {"V_OG_KS", 35, true, 0, 0, HA_SWITCH, "Heizventil Bini"},  // weiß
+        {"V_OG_KN", 36, true, 0, 0, HA_SWITCH, "Heizventil Leo"},  // grün
+        {"V_OG_BA", 37, true, 0, 0, HA_SWITCH, "Heizventil Badezimmer"},  // rosa
+        {"V_OG_SZ", 38, true, 0, 0, HA_SWITCH, "Heizventil Schlafzimmer"},  // grau
 };
 
 const int num_rollos = 4;
 rollo_t rollos[num_rollos] = {
-        {"RO_OG_SZ", 31000, true, false, "", "", 50, 50, 0, false},
-        {"RO_OG_BA", 31000, true, false, "", "", 50, 50, 0, false},
-        {"DF_OG_SZ", 500, false, false, "", "", 50, 50, 0, false },
-        {"VD_OG_SZ", 500, false, false, "", "", 50, 50, 0, false },
+        {"RO_OG_SZ", 31000, true, false, "", "", 50, 50, 0, false, "Rollo Schlafzimmer"},
+        {"RO_OG_BA", 31000, true, false, "", "", 50, 50, 0, false, "Rollo Bad"},
+        {"DF_OG_SZ", 500, false, false, "", "", 50, 50, 0, false , "Dachfenster Schlafzimmer"},
+        {"VD_OG_SZ", 500, false, false, "", "", 50, 50, 0, false , "Verdunkelung Schlafzimmer"},
 };
 
 const int num_switches = 16;

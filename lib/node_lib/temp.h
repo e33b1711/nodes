@@ -23,6 +23,7 @@ struct temp_t {
     float temp_value;
     float humi_value;
     unsigned long last_update;
+    const char *label;  // friendly name in home assistant, none: not announced
 };
 
 extern const int num_temps;

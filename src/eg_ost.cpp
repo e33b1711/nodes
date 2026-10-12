@@ -47,28 +47,28 @@ temp_t temps[num_temps] = {};
 
 const int num_outputs = 15;
 output_t outputs[num_outputs] = {
-        {"LI_EG_WZ", 42, 1, 0, 0},     //
-        {"LI_EG_WZ_L1", 43, 1, 0, 0},  //
-        {"LI_EG_WC", 44, 1, 0, 0},     //
-        {"LI_GA_L1", 45, 1, 0, 0},     //
-        {"LI_EG_GR", 46, 1, 0, 0},     //
-        {"LI_EG_GA", 47, 1, 0, 0},     //
-        {"LI_EG_WZ_L2", 48, 1, 0, 0},  //
-        {"LI_EG_VH", 49, 1, 0, 0},     //
-        {"V_EG_WZ", 34, true, 0, 0},     // 34 rot    Wohnzimmer
-        {"V_EG_GR", 35, true, 0, 0},     // 35 rosa   Garda
-        {"V_EG_EZ", 36, true, 0, 0},     // 36 grau   EZ
-        {"V_EG_E2", 37, true, 0, 0},     // 37 gelb   EZ
-        {"V_EG_WC", 38, true, 0, 0},     // 38 blau   WC
-        {"V_EG_GA", 39, true, 0, 0},     // 39 grün   Gang
-        {"V_EG_KU", 40, true, 0, 0},     // 40 weiß   Küche
+        {"LI_EG_WZ", 42, 1, 0, 0, HA_LIGHT, "Wohnzimmer Mitte"},     //
+        {"LI_EG_WZ_L1", 43, 1, 0, 0, HA_LIGHT, "Wohnzimmer Vorn"},  //
+        {"LI_EG_WC", 44, 1, 0, 0, HA_LIGHT, "WC"},     //
+        {"LI_GA_L1", 45, 1, 0, 0, HA_LIGHT, "Gang EG Wandlampen"},     //
+        {"LI_EG_GR", 46, 1, 0, 0, HA_LIGHT, "Gardarobe"},     //
+        {"LI_EG_GA", 47, 1, 0, 0, HA_LIGHT, "Gang EG"},     //
+        {"LI_EG_WZ_L2", 48, 1, 0, 0, HA_LIGHT, "Wohnzimmer Hinten"},  //
+        {"LI_EG_VH", 49, 1, 0, 0, HA_LIGHT, "Vorhaus"},     //
+        {"V_EG_WZ", 34, true, 0, 0, HA_SWITCH, "Heizventil Wohnzimmer"},     // 34 rot    Wohnzimmer
+        {"V_EG_GR", 35, true, 0, 0, HA_SWITCH, "Heizventil Gardarobe"},     // 35 rosa   Garda
+        {"V_EG_EZ", 36, true, 0, 0, HA_SWITCH, "Heizventil Esszimmer"},     // 36 grau   EZ
+        {"V_EG_E2", 37, true, 0, 0, HA_SWITCH, "Heizventil Esszimmer 2"},     // 37 gelb   EZ
+        {"V_EG_WC", 38, true, 0, 0, HA_SWITCH, "Heizventil WC"},     // 38 blau   WC
+        {"V_EG_GA", 39, true, 0, 0, HA_SWITCH, "Heizventil Gang EG"},     // 39 grün   Gang
+        {"V_EG_KU", 40, true, 0, 0, HA_SWITCH, "Heizventil Küche"},     // 40 weiß   Küche
 };
 
 const int num_rollos = 0;
 rollo_t rollos[num_rollos] = {};
 
 const int num_timers = 1;
-ntimer_t timers[num_timers] = {{"ZE_EG_VH", "LI_EG_VH", false, false, 0, 180}};
+ntimer_t timers[num_timers] = {{"ZE_EG_VH", "LI_EG_VH", false, false, 0, 180, HA_LIGHT, "Vorhaus Timer"}};
 
 const int num_pwms = 0;
 pwm_t pwms[num_pwms] = {};

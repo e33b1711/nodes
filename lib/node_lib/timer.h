@@ -1,6 +1,7 @@
 #ifndef _timer_h__
 #define _timer_h__
 #include <Arduino.h>
+#include "node.h"
 
 void setup_timers();
 void handle_timers();
@@ -15,6 +16,8 @@ struct ntimer_t {
     bool running;
     unsigned long set_time;
     const unsigned long duration;
+    const ha_t ha;      // HA_NONE: not announced to home assistant
+    const char *label;  // friendly name in home assistant
 };
 
 extern const int num_timers;

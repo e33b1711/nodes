@@ -17,6 +17,7 @@ struct pwm_t {
     int value;
     int act_max_value;
     unsigned long set_time;
+    const char *label;  // friendly name in home assistant, none: not announced
 };
 
 extern const int num_pwms;

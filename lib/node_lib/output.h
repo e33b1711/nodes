@@ -2,6 +2,7 @@
 #define _output_h__
 
 #include <Arduino.h>
+#include "node.h"
 
 void update_outputs();
 void setup_outputs();
@@ -17,6 +18,8 @@ struct output_t {
     const bool invert;
     bool value;
     unsigned long set_time;
+    const ha_t ha;      // HA_NONE: not announced to home assistant
+    const char *label;  // friendly name in home assistant
 };
 
 extern const int num_outputs;

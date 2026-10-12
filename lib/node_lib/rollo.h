@@ -21,6 +21,7 @@ struct rollo_t {
     int last_value;
     unsigned long stop_time;
     boolean stop_pending;
+    const char *label;  // friendly name in home assistant, none: not announced
 };
 
 extern const int num_rollos;

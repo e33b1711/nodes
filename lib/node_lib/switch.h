@@ -18,6 +18,7 @@ struct switch_t {
     bool press;
     bool release_early;
     bool release_late;
+    const char *label;  // friendly name in home assistant, none: not announced
 };
 
 extern const int num_switches;

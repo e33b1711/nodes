@@ -29,20 +29,20 @@ switch_t switches[num_switches] = {
         {"innen", false, 25, 0, 0, 0, false, false, false, false},      //
         {"GR_CLOSED", false, 24, 0, 0, 0, false, false, false, false},  //
         {"GR_OPEN", false, 23, 0, 0, 0, false, false, false, false},    //
-        {"F_RAIN", true, PIN_A7, 0, 0, 0, false, false, false, false},      //
+        {"F_RAIN", true, PIN_A7, 0, 0, 0, false, false, false, false, "Regen"},      //
 };
 
 const int num_temps = 2;
 const long period_t = 60000;
 temp_t temps[num_temps] = {
-        {"GR", 8, {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, DHT22_T, 0, 0, 0},  //
-        {"AU", 9, {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, DHT22_T, 0, 0, 0},  //
+        {"GR", 8, {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, DHT22_T, 0, 0, 0, "Garage"},  //
+        {"AU", 9, {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, DHT22_T, 0, 0, 0, "Außen"},  //
 };
 
 const int num_outputs = 10;
 output_t outputs[num_outputs] = {
-        {"LI_GR", 48, 1, 0, 0},     //
-        {"LI_GR_L1", 49, 1, 0, 0},  //
+        {"LI_GR", 48, 1, 0, 0, HA_LIGHT, "Garage"},     //
+        {"LI_GR_L1", 49, 1, 0, 0, HA_LIGHT, "Garage Außen"},  //
         {"DO_GR_DO", 33, 0, 0, 0},  //
         {"DO_GR_UP", 32, 0, 0, 0},  //
         {"DO_GR_DO", 31, 0, 0, 0},  //
@@ -56,13 +56,13 @@ output_t outputs[num_outputs] = {
 const int num_rollos = 1;
 
 rollo_t rollos[num_rollos] = {
-        {"DO_GR", 500, false, true, "GR_CLOSED", "GR_OPEN", 50, 50, 0, false},
+        {"DO_GR", 500, false, true, "GR_CLOSED", "GR_OPEN", 50, 50, 0, false, "Garagentor"},
 };
 
 const int num_timers = 3;
 ntimer_t timers[num_timers] = {
-        {"ZE_GR_1", "LI_GR", false, false, 0, 600},
-        {"ZE_GR_2", "LI_GR_L1", false, false, 0, 120},
+        {"ZE_GR_1", "LI_GR", false, false, 0, 600, HA_LIGHT, "Garage Timer 10 min"},
+        {"ZE_GR_2", "LI_GR_L1", false, false, 0, 120, HA_LIGHT, "Garage Timer außen"},
 };
 
 const int num_pwms = 0;
