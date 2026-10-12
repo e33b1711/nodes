@@ -7,7 +7,6 @@
 #include "pwm.h"
 
 #include "version.h"
-#include "server.h"
 
 #ifndef __TEST__
 uint8_t mac[] = {0xDE, 0xBB, 0x7E, 0xE1, 0xCC, 0xAA};

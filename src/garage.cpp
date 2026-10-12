@@ -7,7 +7,6 @@
 #include "pwm.h"
 
 #include "version.h"
-#include "server.h"
 
 #include "Wiegand.h"
 #include "pinio.h"
