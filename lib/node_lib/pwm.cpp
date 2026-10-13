@@ -26,7 +26,7 @@ void post_all_pwms() {
 
 void update_pwm() {
     for (int i = 0; i < num_pwms; i++) {
-        if ((pwms[i].value != 0) and (pwms[i].set_time + pwms[i].timeout < millis())) {
+        if ((pwms[i].value != 0) and ((millis() - pwms[i].set_time) > pwms[i].timeout)) {
             Serial.println("INFO: " + pwms[i].name + " timed out.");
             pwms[i].value = 0;
             send_state(pwms[i].name, pwms[i].value);

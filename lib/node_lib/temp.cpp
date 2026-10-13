@@ -1,8 +1,6 @@
 #include "node.h"
 #include "temp.h"
 
-#include <avr/wdt.h>
-
 unsigned long s_time_t;
 int this_temp = 0;
 
@@ -10,19 +8,6 @@ bool get_temp(String name, String &value) {
     for (int i = 0; i < num_temps; i++) {
         if (name == ("TI_" + temps[i].name)) {
             value = String(temps[i].temp_value);
-            return true;
-        }
-    }
-    return false;
-}
-
-bool get_temp(String name, int &value) {
-    for (int i = 0; i < num_temps; i++) {
-        if (name == ("TI_" + temps[i].name)) {
-            if (isnan(temps[i].temp_value))
-                value = 9999;
-            else
-                value = (int)temps[i].temp_value;
             return true;
         }
     }
@@ -49,8 +34,6 @@ bool get_humi(String name, String &value) {
     return false;
 }
 
-#ifndef __temp_sh31__
-
 void setup_temps() {
     Serial.println("INFO: setup temps dht22");
     s_time_t = millis();
@@ -62,8 +45,20 @@ void setup_temps() {
 }
 
 void update_temps() {
+    static bool converting = false;
+    const unsigned long conversion_time = 800;
+
     if (num_temps > 0) {
-        if (s_time_t + (period_t) < millis()) {
+        if (converting) {
+            if (millis() - s_time_t > conversion_time) {
+                converting = false;
+                handle_ds18b20(this_temp);
+                this_temp = (this_temp + 1) % num_temps;
+            }
+            return;
+        }
+        // one sensor at a time
+        if (millis() - s_time_t > (unsigned long)period_t / num_temps) {
             s_time_t = millis();
             switch (temps[this_temp].sensor) {
                 case DHT22_T:
@@ -71,13 +66,9 @@ void update_temps() {
                     break;
 
                 case DS18B20_T:
-                    handle_ds18b20(this_temp);
-                    break;
-
-                case SHT31_T:
-                    Serial.println("FAILURE: no SHT31_T implemted");
-                    while (true) wdt_reset();
-                    break;
+                    start_ds18b20(this_temp);
+                    converting = true;
+                    return;
 
                 default:
                     break;
@@ -86,5 +77,3 @@ void update_temps() {
         }
     }
 }
-
-#endif

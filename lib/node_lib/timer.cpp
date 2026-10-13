@@ -14,7 +14,7 @@ void setup_timers() {
 void post_all_timers() {
      static unsigned long last_time = millis();
     const unsigned long post_interval = 70000;
-    if ((last_time + post_interval) < millis()) {
+    if ((millis() - last_time) > post_interval) {
         last_time = millis();
         for (int i = 0; i < num_timers; i++) {
             send_state(timers[i].name, timers[i].value);
@@ -31,7 +31,7 @@ void update_timer(int i) {
     }
     // timer: running
     if (timers[i].value and timers[i].running) {
-        if ((timers[i].set_time + 1000 * timers[i].duration) < millis()) {
+        if ((millis() - timers[i].set_time) > 1000 * timers[i].duration) {
             timers[i].running = false;
             timers[i].value = false;
             write_output(timers[i].slave, 0);

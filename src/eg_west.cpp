@@ -8,11 +8,7 @@
 
 #include "version.h"
 
-#ifndef __TEST__
 uint8_t mac[] = {0xDE, 0xBB, 0x7E, 0xE1, 0xCC, 0x03};
-#else
-uint8_t mac[] = {0xDE, 0xBB, 0x7E, 0xE1, 0xAB, 0x03};
-#endif
 
 node_t node_info = {
         "eg_west",
@@ -21,67 +17,67 @@ node_t node_info = {
         mac,
 };
 
-const int num_switches = 16;
-switch_t switches[num_switches] = {
-        {"", false, 4, 0, 0, 0, false, false, false, false},   // 0 sü hoch
-        {"", false, 5, 0, 0, 0, false, false, false, false},   // 1 we hoch
-        {"", false, 6, 0, 0, 0, false, false, false, false},   // 2 sü runter
-        {"", false, 7, 0, 0, 0, false, false, false, false},   // 3 sü unten
-        {"", false, 8, 0, 0, 0, false, false, false, false},   // 4 ez hoch
-        {"", false, 9, 0, 0, 0, false, false, false, false},   // 5 gang keller oben
-        {"", false, 10, 0, 0, 0, false, false, false, false},  // 6 " unten
-        {"", false, 11, 0, 0, 0, false, false, false, false},  // 7
-        {"", false, 25, 0, 0, 0, false, false, false, false},  // 8 ez runter
-        {"", false, 24, 0, 0, 0, false, false, false, false},  // 9 ez unten
-        {"", false, 23, 0, 0, 0, false, false, false, false},  // 10 gang ez
-        {"", false, 22, 0, 0, 0, false, false, false, false},  // 11 ez mitte
-        {"", false, 17, 0, 0, 0, false, false, false, false},  // 12
-        {"", false, 16, 0, 0, 0, false, false, false, false},  // 13 küche
-        {"", false, 3, 0, 0, 0, false, false, false, false},   // 14 we unten
-        {"", false, 2, 0, 0, 0, false, false, false, false},   // 15 we runter
+switch_t switches[] = {
+        {"", false, 4},   // 0 sü hoch
+        {"", false, 5},   // 1 we hoch
+        {"", false, 6},   // 2 sü runter
+        {"", false, 7},   // 3 sü unten
+        {"", false, 8},   // 4 ez hoch
+        {"", false, 9},   // 5 gang keller oben
+        {"", false, 10},  // 6 " unten
+        {"", false, 11},  // 7
+        {"", false, 25},  // 8 ez runter
+        {"", false, 24},  // 9 ez unten
+        {"", false, 23},  // 10 gang ez
+        {"", false, 22},  // 11 ez mitte
+        {"", false, 17},  // 12
+        {"", false, 16},  // 13 küche
+        {"", false, 3},   // 14 we unten
+        {"", false, 2},   // 15 we runter
 };
+const int num_switches = COUNT_OF(switches);
 
-const int num_temps = 4;
 const long period_t = 60000;
-temp_t temps[num_temps] = {
-        {"EG_GA", 58, {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, DHT22_T, 0, 0, 0, "Gang EG"},  //
-        {"EG_KU", 59, {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, DHT22_T, 0, 0, 0, "Küche"},  //
-        {"EG_WZ", 60, {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, DHT22_T, 0, 0, 0, "Wohnzimmer"},  //
-        {"EG_EZ", 61, {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, DHT22_T, 0, 0, 0, "Esszimmer"},  //
+temp_t temps[] = {
+        {"EG_GA", 58, DHT22_T, "Gang EG"},  //
+        {"EG_KU", 59, DHT22_T, "Küche"},  //
+        {"EG_WZ", 60, DHT22_T, "Wohnzimmer"},  //
+        {"EG_EZ", 61, DHT22_T, "Esszimmer"},  //
 };
+const int num_temps = COUNT_OF(temps);
 
 
-const int num_outputs = 16;
-output_t outputs[num_outputs] = {
-        {"LI_EG_EZ_KU", 34, 1, 0, 0, HA_LIGHT, "Esszimmer Grundbeleuchtung"},  //
-        {"LI_EG_SP", 35, 1, 0, 0, HA_LIGHT, "Speisekammer"},     //
-        {"LI_EG_AS", 36, 1, 0, 0, HA_LIGHT, "Außen Süd"},     //
-        {"LI_EG_KU_L1", 37, 1, 0, 0, HA_LIGHT, "Küche Arbeitsbeleuchtung"},  //
-        {"LI_EG_EZ_L1", 38, 1, 0, 0, HA_LIGHT, "Esszimmer Wandlampen"},  //
-        {"LI_EG_AO", 39, 1, 0, 0, HA_LIGHT, "Außen Ost"},     //
-        {"LI_EG_EZ", 40, 1, 0, 0, HA_LIGHT, "Esstisch"},     //
-        {"LI_EG_AW", 41, 1, 0, 0, HA_LIGHT, "Außen West"},     //
-        {"RO_EG_WE_UP", 42, 1, 0, 0},  //
-        {"LI_GA_L1", 43, 1, 0, 0},     //
-        {"RO_EG_SU_UP", 44, 1, 0, 0},  //
-        {"RO_EG_SU_DO", 45, 1, 0, 0},  //
-        {"LI_EG_EZ_KU", 46, 1, 0, 0},  //
-        {"LI_EG_EZ_L3", 47, 1, 0, 0, HA_LIGHT, "Esszimmer Leselampe"},  //
-        {"RO_EG_WE_DO", 48, 1, 0, 0},  //
-        {"LI_EG_GA", 49, 1, 0, 0},     //
+output_t outputs[] = {
+        {"LI_EG_EZ_KU", 34, 1, HA_LIGHT, "Esszimmer Grundbeleuchtung"},  //
+        {"LI_EG_SP", 35, 1, HA_LIGHT, "Speisekammer"},     //
+        {"LI_EG_AS", 36, 1, HA_LIGHT, "Außen Süd"},     //
+        {"LI_EG_KU_L1", 37, 1, HA_LIGHT, "Küche Arbeitsbeleuchtung"},  //
+        {"LI_EG_EZ_L1", 38, 1, HA_LIGHT, "Esszimmer Wandlampen"},  //
+        {"LI_EG_AO", 39, 1, HA_LIGHT, "Außen Ost"},     //
+        {"LI_EG_EZ", 40, 1, HA_LIGHT, "Esstisch"},     //
+        {"LI_EG_AW", 41, 1, HA_LIGHT, "Außen West"},     //
+        {"RO_EG_WE_UP", 42, 1},  //
+        {"LI_GA_L1", 43, 1},     //
+        {"RO_EG_SU_UP", 44, 1},  //
+        {"RO_EG_SU_DO", 45, 1},  //
+        {"LI_EG_EZ_KU", 46, 1},  //
+        {"LI_EG_EZ_L3", 47, 1, HA_LIGHT, "Esszimmer Leselampe"},  //
+        {"RO_EG_WE_DO", 48, 1},  //
+        {"LI_EG_GA", 49, 1},     //
 };
+const int num_outputs = COUNT_OF(outputs);
 
-const int num_rollos = 2;
-rollo_t rollos[num_rollos] = {
-        {"RO_EG_SU", 31000, true, false, "", "", 50, 50, 0, false, "Rollo Esszimmer Süd"},
-        {"RO_EG_WE", 31000, true, false, "", "", 50, 50, 0, false, "Rollo Esszimmer West"},
+rollo_t rollos[] = {
+        {"RO_EG_SU", 31000, true, "Rollo Esszimmer Süd"},
+        {"RO_EG_WE", 31000, true, "Rollo Esszimmer West"},
 };
+const int num_rollos = COUNT_OF(rollos);
 
-const int num_timers = 0;
-ntimer_t timers[num_timers] = {};
+ntimer_t timers[] = {};
+const int num_timers = COUNT_OF(timers);
 
-const int num_pwms = 0;
-pwm_t pwms[num_pwms] = {};
+pwm_t pwms[] = {};
+const int num_pwms = COUNT_OF(pwms);
 
 void user_logic() {
     toggle_couple(10, "LI_EG_GA");

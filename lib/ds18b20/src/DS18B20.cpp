@@ -61,9 +61,20 @@ void DS18B20::resetSearch() {
 }
 
 float DS18B20::getTempC() {
-    sendCommand(MATCH_ROM, CONVERT_T, !selectedPowerMode);
+    startConversion();
     delayForConversion(selectedResolution, selectedPowerMode);
-    readScratchpad();
+    return readTempC();
+}
+
+void DS18B20::startConversion() {
+    sendCommand(MATCH_ROM, CONVERT_T, !selectedPowerMode);
+}
+
+// result of the last conversion, NAN if the readout fails
+float DS18B20::readTempC() {
+    if (!readScratchpad()) {
+        return NAN;
+    }
     uint8_t lsb = selectedScratchpad[TEMP_LSB];
     uint8_t msb = selectedScratchpad[TEMP_MSB];
 

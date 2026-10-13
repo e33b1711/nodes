@@ -16,10 +16,13 @@ struct output_t {
     const String name;
     const int pin;
     const bool invert;
-    bool value;
-    unsigned long set_time;
     const ha_t ha;      // HA_NONE: not announced to home assistant
     const char *label;  // friendly name in home assistant
+    bool value;
+    unsigned long set_time;
+
+    output_t(String name, int pin, bool invert, ha_t ha = HA_NONE, const char *label = nullptr)
+        : name(name), pin(pin), invert(invert), ha(ha), label(label), value(false), set_time(0) {}
 };
 
 extern const int num_outputs;

@@ -7,15 +7,12 @@
 const int num_pins = PIN_A15;
 const int pseudo_pin = 99;
 
+#define COUNT_OF(a) (sizeof(a) / sizeof(a[0]))
+
 #include <Arduino.h>
 
-#ifndef __TEST__
 const IPAddress server(192, 168, 178, 73);
 const int port = 1883;
-#else
-const IPAddress server(192, 168, 178, 73);
-const int port = 1883;
-#endif
 
 // home assistant entity types for mqtt discovery
 enum ha_t {
@@ -77,11 +74,6 @@ struct node_t {
     uint8_t *mac;
 };
 
-extern const IPAddress ip;
-extern const IPAddress server;
-extern const char *ssid;
-extern const char *pass;
-extern const byte bssid[];
 extern node_t node_info;
 
 extern const String auto_version;

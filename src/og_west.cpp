@@ -8,11 +8,7 @@
 
 #include "version.h"
 
-#ifndef __TEST__
 uint8_t mac[] = {0xDE, 0xBB, 0x7E, 0xE1, 0xCC, 0x05};
-#else
-uint8_t mac[] = {0xDE, 0xBB, 0x7E, 0xE1, 0xAB, 0x05};
-#endif
 
 node_t node_info = {
         "og_west",
@@ -21,79 +17,79 @@ node_t node_info = {
         mac,
 };
 
-const int num_temps = 3;
 const long period_t = 60000;
-temp_t temps[num_temps] = {
-        {"OG_KN", 28, {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, DHT22_T, 0, 0, 0, "Leo"},
-        {"OG_KS", 27, {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, DHT22_T, 0, 0, 0, "Bini"},
-        {"OG_GA", 26, {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, DHT22_T, 0, 0, 0, "Gang OG"},
+temp_t temps[] = {
+        {"OG_KN", 28, DHT22_T, "Leo"},
+        {"OG_KS", 27, DHT22_T, "Bini"},
+        {"OG_GA", 26, DHT22_T, "Gang OG"},
 };
+const int num_temps = COUNT_OF(temps);
 
-const int num_outputs = 24;
-output_t outputs[num_outputs] = {
-        {"LI_34", 34, 1, 0, 0},        //
-        {"RO_OG_KS_DO", 35, 1, 0, 0},  //
-        {"LI_OG_KS", 36, 1, 0, 0, HA_LIGHT, "Bini"},     //
-        {"RO_OG_KS_UP", 37, 1, 0, 0},  //
-        {"LI_OG_KS_L1", 42, 1, 0, 0, HA_LIGHT, "Bini Spots"},  //
-        {"LI_OG_KN_L1", 43, 1, 0, 0, HA_LIGHT, "Leo Spots"},  //
-        {"LI_OG_KN", 44, 1, 0, 0, HA_LIGHT, "Leo"},     //
-        {"RO_OG_KN_UP", 45, 1, 0, 0},  //
-        {"LI_GA_L1", 46, 1, 0, 0},     //
-        {"RO_OG_KN_DO", 47, 1, 0, 0},  //
-        {"LI_OG_GA_L1", 48, 1, 0, 0, HA_LIGHT, "Gang OG Spots"},  //
-        {"LI_OG_GA", 49, 1, 0, 0, HA_LIGHT, "Gang OG"},     //
-        {"VD_OG_KS_DO", 54, 0, 0, 0},  //
-        {"VD_OG_KS_UP", 55, 0, 0, 0},  //
-        {"DF_OG_KS_DO", 56, 0, 0, 0},  //
-        {"DF_OG_KS_UP", 57, 0, 0, 0},  //
-        {"VD_OG_KN_DO", 58, 0, 0, 0},  //
-        {"VD_OG_KN_UP", 59, 0, 0, 0},  //
-        {"DF_OG_KN_UP", 60, 0, 0, 0},  //
-        {"DF_OG_KN_DO", 61, 0, 0, 0},  //
-        {"VD_OG_GA_UP", 30, 0, 0, 0},  //
-        {"DF_OG_GA_DO", 31, 0, 0, 0},  //
-        {"VD_OG_GA_DO", 32, 0, 0, 0},  //
-        {"DF_OG_GA_UP", 33, 0, 0, 0},  //
+output_t outputs[] = {
+        {"LI_34", 34, 1},        //
+        {"RO_OG_KS_DO", 35, 1},  //
+        {"LI_OG_KS", 36, 1, HA_LIGHT, "Bini"},     //
+        {"RO_OG_KS_UP", 37, 1},  //
+        {"LI_OG_KS_L1", 42, 1, HA_LIGHT, "Bini Spots"},  //
+        {"LI_OG_KN_L1", 43, 1, HA_LIGHT, "Leo Spots"},  //
+        {"LI_OG_KN", 44, 1, HA_LIGHT, "Leo"},     //
+        {"RO_OG_KN_UP", 45, 1},  //
+        {"LI_GA_L1", 46, 1},     //
+        {"RO_OG_KN_DO", 47, 1},  //
+        {"LI_OG_GA_L1", 48, 1, HA_LIGHT, "Gang OG Spots"},  //
+        {"LI_OG_GA", 49, 1, HA_LIGHT, "Gang OG"},     //
+        {"VD_OG_KS_DO", 54, 0},  //
+        {"VD_OG_KS_UP", 55, 0},  //
+        {"DF_OG_KS_DO", 56, 0},  //
+        {"DF_OG_KS_UP", 57, 0},  //
+        {"VD_OG_KN_DO", 58, 0},  //
+        {"VD_OG_KN_UP", 59, 0},  //
+        {"DF_OG_KN_UP", 60, 0},  //
+        {"DF_OG_KN_DO", 61, 0},  //
+        {"VD_OG_GA_UP", 30, 0},  //
+        {"DF_OG_GA_DO", 31, 0},  //
+        {"VD_OG_GA_DO", 32, 0},  //
+        {"DF_OG_GA_UP", 33, 0},  //
 };
+const int num_outputs = COUNT_OF(outputs);
 
-const int num_rollos = 8;
-rollo_t rollos[num_rollos] = {
-        {"RO_OG_KN", 31000, true, false, "", "", 50, 50, 0, false, "Rollo Leo"},
-        {"RO_OG_KS", 31000, true, false, "", "", 50, 50, 0, false, "Rollo Bini"},
-        {"DF_OG_KN", 500, false, false, "", "", 50, 50, 0, false, "Dachfenster Leo"},
-        {"DF_OG_KS", 500, false, false, "", "", 50, 50, 0, false, "Dachfenster Bini"},
-        {"DF_OG_GA", 500, false, false, "", "", 50, 50, 0, false, "Dachfenster Gang"},
-        {"VD_OG_KS", 500, false, false, "", "", 50, 50, 0, false, "Verdunkelung Bini"},
-        {"VD_OG_KN", 500, false, false, "", "", 50, 50, 0, false, "Verdunkelung Leo"},
-        {"VD_OG_GA", 500, false, false, "", "", 50, 50, 0, false, "Verdunkelung Gang"},
+rollo_t rollos[] = {
+        {"RO_OG_KN", 31000, true, "Rollo Leo"},
+        {"RO_OG_KS", 31000, true, "Rollo Bini"},
+        {"DF_OG_KN", 500, false, "Dachfenster Leo"},
+        {"DF_OG_KS", 500, false, "Dachfenster Bini"},
+        {"DF_OG_GA", 500, false, "Dachfenster Gang"},
+        {"VD_OG_KS", 500, false, "Verdunkelung Bini"},
+        {"VD_OG_KN", 500, false, "Verdunkelung Leo"},
+        {"VD_OG_GA", 500, false, "Verdunkelung Gang"},
 };
+const int num_rollos = COUNT_OF(rollos);
 
-const int num_switches = 16;
-switch_t switches[num_switches] = {
-        {"", false, 4, 0, 0, 0, false, false, false, false},   // bini oben
-        {"", false, 5, 0, 0, 0, false, false, false, false},   // gang bini
-        {"", false, 6, 0, 0, 0, false, false, false, false},   // bini hoch
-        {"", false, 7, 0, 0, 0, false, false, false, false},   // bini runter
-        {"", false, 8, 0, 0, 0, false, false, false, false},   // leo a hoch
-        {"", false, 9, 0, 0, 0, false, false, false, false},   // bini a runter
-        {"", false, 10, 0, 0, 0, false, false, false, false},  // leo a runter
-        {"", false, 11, 0, 0, 0, false, false, false, false},  // bini a hoch
-        {"", false, 25, 0, 0, 0, false, false, false, false},  // leo hoch
-        {"", false, 24, 0, 0, 0, false, false, false, false},  // leo unten
-        {"", false, 23, 0, 0, 0, false, false, false, false},  // gang runter
-        {"", false, 22, 0, 0, 0, false, false, false, false},  // leo runter
-        {"", false, 17, 0, 0, 0, false, false, false, false},  // bini unten
-        {"", false, 16, 0, 0, 0, false, false, false, false},  // gang hoch
-        {"", false, 3, 0, 0, 0, false, false, false, false},   // leo oben
-        {"", false, 2, 0, 0, 0, false, false, false, false},   // gang leo
+switch_t switches[] = {
+        {"", false, 4},   // bini oben
+        {"", false, 5},   // gang bini
+        {"", false, 6},   // bini hoch
+        {"", false, 7},   // bini runter
+        {"", false, 8},   // leo a hoch
+        {"", false, 9},   // bini a runter
+        {"", false, 10},  // leo a runter
+        {"", false, 11},  // bini a hoch
+        {"", false, 25},  // leo hoch
+        {"", false, 24},  // leo unten
+        {"", false, 23},  // gang runter
+        {"", false, 22},  // leo runter
+        {"", false, 17},  // bini unten
+        {"", false, 16},  // gang hoch
+        {"", false, 3},   // leo oben
+        {"", false, 2},   // gang leo
 };
+const int num_switches = COUNT_OF(switches);
 
-const int num_timers = 0;
-ntimer_t timers[num_timers] = {};
+ntimer_t timers[] = {};
+const int num_timers = COUNT_OF(timers);
 
-const int num_pwms = 0;
-pwm_t pwms[num_pwms] = {};
+pwm_t pwms[] = {};
+const int num_pwms = COUNT_OF(pwms);
 
 void user_logic() {
     long_short(15, "LI_OG_GA", 3, "LI_OG_GA_L1", 3);

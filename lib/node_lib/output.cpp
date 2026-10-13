@@ -16,7 +16,7 @@ void setup_outputs() {
 void post_all_outputs() {
      static unsigned long last_time = millis();
     const unsigned long post_interval = 80000;
-    if ((last_time + post_interval) < millis()) {
+    if ((millis() - last_time) > post_interval) {
         last_time = millis();
         for (int i = 0; i < num_outputs; i++) {
             send_state(outputs[i].name, outputs[i].value);

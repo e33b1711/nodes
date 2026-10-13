@@ -8,11 +8,7 @@
 
 #include "version.h"
 
-#ifndef __TEST__
 uint8_t mac[] = {0xDE, 0xBB, 0x7E, 0xE1, 0xCC, 0x02};
-#else
-uint8_t mac[] = {0xDE, 0xBB, 0x7E, 0xE1, 0xAB, 0x02};
-#endif
 
 node_t node_info = {
         "eg_ost",
@@ -21,57 +17,57 @@ node_t node_info = {
         mac,
 };
 
-const int num_switches = 16;
-switch_t switches[num_switches] = {
-        {"", false, 4, 0, 0, 0, false, false, false, false},  // 0   ht innen, unten  / treppe unten
-        {"", false, 5, 0, 0, 0, false, false, false, false},  // 1   ht innen, oben
-        {"", false, 6, 0, 0, 0, false, false, false, false},  // 2
-        {"", false, 7, 0, 0, 0, false, false, false, false},  // 3
-        {"", false, 8, 0, 0, 0, false, false, false, false},  // 4   gang bei wz
-        {"", false, 9, 0, 0, 0, false, false, false, false},  // 5   wz bei gang
-        {"", false, 10, 0, 0, 0, false, false, false, false},  // 6   garda
-        {"", false, 11, 0, 0, 0, false, false, false, false},  // 7
-        {"", false, 25, 0, 0, 0, false, false, false, false},  // 8   treppe auf
-        {"", false, 24, 0, 0, 0, false, false, false, false},  // 9   wc
-        {"", false, 23, 0, 0, 0, false, false, false, false},  // 10  kachelofen
-        {"", false, 22, 0, 0, 0, false, false, false, false},  // 11  treppe runter
-        {"", false, 17, 0, 0, 0, false, false, false, false},  // 12  wz bei ez
-        {"", false, 16, 0, 0, 0, false, false, false, false},  // 13  klingel
-        {"", false, 3, 0, 0, 0, false, false, false, false},   // 14
-        {"", false, 2, 0, 0, 0, false, false, false, false},   // 15  treppe oben
+switch_t switches[] = {
+        {"", false, 4},  // 0   ht innen, unten  / treppe unten
+        {"", false, 5},  // 1   ht innen, oben
+        {"", false, 6},  // 2
+        {"", false, 7},  // 3
+        {"", false, 8},  // 4   gang bei wz
+        {"", false, 9},  // 5   wz bei gang
+        {"", false, 10},  // 6   garda
+        {"", false, 11},  // 7
+        {"", false, 25},  // 8   treppe auf
+        {"", false, 24},  // 9   wc
+        {"", false, 23},  // 10  kachelofen
+        {"", false, 22},  // 11  treppe runter
+        {"", false, 17},  // 12  wz bei ez
+        {"", false, 16},  // 13  klingel
+        {"", false, 3},   // 14
+        {"", false, 2},   // 15  treppe oben
 };
+const int num_switches = COUNT_OF(switches);
 
-const int num_temps = 0;
 const long period_t = 60000;
-temp_t temps[num_temps] = {};
+temp_t temps[] = {};
+const int num_temps = COUNT_OF(temps);
 
-const int num_outputs = 15;
-output_t outputs[num_outputs] = {
-        {"LI_EG_WZ", 42, 1, 0, 0, HA_LIGHT, "Wohnzimmer Mitte"},     //
-        {"LI_EG_WZ_L1", 43, 1, 0, 0, HA_LIGHT, "Wohnzimmer Vorn"},  //
-        {"LI_EG_WC", 44, 1, 0, 0, HA_LIGHT, "WC"},     //
-        {"LI_GA_L1", 45, 1, 0, 0, HA_LIGHT, "Gang EG Wandlampen"},     //
-        {"LI_EG_GR", 46, 1, 0, 0, HA_LIGHT, "Gardarobe"},     //
-        {"LI_EG_GA", 47, 1, 0, 0, HA_LIGHT, "Gang EG"},     //
-        {"LI_EG_WZ_L2", 48, 1, 0, 0, HA_LIGHT, "Wohnzimmer Hinten"},  //
-        {"LI_EG_VH", 49, 1, 0, 0, HA_LIGHT, "Vorhaus"},     //
-        {"V_EG_WZ", 34, true, 0, 0, HA_SWITCH, "Heizventil Wohnzimmer"},     // 34 rot    Wohnzimmer
-        {"V_EG_GR", 35, true, 0, 0, HA_SWITCH, "Heizventil Gardarobe"},     // 35 rosa   Garda
-        {"V_EG_EZ", 36, true, 0, 0, HA_SWITCH, "Heizventil Esszimmer"},     // 36 grau   EZ
-        {"V_EG_E2", 37, true, 0, 0, HA_SWITCH, "Heizventil Esszimmer 2"},     // 37 gelb   EZ
-        {"V_EG_WC", 38, true, 0, 0, HA_SWITCH, "Heizventil WC"},     // 38 blau   WC
-        {"V_EG_GA", 39, true, 0, 0, HA_SWITCH, "Heizventil Gang EG"},     // 39 grün   Gang
-        {"V_EG_KU", 40, true, 0, 0, HA_SWITCH, "Heizventil Küche"},     // 40 weiß   Küche
+output_t outputs[] = {
+        {"LI_EG_WZ", 42, 1, HA_LIGHT, "Wohnzimmer Mitte"},     //
+        {"LI_EG_WZ_L1", 43, 1, HA_LIGHT, "Wohnzimmer Vorn"},  //
+        {"LI_EG_WC", 44, 1, HA_LIGHT, "WC"},     //
+        {"LI_GA_L1", 45, 1, HA_LIGHT, "Gang EG Wandlampen"},     //
+        {"LI_EG_GR", 46, 1, HA_LIGHT, "Gardarobe"},     //
+        {"LI_EG_GA", 47, 1, HA_LIGHT, "Gang EG"},     //
+        {"LI_EG_WZ_L2", 48, 1, HA_LIGHT, "Wohnzimmer Hinten"},  //
+        {"LI_EG_VH", 49, 1, HA_LIGHT, "Vorhaus"},     //
+        {"V_EG_WZ", 34, true, HA_SWITCH, "Heizventil Wohnzimmer"},     // 34 rot    Wohnzimmer
+        {"V_EG_GR", 35, true, HA_SWITCH, "Heizventil Gardarobe"},     // 35 rosa   Garda
+        {"V_EG_EZ", 36, true, HA_SWITCH, "Heizventil Esszimmer"},     // 36 grau   EZ
+        {"V_EG_E2", 37, true, HA_SWITCH, "Heizventil Esszimmer 2"},     // 37 gelb   EZ
+        {"V_EG_WC", 38, true, HA_SWITCH, "Heizventil WC"},     // 38 blau   WC
+        {"V_EG_GA", 39, true, HA_SWITCH, "Heizventil Gang EG"},     // 39 grün   Gang
+        {"V_EG_KU", 40, true, HA_SWITCH, "Heizventil Küche"},     // 40 weiß   Küche
 };
+const int num_outputs = COUNT_OF(outputs);
 
-const int num_rollos = 0;
-rollo_t rollos[num_rollos] = {};
+rollo_t rollos[] = {};
+const int num_rollos = COUNT_OF(rollos);
 
-const int num_timers = 1;
-ntimer_t timers[num_timers] = {{"ZE_EG_VH", "LI_EG_VH", false, false, 0, 180, HA_LIGHT, "Vorhaus Timer"}};
+ntimer_t timers[] = {{"ZE_EG_VH", "LI_EG_VH", 180, HA_LIGHT, "Vorhaus Timer"}};
+const int num_timers = COUNT_OF(timers);
 
-const int num_pwms = 0;
-pwm_t pwms[num_pwms] = {};
+pwm_t pwms[] = {};
+const int num_pwms = COUNT_OF(pwms);
 
 void user_logic() {
     long_short(6, "LI_EG_AO", 3, "LI_EG_GR", 3);

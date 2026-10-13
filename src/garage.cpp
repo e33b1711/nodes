@@ -11,11 +11,14 @@
 #include "Wiegand.h"
 #include "pinio.h"
 
-#ifndef __TEST__
-uint8_t mac[] = {0xDE, 0xBB, 0x7E, 0xE1, 0xCC, 0x06};
+// door codes are not in git, see include/example_secrets.h
+#if __has_include("secrets.h")
+#include "secrets.h"
 #else
-uint8_t mac[] = {0xDE, 0xBB, 0x7E, 0xE1, 0xAB, 0x06};
+#error "include/secrets.h is missing: copy include/example_secrets.h and set the door codes"
 #endif
+
+uint8_t mac[] = {0xDE, 0xBB, 0x7E, 0xE1, 0xCC, 0x06};
 
 node_t node_info = {
         "gr",
@@ -24,49 +27,49 @@ node_t node_info = {
         mac,
 };
 
-const int num_switches = 4;
-switch_t switches[num_switches] = {
-        {"innen", false, 25, 0, 0, 0, false, false, false, false},      //
-        {"GR_CLOSED", false, 24, 0, 0, 0, false, false, false, false},  //
-        {"GR_OPEN", false, 23, 0, 0, 0, false, false, false, false},    //
-        {"F_RAIN", true, PIN_A7, 0, 0, 0, false, false, false, false, "Regen"},      //
+switch_t switches[] = {
+        {"innen", false, 25},      //
+        {"GR_CLOSED", false, 24},  //
+        {"GR_OPEN", false, 23},    //
+        {"F_RAIN", true, PIN_A7, "Regen"},      //
 };
+const int num_switches = COUNT_OF(switches);
 
-const int num_temps = 2;
 const long period_t = 60000;
-temp_t temps[num_temps] = {
-        {"GR", 8, {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, DHT22_T, 0, 0, 0, "Garage"},  //
-        {"AU", 9, {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, DHT22_T, 0, 0, 0, "Außen"},  //
+temp_t temps[] = {
+        {"GR", 8, DHT22_T, "Garage"},  //
+        {"AU", 9, DHT22_T, "Außen"},  //
 };
+const int num_temps = COUNT_OF(temps);
 
-const int num_outputs = 10;
-output_t outputs[num_outputs] = {
-        {"LI_GR", 48, 1, 0, 0, HA_LIGHT, "Garage"},     //
-        {"LI_GR_L1", 49, 1, 0, 0, HA_LIGHT, "Garage Außen"},  //
-        {"DO_GR_DO", 33, 0, 0, 0},  //
-        {"DO_GR_UP", 32, 0, 0, 0},  //
-        {"DO_GR_DO", 31, 0, 0, 0},  //
-        {"DO_GR_UP", 30, 0, 0, 0},  //
-        {"DO_GR_DO", 29, 0, 0, 0},  //
-        {"DO_GR_UP", 28, 0, 0, 0},  //
-        {"DO_GR_DO", 27, 0, 0, 0},  //
-        {"DO_GR_UP", 26, 0, 0, 0},  //
+output_t outputs[] = {
+        {"LI_GR", 48, 1, HA_LIGHT, "Garage"},     //
+        {"LI_GR_L1", 49, 1, HA_LIGHT, "Garage Außen"},  //
+        {"DO_GR_DO", 33, 0},  //
+        {"DO_GR_UP", 32, 0},  //
+        {"DO_GR_DO", 31, 0},  //
+        {"DO_GR_UP", 30, 0},  //
+        {"DO_GR_DO", 29, 0},  //
+        {"DO_GR_UP", 28, 0},  //
+        {"DO_GR_DO", 27, 0},  //
+        {"DO_GR_UP", 26, 0},  //
 };
+const int num_outputs = COUNT_OF(outputs);
 
-const int num_rollos = 1;
 
-rollo_t rollos[num_rollos] = {
-        {"DO_GR", 500, false, true, "GR_CLOSED", "GR_OPEN", 50, 50, 0, false, "Garagentor"},
+rollo_t rollos[] = {
+        {"DO_GR", 500, false, "Garagentor", true, "GR_CLOSED", "GR_OPEN"},
 };
+const int num_rollos = COUNT_OF(rollos);
 
-const int num_timers = 2;
-ntimer_t timers[num_timers] = {
-        {"ZE_GR_1", "LI_GR", false, false, 0, 600, HA_LIGHT, "Garage Timer 10 min"},
-        {"ZE_GR_2", "LI_GR_L1", false, false, 0, 120, HA_LIGHT, "Garage Timer außen"},
+ntimer_t timers[] = {
+        {"ZE_GR_1", "LI_GR", 600, HA_LIGHT, "Garage Timer 10 min"},
+        {"ZE_GR_2", "LI_GR_L1", 120, HA_LIGHT, "Garage Timer außen"},
 };
+const int num_timers = COUNT_OF(timers);
 
-const int num_pwms = 0;
-pwm_t pwms[num_pwms] = {};
+pwm_t pwms[] = {};
+const int num_pwms = COUNT_OF(pwms);
 
 void on_door_open() {
     static int prev_value;
@@ -84,8 +87,6 @@ void on_door_open() {
 
 WIEGAND wg;
 
-const int num_codes = 4;
-const String code[num_codes] = {"1171", "2105", "6539", "5473"};
 unsigned long buzz_set, led_set;
 
 void init_code_lock() {
@@ -162,14 +163,14 @@ void code_lock() {
         }
     }
 
-    if (last_press + 5000 < millis() and not(code_in == "")) {
+    if ((millis() - last_press) > 5000 and not(code_in == "")) {
         // Serial.println("DEBUG: timeout");
         error_signal();
         code_in = "";
     }
-    if (buzz_set + 1000 < millis())
+    if ((millis() - buzz_set) > 1000)
         digitalWrite(4, 1);
-    if (led_set + 1000 < millis())
+    if ((millis() - led_set) > 1000)
         digitalWrite(5, 1);
 }
 

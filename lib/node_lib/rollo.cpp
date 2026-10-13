@@ -12,7 +12,7 @@ void setup_rollos() {
 void post_all_rollos() {
     static unsigned long last_time = millis();
     const unsigned long post_interval = 75000;
-    if ((last_time + post_interval) < millis()) {
+    if ((millis() - last_time) > post_interval) {
         last_time = millis();
         for (int i = 0; i < num_rollos; i++) {
             send_state(rollos[i].name, rollos[i].value);
@@ -31,13 +31,13 @@ void update_rollos() {
                 case 0:
                     write_output(l_up, 1);
                     write_output(l_down, 0);
-                    rollos[i].stop_time = millis() + rollos[i].duration;
+                    rollos[i].start_time = millis();
                     rollos[i].stop_pending = true;
                     break;
                 case 100:
                     write_output(l_up, rollos[i].is_rollo);
                     write_output(l_down, 1);
-                    rollos[i].stop_time = millis() + rollos[i].duration;
+                    rollos[i].start_time = millis();
                     rollos[i].stop_pending = true;
                     break;
                 default:
@@ -46,7 +46,7 @@ void update_rollos() {
             }
         }
 
-        if (rollos[i].stop_pending and rollos[i].stop_time < millis()) {
+        if (rollos[i].stop_pending and (millis() - rollos[i].start_time) > (unsigned long)rollos[i].duration) {
             rollos[i].stop_pending = false;
             write_output(l_up, 0);
             write_output(l_down, 0);

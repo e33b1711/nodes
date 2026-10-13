@@ -8,11 +8,7 @@
 
 #include "version.h"
 
-#ifndef __TEST__
 uint8_t mac[] = {0xDE, 0xBB, 0x7E, 0xE1, 0xCC, 0x04};
-#else
-uint8_t mac[] = {0xDE, 0xBB, 0x7E, 0xE1, 0xAB, 0x04};
-#endif
 
 node_t node_info = {
         "og_ost",
@@ -21,68 +17,68 @@ node_t node_info = {
         mac,
 };
 
-const int num_temps = 2;
-const long period_t = 30000;
-temp_t temps[num_temps] = {
-        {"OG_BA", 27, {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, DHT22_T, 0, 0, 0, "Badezimmer"},
-        {"OG_SZ", 26, {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, DHT22_T, 0, 0, 0, "Schlafzimmer"},
+const long period_t = 60000;
+temp_t temps[] = {
+        {"OG_BA", 27, DHT22_T, "Badezimmer"},
+        {"OG_SZ", 26, DHT22_T, "Schlafzimmer"},
 };
+const int num_temps = COUNT_OF(temps);
 
 
-const int num_outputs =17;
-output_t outputs[num_outputs] = {
-        {"RO_OG_SZ_UP", 41, 1, 0, 0},  //
-        {"LI_OG_BA", 42, 1, 0, 0, HA_LIGHT, "Badezimmer"},     //
-        {"RO_OG_BA_DO", 43, 1, 0, 0},  //
-        {"LI_OG_SZ", 44, 1, 0, 0, HA_LIGHT, "Schlafzimmer"},     //
-        {"LI_OG_SZ_L2", 45, 1, 0, 0, HA_LIGHT, "Leselampe Anselm"},  //
-        {"RO_OG_SZ_DO", 46, 1, 0, 0},  //
-        {"LI_OG_SZ_L1", 47, 1, 0, 0, HA_LIGHT, "Leselampe Melli"},  //
-        {"RO_OG_BA_UP", 49, 1, 0, 0},  //
-        {"VD_OG_SZ_DO", 58, 0, 0, 0},  //
-        {"DF_OG_SZ_DO", 59, 0, 0, 0},  //
-        {"VD_OG_SZ_UP", 60, 0, 0, 0},  //
-        {"DF_OG_SZ_UP", 61, 0, 0, 0},  //
-        {"V_OG_GA", 34, true, 0, 0, HA_SWITCH, "Heizventil Gang OG"},  // blau
-        {"V_OG_KS", 35, true, 0, 0, HA_SWITCH, "Heizventil Bini"},  // weiß
-        {"V_OG_KN", 36, true, 0, 0, HA_SWITCH, "Heizventil Leo"},  // grün
-        {"V_OG_BA", 37, true, 0, 0, HA_SWITCH, "Heizventil Badezimmer"},  // rosa
-        {"V_OG_SZ", 38, true, 0, 0, HA_SWITCH, "Heizventil Schlafzimmer"},  // grau
+output_t outputs[] = {
+        {"RO_OG_SZ_UP", 41, 1},  //
+        {"LI_OG_BA", 42, 1, HA_LIGHT, "Badezimmer"},     //
+        {"RO_OG_BA_DO", 43, 1},  //
+        {"LI_OG_SZ", 44, 1, HA_LIGHT, "Schlafzimmer"},     //
+        {"LI_OG_SZ_L2", 45, 1, HA_LIGHT, "Leselampe Anselm"},  //
+        {"RO_OG_SZ_DO", 46, 1},  //
+        {"LI_OG_SZ_L1", 47, 1, HA_LIGHT, "Leselampe Melli"},  //
+        {"RO_OG_BA_UP", 49, 1},  //
+        {"VD_OG_SZ_DO", 58, 0},  //
+        {"DF_OG_SZ_DO", 59, 0},  //
+        {"VD_OG_SZ_UP", 60, 0},  //
+        {"DF_OG_SZ_UP", 61, 0},  //
+        {"V_OG_GA", 34, true, HA_SWITCH, "Heizventil Gang OG"},  // blau
+        {"V_OG_KS", 35, true, HA_SWITCH, "Heizventil Bini"},  // weiß
+        {"V_OG_KN", 36, true, HA_SWITCH, "Heizventil Leo"},  // grün
+        {"V_OG_BA", 37, true, HA_SWITCH, "Heizventil Badezimmer"},  // rosa
+        {"V_OG_SZ", 38, true, HA_SWITCH, "Heizventil Schlafzimmer"},  // grau
 };
+const int num_outputs = COUNT_OF(outputs);
 
-const int num_rollos = 4;
-rollo_t rollos[num_rollos] = {
-        {"RO_OG_SZ", 31000, true, false, "", "", 50, 50, 0, false, "Rollo Schlafzimmer"},
-        {"RO_OG_BA", 31000, true, false, "", "", 50, 50, 0, false, "Rollo Bad"},
-        {"DF_OG_SZ", 500, false, false, "", "", 50, 50, 0, false , "Dachfenster Schlafzimmer"},
-        {"VD_OG_SZ", 500, false, false, "", "", 50, 50, 0, false , "Verdunkelung Schlafzimmer"},
+rollo_t rollos[] = {
+        {"RO_OG_SZ", 31000, true, "Rollo Schlafzimmer"},
+        {"RO_OG_BA", 31000, true, "Rollo Bad"},
+        {"DF_OG_SZ", 500, false, "Dachfenster Schlafzimmer"},
+        {"VD_OG_SZ", 500, false, "Verdunkelung Schlafzimmer"},
 };
+const int num_rollos = COUNT_OF(rollos);
 
-const int num_switches = 16;
-switch_t switches[num_switches] = {
-        {"", false, 4, 0, 0, 0, false, false, false, false},   // 0 sz unten
-        {"", false, 5, 0, 0, 0, false, false, false, false},   // 1 ans
-        {"", false, 6, 0, 0, 0, false, false, false, false},   // 2 sz rollo runter
-        {"", false, 7, 0, 0, 0, false, false, false, false},   // 3 sz oben
-        {"", false, 8, 0, 0, 0, false, false, false, false},   // 4 bewegung
-        {"", false, 9, 0, 0, 0, false, false, false, false},   // 5 mell
-        {"", false, 10, 0, 0, 0, false, false, false, false},  // 6 sz rollohoch
-        {"", false, 11, 0, 0, 0, false, false, false, false},  // 7 gang sz
-        {"", false, 25, 0, 0, 0, false, false, false, false},  // 8 bad runter tür
-        {"", false, 24, 0, 0, 0, false, false, false, false},  // 9 gang bad
-        {"", false, 23, 0, 0, 0, false, false, false, false},  // 10 bad
-        {"", false, 22, 0, 0, 0, false, false, false, false},  // 11 bad hoch tür
-        {"", false, 17, 0, 0, 0, false, false, false, false},  // 12 bad fenster runter
-        {"", false, 16, 0, 0, 0, false, false, false, false},  // 13 bad fenster hoch
-        {"", false, 3, 0, 0, 0, false, false, false, false},   // 14 df sz hoch
-        {"", false, 2, 0, 0, 0, false, false, false, false},   // 15 df sz runter
+switch_t switches[] = {
+        {"", false, 4},   // 0 sz unten
+        {"", false, 5},   // 1 ans
+        {"", false, 6},   // 2 sz rollo runter
+        {"", false, 7},   // 3 sz oben
+        {"", false, 8},   // 4 bewegung
+        {"", false, 9},   // 5 mell
+        {"", false, 10},  // 6 sz rollohoch
+        {"", false, 11},  // 7 gang sz
+        {"", false, 25},  // 8 bad runter tür
+        {"", false, 24},  // 9 gang bad
+        {"", false, 23},  // 10 bad
+        {"", false, 22},  // 11 bad hoch tür
+        {"", false, 17},  // 12 bad fenster runter
+        {"", false, 16},  // 13 bad fenster hoch
+        {"", false, 3},   // 14 df sz hoch
+        {"", false, 2},   // 15 df sz runter
 };
+const int num_switches = COUNT_OF(switches);
 
-const int num_timers = 0;
-ntimer_t timers[num_timers] = {};
+ntimer_t timers[] = {};
+const int num_timers = COUNT_OF(timers);
 
-const int num_pwms = 0;
-pwm_t pwms[num_pwms] = {};
+pwm_t pwms[] = {};
+const int num_pwms = COUNT_OF(pwms);
 
 void user_logic() {
     long_short(3, "LI_OG_SZ", 0, "LI_OG_SZ", 3);

@@ -8,11 +8,7 @@
 
 #include "version.h"
 
-#ifndef __TEST__
 uint8_t mac[] = {0xDE, 0xBB, 0x7E, 0xE1, 0xCC, 0x01};
-#else
-uint8_t mac[] = {0xDE, 0xBB, 0x7E, 0xE1, 0xAB, 0x01};
-#endif
 
 node_t node_info = {
         "ug",
@@ -21,60 +17,60 @@ node_t node_info = {
         mac,
 };
 
-const int num_switches = 11;
-switch_t switches[num_switches] = {
-        {"", false, 2, 0, 0, 0, false, false, false, false},             // 0
-        {"", false, 3, 0, 0, 0, false, false, false, false},             // 1
-        {"", false, 16, 0, 0, 0, false, false, false, false},            // 2 HK
-        {"", false, 17, 0, 0, 0, false, false, false, false},            // 3 GA_HK
-        {"", false, 22, 0, 0, 0, false, false, false, false},            // 4 GA
-        {"", false, 23, 0, 0, 0, false, false, false, false},            // 5 HN
-        {"", false, 24, 0, 0, 0, false, false, false, false},            // 6 WK
-        {"", false, 25, 0, 0, 0, false, false, false, false},            // 7 HS
-        {"F_HE", true, PIN_A7, 0, 0, 0, false, false, false, false, "Gastherme"},     // gastherme anforderung
-        {"F_WW_NO", true, PIN_A6, 0, 0, 0, false, false, false, false},  // pumpensumpf NC
-        {"F_WW_NC", true, PIN_A5, 0, 0, 0, false, false, false, false},  // pumepensumpf NO
+switch_t switches[] = {
+        {"", false, 2},             // 0
+        {"", false, 3},             // 1
+        {"", false, 16},            // 2 HK
+        {"", false, 17},            // 3 GA_HK
+        {"", false, 22},            // 4 GA
+        {"", false, 23},            // 5 HN
+        {"", false, 24},            // 6 WK
+        {"", false, 25},            // 7 HS
+        {"F_HE", true, PIN_A7, "Gastherme"},     // gastherme anforderung
+        {"F_WW_NO", true, PIN_A6},  // pumpensumpf NC
+        {"F_WW_NC", true, PIN_A5},  // pumepensumpf NO
 };
+const int num_switches = COUNT_OF(switches);
 
-const int num_temps = 7;
 const long period_t = 60000;
-temp_t temps[num_temps] = {
-        {"PU_O", 8, {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, DS18B20_T, 0, 0, 0, "Puffer oben"},  //
-        {"PU_U", 9, {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, DS18B20_T, 0, 0, 0, "Puffer unten"},  //
-        {"UG_WK", 26, {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, DHT22_T, 0, 0, 0, "Waschküche"},  //
-        {"UG_HO", 27, {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, DHT22_T, 0, 0, 0, "Hobby"},  //
-        {"UG_LA", 28, {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, DHT22_T, 0, 0, 0, "Lager"},  //
-        {"UG_GA", 29, {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, DHT22_T, 0, 0, 0, "Gang UG"},  //
-        {"UG_HK", 30, {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}, DHT22_T, 0, 0, 0, "Technik"},  //
+temp_t temps[] = {
+        {"PU_O", 8, DS18B20_T, "Puffer oben"},  //
+        {"PU_U", 9, DS18B20_T, "Puffer unten"},  //
+        {"UG_WK", 26, DHT22_T, "Waschküche"},  //
+        {"UG_HO", 27, DHT22_T, "Hobby"},  //
+        {"UG_LA", 28, DHT22_T, "Lager"},  //
+        {"UG_GA", 29, DHT22_T, "Gang UG"},  //
+        {"UG_HK", 30, DHT22_T, "Technik"},  //
 
 };
+const int num_temps = COUNT_OF(temps);
 
-const int num_outputs = 14;
-output_t outputs[num_outputs] = {
-        {"LI_UG_HO", 42, 1, 0, 0, HA_LIGHT, "Hobby Schreibtisch"},    //
-        {"LI_UG_HK", 43, 1, 0, 0, HA_LIGHT, "Technik"},    //
-        {"LI_UG_TR", 44, 1, 0, 0, HA_LIGHT, "UG Treppe"},    //
-        {"BELL", 45, 1, 0, 0, HA_SIREN, "Klingel (dauer)"},        //
-        {"PUMP", 46, 1, 0, 0},        //
-        {"LI_UG_GA", 47, 1, 0, 0, HA_LIGHT, "Gang UG"},    //
-        {"LI_UG_WK", 48, 1, 0, 0, HA_LIGHT, "Waschküche"},    //
-        {"LI_UG_HN", 49, 1, 0, 0, HA_LIGHT, "Hobby Hinten"},    //
-        {"V_UG_HO", 34, true, 0, 0, HA_SWITCH, "Heizventil Hobby"},  //
-        {"V_UG_LA", 35, true, 0, 0, HA_SWITCH, "Heizventil Lager"},  //
-        {"V_UG_WK", 36, true, 0, 0, HA_SWITCH, "Heizventil Waschküche"},  //
-        {"V_UG_H2", 37, true, 0, 0, HA_SWITCH, "Heizventil Hobby 2"},  //
-        {"V_UG_GA", 38, true, 0, 0, HA_SWITCH, "Heizventil Gang UG"},  //
-        {"V_UG_H3", 39, true, 0, 0},  //
+output_t outputs[] = {
+        {"LI_UG_HO", 42, 1, HA_LIGHT, "Hobby Schreibtisch"},    //
+        {"LI_UG_HK", 43, 1, HA_LIGHT, "Technik"},    //
+        {"LI_UG_TR", 44, 1, HA_LIGHT, "UG Treppe"},    //
+        {"BELL", 45, 1, HA_SIREN, "Klingel (dauer)"},        //
+        {"PUMP", 46, 1},        //
+        {"LI_UG_GA", 47, 1, HA_LIGHT, "Gang UG"},    //
+        {"LI_UG_WK", 48, 1, HA_LIGHT, "Waschküche"},    //
+        {"LI_UG_HN", 49, 1, HA_LIGHT, "Hobby Hinten"},    //
+        {"V_UG_HO", 34, true, HA_SWITCH, "Heizventil Hobby"},  //
+        {"V_UG_LA", 35, true, HA_SWITCH, "Heizventil Lager"},  //
+        {"V_UG_WK", 36, true, HA_SWITCH, "Heizventil Waschküche"},  //
+        {"V_UG_H2", 37, true, HA_SWITCH, "Heizventil Hobby 2"},  //
+        {"V_UG_GA", 38, true, HA_SWITCH, "Heizventil Gang UG"},  //
+        {"V_UG_H3", 39, true},  //
 };
+const int num_outputs = COUNT_OF(outputs);
 
-const int num_rollos = 0;
-rollo_t rollos[num_rollos] = {};
+rollo_t rollos[] = {};
+const int num_rollos = COUNT_OF(rollos);
 
-const int num_timers = 1;
-ntimer_t timers[num_timers] = {{"ZE_BELL", "BELL", false, false, 0, 5, HA_SIREN, "Klingel"}};
+ntimer_t timers[] = {{"ZE_BELL", "BELL", 5, HA_SIREN, "Klingel"}};
+const int num_timers = COUNT_OF(timers);
 
-const int num_pwms = 1;
-pwm_t pwms[num_pwms] = {{"U_EL", 6, 210, 30000, 0, 210, 0, "Elektrische Heizung"}};
+pwm_t pwms[] = {{"U_EL", 6, 210, 30000, "Elektrische Heizung"}};
+const int num_pwms = COUNT_OF(pwms);
 
 void overtemp() {
     // overtemp for elo heating, 85°
@@ -97,7 +93,7 @@ void water_warning() {
     static unsigned long last_time;
     const unsigned long period = 3600000;
     static bool initial = true;
-    if (((last_time + period) < millis()) or initial) {
+    if (((millis() - last_time) > period) or initial) {
         initial = false;
         last_time = millis();
 

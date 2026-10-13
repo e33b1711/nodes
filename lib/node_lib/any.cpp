@@ -5,7 +5,6 @@
 #include "timer.h"
 #include "rollo.h"
 #include "pwm.h"
-#include "switch.h"
 
 #include <avr/wdt.h>
 

@@ -61,7 +61,7 @@ void update_switches() {
             Serial.println("INFO: Switch: " + ident_string(this_switch) + " pressed.");
         }
         if (edge == -1) {
-            if (switches[this_switch].last_edge + 500 > millis()) {
+            if ((millis() - switches[this_switch].last_edge) < 500) {
                 switches[this_switch].release_early = true;
                 Serial.println("INFO: Switch: " + ident_string(this_switch) + " released early.");
             } else {

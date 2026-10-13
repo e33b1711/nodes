@@ -11,6 +11,7 @@ struct switch_t {
     const String name;
     const bool is_public;
     const int pin;
+    const char *label;  // friendly name in home assistant, none: not announced
     int value;
     int prev_value;
     unsigned long last_edge;
@@ -18,7 +19,10 @@ struct switch_t {
     bool press;
     bool release_early;
     bool release_late;
-    const char *label;  // friendly name in home assistant, none: not announced
+
+    switch_t(String name, bool is_public, int pin, const char *label = nullptr)
+        : name(name), is_public(is_public), pin(pin), label(label), value(0), prev_value(0), last_edge(0),
+          edge(false), press(false), release_early(false), release_late(false) {}
 };
 
 extern const int num_switches;

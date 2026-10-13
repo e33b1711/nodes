@@ -60,10 +60,6 @@ void send_state(String name, int value) {
     send_state(name, String(value));
 }
 
-void send_state(String name, float value) {
-    send_state(name, String(value, 1));
-}
-
 // retained and not limited by the PubSubClient buffer size
 bool send_retained(String topic, String payload) {
     Serial.println("INFO: Publish retained [" + topic + "]");
@@ -107,7 +103,7 @@ void mqtt_callback(char* topic, byte* payload, unsigned int length) {
     String topicStr = String(topic);
     Serial.println("INFO: Received [" + topicStr + "]: " + message);
 
-    // Topic format: nodes/{unit_name}/{type}/{name}
+    // Topic format: nodes/{cmd|read}/{name}
     int lastSlash = topicStr.lastIndexOf('/');
     if (lastSlash == -1) return;
 

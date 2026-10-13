@@ -14,14 +14,20 @@ struct rollo_t {
     const String name;
     const int duration;
     const bool is_rollo;
+    const char *label;  // friendly name in home assistant, none: not announced
     const bool has_stops;  //uses stop switches
     const String switch_open;
     const String switch_closed;
     int value;
     int last_value;
-    unsigned long stop_time;
+    unsigned long start_time;
     boolean stop_pending;
-    const char *label;  // friendly name in home assistant, none: not announced
+
+    rollo_t(String name, int duration, bool is_rollo, const char *label = nullptr, bool has_stops = false,
+            String switch_open = "", String switch_closed = "")
+        : name(name), duration(duration), is_rollo(is_rollo), label(label), has_stops(has_stops),
+          switch_open(switch_open), switch_closed(switch_closed), value(50), last_value(50), start_time(0),
+          stop_pending(false) {}
 };
 
 extern const int num_rollos;
