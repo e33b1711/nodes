@@ -13,14 +13,18 @@ void setup_outputs() {
     }
 }
 
+void send_all_outputs() {
+    for (int i = 0; i < num_outputs; i++) {
+        send_state(outputs[i].name, outputs[i].value);
+    }
+}
+
 void post_all_outputs() {
     static unsigned long last_time = millis();
     const unsigned long post_interval = 80000;
     if ((millis() - last_time) > post_interval) {
         last_time = millis();
-        for (int i = 0; i < num_outputs; i++) {
-            send_state(outputs[i].name, outputs[i].value);
-        }
+        send_all_outputs();
     }
 }
 

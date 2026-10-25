@@ -4,6 +4,7 @@
 
 void update_temps();
 void setup_temps();
+void send_all_temps();
 bool get_temp(String name, String &value);
 bool get_temp(String name, float &value);
 bool get_humi(String name, String &value);

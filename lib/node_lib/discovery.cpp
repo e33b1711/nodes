@@ -24,11 +24,9 @@ void add_topic(String &config,
     config += '"';
 }
 
-void announce(ha_t type, String id, String label, int max_value) {
-    String component;
-    String config;
+// name, unique id and availability, common to all entities
+void begin_config(String &config, String id, String label) {
     config.reserve(450);
-
     config += F("{\"name\":\"");
     config += label;
     config += F("\",\"uniq_id\":\"");
@@ -36,6 +34,19 @@ void announce(ha_t type, String id, String label, int max_value) {
     config += F("\",\"avty_t\":\"nodes/");
     config += node_info.unit_name;
     config += F("/status\"");
+}
+
+void publish_config(String component, String id, String &config) {
+    config += '}';
+    String object_id = id;
+    object_id.replace('/', '_');
+    send_retained("homeassistant/" + component + "/" + object_id + "/config", config);
+}
+
+void announce(ha_t type, String id, String label, int max_value) {
+    String component;
+    String config;
+    begin_config(config, id, label);
 
     switch (type) {
         case HA_LIGHT:
@@ -99,26 +110,44 @@ void announce(ha_t type, String id, String label, int max_value) {
             config += F(",\"stat_cla\":\"measurement\"");
             break;
 
-        case HA_DIAGNOSTIC:
-            component = F("sensor");
-            add_topic(config, F("stat_t"), F("state/"), id);
-            config += F(",\"ent_cat\":\"diagnostic\"");
-            break;
-
         default:
             return;
     }
-    config += '}';
+    publish_config(component, id, config);
+}
 
-    String object_id = id;
-    object_id.replace('/', '_');
-    send_retained("homeassistant/" + component + "/" + object_id + "/config", config);
+// diagnostics form a home assistant device per node, the other entities stay without device
+// to keep their names
+void announce_diagnostic(const char *key, String label, const __FlashStringHelper *extra) {
+    String id = node_info.unit_name + "/" + key;
+    String config;
+    begin_config(config, id, label);
+    add_topic(config, F("stat_t"), F("state/"), id);
+    config += F(",\"ent_cat\":\"diagnostic\"");
+    config += extra;
+    config += F(",\"dev\":{\"ids\":[\"arduino_");
+    config += node_info.unit_name;
+    config += F("\"],\"name\":\"arduino_");
+    config += node_info.unit_name;
+    config += F("\",\"mdl\":\"Arduino Mega 2560\",\"sw\":\"");
+    config += revision();
+    config += F("\"}");
+    publish_config("sensor", id, config);
+}
+
+// payload {"event_type":"..."}, sent with send_state and never retained
+void announce_event(String id, String label, const __FlashStringHelper *event_types) {
+    String config;
+    begin_config(config, id, label);
+    add_topic(config, F("stat_t"), F("state/"), id);
+    config += F(",\"evt_typ\":");
+    config += event_types;
+    publish_config("event", id, config);
 }
 
 void send_discovery() {
     Serial.println("INFO: Sending home assistant discovery.");
-    announce(HA_DIAGNOSTIC, node_info.unit_name + "/git_revision",
-             "revision_" + node_info.unit_name);
+    announce_diagnostics();
 
     for (int i = 0; i < num_outputs; i++) {
         if (outputs[i].label)

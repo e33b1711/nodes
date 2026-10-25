@@ -5,6 +5,7 @@
 #include "node.h"
 
 void update_outputs();
+void send_all_outputs();
 void setup_outputs();
 bool write_output(String name, String val_str);
 bool write_output(String name, int value);

@@ -34,6 +34,14 @@ bool get_humi(String name, String &value) {
     return false;
 }
 
+void send_all_temps() {
+    for (int i = 0; i < num_temps; i++) {
+        send_state("TI_" + temps[i].name, String(temps[i].temp_value));
+        if (temps[i].sensor == DHT22_T)
+            send_state("HI_" + temps[i].name, String(temps[i].humi_value));
+    }
+}
+
 void setup_temps() {
     Serial.println("INFO: setup temps");
     s_time_t = millis();

@@ -125,9 +125,25 @@ void success_signal() {
     success_set = millis();
 }
 
+const int max_wrong_codes = 5;
+const unsigned long lock_time = 60000;
+
+void code_event(const char *type) {
+    send_state("GR_CODE", String("{\"event_type\":\"") + type + "\"}");
+}
+
 void code_lock() {
     static String code_in = "";
     static unsigned long last_press = 0;
+    static int wrong_codes = 0;
+    static unsigned long locked_since = 0;
+
+    bool locked = wrong_codes >= max_wrong_codes;
+    if (locked and (millis() - locked_since) > lock_time) {
+        wrong_codes = 0;
+        locked = false;
+        Serial.println("INFO: keypad unlocked");
+    }
 
     if (wg.available()) {
         unsigned long button_in = wg.getCode();
@@ -142,7 +158,10 @@ void code_lock() {
             code_in = "";
             // Serial.println("DEBUG: code clear");
         }
-        if (button_in == 13) {
+        if (button_in == 13 and locked) {
+            code_in = "";
+            error_signal();
+        } else if (button_in == 13) {
             bool found = false;
             Serial.println("DEBUG: code to check: " + code_in);
             for (int i = 0; i < num_codes; i++) {
@@ -155,8 +174,19 @@ void code_lock() {
                 }
             }
             code_in = "";
-            if (!found)
+            if (found) {
+                wrong_codes = 0;
+                code_event("code_ok");
+            } else {
                 error_signal();
+                wrong_codes++;
+                code_event("code_wrong");
+                if (wrong_codes >= max_wrong_codes) {
+                    locked_since = millis();
+                    code_event("locked");
+                    Serial.println("WARNING: keypad locked after wrong codes");
+                }
+            }
         }
         if (code_in.length() > 8) {
             code_in = "";
@@ -178,6 +208,10 @@ void user_logic() {
     simple(0, 3, "ZE_GR_1");
     on_door_open();
     code_lock();
+}
+
+void user_discovery() {
+    announce_event("GR_CODE", "Codeschloss", F("[\"code_ok\",\"code_wrong\",\"locked\"]"));
 }
 
 void user_init() { init_code_lock(); }

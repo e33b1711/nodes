@@ -31,15 +31,19 @@ String ident_string(int this_switch) {
     return switches[this_switch].name;
 }
 
+void send_all_switches() {
+    for (int i = 0; i < num_switches; i++) {
+        if (switches[i].is_public)
+            send_state(switches[i].name, switches[i].value);
+    }
+}
+
 void post_all_switches() {
     static unsigned long last_time = millis();
     const unsigned long post_interval = 85000;
     if ((millis() - last_time) > post_interval) {
         last_time = millis();
-        for (int i = 0; i < num_switches; i++) {
-            if (switches[i].is_public)
-                send_state(switches[i].name, switches[i].value);
-        }
+        send_all_switches();
     }
 }
 

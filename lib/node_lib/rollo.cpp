@@ -3,15 +3,18 @@
 #include "output.h"
 #include "switch.h"
 
+void send_all_rollos() {
+    for (int i = 0; i < num_rollos; i++) {
+        send_state(rollos[i].name, rollos[i].value);
+    }
+}
 
 void post_all_rollos() {
     static unsigned long last_time = millis();
     const unsigned long post_interval = 75000;
     if ((millis() - last_time) > post_interval) {
         last_time = millis();
-        for (int i = 0; i < num_rollos; i++) {
-            send_state(rollos[i].name, rollos[i].value);
-        }
+        send_all_rollos();
     }
 }
 

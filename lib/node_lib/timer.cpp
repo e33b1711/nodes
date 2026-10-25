@@ -11,14 +11,18 @@ void setup_timers() {
     }
 }
 
+void send_all_timers() {
+    for (int i = 0; i < num_timers; i++) {
+        send_state(timers[i].name, timers[i].value);
+    }
+}
+
 void post_all_timers() {
     static unsigned long last_time = millis();
     const unsigned long post_interval = 70000;
     if ((millis() - last_time) > post_interval) {
         last_time = millis();
-        for (int i = 0; i < num_timers; i++) {
-            send_state(timers[i].name, timers[i].value);
-        }
+        send_all_timers();
     }
 }
 

@@ -4,6 +4,7 @@
 #include "node.h"
 
 void setup_timers();
+void send_all_timers();
 void handle_timers();
 
 bool write_timer(String name, String val_str);

@@ -9,16 +9,10 @@
 
 #include <avr/wdt.h>
 
-// restart by letting the watchdog expire
-void restart() {
-    Serial.println("INFO: restarting...");
-    while (true) {
-    }
-}
-
 void setup() {
     wdt_enable(WDTO_8S);
     init_debug();
+    setup_diagnostics();
     setup_pinio();
     setup_comm();
     wdt_reset();
@@ -41,4 +35,5 @@ void loop() {
     update_outputs();
     update_pwm();
     handle_debug();
+    handle_diagnostics();
 }

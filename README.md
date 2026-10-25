@@ -24,7 +24,7 @@ Jedes PlatformIO-Environment baut genau ein File aus `src/` (`build_src_filter =
 | `eg_ost`    | EG Ost  |
 | `eg_west`   | EG West |
 | `ug`        | UG      |
-| `garage`    | Garage, mit Codeschloss (Wiegand-Keypad) |
+| `garage`    | Garage, mit Codeschloss (Wiegand-Keypad, Sperre nach 5 Fehlversuchen, Events an HA) |
 | `test`      | Testaufbau |
 
 ## Bauen und Flashen
@@ -99,15 +99,26 @@ Broker-Adresse und Port stehen in `lib/node_lib/node.h`.
 | `nodes/state/<name>`                   | Knoten → | Zustand; wird bei Änderung und zusätzlich periodisch gesendet |
 | `nodes/<knoten>/status`                | Knoten → | `online` / `offline` (Last Will), retained |
 | `homeassistant/<component>/<id>/config`| Knoten → | Discovery-Konfiguration, retained |
+| `homeassistant/status`                 | → Knoten | `online` nach einem HA-Neustart: Knoten schicken Discovery und alle Zustände neu |
 
 Rollos verwenden Positionen: `0` = offen, `100` = geschlossen, `50` = Stopp.
 Echte Rollos (`is_rollo = true`) lassen sich zusätzlich über `nodes/cmd/<name>_POS` auf eine Position
 in Prozent fahren. Die Position wird über die Laufzeit mitgerechnet und bei jeder vollen Fahrt auf oder zu
 neu abgeglichen. Beim Start des Knotens fahren echte Rollos zum Abgleich ganz auf.
 
+## Diagnose
+
+Jeder Knoten erscheint in Home Assistant als Gerät `arduino_<knoten>` mit Diagnose-Entitäten:
+Revision, letzter Reset (`power_on`, `watchdog`, `restart`, `reset`), Uptime, freier RAM und
+Anzahl der MQTT-Verbindungen. Die übrigen Entitäten hängen bewusst an keinem Gerät, damit
+Home Assistant ihren Namen nicht um den Gerätenamen ergänzt.
+
+Der Bootloader des Mega löscht das Reset-Register `MCUSR`. Der Watchdog läuft deshalb im Modus
+„erst Interrupt, dann Reset“: Der Interrupt merkt sich den Grund in RAM, das einen Reset übersteht.
+
 ## Robustheit
 
-Ein Watchdog (8 s) startet den Knoten neu, wenn er hängt. Netzwerk- und MQTT-Timeouts sind so
+Ein Watchdog startet den Knoten neu, wenn er hängt (Interrupt nach 8 s, Reset nach weiteren 8 s). Netzwerk- und MQTT-Timeouts sind so
 gewählt, dass sie unterhalb dieser Zeit bleiben. Bei Verbindungsverlust versucht der Knoten alle 20 s
 neu zu verbinden und arbeitet die lokale Logik in der Zwischenzeit weiter ab.
 

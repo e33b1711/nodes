@@ -13,14 +13,18 @@ void setup_pwm() {
     }
 }
 
+void send_all_pwms() {
+    for (int i = 0; i < num_pwms; i++) {
+        send_state(pwms[i].name, pwms[i].value);
+    }
+}
+
 void post_all_pwms() {
     static unsigned long last_time = millis();
     const unsigned long post_interval = 65000;
     if ((millis() - last_time) > post_interval) {
         last_time = millis();
-        for (int i = 0; i < num_pwms; i++) {
-            send_state(pwms[i].name, pwms[i].value);
-        }
+        send_all_pwms();
     }
 }
 

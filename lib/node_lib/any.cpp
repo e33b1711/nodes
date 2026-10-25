@@ -28,6 +28,15 @@ void write_any(String name, String val_str) {
     Serial.println("WARNING: Internal fallback!");
 }
 
+void send_all_states() {
+    send_all_outputs();
+    send_all_switches();
+    send_all_timers();
+    send_all_pwms();
+    send_all_rollos();
+    send_all_temps();
+}
+
 bool get_any(String name, String &value_string) {
     Serial.println("INFO: get_any: " + name);
     if (get_temp(name, value_string))

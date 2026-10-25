@@ -4,6 +4,7 @@
 #include <Arduino.h>
 
 void update_pwm();
+void send_all_pwms();
 void setup_pwm();
 bool write_pwm(String name, String val_str);
 bool get_pwm(String name, String &value);

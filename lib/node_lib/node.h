@@ -26,7 +26,6 @@ enum ha_t {
     HA_TEMPERATURE,
     HA_HUMIDITY,
     HA_NUMBER,
-    HA_DIAGNOSTIC,
 };
 
 void restart();
@@ -47,6 +46,16 @@ bool send_retained(String topic, String payload);
 void send_discovery();
 void user_discovery();
 void announce(ha_t type, String id, String label, int max_value = 255);
+void announce_diagnostic(const char *key, String label, const __FlashStringHelper *extra);
+void announce_event(String id, String label, const __FlashStringHelper *event_types);
+void send_all_states();
+
+void setup_diagnostics();
+void handle_diagnostics();
+void send_diagnostics();
+void announce_diagnostics();
+String revision();
+extern unsigned int mqtt_connects;
 
 void long_short(const int b_index,
                 const String l_long,

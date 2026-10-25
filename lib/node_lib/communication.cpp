@@ -13,14 +13,9 @@ PubSubClient mqttClient(netClient);
 unsigned long last_try_connect = 0;
 bool initial_connect = true;
 const int retry_period = 20000;
+bool resend_pending = false;
 
 void mqtt_callback(char *topic, byte *payload, unsigned int length);
-
-void send_git_revision() {
-    Serial.println("INFO: Sending git revision.");
-    String val = (dirty ? "dirty_" : "") + auto_version.substring(0, 8);
-    send_retained("nodes/state/" + node_info.unit_name + "/git_revision", val);
-}
 
 void init_link() {
     static bool pins_allocated = false;
@@ -94,6 +89,13 @@ void mqtt_callback(char *topic, byte *payload, unsigned int length) {
     String topicStr = String(topic);
     Serial.println("INFO: Received [" + topicStr + "]: " + message);
 
+    // home assistant (re)started: it needs discovery and all states, sent from handle_comm
+    if (topicStr == "homeassistant/status") {
+        if (message == "online")
+            resend_pending = true;
+        return;
+    }
+
     // Topic format: nodes/{cmd|read}/{name}
     int lastSlash = topicStr.lastIndexOf('/');
     if (lastSlash == -1)
@@ -137,9 +139,11 @@ bool maintain_connection() {
 
             mqttClient.subscribe("nodes/cmd/#");
             mqttClient.subscribe("nodes/read/#");
+            mqttClient.subscribe("homeassistant/status");
+            mqtt_connects++;
 
             send_discovery();
-            send_git_revision();
+            send_diagnostics();
 
             return true;
         } else {
@@ -164,5 +168,11 @@ void setup_comm() {
 void handle_comm() {
     if (maintain_connection()) {
         mqttClient.loop();
+        if (resend_pending) {
+            resend_pending = false;
+            send_discovery();
+            send_all_states();
+            send_diagnostics();
+        }
     }
 }

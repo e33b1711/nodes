@@ -3,6 +3,7 @@
 #include <Arduino.h>
 
 void setup_switches();
+void send_all_switches();
 void update_switches();
 bool get_switch(String name, String &value);
 int get_switch(String name);

@@ -3,6 +3,7 @@
 #include <Arduino.h>
 
 void update_rollos();
+void send_all_rollos();
 void setup_rollos();
 
 bool write_rollo(String name, String val_str);
