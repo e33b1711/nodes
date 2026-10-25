@@ -168,8 +168,12 @@ void send_discovery() {
     }
     // inputs are sensors, not binary sensors, to keep the entity ids from the former mqtt.yaml
     for (int i = 0; i < num_switches; i++) {
-        if (switches[i].label and switches[i].is_public)
+        if (!switches[i].label)
+            continue;
+        if (switches[i].is_public)
             announce(HA_SENSOR, switches[i].name, switches[i].label);
+        else
+            announce_event(button_id(i), switches[i].label, F("[\"press\",\"short\",\"long\"]"));
     }
     for (int i = 0; i < num_temps; i++) {
         if (!temps[i].label)

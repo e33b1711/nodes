@@ -16,22 +16,22 @@ node_t node_info = {
 };
 
 switch_t switches[] = {
-        {"", false, 4},   // 0   ht innen, unten  / treppe unten
-        {"", false, 5},   // 1   ht innen, oben
-        {"", false, 6},   // 2
-        {"", false, 7},   // 3
-        {"", false, 8},   // 4   gang bei wz
-        {"", false, 9},   // 5   wz bei gang
-        {"", false, 10},  // 6   garda
-        {"", false, 11},  // 7
-        {"", false, 25},  // 8   treppe auf
-        {"", false, 24},  // 9   wc
-        {"", false, 23},  // 10  kachelofen
-        {"", false, 22},  // 11  treppe runter
-        {"", false, 17},  // 12  wz bei ez
-        {"", false, 16},  // 13  klingel
-        {"", false, 3},   // 14
-        {"", false, 2},   // 15  treppe oben
+        {"", false, 4, "Taster Haustür innen unten"},         // 0
+        {"", false, 5, "Taster Haustür innen oben"},          // 1
+        {"", false, 6},                                       // 2
+        {"", false, 7},                                       // 3
+        {"", false, 8, "Taster Gang EG beim Wohnzimmer"},     // 4
+        {"", false, 9, "Taster Wohnzimmer beim Gang"},        // 5
+        {"", false, 10, "Taster Garderobe"},                  // 6
+        {"", false, 11},                                      // 7
+        {"", false, 25, "Taster Treppe Dachfenster hoch"},    // 8
+        {"", false, 24, "Taster WC"},                         // 9
+        {"", false, 23, "Taster Kachelofen"},                 // 10
+        {"", false, 22, "Taster Treppe Dachfenster runter"},  // 11
+        {"", false, 17, "Taster Wohnzimmer beim Esszimmer"},  // 12
+        {"", false, 16, "Klingeltaster"},                     // 13
+        {"", false, 3},                                       // 14
+        {"", false, 2, "Taster Treppe oben"},                 // 15
 };
 const int num_switches = COUNT_OF(switches);
 

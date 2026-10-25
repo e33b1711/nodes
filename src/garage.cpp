@@ -26,10 +26,10 @@ node_t node_info = {
 };
 
 switch_t switches[] = {
-        {"innen", false, 25},               //
-        {"GR_CLOSED", false, 24},           //
-        {"GR_OPEN", false, 23},             //
-        {"F_RAIN", true, PIN_A7, "Regen"},  //
+        {"innen", false, 25, "Taster Garage innen"},  //
+        {"GR_CLOSED", false, 24},                     //
+        {"GR_OPEN", false, 23},                       //
+        {"F_RAIN", true, PIN_A7, "Regen"},            //
 };
 const int num_switches = COUNT_OF(switches);
 

@@ -16,22 +16,22 @@ node_t node_info = {
 };
 
 switch_t switches[] = {
-        {"", false, 4},   // 0 sü hoch
-        {"", false, 5},   // 1 we hoch
-        {"", false, 6},   // 2 sü runter
-        {"", false, 7},   // 3 sü unten
-        {"", false, 8},   // 4 ez hoch
-        {"", false, 9},   // 5 gang keller oben
-        {"", false, 10},  // 6 " unten
-        {"", false, 11},  // 7
-        {"", false, 25},  // 8 ez runter
-        {"", false, 24},  // 9 ez unten
-        {"", false, 23},  // 10 gang ez
-        {"", false, 22},  // 11 ez mitte
-        {"", false, 17},  // 12
-        {"", false, 16},  // 13 küche
-        {"", false, 3},   // 14 we unten
-        {"", false, 2},   // 15 we runter
+        {"", false, 4, "Taster Rollo Süd hoch"},            // 0
+        {"", false, 5, "Taster Rollo West hoch"},           // 1
+        {"", false, 6, "Taster Rollo Süd runter"},          // 2
+        {"", false, 7, "Taster Süd unten"},                 // 3
+        {"", false, 8, "Taster Esszimmer Rollos hoch"},     // 4
+        {"", false, 9, "Taster Kellergang oben"},           // 5
+        {"", false, 10, "Taster Kellergang unten"},         // 6
+        {"", false, 11},                                    // 7
+        {"", false, 25, "Taster Esszimmer Rollos runter"},  // 8
+        {"", false, 24, "Taster Esszimmer unten"},          // 9
+        {"", false, 23, "Taster Gang EG beim Esszimmer"},   // 10
+        {"", false, 22, "Taster Esszimmer Mitte"},          // 11
+        {"", false, 17},                                    // 12
+        {"", false, 16, "Taster Küche"},                    // 13
+        {"", false, 3, "Taster West unten"},                // 14
+        {"", false, 2, "Taster Rollo West runter"},         // 15
 };
 const int num_switches = COUNT_OF(switches);
 

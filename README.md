@@ -75,7 +75,7 @@ Verfügbare Bausteine:
 
 | Typ        | Zweck |
 |------------|-------|
-| `switch_t` | Tastereingang; erkennt Drücken, kurzes und langes Loslassen |
+| `switch_t` | Tastereingang; erkennt Drücken, kurzes und langes Loslassen. Mit Label: öffentlich als Sensor, sonst als Event-Entität (`press`, `short`, `long`) in Home Assistant |
 | `output_t` | Digitaler Ausgang (Relais) |
 | `rollo_t`  | Rollo/Fenster aus zwei Ausgängen `<name>_UP` und `<name>_DO`, optional mit Endschaltern |
 | `ntimer_t` | Schaltet einen Ausgang für eine feste Zeit ein (Treppenlicht) |

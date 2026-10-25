@@ -31,6 +31,15 @@ String ident_string(int this_switch) {
     return switches[this_switch].name;
 }
 
+// wall buttons with a label are event entities in home assistant, the pin keeps the id stable
+String button_id(int i) { return node_info.unit_name + "/button_" + String(switches[i].pin); }
+
+void button_event(int i, const char *type) {
+    if (!switches[i].label or switches[i].is_public)
+        return;
+    send_state(button_id(i), String("{\"event_type\":\"") + type + "\"}");
+}
+
 void send_all_switches() {
     for (int i = 0; i < num_switches; i++) {
         if (switches[i].is_public)
@@ -63,14 +72,17 @@ void update_switches() {
         if (edge == 1) {
             switches[this_switch].press = true;
             Serial.println("INFO: Switch: " + ident_string(this_switch) + " pressed.");
+            button_event(this_switch, "press");
         }
         if (edge == -1) {
             if ((millis() - switches[this_switch].last_edge) < 500) {
                 switches[this_switch].release_early = true;
                 Serial.println("INFO: Switch: " + ident_string(this_switch) + " released early.");
+                button_event(this_switch, "short");
             } else {
                 switches[this_switch].release_late = true;
                 Serial.println("INFO: Switch: " + ident_string(this_switch) + " released late.");
+                button_event(this_switch, "long");
             }
         }
         if (edge != 0) {

@@ -52,22 +52,22 @@ rollo_t rollos[] = {
 const int num_rollos = COUNT_OF(rollos);
 
 switch_t switches[] = {
-        {"", false, 4},   // 0 sz unten
-        {"", false, 5},   // 1 ans
-        {"", false, 6},   // 2 sz rollo runter
-        {"", false, 7},   // 3 sz oben
-        {"", false, 8},   // 4 bewegung
-        {"", false, 9},   // 5 mell
-        {"", false, 10},  // 6 sz rollohoch
-        {"", false, 11},  // 7 gang sz
-        {"", false, 25},  // 8 bad runter tür
-        {"", false, 24},  // 9 gang bad
-        {"", false, 23},  // 10 bad
-        {"", false, 22},  // 11 bad hoch tür
-        {"", false, 17},  // 12 bad fenster runter
-        {"", false, 16},  // 13 bad fenster hoch
-        {"", false, 3},   // 14 df sz hoch
-        {"", false, 2},   // 15 df sz runter
+        {"", false, 4, "Taster Schlafzimmer unten"},               // 0
+        {"", false, 5, "Taster Anselm"},                           // 1
+        {"", false, 6, "Taster Schlafzimmer Rollo runter"},        // 2
+        {"", false, 7, "Taster Schlafzimmer oben"},                // 3
+        {"", false, 8, "Bewegungsmelder"},                         // 4
+        {"", false, 9, "Taster Melli"},                            // 5
+        {"", false, 10, "Taster Schlafzimmer Rollo hoch"},         // 6
+        {"", false, 11, "Taster Gang OG beim Schlafzimmer"},       // 7
+        {"", false, 25, "Taster Bad Tür Rollo runter"},            // 8
+        {"", false, 24, "Taster Gang OG beim Bad"},                // 9
+        {"", false, 23, "Taster Bad"},                             // 10
+        {"", false, 22, "Taster Bad Tür Rollo hoch"},              // 11
+        {"", false, 17, "Taster Bad Fenster Rollo runter"},        // 12
+        {"", false, 16, "Taster Bad Fenster Rollo hoch"},          // 13
+        {"", false, 3, "Taster Schlafzimmer Dachfenster hoch"},    // 14
+        {"", false, 2, "Taster Schlafzimmer Dachfenster runter"},  // 15
 };
 const int num_switches = COUNT_OF(switches);
 

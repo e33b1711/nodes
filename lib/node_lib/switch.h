@@ -7,12 +7,13 @@ void send_all_switches();
 void update_switches();
 bool get_switch(String name, String &value);
 int get_switch(String name);
+String button_id(int i);
 
 struct switch_t {
     const String name;
     const bool is_public;
     const int pin;
-    const char *label;  // friendly name in home assistant, none: not announced
+    const char *label;  // home assistant: sensor if public, else event entity; none: not announced
     int value;
     int prev_value;
     unsigned long last_edge;

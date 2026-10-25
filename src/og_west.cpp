@@ -60,22 +60,22 @@ rollo_t rollos[] = {
 const int num_rollos = COUNT_OF(rollos);
 
 switch_t switches[] = {
-        {"", false, 4},   // bini oben
-        {"", false, 5},   // gang bini
-        {"", false, 6},   // bini hoch
-        {"", false, 7},   // bini runter
-        {"", false, 8},   // leo a hoch
-        {"", false, 9},   // bini a runter
-        {"", false, 10},  // leo a runter
-        {"", false, 11},  // bini a hoch
-        {"", false, 25},  // leo hoch
-        {"", false, 24},  // leo unten
-        {"", false, 23},  // gang runter
-        {"", false, 22},  // leo runter
-        {"", false, 17},  // bini unten
-        {"", false, 16},  // gang hoch
-        {"", false, 3},   // leo oben
-        {"", false, 2},   // gang leo
+        {"", false, 4, "Taster Bini oben"},                    // 0
+        {"", false, 5, "Taster Gang OG bei Bini"},             // 1
+        {"", false, 6, "Taster Bini Dachfenster hoch"},        // 2
+        {"", false, 7, "Taster Bini Dachfenster runter"},      // 3
+        {"", false, 8, "Taster Leo Rollo hoch"},               // 4
+        {"", false, 9, "Taster Bini Rollo runter"},            // 5
+        {"", false, 10, "Taster Leo Rollo runter"},            // 6
+        {"", false, 11, "Taster Bini Rollo hoch"},             // 7
+        {"", false, 25, "Taster Leo Dachfenster hoch"},        // 8
+        {"", false, 24, "Taster Leo unten"},                   // 9
+        {"", false, 23, "Taster Gang OG Dachfenster runter"},  // 10
+        {"", false, 22, "Taster Leo Dachfenster runter"},      // 11
+        {"", false, 17, "Taster Bini unten"},                  // 12
+        {"", false, 16, "Taster Gang OG Dachfenster hoch"},    // 13
+        {"", false, 3, "Taster Leo oben"},                     // 14
+        {"", false, 2, "Taster Gang OG bei Leo"},              // 15
 };
 const int num_switches = COUNT_OF(switches);
 
