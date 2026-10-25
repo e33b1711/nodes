@@ -10,6 +10,7 @@
 #include <avr/wdt.h>
 
 void setup() {
+    safe_pwm_pins();  // before anything slow like DHCP
     wdt_enable(WDTO_8S);
     init_debug();
     setup_diagnostics();
@@ -32,6 +33,7 @@ void loop() {
     update_temps();
     update_rollos();
     handle_timers();
+    update_failsafe();
     update_outputs();
     update_pwm();
     handle_debug();

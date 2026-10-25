@@ -24,7 +24,6 @@ switch_t switches[] = {
         {"", false, 23, "Taster Hobby hinten"},         // 5
         {"", false, 24, "Taster Waschküche"},           // 6
         {"", false, 25, "Taster Hobby Schreibtisch"},   // 7
-        {"F_HE", true, PIN_A7, "Gastherme"},            // Anforderung Gastherme
         {"F_WW", true, PIN_A6, "Warnung Pumpensumpf"},  // 1: Warnung
 };
 const int num_switches = COUNT_OF(switches);
@@ -43,20 +42,20 @@ temp_t temps[] = {
 const int num_temps = COUNT_OF(temps);
 
 output_t outputs[] = {
-        {"LI_UG_HO", 42, 1, HA_LIGHT, "Hobby Schreibtisch"},        //
-        {"LI_UG_HK", 43, 1, HA_LIGHT, "Technik"},                   //
-        {"LI_UG_TR", 44, 1, HA_LIGHT, "UG Treppe"},                 //
-        {"BELL", 45, 1, HA_SIREN, "Klingel (dauer)"},               //
-        {"PUMP", 46, 1},                                            //
-        {"LI_UG_GA", 47, 1, HA_LIGHT, "Gang UG"},                   //
-        {"LI_UG_WK", 48, 1, HA_LIGHT, "Waschküche"},                //
-        {"LI_UG_HN", 49, 1, HA_LIGHT, "Hobby Hinten"},              //
-        {"V_UG_HO", 34, true, HA_SWITCH, "Heizventil Hobby"},       //
-        {"V_UG_LA", 35, true, HA_SWITCH, "Heizventil Lager"},       //
-        {"V_UG_WK", 36, true, HA_SWITCH, "Heizventil Waschküche"},  //
-        {"V_UG_H2", 37, true, HA_SWITCH, "Heizventil Hobby 2"},     //
-        {"V_UG_GA", 38, true, HA_SWITCH, "Heizventil Gang UG"},     //
-        {"V_UG_H3", 39, true},                                      //
+        {"LI_UG_HO", 42, 1, HA_LIGHT, "Hobby Schreibtisch"},           //
+        {"LI_UG_HK", 43, 1, HA_LIGHT, "Technik"},                      //
+        {"LI_UG_TR", 44, 1, HA_LIGHT, "UG Treppe"},                    //
+        {"BELL", 45, 1, HA_SIREN, "Klingel (dauer)"},                  //
+        {"PUMP", 46, 1},                                               //
+        {"LI_UG_GA", 47, 1, HA_LIGHT, "Gang UG"},                      //
+        {"LI_UG_WK", 48, 1, HA_LIGHT, "Waschküche"},                   //
+        {"LI_UG_HN", 49, 1, HA_LIGHT, "Hobby Hinten"},                 //
+        {"V_UG_HO", 34, true, HA_SWITCH, "Heizventil Hobby", 1},       //
+        {"V_UG_LA", 35, true, HA_SWITCH, "Heizventil Lager", 1},       //
+        {"V_UG_WK", 36, true, HA_SWITCH, "Heizventil Waschküche", 1},  //
+        {"V_UG_H2", 37, true, HA_SWITCH, "Heizventil Hobby 2", 1},     //
+        {"V_UG_GA", 38, true, HA_SWITCH, "Heizventil Gang UG", 1},     //
+        {"V_UG_H3", 39, true, HA_NONE, nullptr, 1},                    //
 };
 const int num_outputs = COUNT_OF(outputs);
 

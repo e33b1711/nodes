@@ -40,20 +40,51 @@ bool write_output(String name, String val_str) {
     return write_output(name, value);
 }
 
+bool fs_active = false;
+
+bool failsafe_active() { return fs_active; }
+
+// without heartbeat from home assistant outputs with a failsafe value take it,
+// afterwards they get back the last value home assistant has set
+void update_failsafe() {
+    bool lost = ha_lost();
+    if (lost == fs_active)
+        return;
+    fs_active = lost;
+    if (lost)
+        Serial.println(F("WARNING: no heartbeat from home assistant, failsafe on"));
+    else
+        Serial.println(F("INFO: heartbeat from home assistant, failsafe off"));
+    for (int i = 0; i < num_outputs; i++) {
+        if (outputs[i].failsafe == no_failsafe)
+            continue;
+        if (lost) {
+            outputs[i].saved = outputs[i].value;
+            outputs[i].value = outputs[i].failsafe;
+        } else {
+            outputs[i].value = outputs[i].saved;
+        }
+        send_state(outputs[i].name, outputs[i].value);
+    }
+}
+
 bool write_output(String name, int value) {
     bool found = false;
     for (int i = 0; i < num_outputs; i++) {
         if (outputs[i].name == name) {
             outputs[i].set_time = millis();
+            // during the failsafe a command only takes effect once it ends
+            bool &target = (fs_active and outputs[i].failsafe != no_failsafe) ? outputs[i].saved
+                                                                              : outputs[i].value;
             switch (value) {
                 case 0:
-                    outputs[i].value = false;
+                    target = false;
                     break;
                 case 1:
-                    outputs[i].value = true;
+                    target = true;
                     break;
                 default:
-                    outputs[i].value = not(outputs[i].value);
+                    target = not(target);
                     break;
             }
             send_state(name, outputs[i].value);

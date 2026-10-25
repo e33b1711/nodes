@@ -15,6 +15,13 @@ bool initial_connect = true;
 const int retry_period = 20000;
 bool resend_pending = false;
 
+// home assistant publishes this every minute, without it the outputs go to their failsafe value
+const char *heartbeat_topic = "nodes/heartbeat";
+const unsigned long heartbeat_timeout = 600000;
+unsigned long last_heartbeat = 0;  // the timeout also runs from the start
+
+bool ha_lost() { return millis() - last_heartbeat > heartbeat_timeout; }
+
 void mqtt_callback(char *topic, byte *payload, unsigned int length);
 
 void init_link() {
@@ -87,6 +94,12 @@ void mqtt_callback(char *topic, byte *payload, unsigned int length) {
     }
 
     String topicStr = String(topic);
+
+    if (topicStr == heartbeat_topic) {
+        last_heartbeat = millis();
+        return;
+    }
+
     Serial.println("INFO: Received [" + topicStr + "]: " + message);
 
     // home assistant (re)started: it needs discovery and all states, sent from handle_comm
@@ -140,6 +153,7 @@ bool maintain_connection() {
             mqttClient.subscribe("nodes/cmd/#");
             mqttClient.subscribe("nodes/read/#");
             mqttClient.subscribe("homeassistant/status");
+            mqttClient.subscribe(heartbeat_topic);
             mqtt_connects++;
 
             send_discovery();

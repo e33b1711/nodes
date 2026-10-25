@@ -2,6 +2,14 @@
 #include "pwm.h"
 #include "pinio.h"
 
+// first thing after a reset: until here the pins float, which a power controller can read as full power
+void safe_pwm_pins() {
+    for (int i = 0; i < num_pwms; i++) {
+        digitalWrite(pwms[i].pin, LOW);
+        pinMode(pwms[i].pin, OUTPUT);
+    }
+}
+
 void setup_pwm() {
     Serial.println("INFO: setupPWM");
     for (int i = 0; i < num_pwms; i++) {

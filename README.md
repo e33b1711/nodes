@@ -53,10 +53,11 @@ uint8_t mac[] = {0xDE, 0xBB, 0x7E, 0xE1, 0xCC, 0x04};
 node_t node_info = {"og_ost", mac};
 
 output_t outputs[] = {
-        // Name, Pin, invertiert, HA-Typ, Name in Home Assistant
+        // Name, Pin, invertiert, HA-Typ, Name in Home Assistant, Wert ohne Home Assistant
         {"LI_OG_BA", 42, 1, HA_LIGHT, "Badezimmer"},
         {"RO_OG_BA_UP", 49, 1},  // ohne Label: nicht in Home Assistant
         {"RO_OG_BA_DO", 43, 1},
+        {"V_OG_BA", 37, true, HA_SWITCH, "Heizventil Badezimmer", 1},  // Notbetrieb: auf
 };
 const int num_outputs = COUNT_OF(outputs);
 
@@ -100,6 +101,7 @@ Broker-Adresse und Port stehen in `lib/node_lib/node.h`.
 | `nodes/<knoten>/status`                | Knoten → | `online` / `offline` (Last Will), retained |
 | `homeassistant/<component>/<id>/config`| Knoten → | Discovery-Konfiguration, retained |
 | `homeassistant/status`                 | → Knoten | `online` nach einem HA-Neustart: Knoten schicken Discovery und alle Zustände neu |
+| `nodes/heartbeat`                      | → Knoten | Lebenszeichen von Home Assistant, jede Minute (siehe Notbetrieb) |
 
 Rollos verwenden Positionen: `0` = offen, `100` = geschlossen, `50` = Stopp.
 Echte Rollos (`is_rollo = true`) lassen sich zusätzlich über `nodes/cmd/<name>_POS` auf eine Position
@@ -109,8 +111,8 @@ neu abgeglichen. Beim Start des Knotens fahren echte Rollos zum Abgleich ganz au
 ## Diagnose
 
 Jeder Knoten erscheint in Home Assistant als Gerät `arduino_<knoten>` mit Diagnose-Entitäten:
-Revision, letzter Reset (`power_on`, `watchdog`, `restart`, `reset`), Uptime, freier RAM und
-Anzahl der MQTT-Verbindungen. Die übrigen Entitäten hängen bewusst an keinem Gerät, damit
+Revision, letzter Reset (`power_on`, `watchdog`, `restart`, `reset`), Uptime, freier RAM,
+Anzahl der MQTT-Verbindungen, IP- und MAC-Adresse und ob der Notbetrieb aktiv ist. Die übrigen Entitäten hängen bewusst an keinem Gerät, damit
 Home Assistant ihren Namen nicht um den Gerätenamen ergänzt.
 
 Der Bootloader des Mega löscht das Reset-Register `MCUSR`. Der Watchdog läuft deshalb im Modus
@@ -121,6 +123,18 @@ Der Bootloader des Mega löscht das Reset-Register `MCUSR`. Der Watchdog läuft 
 Ein Watchdog startet den Knoten neu, wenn er hängt (Interrupt nach 8 s, Reset nach weiteren 8 s). Netzwerk- und MQTT-Timeouts sind so
 gewählt, dass sie unterhalb dieser Zeit bleiben. Bei Verbindungsverlust versucht der Knoten alle 20 s
 neu zu verbinden und arbeitet die lokale Logik in der Zwischenzeit weiter ab.
+
+PWM-Ausgänge werden als Allererstes in `setup()` auf LOW gezogen. Bis dahin hängt der Pin offen,
+was ein Leistungssteller als Vollgas lesen kann. Die Zeit im Bootloader überbrückt das nicht,
+dafür braucht der Pin einen Pull-down-Widerstand (z. B. 10 kΩ nach GND).
+
+### Notbetrieb
+
+Home Assistant schickt jede Minute ein Lebenszeichen auf `nodes/heartbeat` (Automation
+„Controller Heartbeat“). Bleibt es 10 Minuten aus (gezählt auch ab dem Start des Knotens), gehen Ausgänge mit
+einem Notwert in diesen Zustand: die Heizventile auf, damit ohne die Thermostate in Home Assistant
+nicht kalt wird. Kommt das Lebenszeichen zurück, nehmen sie wieder den Wert an, den Home Assistant
+zuletzt gesetzt hat. Befehle während des Notbetriebs werden dafür vorgemerkt.
 
 ## Serielle Konsole
 

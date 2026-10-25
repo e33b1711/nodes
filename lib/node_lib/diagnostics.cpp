@@ -1,4 +1,5 @@
 #include "node.h"
+#include "output.h"
 
 #include <avr/wdt.h>
 #include <avr/interrupt.h>
@@ -57,12 +58,33 @@ void send_diagnostic(const char *key, String value) {
     send_state(node_info.unit_name + "/" + key, value);
 }
 
+String ip_address() {
+    IPAddress ip = Ethernet.localIP();
+    return String(ip[0]) + "." + String(ip[1]) + "." + String(ip[2]) + "." + String(ip[3]);
+}
+
+String mac_address() {
+    String mac;
+    for (int i = 0; i < 6; i++) {
+        if (i > 0)
+            mac += ':';
+        if (node_info.mac[i] < 0x10)
+            mac += '0';
+        mac += String(node_info.mac[i], HEX);
+    }
+    mac.toUpperCase();
+    return mac;
+}
+
 void send_diagnostics() {
     send_retained("nodes/state/" + node_info.unit_name + "/git_revision", revision());
     send_diagnostic("reset_reason", reset_reason);
     send_diagnostic("uptime", String(uptime_s));
     send_diagnostic("free_ram", String(free_ram()));
     send_diagnostic("mqtt_connects", String(mqtt_connects));
+    send_diagnostic("ip", ip_address());
+    send_diagnostic("mac", mac_address());
+    send_diagnostic("failsafe", failsafe_active() ? "1" : "0");
 }
 
 void announce_diagnostics() {
@@ -71,6 +93,9 @@ void announce_diagnostics() {
     announce_diagnostic("uptime", "Uptime", F(",\"dev_cla\":\"duration\",\"unit_of_meas\":\"s\""));
     announce_diagnostic("free_ram", "Freier RAM", F(",\"unit_of_meas\":\"B\""));
     announce_diagnostic("mqtt_connects", "MQTT-Verbindungen", F(""));
+    announce_diagnostic("ip", "IP-Adresse", F(""));
+    announce_diagnostic("mac", "MAC-Adresse", F(""));
+    announce_diagnostic("failsafe", "Notbetrieb Ventile", F(""));
 }
 
 void handle_diagnostics() {

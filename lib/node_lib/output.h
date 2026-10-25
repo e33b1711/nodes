@@ -12,23 +12,36 @@ bool write_output(String name, int value);
 bool get_output(String name, String &value);
 bool get_output(String name, int &value);
 int get_output(String name);
+void update_failsafe();
+bool failsafe_active();
+
+const int8_t no_failsafe = -1;
 
 struct output_t {
     const String name;
     const int pin;
     const bool invert;
-    const ha_t ha;      // HA_NONE: not announced to home assistant
-    const char *label;  // friendly name in home assistant
+    const ha_t ha;          // HA_NONE: not announced to home assistant
+    const char *label;      // friendly name in home assistant
+    const int8_t failsafe;  // value while home assistant is gone, no_failsafe: keep the value
     bool value;
+    bool saved;             // value commanded by home assistant while the failsafe is active
     unsigned long set_time;
 
-    output_t(String name, int pin, bool invert, ha_t ha = HA_NONE, const char *label = nullptr)
+    output_t(String name,
+             int pin,
+             bool invert,
+             ha_t ha = HA_NONE,
+             const char *label = nullptr,
+             int8_t failsafe = no_failsafe)
             : name(name),
               pin(pin),
               invert(invert),
               ha(ha),
               label(label),
+              failsafe(failsafe),
               value(false),
+              saved(false),
               set_time(0) {}
 };
 
