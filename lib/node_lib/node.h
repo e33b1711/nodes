@@ -20,6 +20,7 @@ enum ha_t {
     HA_SWITCH,
     HA_SIREN,
     HA_COVER,
+    HA_COVER_POSITION,  // cover that can be set to a position
     HA_BINARY_SENSOR,
     HA_SENSOR,  // plain value, e.g. an input announced as sensor
     HA_TEMPERATURE,

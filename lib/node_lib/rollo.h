@@ -23,6 +23,14 @@ struct rollo_t {
     unsigned long start_time;
     boolean stop_pending;
     bool trapped;  // both stop switches active, already reported
+    // is_rollo: position tracked over the travel time, 0 open, duration closed
+    long pos_ms;
+    bool known;   // position calibrated by a full travel
+    int dir;      // -1 up, 0 stopped, 1 down
+    int target;   // percent
+    int pending;  // percent to go to after calibration, -1: none
+    unsigned long last_tick;
+    unsigned long last_report;
 
     rollo_t(String name,
             int duration,
@@ -42,7 +50,14 @@ struct rollo_t {
               last_value(50),
               start_time(0),
               stop_pending(false),
-              trapped(false) {}
+              trapped(false),
+              pos_ms(0),
+              known(false),
+              dir(0),
+              target(0),
+              pending(-1),
+              last_tick(0),
+              last_report(0) {}
 };
 
 extern const int num_rollos;

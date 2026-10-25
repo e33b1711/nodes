@@ -58,9 +58,13 @@ void announce(ha_t type, String id, String label, int max_value) {
             break;
 
         case HA_COVER:
+        case HA_COVER_POSITION:
             component = F("cover");
             add_topic(config, F("pos_t"), F("state/"), id);
             add_topic(config, F("cmd_t"), F("cmd/"), id);
+            // 50 on cmd_t is stop, so positions go to their own topic
+            if (type == HA_COVER_POSITION)
+                add_topic(config, F("set_pos_t"), F("cmd/"), id + "_POS");
             config
                     += F(",\"pl_open\":\"0\",\"pl_cls\":\"100\",\"pl_stop\":\"50\",\"pos_open\":0,"
                          "\"pos_clsd\":100");
@@ -126,7 +130,8 @@ void send_discovery() {
     }
     for (int i = 0; i < num_rollos; i++) {
         if (rollos[i].label)
-            announce(HA_COVER, rollos[i].name, rollos[i].label);
+            announce(rollos[i].is_rollo ? HA_COVER_POSITION : HA_COVER, rollos[i].name,
+                     rollos[i].label);
     }
     for (int i = 0; i < num_pwms; i++) {
         if (pwms[i].label)

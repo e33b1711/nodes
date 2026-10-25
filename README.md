@@ -101,6 +101,9 @@ Broker-Adresse und Port stehen in `lib/node_lib/node.h`.
 | `homeassistant/<component>/<id>/config`| Knoten → | Discovery-Konfiguration, retained |
 
 Rollos verwenden Positionen: `0` = offen, `100` = geschlossen, `50` = Stopp.
+Echte Rollos (`is_rollo = true`) lassen sich zusätzlich über `nodes/cmd/<name>_POS` auf eine Position
+in Prozent fahren. Die Position wird über die Laufzeit mitgerechnet und bei jeder vollen Fahrt auf oder zu
+neu abgeglichen. Beim Start des Knotens fahren echte Rollos zum Abgleich ganz auf.
 
 ## Robustheit
 

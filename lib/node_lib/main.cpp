@@ -24,9 +24,9 @@ void setup() {
     wdt_reset();
     setup_switches();
     setup_temps();
-    setup_rollos();
     setup_timers();
     setup_outputs();
+    setup_rollos();  // after the outputs, a calibration drives them
     setup_pwm();
     user_init();
 }
