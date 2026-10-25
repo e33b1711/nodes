@@ -65,8 +65,8 @@ output_t outputs[] = {
 const int num_outputs = COUNT_OF(outputs);
 
 rollo_t rollos[] = {
-        {"RO_EG_SU", 31000, true, "Rollo Esszimmer Süd"},
-        {"RO_EG_WE", 31000, true, "Rollo Esszimmer West"},
+        {"RO_EG_SU", 28000, true, "Rollo Esszimmer Süd"},
+        {"RO_EG_WE", 28000, true, "Rollo Esszimmer West"},
 };
 const int num_rollos = COUNT_OF(rollos);
 
