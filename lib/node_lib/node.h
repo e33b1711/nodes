@@ -21,6 +21,7 @@ enum ha_t {
     HA_SIREN,
     HA_COVER,
     HA_BINARY_SENSOR,
+    HA_SENSOR,  // plain value, e.g. an input announced as sensor
     HA_TEMPERATURE,
     HA_HUMIDITY,
     HA_NUMBER,

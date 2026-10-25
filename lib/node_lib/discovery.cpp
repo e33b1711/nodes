@@ -89,6 +89,12 @@ void announce(ha_t type, String id, String label, int max_value) {
             config += String(max_value, DEC);
             break;
 
+        case HA_SENSOR:
+            component = F("sensor");
+            add_topic(config, F("stat_t"), F("state/"), id);
+            config += F(",\"stat_cla\":\"measurement\"");
+            break;
+
         case HA_DIAGNOSTIC:
             component = F("sensor");
             add_topic(config, F("stat_t"), F("state/"), id);
@@ -126,9 +132,10 @@ void send_discovery() {
         if (pwms[i].label)
             announce(HA_NUMBER, pwms[i].name, pwms[i].label, pwms[i].max_value);
     }
+    // inputs are sensors, not binary sensors, to keep the entity ids from the former mqtt.yaml
     for (int i = 0; i < num_switches; i++) {
         if (switches[i].label and switches[i].is_public)
-            announce(HA_BINARY_SENSOR, switches[i].name, switches[i].label);
+            announce(HA_SENSOR, switches[i].name, switches[i].label);
     }
     for (int i = 0; i < num_temps; i++) {
         if (!temps[i].label)

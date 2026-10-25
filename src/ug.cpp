@@ -129,4 +129,4 @@ void user_logic() {
 
 void user_init() {}
 
-void user_discovery() { announce(HA_BINARY_SENSOR, "F_WW", "Warnung Pumpensumpf"); }
+void user_discovery() { announce(HA_SENSOR, "F_WW", "Warnung Pumpensumpf"); }
