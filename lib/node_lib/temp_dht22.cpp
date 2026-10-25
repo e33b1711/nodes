@@ -23,4 +23,3 @@ void handle_dht22(int i) {
     send_state("TI_" + temps[i].name, String(temps[i].temp_value));
     send_state("HI_" + temps[i].name, String(temps[i].humi_value));
 }
-

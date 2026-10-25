@@ -12,7 +12,7 @@ void setup_timers() {
 }
 
 void post_all_timers() {
-     static unsigned long last_time = millis();
+    static unsigned long last_time = millis();
     const unsigned long post_interval = 70000;
     if ((millis() - last_time) > post_interval) {
         last_time = millis();
@@ -39,10 +39,9 @@ void update_timer(int i) {
         }
     }
     // timer: external off
-    // timer: running
     if (!timers[i].value and timers[i].running) {
         timers[i].running = false;
-        write_output(timers[i].slave, "0");
+        write_output(timers[i].slave, 0);
     }
 }
 
@@ -77,7 +76,7 @@ bool write_timer(String name, String val_str) {
 bool get_timer(String name, String &value) {
     for (int i = 0; i < num_timers; i++) {
         if (timers[i].name == name) {
-            value = String(timers[i].running);
+            value = String(timers[i].value);
             return true;
         }
     }

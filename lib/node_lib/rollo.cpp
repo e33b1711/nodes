@@ -46,7 +46,8 @@ void update_rollos() {
             }
         }
 
-        if (rollos[i].stop_pending and (millis() - rollos[i].start_time) > (unsigned long)rollos[i].duration) {
+        if (rollos[i].stop_pending
+            and (millis() - rollos[i].start_time) > (unsigned long)rollos[i].duration) {
             rollos[i].stop_pending = false;
             write_output(l_up, 0);
             write_output(l_down, 0);
@@ -56,16 +57,16 @@ void update_rollos() {
             bool open = get_switch(rollos[i].switch_open);
             bool closed = get_switch(rollos[i].switch_closed);
             int new_val = 50;
-            if (open and !closed)  // TODO polarity seems false. 100 is down not up
-                new_val = 100;
-            if (!open and closed)
+            if (open and !closed)
                 new_val = 0;
-            static bool trapped = false;
-            if (open and closed and !trapped) {
-                trapped = true;
-                Serial.println("ERROR Rollo with stops: open and closed");
+            if (!open and closed)
+                new_val = 100;
+            if (open and closed) {
+                if (!rollos[i].trapped)
+                    Serial.println("ERROR: Rollo with stops: open and closed: " + rollos[i].name);
+                rollos[i].trapped = true;
             } else {
-                trapped = false;
+                rollos[i].trapped = false;
             }
             if (rollos[i].value != new_val) {
                 rollos[i].value = new_val;

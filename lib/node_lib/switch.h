@@ -21,8 +21,17 @@ struct switch_t {
     bool release_late;
 
     switch_t(String name, bool is_public, int pin, const char *label = nullptr)
-        : name(name), is_public(is_public), pin(pin), label(label), value(0), prev_value(0), last_edge(0),
-          edge(false), press(false), release_early(false), release_late(false) {}
+            : name(name),
+              is_public(is_public),
+              pin(pin),
+              label(label),
+              value(0),
+              prev_value(0),
+              last_edge(0),
+              edge(false),
+              press(false),
+              release_early(false),
+              release_late(false) {}
 };
 
 extern const int num_switches;

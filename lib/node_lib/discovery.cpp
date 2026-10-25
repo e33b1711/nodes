@@ -12,7 +12,10 @@
 void user_discovery() __attribute__((weak));
 void user_discovery() {}
 
-void add_topic(String &config, const __FlashStringHelper *key, const __FlashStringHelper *base, String id) {
+void add_topic(String &config,
+               const __FlashStringHelper *key,
+               const __FlashStringHelper *base,
+               String id) {
     config += F(",\"");
     config += key;
     config += F("\":\"nodes/");
@@ -58,7 +61,9 @@ void announce(ha_t type, String id, String label, int max_value) {
             component = F("cover");
             add_topic(config, F("pos_t"), F("state/"), id);
             add_topic(config, F("cmd_t"), F("cmd/"), id);
-            config += F(",\"pl_open\":\"0\",\"pl_cls\":\"100\",\"pl_stop\":\"50\",\"pos_open\":0,\"pos_clsd\":100");
+            config
+                    += F(",\"pl_open\":\"0\",\"pl_cls\":\"100\",\"pl_stop\":\"50\",\"pos_open\":0,"
+                         "\"pos_clsd\":100");
             break;
 
         case HA_TEMPERATURE:
@@ -71,8 +76,9 @@ void announce(ha_t type, String id, String label, int max_value) {
                 config += F(",\"dev_cla\":\"humidity\",\"unit_of_meas\":\"%\"");
             config += F(",\"stat_cla\":\"measurement\",\"sug_dsp_prc\":1");
             // a failed sensor sends nan
-            config += F(",\"val_tpl\":\"{% set v = value.strip() | lower %}"
-                        "{% if v in ['nan', ''] %}{{ None }}{% else %}{{ v | float }}{% endif %}\"");
+            config += F(
+                    ",\"val_tpl\":\"{% set v = value.strip() | lower %}"
+                    "{% if v in ['nan', ''] %}{{ None }}{% else %}{{ v | float }}{% endif %}\"");
             break;
 
         case HA_NUMBER:
@@ -101,7 +107,8 @@ void announce(ha_t type, String id, String label, int max_value) {
 
 void send_discovery() {
     Serial.println("INFO: Sending home assistant discovery.");
-    announce(HA_DIAGNOSTIC, node_info.unit_name + "/git_revision", "revision_" + node_info.unit_name);
+    announce(HA_DIAGNOSTIC, node_info.unit_name + "/git_revision",
+             "revision_" + node_info.unit_name);
 
     for (int i = 0; i < num_outputs; i++) {
         if (outputs[i].label)

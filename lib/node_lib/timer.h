@@ -19,9 +19,19 @@ struct ntimer_t {
     bool running;
     unsigned long set_time;
 
-    ntimer_t(String name, String slave, unsigned long duration, ha_t ha = HA_NONE, const char *label = nullptr)
-        : name(name), slave(slave), duration(duration), ha(ha), label(label), value(false), running(false),
-          set_time(0) {}
+    ntimer_t(String name,
+             String slave,
+             unsigned long duration,
+             ha_t ha = HA_NONE,
+             const char *label = nullptr)
+            : name(name),
+              slave(slave),
+              duration(duration),
+              ha(ha),
+              label(label),
+              value(false),
+              running(false),
+              set_time(0) {}
 };
 
 extern const int num_timers;

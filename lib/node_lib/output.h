@@ -7,7 +7,7 @@
 void update_outputs();
 void setup_outputs();
 bool write_output(String name, String val_str);
-bool write_output(String name, int value) ;
+bool write_output(String name, int value);
 bool get_output(String name, String &value);
 bool get_output(String name, int &value);
 int get_output(String name);
@@ -22,7 +22,13 @@ struct output_t {
     unsigned long set_time;
 
     output_t(String name, int pin, bool invert, ha_t ha = HA_NONE, const char *label = nullptr)
-        : name(name), pin(pin), invert(invert), ha(ha), label(label), value(false), set_time(0) {}
+            : name(name),
+              pin(pin),
+              invert(invert),
+              ha(ha),
+              label(label),
+              value(false),
+              set_time(0) {}
 };
 
 extern const int num_outputs;

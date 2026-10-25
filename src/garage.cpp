@@ -22,43 +22,40 @@ uint8_t mac[] = {0xDE, 0xBB, 0x7E, 0xE1, 0xCC, 0x06};
 
 node_t node_info = {
         "gr",
-        server,
-        port,
         mac,
 };
 
 switch_t switches[] = {
-        {"innen", false, 25},      //
-        {"GR_CLOSED", false, 24},  //
-        {"GR_OPEN", false, 23},    //
-        {"F_RAIN", true, PIN_A7, "Regen"},      //
+        {"innen", false, 25},               //
+        {"GR_CLOSED", false, 24},           //
+        {"GR_OPEN", false, 23},             //
+        {"F_RAIN", true, PIN_A7, "Regen"},  //
 };
 const int num_switches = COUNT_OF(switches);
 
 const long period_t = 60000;
 temp_t temps[] = {
         {"GR", 8, DHT22_T, "Garage"},  //
-        {"AU", 9, DHT22_T, "Außen"},  //
+        {"AU", 9, DHT22_T, "Außen"},   //
 };
 const int num_temps = COUNT_OF(temps);
 
 output_t outputs[] = {
-        {"LI_GR", 48, 1, HA_LIGHT, "Garage"},     //
+        {"LI_GR", 48, 1, HA_LIGHT, "Garage"},           //
         {"LI_GR_L1", 49, 1, HA_LIGHT, "Garage Außen"},  //
-        {"DO_GR_DO", 33, 0},  //
-        {"DO_GR_UP", 32, 0},  //
-        {"DO_GR_DO", 31, 0},  //
-        {"DO_GR_UP", 30, 0},  //
-        {"DO_GR_DO", 29, 0},  //
-        {"DO_GR_UP", 28, 0},  //
-        {"DO_GR_DO", 27, 0},  //
-        {"DO_GR_UP", 26, 0},  //
+        {"DO_GR_DO", 33, 0},                            //
+        {"DO_GR_UP", 32, 0},                            //
+        {"DO_GR_DO", 31, 0},                            //
+        {"DO_GR_UP", 30, 0},                            //
+        {"DO_GR_DO", 29, 0},                            //
+        {"DO_GR_UP", 28, 0},                            //
+        {"DO_GR_DO", 27, 0},                            //
+        {"DO_GR_UP", 26, 0},                            //
 };
 const int num_outputs = COUNT_OF(outputs);
 
-
 rollo_t rollos[] = {
-        {"DO_GR", 500, false, "Garagentor", true, "GR_CLOSED", "GR_OPEN"},
+        {"DO_GR", 500, false, "Garagentor", true, "GR_OPEN", "GR_CLOSED"},
 };
 const int num_rollos = COUNT_OF(rollos);
 
@@ -87,22 +84,25 @@ void on_door_open() {
 
 WIEGAND wg;
 
-unsigned long buzz_set, led_set;
+// keypad feedback, active low
+const int error_pin = 4;
+const int success_pin = 5;
+unsigned long error_set, success_set;
 
 void init_code_lock() {
     Serial.println("INFO: init wiegand keypad");
     alloc_pin(2);  // wiegand
     alloc_pin(3);  // wiegand
-    alloc_pin(4);  // led
-    alloc_pin(5);  // buzz
+    alloc_pin(error_pin);
+    alloc_pin(success_pin);
     wg.begin(2, 3);
 
-    digitalWrite(4, 1);
-    digitalWrite(5, 1);
-    pinio_mode(4, OUTPUT);
-    pinio_mode(5, OUTPUT);
-    buzz_set = millis();
-    led_set = millis();
+    digitalWrite(error_pin, 1);
+    digitalWrite(success_pin, 1);
+    pinio_mode(error_pin, OUTPUT);
+    pinio_mode(success_pin, OUTPUT);
+    error_set = millis();
+    success_set = millis();
 }
 
 void toggle_door() {
@@ -116,13 +116,13 @@ void toggle_door() {
 }
 
 void error_signal() {
-    digitalWrite(4, 0);
-    buzz_set = millis();
+    digitalWrite(error_pin, 0);
+    error_set = millis();
 }
 
 void success_signal() {
-    digitalWrite(5, 0);
-    led_set = millis();
+    digitalWrite(success_pin, 0);
+    success_set = millis();
 }
 
 void code_lock() {
@@ -168,10 +168,10 @@ void code_lock() {
         error_signal();
         code_in = "";
     }
-    if ((millis() - buzz_set) > 1000)
-        digitalWrite(4, 1);
-    if ((millis() - led_set) > 1000)
-        digitalWrite(5, 1);
+    if ((millis() - error_set) > 1000)
+        digitalWrite(error_pin, 1);
+    if ((millis() - success_set) > 1000)
+        digitalWrite(success_pin, 1);
 }
 
 void user_logic() {

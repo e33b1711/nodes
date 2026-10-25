@@ -12,8 +12,6 @@ uint8_t mac[] = {0xDE, 0xBB, 0x7E, 0xE1, 0xCC, 0x04};
 
 node_t node_info = {
         "og_ost",
-        server,
-        port,
         mac,
 };
 
@@ -24,24 +22,23 @@ temp_t temps[] = {
 };
 const int num_temps = COUNT_OF(temps);
 
-
 output_t outputs[] = {
-        {"RO_OG_SZ_UP", 41, 1},  //
-        {"LI_OG_BA", 42, 1, HA_LIGHT, "Badezimmer"},     //
-        {"RO_OG_BA_DO", 43, 1},  //
-        {"LI_OG_SZ", 44, 1, HA_LIGHT, "Schlafzimmer"},     //
-        {"LI_OG_SZ_L2", 45, 1, HA_LIGHT, "Leselampe Anselm"},  //
-        {"RO_OG_SZ_DO", 46, 1},  //
-        {"LI_OG_SZ_L1", 47, 1, HA_LIGHT, "Leselampe Melli"},  //
-        {"RO_OG_BA_UP", 49, 1},  //
-        {"VD_OG_SZ_DO", 58, 0},  //
-        {"DF_OG_SZ_DO", 59, 0},  //
-        {"VD_OG_SZ_UP", 60, 0},  //
-        {"DF_OG_SZ_UP", 61, 0},  //
-        {"V_OG_GA", 34, true, HA_SWITCH, "Heizventil Gang OG"},  // blau
-        {"V_OG_KS", 35, true, HA_SWITCH, "Heizventil Bini"},  // weiß
-        {"V_OG_KN", 36, true, HA_SWITCH, "Heizventil Leo"},  // grün
-        {"V_OG_BA", 37, true, HA_SWITCH, "Heizventil Badezimmer"},  // rosa
+        {"RO_OG_SZ_UP", 41, 1},                                       //
+        {"LI_OG_BA", 42, 1, HA_LIGHT, "Badezimmer"},                  //
+        {"RO_OG_BA_DO", 43, 1},                                       //
+        {"LI_OG_SZ", 44, 1, HA_LIGHT, "Schlafzimmer"},                //
+        {"LI_OG_SZ_L2", 45, 1, HA_LIGHT, "Leselampe Anselm"},         //
+        {"RO_OG_SZ_DO", 46, 1},                                       //
+        {"LI_OG_SZ_L1", 47, 1, HA_LIGHT, "Leselampe Melli"},          //
+        {"RO_OG_BA_UP", 49, 1},                                       //
+        {"VD_OG_SZ_DO", 58, 0},                                       //
+        {"DF_OG_SZ_DO", 59, 0},                                       //
+        {"VD_OG_SZ_UP", 60, 0},                                       //
+        {"DF_OG_SZ_UP", 61, 0},                                       //
+        {"V_OG_GA", 34, true, HA_SWITCH, "Heizventil Gang OG"},       // blau
+        {"V_OG_KS", 35, true, HA_SWITCH, "Heizventil Bini"},          // weiß
+        {"V_OG_KN", 36, true, HA_SWITCH, "Heizventil Leo"},           // grün
+        {"V_OG_BA", 37, true, HA_SWITCH, "Heizventil Badezimmer"},    // rosa
         {"V_OG_SZ", 38, true, HA_SWITCH, "Heizventil Schlafzimmer"},  // grau
 };
 const int num_outputs = COUNT_OF(outputs);

@@ -4,11 +4,11 @@
 
 void update_temps();
 void setup_temps();
-bool get_temp(String name, String &String);
+bool get_temp(String name, String &value);
 bool get_temp(String name, float &value);
-bool get_humi(String name, String &String);
+bool get_humi(String name, String &value);
 
-enum sensor_t {DHT22_T, DS18B20_T};
+enum sensor_t { DHT22_T, DS18B20_T };
 
 void handle_dht22(int this_temp);
 void start_ds18b20(int this_temp);
@@ -24,12 +24,17 @@ struct temp_t {
     unsigned long last_update;
 
     temp_t(String name, uint8_t pin, sensor_t sensor, const char *label = nullptr)
-        : name(name), pin(pin), sensor(sensor), label(label), temp_value(NAN), humi_value(NAN), last_update(0) {}
+            : name(name),
+              pin(pin),
+              sensor(sensor),
+              label(label),
+              temp_value(NAN),
+              humi_value(NAN),
+              last_update(0) {}
 };
 
 extern const int num_temps;
 extern const long period_t;  // every sensor is read once per period
 extern temp_t temps[];
-
 
 #endif

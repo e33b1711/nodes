@@ -12,8 +12,6 @@ uint8_t mac[] = {0xDE, 0xBB, 0x7E, 0xE1, 0xCC, 0x05};
 
 node_t node_info = {
         "og_west",
-        server,
-        port,
         mac,
 };
 
@@ -26,42 +24,38 @@ temp_t temps[] = {
 const int num_temps = COUNT_OF(temps);
 
 output_t outputs[] = {
-        {"LI_34", 34, 1},        //
-        {"RO_OG_KS_DO", 35, 1},  //
-        {"LI_OG_KS", 36, 1, HA_LIGHT, "Bini"},     //
-        {"RO_OG_KS_UP", 37, 1},  //
-        {"LI_OG_KS_L1", 42, 1, HA_LIGHT, "Bini Spots"},  //
-        {"LI_OG_KN_L1", 43, 1, HA_LIGHT, "Leo Spots"},  //
-        {"LI_OG_KN", 44, 1, HA_LIGHT, "Leo"},     //
-        {"RO_OG_KN_UP", 45, 1},  //
-        {"LI_GA_L1", 46, 1},     //
-        {"RO_OG_KN_DO", 47, 1},  //
+        {"LI_34", 34, 1},                                   //
+        {"RO_OG_KS_DO", 35, 1},                             //
+        {"LI_OG_KS", 36, 1, HA_LIGHT, "Bini"},              //
+        {"RO_OG_KS_UP", 37, 1},                             //
+        {"LI_OG_KS_L1", 42, 1, HA_LIGHT, "Bini Spots"},     //
+        {"LI_OG_KN_L1", 43, 1, HA_LIGHT, "Leo Spots"},      //
+        {"LI_OG_KN", 44, 1, HA_LIGHT, "Leo"},               //
+        {"RO_OG_KN_UP", 45, 1},                             //
+        {"LI_GA_L1", 46, 1},                                //
+        {"RO_OG_KN_DO", 47, 1},                             //
         {"LI_OG_GA_L1", 48, 1, HA_LIGHT, "Gang OG Spots"},  //
-        {"LI_OG_GA", 49, 1, HA_LIGHT, "Gang OG"},     //
-        {"VD_OG_KS_DO", 54, 0},  //
-        {"VD_OG_KS_UP", 55, 0},  //
-        {"DF_OG_KS_DO", 56, 0},  //
-        {"DF_OG_KS_UP", 57, 0},  //
-        {"VD_OG_KN_DO", 58, 0},  //
-        {"VD_OG_KN_UP", 59, 0},  //
-        {"DF_OG_KN_UP", 60, 0},  //
-        {"DF_OG_KN_DO", 61, 0},  //
-        {"VD_OG_GA_UP", 30, 0},  //
-        {"DF_OG_GA_DO", 31, 0},  //
-        {"VD_OG_GA_DO", 32, 0},  //
-        {"DF_OG_GA_UP", 33, 0},  //
+        {"LI_OG_GA", 49, 1, HA_LIGHT, "Gang OG"},           //
+        {"VD_OG_KS_DO", 54, 0},                             //
+        {"VD_OG_KS_UP", 55, 0},                             //
+        {"DF_OG_KS_DO", 56, 0},                             //
+        {"DF_OG_KS_UP", 57, 0},                             //
+        {"VD_OG_KN_DO", 58, 0},                             //
+        {"VD_OG_KN_UP", 59, 0},                             //
+        {"DF_OG_KN_UP", 60, 0},                             //
+        {"DF_OG_KN_DO", 61, 0},                             //
+        {"VD_OG_GA_UP", 30, 0},                             //
+        {"DF_OG_GA_DO", 31, 0},                             //
+        {"VD_OG_GA_DO", 32, 0},                             //
+        {"DF_OG_GA_UP", 33, 0},                             //
 };
 const int num_outputs = COUNT_OF(outputs);
 
 rollo_t rollos[] = {
-        {"RO_OG_KN", 31000, true, "Rollo Leo"},
-        {"RO_OG_KS", 31000, true, "Rollo Bini"},
-        {"DF_OG_KN", 500, false, "Dachfenster Leo"},
-        {"DF_OG_KS", 500, false, "Dachfenster Bini"},
-        {"DF_OG_GA", 500, false, "Dachfenster Gang"},
-        {"VD_OG_KS", 500, false, "Verdunkelung Bini"},
-        {"VD_OG_KN", 500, false, "Verdunkelung Leo"},
-        {"VD_OG_GA", 500, false, "Verdunkelung Gang"},
+        {"RO_OG_KN", 31000, true, "Rollo Leo"},       {"RO_OG_KS", 31000, true, "Rollo Bini"},
+        {"DF_OG_KN", 500, false, "Dachfenster Leo"},  {"DF_OG_KS", 500, false, "Dachfenster Bini"},
+        {"DF_OG_GA", 500, false, "Dachfenster Gang"}, {"VD_OG_KS", 500, false, "Verdunkelung Bini"},
+        {"VD_OG_KN", 500, false, "Verdunkelung Leo"}, {"VD_OG_GA", 500, false, "Verdunkelung Gang"},
 };
 const int num_rollos = COUNT_OF(rollos);
 

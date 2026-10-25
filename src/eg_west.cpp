@@ -12,8 +12,6 @@ uint8_t mac[] = {0xDE, 0xBB, 0x7E, 0xE1, 0xCC, 0x03};
 
 node_t node_info = {
         "eg_west",
-        server,
-        port,
         mac,
 };
 
@@ -39,31 +37,30 @@ const int num_switches = COUNT_OF(switches);
 
 const long period_t = 60000;
 temp_t temps[] = {
-        {"EG_GA", 58, DHT22_T, "Gang EG"},  //
-        {"EG_KU", 59, DHT22_T, "Küche"},  //
+        {"EG_GA", 58, DHT22_T, "Gang EG"},     //
+        {"EG_KU", 59, DHT22_T, "Küche"},       //
         {"EG_WZ", 60, DHT22_T, "Wohnzimmer"},  //
-        {"EG_EZ", 61, DHT22_T, "Esszimmer"},  //
+        {"EG_EZ", 61, DHT22_T, "Esszimmer"},   //
 };
 const int num_temps = COUNT_OF(temps);
 
-
 output_t outputs[] = {
         {"LI_EG_EZ_KU", 34, 1, HA_LIGHT, "Esszimmer Grundbeleuchtung"},  //
-        {"LI_EG_SP", 35, 1, HA_LIGHT, "Speisekammer"},     //
-        {"LI_EG_AS", 36, 1, HA_LIGHT, "Außen Süd"},     //
-        {"LI_EG_KU_L1", 37, 1, HA_LIGHT, "Küche Arbeitsbeleuchtung"},  //
-        {"LI_EG_EZ_L1", 38, 1, HA_LIGHT, "Esszimmer Wandlampen"},  //
-        {"LI_EG_AO", 39, 1, HA_LIGHT, "Außen Ost"},     //
-        {"LI_EG_EZ", 40, 1, HA_LIGHT, "Esstisch"},     //
-        {"LI_EG_AW", 41, 1, HA_LIGHT, "Außen West"},     //
-        {"RO_EG_WE_UP", 42, 1},  //
-        {"LI_GA_L1", 43, 1},     //
-        {"RO_EG_SU_UP", 44, 1},  //
-        {"RO_EG_SU_DO", 45, 1},  //
-        {"LI_EG_EZ_KU", 46, 1},  //
-        {"LI_EG_EZ_L3", 47, 1, HA_LIGHT, "Esszimmer Leselampe"},  //
-        {"RO_EG_WE_DO", 48, 1},  //
-        {"LI_EG_GA", 49, 1},     //
+        {"LI_EG_SP", 35, 1, HA_LIGHT, "Speisekammer"},                   //
+        {"LI_EG_AS", 36, 1, HA_LIGHT, "Außen Süd"},                      //
+        {"LI_EG_KU_L1", 37, 1, HA_LIGHT, "Küche Arbeitsbeleuchtung"},    //
+        {"LI_EG_EZ_L1", 38, 1, HA_LIGHT, "Esszimmer Wandlampen"},        //
+        {"LI_EG_AO", 39, 1, HA_LIGHT, "Außen Ost"},                      //
+        {"LI_EG_EZ", 40, 1, HA_LIGHT, "Esstisch"},                       //
+        {"LI_EG_AW", 41, 1, HA_LIGHT, "Außen West"},                     //
+        {"RO_EG_WE_UP", 42, 1},                                          //
+        {"LI_GA_L1", 43, 1},                                             //
+        {"RO_EG_SU_UP", 44, 1},                                          //
+        {"RO_EG_SU_DO", 45, 1},                                          //
+        {"LI_EG_EZ_KU", 46, 1},                                          //
+        {"LI_EG_EZ_L3", 47, 1, HA_LIGHT, "Esszimmer Leselampe"},         //
+        {"RO_EG_WE_DO", 48, 1},                                          //
+        {"LI_EG_GA", 49, 1},                                             //
 };
 const int num_outputs = COUNT_OF(outputs);
 

@@ -35,7 +35,7 @@ bool get_humi(String name, String &value) {
 }
 
 void setup_temps() {
-    Serial.println("INFO: setup temps dht22");
+    Serial.println("INFO: setup temps");
     s_time_t = millis();
     for (int i = 0; i < num_temps; i++) {
         alloc_pin(temps[i].pin);

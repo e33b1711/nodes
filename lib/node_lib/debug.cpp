@@ -33,7 +33,7 @@ void execute_message_dg(String type, String name, String val_str) {
     }
 }
 
-void handle_message_db() {
+void handle_message_dg() {
     String type, name, val_str;
     parse_message(input_buffer_dg, type, name, val_str);
     input_buffer_dg = "";
@@ -42,7 +42,7 @@ void handle_message_db() {
 
 void handle_debug() {
     if (get_message_dg())
-        handle_message_db();
+        handle_message_dg();
 }
 
 void init_debug() {
@@ -51,5 +51,6 @@ void init_debug() {
     Serial.begin(115200);
     Serial.println("INFO: " + node_info.unit_name + " starting...");
     Serial.println("INFO: GIT revision:" + auto_version);
-    if (dirty) Serial.println("WARNING: Dirty build!");
+    if (dirty)
+        Serial.println("WARNING: Dirty build!");
 }

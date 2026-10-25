@@ -2,9 +2,8 @@
 #ifndef __node__
 #define __node__
 
-
 #include <Ethernet.h>
-const int num_pins = PIN_A15;
+const int num_pins = PIN_A15 + 1;
 const int pseudo_pin = 99;
 
 #define COUNT_OF(a) (sizeof(a) / sizeof(a[0]))
@@ -69,8 +68,6 @@ int convert_value(String value_string);
 
 struct node_t {
     const String unit_name;
-    const IPAddress server;
-    const int port;
     uint8_t *mac;
 };
 

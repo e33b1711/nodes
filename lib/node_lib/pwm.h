@@ -20,8 +20,14 @@ struct pwm_t {
     unsigned long set_time;
 
     pwm_t(String name, int pin, int max_value, unsigned long timeout, const char *label = nullptr)
-        : name(name), pin(pin), max_value(max_value), timeout(timeout), label(label), value(0),
-          act_max_value(max_value), set_time(0) {}
+            : name(name),
+              pin(pin),
+              max_value(max_value),
+              timeout(timeout),
+              label(label),
+              value(0),
+              act_max_value(max_value),
+              set_time(0) {}
 };
 
 extern const int num_pwms;

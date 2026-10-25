@@ -20,14 +20,16 @@ void write_any_internal(String name, String val_str) {
 }
 
 void write_any(String name, String val_str) {
-    if (name == "none") return;  //placeholder in user logic
-    if (send_command(name, val_str)) return;  //normaly go over mqtt
-    write_any_internal(name, val_str); //internal fallback
+    if (name == "none")
+        return;  // placeholder in user logic
+    if (send_command(name, val_str))
+        return;                         // normaly go over mqtt
+    write_any_internal(name, val_str);  // internal fallback
     Serial.println("WARNING: Internal fallback!");
 }
 
 bool get_any(String name, String &value_string) {
-    Serial.println("INFO: get_any: " + name + " " + value_string);
+    Serial.println("INFO: get_any: " + name);
     if (get_temp(name, value_string))
         return true;
     if (get_humi(name, value_string))
@@ -49,7 +51,8 @@ bool get_any(String name, String &value_string) {
 bool pin_alloc[num_pins] = {false};
 
 void alloc_pin(int pin) {
-    if (pin == pseudo_pin) return;
+    if (pin == pseudo_pin)
+        return;
     if (pin >= num_pins) {
         Serial.println("FAILURE: pin undefinied: " + String(pin, DEC));
         Serial.println("Exit...");
