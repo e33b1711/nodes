@@ -44,12 +44,12 @@ const int num_temps = COUNT_OF(temps);
 output_t outputs[] = {
         {"LI_UG_HO", 42, 1, HA_LIGHT, "Hobby Schreibtisch"},           //
         {"LI_UG_HK", 43, 1, HA_LIGHT, "Technik"},                      //
-        {"LI_UG_TR", 44, 1, HA_LIGHT, "UG Treppe"},                    //
+        {"LI_UG_TR", 44, 1, HA_LIGHT, "Treppe UG"},                    //
         {"BELL", 45, 1, HA_SIREN, "Klingel (dauer)"},                  //
         {"PUMP", 46, 1},                                               //
         {"LI_UG_GA", 47, 1, HA_LIGHT, "Gang UG"},                      //
         {"LI_UG_WK", 48, 1, HA_LIGHT, "Waschküche"},                   //
-        {"LI_UG_HN", 49, 1, HA_LIGHT, "Hobby Hinten"},                 //
+        {"LI_UG_HN", 49, 1, HA_LIGHT, "Hobby hinten"},                 //
         {"V_UG_HO", 34, true, HA_SWITCH, "Heizventil Hobby", 1},       //
         {"V_UG_LA", 35, true, HA_SWITCH, "Heizventil Lager", 1},       //
         {"V_UG_WK", 36, true, HA_SWITCH, "Heizventil Waschküche", 1},  //
