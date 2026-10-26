@@ -56,7 +56,7 @@ switch_t switches[] = {
         {"", false, 5, "Taster Anselm"},                           // 1
         {"", false, 6, "Taster Schlafzimmer Rollo runter"},        // 2
         {"", false, 7, "Taster Schlafzimmer oben"},                // 3
-        {"", false, 8, "Bewegungsmelder"},                         // 4
+        {"", false, 8},                                            // 4 frei, war Bewegungsmelder
         {"", false, 9, "Taster Melli"},                            // 5
         {"", false, 10, "Taster Schlafzimmer Rollo hoch"},         // 6
         {"", false, 11, "Taster Gang OG beim Schlafzimmer"},       // 7
@@ -101,8 +101,6 @@ void user_logic() {
     rollo_lock(8, 100, "RO_OG_BA");
     rollo_lock(13, 0, "RO_OG_BA");
     rollo_lock(12, 100, "RO_OG_BA");
-    simple(4, 1, "ZE_EG_VH");
-    simple(4, 1, "ZE_GR_2");
 }
 
 void user_init() {}
