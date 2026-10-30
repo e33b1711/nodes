@@ -89,7 +89,7 @@ void user_logic() {
     long_short(12, "LI_EG_WZ_L2", 0, "LI_EG_WZ_L2", li_eg_wz_inv);
 
     long_short(10, "LI_EG_EZ_L3", 3, "LI_EG_EZ_KU", 3);
-    simple(9, 3, "LI_EG_WC");
+    long_short(9, "none", 0, "LI_EG_WC", 3);  // lang: nächster Radiosender (HA, medien/radio.py)
     long_short(15, "LI_OG_GA", 3, "LI_OG_GA_L1", 3);
     long_short(11, "VD_OG_GA", 100, "DF_OG_GA", 100);
     long_short(8, "VD_OG_GA", 0, "DF_OG_GA", 0);
