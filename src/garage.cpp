@@ -61,7 +61,7 @@ const int num_rollos = COUNT_OF(rollos);
 
 ntimer_t timers[] = {
         {"ZE_GR_1", "LI_GR", 600, HA_LIGHT, "Garage Timer 10 min"},
-        {"ZE_GR_2", "LI_GR_L1", 120, HA_LIGHT, "Garage Timer außen"},
+        {"ZE_GR_2", "LI_GR_L1", 180, HA_LIGHT, "Garage Timer außen"},
 };
 const int num_timers = COUNT_OF(timers);
 
