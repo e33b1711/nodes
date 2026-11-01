@@ -42,6 +42,8 @@ bool send_command(String name, String value);
 void send_state(String name, int value);
 void send_state(String name, String value);
 bool send_retained(String topic, String payload);
+bool subscribe_topic(String topic);
+bool unsubscribe_topic(String topic);
 
 void send_discovery();
 void user_discovery();

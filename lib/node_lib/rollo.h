@@ -10,6 +10,7 @@ bool write_rollo(String name, String val_str);
 bool write_rollo(String name, int value);
 bool get_rollo(String name, String &value);
 int get_rollo(String name);
+bool is_rollo_output(String name);
 
 struct rollo_t {
     const String name;

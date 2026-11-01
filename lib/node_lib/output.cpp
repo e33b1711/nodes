@@ -1,6 +1,8 @@
 #include "node.h"
 #include "output.h"
 #include "pinio.h"
+#include "rollo.h"
+#include "timer.h"
 
 void setup_outputs() {
     Serial.println("INFO: setup outputs");
@@ -28,7 +30,69 @@ void post_all_outputs() {
     }
 }
 
+bool fs_active = false;
+
+// The last commanded value of each output is kept retained on nodes/soll/<name>. After every connect a
+// node reads the values of its outputs from there: a restart keeps the lights and valves, and a command
+// missed while the connection was gone is caught up. Outputs behind a timer or a rollo are left out,
+// repeating those would start them again. Afterwards the topics are given up again, otherwise the
+// echo of an older value could overtake a newer command.
+const unsigned long soll_window = 10000;
+bool soll_requested = false;
+bool soll_open = false;
+unsigned long soll_start = 0;
+
+void request_soll() { soll_requested = true; }
+
+bool keeps_soll(const output_t &output) {
+    return !is_timer_slave(output.name) and !is_rollo_output(output.name);
+}
+
+void update_soll() {
+    if (soll_requested) {
+        soll_requested = false;
+        soll_open = true;
+        soll_start = millis();
+        for (int i = 0; i < num_outputs; i++) {
+            if (keeps_soll(outputs[i]))
+                subscribe_topic("nodes/soll/" + outputs[i].name);
+        }
+    }
+    if (soll_open and millis() - soll_start > soll_window) {
+        soll_open = false;
+        for (int i = 0; i < num_outputs; i++) {
+            if (keeps_soll(outputs[i]))
+                unsubscribe_topic("nodes/soll/" + outputs[i].name);
+        }
+    }
+}
+
+void restore_output(String name, String val_str) {
+    if (!soll_open or (val_str != "0" and val_str != "1"))
+        return;
+    for (int i = 0; i < num_outputs; i++) {
+        // a command since the connect is newer than the kept value
+        if (outputs[i].name == name and keeps_soll(outputs[i]) and
+            millis() - outputs[i].set_time >= millis() - soll_start) {
+            write_output(name, val_str);
+            return;
+        }
+    }
+}
+
+void remember_output(String name) {
+    for (int i = 0; i < num_outputs; i++) {
+        if (outputs[i].name == name and keeps_soll(outputs[i])) {
+            bool value = (fs_active and outputs[i].failsafe != no_failsafe) ? outputs[i].saved
+                                                                            : outputs[i].value;
+            send_retained("nodes/soll/" + name, String(int(value)));
+            return;
+        }
+    }
+}
+
 void update_outputs() {
+    update_soll();
     for (int i = 0; i < num_outputs; i++) {
         pinio_write(outputs[i].pin, !outputs[i].invert ^ outputs[i].value);
     }
@@ -39,8 +103,6 @@ bool write_output(String name, String val_str) {
     int value = convert_value(val_str);
     return write_output(name, value);
 }
-
-bool fs_active = false;
 
 bool failsafe_active() { return fs_active; }
 

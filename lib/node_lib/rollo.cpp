@@ -221,3 +221,10 @@ int get_rollo(String name) {
     Serial.println("WARNING: no such rollo.");
     return 300;
 }
+bool is_rollo_output(String name) {
+    for (int i = 0; i < num_rollos; i++) {
+        if (rollos[i].name + "_UP" == name or rollos[i].name + "_DO" == name)
+            return true;
+    }
+    return false;
+}

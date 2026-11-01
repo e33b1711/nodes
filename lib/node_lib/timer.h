@@ -9,6 +9,7 @@ void handle_timers();
 
 bool write_timer(String name, String val_str);
 bool get_timer(String name, String &value);
+bool is_timer_slave(String name);
 
 struct ntimer_t {
     const String name;

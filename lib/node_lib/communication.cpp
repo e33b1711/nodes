@@ -1,4 +1,5 @@
 #include "node.h"
+#include "output.h"
 #include <PubSubClient.h>
 #include <avr/wdt.h>
 #include <SPI.h>
@@ -66,6 +67,10 @@ bool send_retained(String topic, String payload) {
     return mqttClient.endPublish();
 }
 
+bool subscribe_topic(String topic) { return mqttClient.subscribe(topic.c_str()); }
+
+bool unsubscribe_topic(String topic) { return mqttClient.unsubscribe(topic.c_str()); }
+
 bool send_command(String name, String value) {
     if (!mqttClient.connected()) {
         return false;
@@ -84,6 +89,7 @@ void execute_message(String type, String name, String val_str) {
             send_state(name, value_string);
     } else if (type == "c") {
         write_any_internal(name, val_str);
+        remember_output(name);
     }
 }
 
@@ -120,6 +126,8 @@ void mqtt_callback(char *topic, byte *payload, unsigned int length) {
         execute_message("c", name, message);
     } else if (topicStr.indexOf("/read/") != -1) {
         execute_message("r", name, message);
+    } else if (topicStr.indexOf("/soll/") != -1) {
+        restore_output(name, message);
     }
 }
 
@@ -154,6 +162,7 @@ bool maintain_connection() {
             mqttClient.subscribe("nodes/read/#");
             mqttClient.subscribe("homeassistant/status");
             mqttClient.subscribe(heartbeat_topic);
+            request_soll();
             mqtt_connects++;
 
             send_discovery();

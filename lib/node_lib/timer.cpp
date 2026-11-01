@@ -86,3 +86,11 @@ bool get_timer(String name, String &value) {
     }
     return false;
 }
+
+bool is_timer_slave(String name) {
+    for (int i = 0; i < num_timers; i++) {
+        if (timers[i].slave == name)
+            return true;
+    }
+    return false;
+}

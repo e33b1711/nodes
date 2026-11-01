@@ -136,6 +136,19 @@ einem Notwert in diesen Zustand: die Heizventile auf, damit ohne die Thermostate
 nicht kalt wird. Kommt das Lebenszeichen zurück, nehmen sie wieder den Wert an, den Home Assistant
 zuletzt gesetzt hat. Befehle während des Notbetriebs werden dafür vorgemerkt.
 
+### Zustand über Neustart und Verbindungsabbruch
+
+Kommt ein Befehl auf `nodes/cmd/<name>` bei einem Ausgang an, schreibt der Knoten den Zielwert retained nach
+`nodes/soll/<name>`. Nach jedem Verbinden, also beim Start und nach einem Abbruch, liest er von dort die
+Werte seiner Ausgänge. So überstehen Lichter und Ventile einen Neustart, und ein während des Abbruchs
+verpasster Befehl wird nachgeholt. Das gilt auch für Ausgänge unter demselben Namen auf mehreren Knoten
+(`LI_GA_L1`, `LI_EG_GA`). Ausgenommen sind Ausgänge hinter einem Timer und die Relais der Rollos, Timer,
+Rollos und PWM selbst sowie Schalten über die serielle Konsole. Die Topics bleiben nur 10 s abonniert;
+ein Befehl aus dieser Zeit gilt vor dem gespeicherten Wert.
+
+Nach einem Stromausfall geht also wieder an, was vorher an war. Ein Taster während eines Broker-Ausfalls
+schaltet nur lokal und wird beim Verbinden vom gespeicherten Wert überschrieben.
+
 ## Serielle Konsole
 
 Neben den Logausgaben nimmt die serielle Schnittstelle Befehle im Format `!<typ>!<name>!<wert>$` an:

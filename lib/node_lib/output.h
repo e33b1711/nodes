@@ -13,6 +13,9 @@ bool get_output(String name, String &value);
 bool get_output(String name, int &value);
 int get_output(String name);
 void update_failsafe();
+void request_soll();
+void restore_output(String name, String val_str);
+void remember_output(String name);
 bool failsafe_active();
 
 const int8_t no_failsafe = -1;

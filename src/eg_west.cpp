@@ -84,8 +84,7 @@ void user_logic() {
     simple(4, 0, "RO_EG_WE");
     simple(8, 100, "RO_EG_SU");
     simple(8, 100, "RO_EG_WE");
-    long_short(3, "none", 1, "LI_EG_AS", 3);
-    long_short(3, "PUMP", 3, "none", 3);
+    simple(3, 3, "LI_EG_AS");
     rollo_lock(0, 0, "RO_EG_SU");
     rollo_lock(2, 100, "RO_EG_SU");
     simple(14, 3, "LI_EG_AW");
