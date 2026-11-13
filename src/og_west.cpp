@@ -44,10 +44,10 @@ output_t outputs[] = {
         {"VD_OG_KN_UP", 59, 0},                             //
         {"DF_OG_KN_UP", 60, 0},                             //
         {"DF_OG_KN_DO", 61, 0},                             //
-        {"VD_OG_GA_UP", 30, 0},                             //
-        {"DF_OG_GA_DO", 31, 0},                             //
-        {"VD_OG_GA_DO", 32, 0},                             //
-        {"DF_OG_GA_UP", 33, 0},                             //
+        {"VD_OG_GA_UP", 8, 0},                             //
+        {"DF_OG_GA_DO", 9, 0},                             //
+        {"VD_OG_GA_DO", 10, 0},                             //
+        {"DF_OG_GA_UP", 11, 0},                             //
 };
 const int num_outputs = COUNT_OF(outputs);
 
@@ -64,10 +64,10 @@ switch_t switches[] = {
         {"", false, 5, "Taster Gang OG bei Bini"},             // 1
         {"", false, 6, "Taster Bini Dachfenster hoch"},        // 2
         {"", false, 7, "Taster Bini Dachfenster runter"},      // 3
-        {"", false, 8, "Taster Leo Rollo hoch"},               // 4
-        {"", false, 9, "Taster Bini Rollo runter"},            // 5
-        {"", false, 10, "Taster Leo Rollo runter"},            // 6
-        {"", false, 11, "Taster Bini Rollo hoch"},             // 7
+        {"", false, 30, "Taster Leo Rollo hoch"},               // 4
+        {"", false, 31, "Taster Bini Rollo runter"},            // 5
+        {"", false, 32, "Taster Leo Rollo runter"},            // 6
+        {"", false, 33, "Taster Bini Rollo hoch"},             // 7
         {"", false, 25, "Taster Leo Dachfenster hoch"},        // 8
         {"", false, 24, "Taster Leo unten"},                   // 9
         {"", false, 23, "Taster Gang OG Dachfenster runter"},  // 10
