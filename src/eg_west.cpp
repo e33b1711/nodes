@@ -90,8 +90,13 @@ void user_logic() {
     simple(14, 3, "LI_EG_AW");
     rollo_lock(1, 0, "RO_EG_WE");
     rollo_lock(15, 100, "RO_EG_WE");
-    simple(13, 3, "LI_EG_KU_L1");
-    simple(13, 3, "LI_EG_SP");
+
+    int inv_val = 0;
+    if (get_output("LI_EG_KU_L1") == 0)
+        inv_val = 1;
+    simple(13, inv_val, "LI_EG_KU_L1");
+    simple(13, inv_val, "LI_EG_SP");
+
     simple(6, 3, "LI_UG_GA");
     toggle_couple(5, "LI_EG_GA");
 }
