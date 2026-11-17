@@ -82,6 +82,7 @@ void send_diagnostics() {
     send_diagnostic("uptime", String(uptime_s));
     send_diagnostic("free_ram", String(free_ram()));
     send_diagnostic("mqtt_connects", String(mqtt_connects));
+    send_diagnostic("link_resets", String(link_resets));
     send_diagnostic("ip", ip_address());
     send_diagnostic("mac", mac_address());
     send_diagnostic("failsafe", failsafe_active() ? "1" : "0");
@@ -93,6 +94,7 @@ void announce_diagnostics() {
     announce_diagnostic("uptime", "Uptime", F(",\"dev_cla\":\"duration\",\"unit_of_meas\":\"s\""));
     announce_diagnostic("free_ram", "Freier RAM", F(",\"unit_of_meas\":\"B\""));
     announce_diagnostic("mqtt_connects", "MQTT-Verbindungen", F(""));
+    announce_diagnostic("link_resets", "Ethernet-Resets", F(""));
     announce_diagnostic("ip", "IP-Adresse", F(""));
     announce_diagnostic("mac", "MAC-Adresse", F(""));
     announce_diagnostic("failsafe", "Notbetrieb Ventile", F(""));

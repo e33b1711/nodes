@@ -58,6 +58,7 @@ void send_diagnostics();
 void announce_diagnostics();
 String revision();
 extern unsigned int mqtt_connects;
+extern unsigned int link_resets;
 bool ha_lost();
 
 void long_short(const int b_index,

@@ -1,5 +1,6 @@
 #include "node.h"
 #include "output.h"
+#include "pinio.h"
 #include <PubSubClient.h>
 #include <avr/wdt.h>
 #include <SPI.h>
@@ -25,11 +26,28 @@ bool ha_lost() { return millis() - last_heartbeat > heartbeat_timeout; }
 
 void mqtt_callback(char *topic, byte *payload, unsigned int length);
 
+// the W5100 reset hangs on D12 only, a watchdog reset of the mega leaves the chip as it is
+const unsigned int link_reset_after = 3;  // failed connects in a row, about a minute
+unsigned int failed_connects = 0;
+unsigned int link_resets = 0;
+
+void reset_link_hw() {
+    Serial.println("INFO: Resetting ethernet chip.");
+    pinio_write(ethernet_reset_pin, LOW);
+    delay(1);  // the W5100 needs 2 us
+    pinio_write(ethernet_reset_pin, HIGH);
+    delay(200);  // until its PLL is stable
+    wdt_reset();
+}
+
 void init_link() {
     static bool pins_allocated = false;
     if (!pins_allocated) {
         alloc_pin(ethernet_sc_pin);
         alloc_pin(ethernet_reset_pin);
+        pinio_write(ethernet_reset_pin, HIGH);
+        pinio_mode(ethernet_reset_pin, OUTPUT);
+        reset_link_hw();  // a clean chip also after a watchdog reset
         pins_allocated = true;
     }
 
@@ -40,7 +58,9 @@ void init_link() {
 
     Ethernet.init(ethernet_sc_pin);
     if (Ethernet.localIP() == IPAddress(0, 0, 0, 0)) {
-        if (!Ethernet.begin(node_info.mac, 2000, 2000)) {
+        bool got_ip = Ethernet.begin(node_info.mac, 2000, 2000);
+        wdt_reset();
+        if (!got_ip) {
             Serial.println("ERROR: Got no IP from DHCP.");
             return;
         }
@@ -164,6 +184,7 @@ bool maintain_connection() {
             mqttClient.subscribe(heartbeat_topic);
             request_soll();
             mqtt_connects++;
+            failed_connects = 0;
 
             send_discovery();
             send_diagnostics();
@@ -172,6 +193,13 @@ bool maintain_connection() {
         } else {
             Serial.print("ERROR: MQTT connection failed, rc=");
             Serial.println(mqttClient.state());
+            // a hung chip still reports its old ip, so init_link alone does not help;
+            // after the reset the ip is 0.0.0.0 and the next try starts with DHCP
+            if (++failed_connects >= link_reset_after) {
+                failed_connects = 0;
+                link_resets++;
+                reset_link_hw();
+            }
         }
     }
     return false;

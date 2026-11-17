@@ -112,7 +112,7 @@ neu abgeglichen. Beim Start des Knotens fahren echte Rollos zum Abgleich ganz au
 
 Jeder Knoten erscheint in Home Assistant als Gerät `arduino_<knoten>` mit Diagnose-Entitäten:
 Revision, letzter Reset (`power_on`, `watchdog`, `restart`, `reset`), Uptime, freier RAM,
-Anzahl der MQTT-Verbindungen, IP- und MAC-Adresse und ob der Notbetrieb aktiv ist. Die übrigen Entitäten hängen bewusst an keinem Gerät, damit
+Anzahl der MQTT-Verbindungen und der Ethernet-Resets, IP- und MAC-Adresse und ob der Notbetrieb aktiv ist. Die übrigen Entitäten hängen bewusst an keinem Gerät, damit
 Home Assistant ihren Namen nicht um den Gerätenamen ergänzt.
 
 Der Bootloader des Mega löscht das Reset-Register `MCUSR`. Der Watchdog läuft deshalb im Modus
@@ -122,7 +122,11 @@ Der Bootloader des Mega löscht das Reset-Register `MCUSR`. Der Watchdog läuft 
 
 Ein Watchdog startet den Knoten neu, wenn er hängt (Interrupt nach 8 s, Reset nach weiteren 8 s). Netzwerk- und MQTT-Timeouts sind so
 gewählt, dass sie unterhalb dieser Zeit bleiben. Bei Verbindungsverlust versucht der Knoten alle 20 s
-neu zu verbinden und arbeitet die lokale Logik in der Zwischenzeit weiter ab.
+neu zu verbinden und arbeitet die lokale Logik in der Zwischenzeit weiter ab. Klappt das dreimal hintereinander
+nicht (etwa 1 min), setzt er den W5100 über dessen RST-Leitung (D12) zurück und holt sich die Adresse neu per DHCP;
+beim Start passiert das immer. Der Watchdog allein hilft hier nicht, weil RST des W5100 nur an D12 hängt und ein
+Reset des Mega den Chip nicht zurücksetzt. Die Diagnose-Entität „Ethernet-Resets“ zählt die Resets seit dem Start.
+Ist der Broker länger weg, kommt so jede Minute ein Reset, das schadet nicht.
 
 PWM-Ausgänge werden als Allererstes in `setup()` auf LOW gezogen. Bis dahin hängt der Pin offen,
 was ein Leistungssteller als Vollgas lesen kann. Die Zeit im Bootloader überbrückt das nicht,
