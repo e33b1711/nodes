@@ -37,6 +37,7 @@ temp_t temps[] = {
         {"UG_LA", 28, DHT22_T, "Lager"},         //
         {"UG_GA", 29, DHT22_T, "Gang UG"},       //
         {"UG_HK", 30, DHT22_T, "Technik"},       //
+        {"UG_H2", 31, DHT22_T, "Hobby 2"},       //
 
 };
 const int num_temps = COUNT_OF(temps);

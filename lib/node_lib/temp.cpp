@@ -42,14 +42,33 @@ void send_all_temps() {
     }
 }
 
+// reads every sensor once at startup instead of waiting up to a whole period,
+// the ds18b20 conversions run in parallel while the dht22 are read
+static void read_all_temps() {
+    const unsigned long conversion_time = 800;
+    unsigned long start = millis();
+    for (int i = 0; i < num_temps; i++)
+        if (temps[i].sensor == DS18B20_T)
+            start_ds18b20(i);
+    for (int i = 0; i < num_temps; i++)
+        if (temps[i].sensor == DHT22_T)
+            handle_dht22(i);
+    while (millis() - start < conversion_time) {
+    }
+    for (int i = 0; i < num_temps; i++)
+        if (temps[i].sensor == DS18B20_T)
+            handle_ds18b20(i);
+}
+
 void setup_temps() {
     Serial.println("INFO: setup temps");
-    s_time_t = millis();
     for (int i = 0; i < num_temps; i++) {
         alloc_pin(temps[i].pin);
         temps[i].temp_value = NAN;
         temps[i].humi_value = NAN;
     }
+    read_all_temps();
+    s_time_t = millis();
 }
 
 void update_temps() {
