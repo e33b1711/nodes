@@ -84,7 +84,7 @@ void on_door_open() {
 
 WIEGAND wg;
 
-// keypad feedback, active low
+// keypad feedback, active low: pin 4 beeps, pin 5 is the led
 const int error_pin = 4;
 const int success_pin = 5;
 unsigned long error_set, success_set;
@@ -132,6 +132,43 @@ void code_event(const char *type) {
     send_state("GR_CODE", String("{\"event_type\":\"") + type + "\"}");
 }
 
+// front door code: 10 s countdown on the keypad (9 short beeps, then a long one, led on), then the
+// event door_open, home assistant opens the nuki. Any key during the countdown aborts it.
+const unsigned long countdown_time = 10000;
+const unsigned long short_beep = 150;
+bool countdown_active = false;
+unsigned long countdown_start;
+
+void start_countdown() {
+    countdown_active = true;
+    countdown_start = millis();
+    Serial.println("INFO: front door countdown started");
+}
+
+void abort_countdown() {
+    countdown_active = false;
+    digitalWrite(success_pin, 1);
+    error_signal();
+    code_event("door_abort");
+    Serial.println("INFO: front door countdown aborted");
+}
+
+void update_countdown() {
+    unsigned long t = millis() - countdown_start;
+    if (t >= countdown_time) {
+        countdown_active = false;
+        digitalWrite(error_pin, 1);
+        digitalWrite(success_pin, 1);
+        code_event("door_open");
+        Serial.println("INFO: front door open");
+        return;
+    }
+    // seconds 0..8 short beep at the start, second 9 beeps the whole time
+    bool beep = (t / 1000 >= 9) or (t % 1000 < short_beep);
+    digitalWrite(error_pin, beep ? 0 : 1);
+    digitalWrite(success_pin, 0);
+}
+
 void code_lock() {
     static String code_in = "";
     static unsigned long last_press = 0;
@@ -150,6 +187,10 @@ void code_lock() {
         last_press = millis();
         Serial.print("DEBUG: Wiegand");
         Serial.println(button_in);
+        if (countdown_active) {
+            abort_countdown();
+            return;
+        }
         if (button_in <= 9) {
             code_in += String(button_in);
             Serial.println("DEBUG:code_in += " + code_in);
@@ -164,7 +205,14 @@ void code_lock() {
         } else if (button_in == 13) {
             bool found = false;
             Serial.println("DEBUG: code to check: " + code_in);
-            for (int i = 0; i < num_codes; i++) {
+            for (int i = 0; i < num_door_codes; i++) {
+                if (code_in == door_code[i]) {
+                    start_countdown();
+                    found = true;
+                    break;
+                }
+            }
+            for (int i = 0; i < num_codes and not found; i++) {
                 if (code_in == code[i]) {
                     // Serial.println("DEBUG: code match: " + String(i));
                     success_signal();
@@ -198,6 +246,10 @@ void code_lock() {
         error_signal();
         code_in = "";
     }
+    if (countdown_active) {
+        update_countdown();
+        return;
+    }
     if ((millis() - error_set) > 1000)
         digitalWrite(error_pin, 1);
     if ((millis() - success_set) > 1000)
@@ -211,7 +263,7 @@ void user_logic() {
 }
 
 void user_discovery() {
-    announce_event("GR_CODE", "Codeschloss", F("[\"code_ok\",\"code_wrong\",\"locked\"]"));
+    announce_event("GR_CODE", "Codeschloss", F("[\"code_ok\",\"code_wrong\",\"locked\",\"door_open\",\"door_abort\"]"));
 }
 
 void user_init() { init_code_lock(); }

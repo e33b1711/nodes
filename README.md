@@ -26,7 +26,7 @@ Jedes PlatformIO-Environment baut genau ein File aus `src/` (`build_src_filter =
 | `eg_ost`    | EG Ost  |
 | `eg_west`   | EG West |
 | `ug`        | UG      |
-| `garage`    | Garage, mit Codeschloss (Wiegand-Keypad, Sperre nach 5 Fehlversuchen, Events an HA) |
+| `garage`    | Garage, mit Codeschloss (Wiegand-Keypad, Sperre nach 5 Fehlversuchen, Events an HA; Haustür-Code: 10 s Countdown mit Piepsern, dann Event `door_open`, HA öffnet das Nuki) |
 | `test`      | Testaufbau |
 
 ## Bauen und Flashen
