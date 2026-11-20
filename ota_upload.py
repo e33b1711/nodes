@@ -1,6 +1,7 @@
 # firmware upload over the network, see README "Flashen über das Netzwerk (OTA)"
 #   pio run -e og_ost -t ota                         ip from custom_ota_host in platformio.ini
-#   OTA_HOST=192.168.178.50 pio run -e og_ost -t ota
+#   pio run -t ota                                   all nodes in default_envs
+#   OTA_HOST=192.168.178.50 pio run -e test -t ota   only for environments without custom_ota_host
 import base64
 import os
 import re
@@ -37,7 +38,8 @@ def read_password():
 
 
 def ota_upload(target, source, env):
-    host = os.environ.get("OTA_HOST") or env.GetProjectOption("custom_ota_host", "")
+    # the ini wins, otherwise a run over all nodes would send every image to OTA_HOST
+    host = env.GetProjectOption("custom_ota_host", "") or os.environ.get("OTA_HOST")
     if not host:
         sys.stderr.write(
             "Error: no ip for %s, set custom_ota_host in platformio.ini or OTA_HOST\n"

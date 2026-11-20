@@ -54,8 +54,15 @@ Port 65280 ein neues Image per HTTP an (Benutzer `arduino`, Passwort aus `secret
 
 ```sh
 pio run -e og_ost -t ota                           # IP aus custom_ota_host in platformio.ini
-OTA_HOST=192.168.178.50 pio run -e og_ost -t ota   # oder IP direkt angeben
+pio run -t ota                                     # alle Knoten aus default_envs nacheinander
+OTA_HOST=192.168.178.50 pio run -e test -t ota     # Environment ohne custom_ota_host
 ```
+
+Ohne `pio` im PATH geht dasselbe mit `./ota_all.sh` (alle Knoten) oder `./ota_all.sh og_ost ug`.
+
+`OTA_HOST` gilt nur für Environments ohne `custom_ota_host`, sonst ginge beim Lauf über alle Knoten
+jedes Image an dieselbe Adresse. Schlägt ein Knoten fehl, macht `pio run -t ota` mit den übrigen weiter
+und zeigt am Ende eine Übersicht. `pio run` ohne `-e` baut ebenfalls nur noch die Knoten aus `default_envs`.
 
 In VS Code liegt das Target unter PlatformIO → Project Tasks → `<knoten>` → Custom → „Upload OTA“,
 dafür muss `custom_ota_host` gesetzt sein. „Remote“ in PlatformIO ist etwas anderes (PIO Remote) und
