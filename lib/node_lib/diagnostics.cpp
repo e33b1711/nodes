@@ -9,6 +9,7 @@ const uint16_t boot_magic_value = 0xB007;
 const uint8_t cause_none = 0;
 const uint8_t cause_watchdog = 1;
 const uint8_t cause_restart = 2;
+const uint8_t cause_ota = 3;
 
 volatile uint16_t boot_magic __attribute__((section(".noinit")));
 volatile uint8_t boot_cause __attribute__((section(".noinit")));
@@ -19,7 +20,7 @@ unsigned long uptime_s = 0;
 
 // the watchdog interrupts first and resets on the next timeout
 ISR(WDT_vect) {
-    if (boot_cause != cause_restart)
+    if (boot_cause == cause_none)
         boot_cause = cause_watchdog;
 }
 
@@ -31,6 +32,9 @@ void restart() {
     }
 }
 
+// the new firmware is copied by the bootloader, which then resets via the watchdog
+void mark_ota_restart() { boot_cause = cause_ota; }
+
 void setup_diagnostics() {
     if (boot_magic != boot_magic_value)
         reset_reason = "power_on";  // ram content is random after power loss
@@ -38,6 +42,8 @@ void setup_diagnostics() {
         reset_reason = "watchdog";
     else if (boot_cause == cause_restart)
         reset_reason = "restart";
+    else if (boot_cause == cause_ota)
+        reset_reason = "ota";
     else
         reset_reason = "reset";  // reset button, upload, brown-out
     boot_magic = boot_magic_value;
@@ -86,6 +92,7 @@ void send_diagnostics() {
     send_diagnostic("ip", ip_address());
     send_diagnostic("mac", mac_address());
     send_diagnostic("failsafe", failsafe_active() ? "1" : "0");
+    send_diagnostic("ota", ota_ready() ? "1" : "0");
 }
 
 void announce_diagnostics() {
@@ -98,6 +105,7 @@ void announce_diagnostics() {
     announce_diagnostic("ip", "IP-Adresse", F(""));
     announce_diagnostic("mac", "MAC-Adresse", F(""));
     announce_diagnostic("failsafe", "Notbetrieb Ventile", F(""));
+    announce_diagnostic("ota", "OTA bereit", F(""));
 }
 
 void handle_diagnostics() {

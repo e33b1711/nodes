@@ -64,9 +64,10 @@ void init_link() {
             Serial.println("ERROR: Got no IP from DHCP.");
             return;
         }
-        Serial.println("INFO: IP: " + String(Ethernet.localIP()));
+        Serial.println("INFO: IP: " + ip_address());
         // a send to a vanished peer gives up after 3 s (default 30 s), below the watchdog timeout
         Ethernet.setRetransmissionCount(3);
+        start_ota();
     }
 }
 

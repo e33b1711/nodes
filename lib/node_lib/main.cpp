@@ -29,6 +29,7 @@ void setup() {
 void loop() {
     wdt_reset();
     handle_comm();
+    handle_ota();
     update_switches();
     update_temps();
     update_rollos();

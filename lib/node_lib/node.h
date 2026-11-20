@@ -57,9 +57,15 @@ void handle_diagnostics();
 void send_diagnostics();
 void announce_diagnostics();
 String revision();
+String ip_address();
 extern unsigned int mqtt_connects;
 extern unsigned int link_resets;
 bool ha_lost();
+void mark_ota_restart();
+
+void start_ota();
+void handle_ota();
+bool ota_ready();
 
 void long_short(const int b_index,
                 const String l_long,

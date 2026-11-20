@@ -12,7 +12,9 @@ Die Tasterlogik läuft lokal auf dem Knoten, die Grundfunktionen bleiben also au
 ```
 src/            ein File pro Knoten: Pinbelegung, Entitäten, Tasterlogik
 lib/node_lib/   gemeinsamer Code aller Knoten
-include/        example_secrets.h, generierte version.h
+include/        example_secrets.h, example_secret_ota.h, generierte version.h
+bootloader/     Optiboot für den Mega, Voraussetzung für OTA
+ota_upload.py   PlatformIO-Target `ota`: Upload über das Netzwerk
 ```
 
 Jedes PlatformIO-Environment baut genau ein File aus `src/` (`build_src_filter = +<${PIOENV}.cpp>`).
@@ -37,8 +39,64 @@ pio run -e og_ost -t upload          # flashen
 pio device monitor                   # serielle Konsole, 115200 Baud
 ```
 
-Für `garage` muss vorher `include/example_secrets.h` nach `include/secrets.h` kopiert und
-mit den Türcodes befüllt werden. Die Datei ist in `.gitignore` eingetragen.
+Für alle Knoten muss vorher `include/example_secret_ota.h` nach `include/secret_ota.h` kopiert und
+das OTA-Passwort gesetzt werden. Für `garage` zusätzlich `include/example_secrets.h` nach
+`include/secrets.h` mit den Türcodes. Beide Dateien sind in `.gitignore` eingetragen.
+
+Die Knoten laufen mit [Optiboot](https://github.com/Optiboot/optiboot) statt dem
+Original-Bootloader des Mega, `upload` über USB spricht deshalb das Protokoll `arduino` mit 115200 Baud.
+Ein Knoten mit dem alten Bootloader lässt sich so nicht mehr per USB flashen, siehe unten.
+
+### Flashen über das Netzwerk (OTA)
+
+Mit der Library [ArduinoOTA](https://github.com/JAndrassy/ArduinoOTA) nimmt jeder Knoten auf
+Port 65280 ein neues Image per HTTP an (Benutzer `arduino`, Passwort aus `secret_ota.h`):
+
+```sh
+pio run -e og_ost -t ota                           # IP aus custom_ota_host in platformio.ini
+OTA_HOST=192.168.178.50 pio run -e og_ost -t ota   # oder IP direkt angeben
+```
+
+In VS Code liegt das Target unter PlatformIO → Project Tasks → `<knoten>` → Custom → „Upload OTA“,
+dafür muss `custom_ota_host` gesetzt sein. „Remote“ in PlatformIO ist etwas anderes (PIO Remote) und
+hilft hier nicht. Die Logausgaben gibt es weiterhin nur über USB.
+
+Die IP steht in Home Assistant bei der Diagnose-Entität „IP-Adresse“. Fest eintragen lohnt sich, wenn
+die Fritzbox der MAC des Knotens immer dieselbe Adresse gibt. Der Knoten schreibt das Image
+in die obere Hälfte des Flash, Optiboot kopiert es danach an den Anfang und startet neu
+(Reset-Grund `ota`). Ein Image darf deshalb höchstens 127,5 KB groß sein, `board_upload.maximum_size`
+lässt größere Builds schon beim Bauen scheitern. Bricht der Upload ab, bleibt die alte Firmware
+unverändert. Das Target prüft nicht, ob das Image zum Knoten passt: Die richtige IP ist Sache des Aufrufers.
+
+Während des Uploads steht die Logik des Knotens für einige Sekunden. Der Watchdog bleibt aktiv,
+hängt der Upload, startet der Knoten mit der alten Firmware neu.
+
+### Bootloader brennen
+
+Einmal pro Knoten, mit einem ISP-Programmer (USBasp oder ein zweiter Arduino mit dem Sketch
+„ArduinoISP“). Der Mega wird dabei komplett gelöscht, danach die Firmware einmal per USB flashen.
+
+```sh
+pio run -e bootloader -t bootloader     # Fuses setzen, Optiboot brennen
+pio run -e og_ost -t upload             # Firmware per USB
+```
+
+Das Environment `bootloader` ist auf einen Uno mit ArduinoISP an `/dev/ttyACM0` eingestellt,
+einen anderen Port mit `--upload-port` angeben (Port mit `pio device list` prüfen). Für USBasp stehen
+die Zeilen auskommentiert in `platformio.ini`.
+Auf dem Uno gehört nach dem Hochladen von ArduinoISP ein 10-µF-Elko zwischen RESET und GND.
+Verkabelung: Uno D13/D12/D11 an SCK/MISO/MOSI des Mega (D52/D50/D51 oder ICSP), Uno D10 an RESET des Mega. Gesetzt werden lfuse `0xFF`, hfuse `0xD6` (1 KB Bootsektor,
+EEPROM bleibt beim Löschen erhalten), efuse `0xFD`, Lock `0x0F`. Das Image
+`bootloader/optiboot_atmega2560.hex` stammt aus [my_boards](https://github.com/JAndrassy/my_boards)
+von Juraj Andrassy, es ist Optiboot 8 mit der Funktion `copy_flash_pages`, die OTA braucht.
+
+Der ISP-Stecker (6 Pins neben dem ATmega) wird vom Ethernet-Shield belegt, das Shield muss dafür ab.
+Alternativ an den Mega-Pins 50 (MISO), 51 (MOSI), 52 (SCK) und RESET anschließen. Beim Brennen hängen
+alle Ausgänge offen, die Relais also vorher stromlos machen oder den Knoten ausbauen.
+
+Ein Knoten ohne Optiboot läuft mit der neuen Firmware weiter, OTA bleibt dort aber abgeschaltet
+(Diagnose-Entität „OTA bereit“ = 0). Der Knoten prüft dazu die Fuses, denn mit dem alten Bootloader
+würde der Sprung nach `copy_flash_pages` irgendwo landen.
 
 Vor jedem Build schreibt `auto_firmware_version.py` den aktuellen Git-Hash nach `include/version.h`.
 Der Knoten veröffentlicht ihn als Diagnose-Entität, mit dem Präfix `dirty_`, wenn beim Build
@@ -111,11 +169,12 @@ neu abgeglichen. Beim Start des Knotens fahren echte Rollos zum Abgleich ganz au
 ## Diagnose
 
 Jeder Knoten erscheint in Home Assistant als Gerät `arduino_<knoten>` mit Diagnose-Entitäten:
-Revision, letzter Reset (`power_on`, `watchdog`, `restart`, `reset`), Uptime, freier RAM,
-Anzahl der MQTT-Verbindungen und der Ethernet-Resets, IP- und MAC-Adresse und ob der Notbetrieb aktiv ist. Die übrigen Entitäten hängen bewusst an keinem Gerät, damit
+Revision, letzter Reset (`power_on`, `watchdog`, `restart`, `ota`, `reset`), Uptime, freier RAM,
+Anzahl der MQTT-Verbindungen und der Ethernet-Resets, IP- und MAC-Adresse, ob der Notbetrieb aktiv ist
+und ob OTA bereit ist. Die übrigen Entitäten hängen bewusst an keinem Gerät, damit
 Home Assistant ihren Namen nicht um den Gerätenamen ergänzt.
 
-Der Bootloader des Mega löscht das Reset-Register `MCUSR`. Der Watchdog läuft deshalb im Modus
+Der Original-Bootloader des Mega löscht das Reset-Register `MCUSR`, Optiboot zumindest das Watchdog-Bit. Der Watchdog läuft deshalb im Modus
 „erst Interrupt, dann Reset“: Der Interrupt merkt sich den Grund in RAM, das einen Reset übersteht.
 
 ## Robustheit
@@ -166,7 +225,7 @@ Neben den Logausgaben nimmt die serielle Schnittstelle Befehle im Format `!<typ>
 ## Fremd-Libraries
 
 PlatformIO lädt alle Libraries mit fester Version über `lib_deps`:
-Ethernet, PubSubClient, [OneWire](https://www.pjrc.com/teensy/td_libs_OneWire.html),
+Ethernet, PubSubClient, [ArduinoOTA](https://github.com/JAndrassy/ArduinoOTA), [OneWire](https://www.pjrc.com/teensy/td_libs_OneWire.html),
 [DallasTemperature](https://github.com/milesburton/Arduino-Temperature-Control-Library) (DS18B20),
 [DHT22](https://github.com/dvarrel/DHT22) und
 [Wiegand](https://github.com/monkeyboard/Wiegand-Protocol-Library-for-Arduino). Die letzten beiden
