@@ -78,7 +78,11 @@ const int num_pwms = COUNT_OF(pwms);
 
 void user_logic() {
     toggle_couple(10, "LI_EG_GA");
-    simple(9, 3, "LI_EG_EZ_KU");
+    // Esszimmer unten: kurz Grundbeleuchtung umschalten, lang ganzes Esszimmer aus (Leselampe an eg_ost)
+    long_short(9, "LI_EG_EZ_KU", 0, "LI_EG_EZ_KU", 3);
+    long_short(9, "LI_EG_EZ", 0, "none", 0);
+    long_short(9, "LI_EG_EZ_L1", 0, "none", 0);
+    long_short(9, "LI_EG_EZ_L3", 0, "none", 0);
     long_short(11, "LI_EG_EZ_L1", 3, "LI_EG_EZ", 3);
     simple(4, 0, "RO_EG_SU");
     simple(4, 0, "RO_EG_WE");
@@ -94,8 +98,9 @@ void user_logic() {
     int inv_val = 0;
     if (get_output("LI_EG_KU_L1") == 0)
         inv_val = 1;
-    simple(13, inv_val, "LI_EG_KU_L1");
-    simple(13, inv_val, "LI_EG_SP");
+    // Küche: kurz Arbeitsbeleuchtung und Speisekammer gemeinsam, lang Squeezebox Esszimmer an (HA)
+    long_short(13, "none", 0, "LI_EG_KU_L1", inv_val);
+    long_short(13, "none", 0, "LI_EG_SP", inv_val);
 
     simple(6, 3, "LI_UG_GA");
     toggle_couple(5, "LI_EG_GA");

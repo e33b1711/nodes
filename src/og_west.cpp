@@ -90,14 +90,20 @@ void user_logic() {
     long_short(13, "VD_OG_GA", 0, "DF_OG_GA", 0);
     long_short(10, "VD_OG_GA", 100, "DF_OG_GA", 100);
     long_short(1, "LI_OG_GA", 3, "LI_OG_GA_L1", 3);
-    simple(14, 3, "LI_OG_KN");
-    simple(9, 3, "LI_OG_KN_L1");
+    // Leo oben / unten: kurz Leo / Leo Spots umschalten, lang beide aus
+    long_short(14, "LI_OG_KN", 0, "LI_OG_KN", 3);
+    long_short(14, "LI_OG_KN_L1", 0, "none", 0);
+    long_short(9, "LI_OG_KN_L1", 0, "LI_OG_KN_L1", 3);
+    long_short(9, "LI_OG_KN", 0, "none", 0);
     long_short(11, "VD_OG_KN", 100, "DF_OG_KN", 100);
     long_short(8, "VD_OG_KN", 0, "DF_OG_KN", 0);
     rollo_lock(4, 0, "RO_OG_KN");
     rollo_lock(6, 100, "RO_OG_KN");
-    simple(0, 3, "LI_OG_KS");
-    simple(12, 3, "LI_OG_KS_L1");
+    // Bini oben / unten: kurz Bini / Bini Spots umschalten, lang beide aus
+    long_short(0, "LI_OG_KS", 0, "LI_OG_KS", 3);
+    long_short(0, "LI_OG_KS_L1", 0, "none", 0);
+    long_short(12, "LI_OG_KS_L1", 0, "LI_OG_KS_L1", 3);
+    long_short(12, "LI_OG_KS", 0, "none", 0);
     long_short(2, "VD_OG_KS", 0, "DF_OG_KS", 0);
     long_short(3, "VD_OG_KS", 100, "DF_OG_KS", 100);
     rollo_lock(5, 100, "RO_OG_KS");
